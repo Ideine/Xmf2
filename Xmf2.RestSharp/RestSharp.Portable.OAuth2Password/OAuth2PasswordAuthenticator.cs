@@ -131,6 +131,11 @@ namespace RestSharp.Portable.Authenticators
             return Client.AccessToken;
         }
 
+        public string GetRefreshToken()
+        {
+            return Client.RefreshToken;
+        }
+
         /// <summary>
         /// Will be called when the authentication failed
         /// </summary>
@@ -172,6 +177,11 @@ namespace RestSharp.Portable.Authenticators
             {
                 authParam.Value = authValue;
             }
+        }
+
+        public async Task<string> GetCurrentToken()
+        {
+            return await Client.GetCurrentToken();
         }
     }
 }
