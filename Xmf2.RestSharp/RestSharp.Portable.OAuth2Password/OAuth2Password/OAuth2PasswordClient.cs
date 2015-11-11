@@ -336,6 +336,23 @@ namespace RestSharp.Portable.Authenticators.OAuth2Password
             {
                 grant_type = GrantType
             });
+
+            if(!Configuration.ClientId.IsEmpty())
+            { 
+                args.Request.AddObject(new
+                {
+                    client_id = Configuration.ClientId
+                });
+            }
+
+            if (!Configuration.ClientSecret.IsEmpty())
+            {
+                args.Request.AddObject(new
+                {
+                    client_secret = Configuration.ClientSecret
+                });
+            }
+
             if (GrantType == GrantTypeRefreshTokenKey)
             {
                 args.Request.AddObject(new

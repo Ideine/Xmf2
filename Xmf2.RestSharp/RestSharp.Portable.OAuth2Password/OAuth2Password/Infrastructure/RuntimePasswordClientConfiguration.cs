@@ -14,6 +14,16 @@
         public string ClientTypeName { get; set; }
 
         /// <summary>
+        /// Client ID (ID of your application).
+        /// </summary>
+        public string ClientId { get; set; }
+
+        /// <summary>
+        /// Client secret.
+        /// </summary>
+        public string ClientSecret { get; set; }
+
+        /// <summary>
         /// Scope - contains set of permissions which user should give to your application.
         /// </summary>
         public string Scope { get; set; }
