@@ -56,10 +56,26 @@
     <Compile Include="Converters\NotConverter.cs" />
     <Compile Include="Converters\PercentageFormatConverter.cs" />
     <Compile Include="Converters\StringFormatConverter.cs" />
+    <Compile Include="ErrorManagers\AccessDataException.cs" />
+    <Compile Include="ErrorManagers\BaseErrorManager.cs" />
+    <Compile Include="ErrorManagers\IErrorManager.cs" />
+    <Compile Include="ErrorManagers\ManagedException.cs" />
     <Compile Include="Extensions\ViewModelLoaderExtensions.cs" />
     <Compile Include="Interactions\PopupMenuRequest.cs" />
+    <Compile Include="Logs\BaseLogger.cs" />
+    <Compile Include="Logs\ILogger.cs" />
     <Compile Include="MvxAsyncCommand.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\BaseViewModel.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Nito.AsyncEx, Version=3.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Nito.AsyncEx.3.0.1\lib\portable-net45+netcore45+wp8+wpa81\Nito.AsyncEx.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

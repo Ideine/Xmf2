@@ -52,6 +52,7 @@
     <Compile Include="Targets\TextViewSpannedTextTargetBinding.cs" />
     <Compile Include="Targets\TextViewIsBoldTargetBinding.cs" />
     <Compile Include="Targets\TextViewTextColorTargetBinding.cs" />
+    <Compile Include="Views\BaseView.cs" />
     <Compile Include="Views\CircleImageView.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -84,6 +85,10 @@
     <ProjectReference Include="..\..\..\MvvmCross\CrossCore\Cirrious.CrossCore\Cirrious.CrossCore.csproj">
       <Project>{cff6f25a-3c3b-44ee-a54c-2ed4aaff3adb}</Project>
       <Name>Cirrious.CrossCore</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Xmf2.Commons.MvxExtends\Xmf2.Commons.MvxExtends.csproj">
+      <Project>{7d6a560f-5947-4aba-af63-902e40acda2b}</Project>
+      <Name>Xmf2.Commons.MvxExtends</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />
