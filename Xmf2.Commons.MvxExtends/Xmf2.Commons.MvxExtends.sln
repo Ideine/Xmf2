@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.23107.0
+VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xmf2.Commons.MvxExtends", "Xmf2.Commons.MvxExtends\Xmf2.Commons.MvxExtends.csproj", "{7D6A560F-5947-4ABA-AF63-902E40ACDA2B}"
 EndProject
@@ -22,6 +22,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cirrious.MvvmCross.Binding.Droid", "..\..\MvvmCross\Cirrious\Cirrious.MvvmCross.Binding.Droid\Cirrious.MvvmCross.Binding.Droid.csproj", "{47FD89C3-19DC-4BD2-9B6D-FB8363BE7EB9}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cirrious.MvvmCross.Droid", "..\..\MvvmCross\Cirrious\Cirrious.MvvmCross.Droid\Cirrious.MvvmCross.Droid.csproj", "{7A6BE137-D0F1-46A1-AE5C-81FAEEDDDF02}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Mvx-AndroidSupport", "Mvx-AndroidSupport", "{D3CFB9DF-D723-40DE-BBFA-F93CA6E1E1CD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MvvmCross.Droid.Support.V7.AppCompat", "..\..\MvvmCross-AndroidSupport\MvvmCross.Droid.Support.V7.AppCompat\MvvmCross.Droid.Support.V7.AppCompat.csproj", "{911D9032-EA82-41B9-80D7-5DB84951B6E5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -65,6 +69,10 @@ Global
 		{7A6BE137-D0F1-46A1-AE5C-81FAEEDDDF02}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7A6BE137-D0F1-46A1-AE5C-81FAEEDDDF02}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7A6BE137-D0F1-46A1-AE5C-81FAEEDDDF02}.Release|Any CPU.Build.0 = Release|Any CPU
+		{911D9032-EA82-41B9-80D7-5DB84951B6E5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{911D9032-EA82-41B9-80D7-5DB84951B6E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{911D9032-EA82-41B9-80D7-5DB84951B6E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{911D9032-EA82-41B9-80D7-5DB84951B6E5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -76,5 +84,6 @@ Global
 		{64DCD397-9019-41E8-A928-E5F5C5DF185B} = {263413AE-74AE-4A9E-BCE5-12B3A34FF6E2}
 		{47FD89C3-19DC-4BD2-9B6D-FB8363BE7EB9} = {263413AE-74AE-4A9E-BCE5-12B3A34FF6E2}
 		{7A6BE137-D0F1-46A1-AE5C-81FAEEDDDF02} = {263413AE-74AE-4A9E-BCE5-12B3A34FF6E2}
+		{911D9032-EA82-41B9-80D7-5DB84951B6E5} = {D3CFB9DF-D723-40DE-BBFA-F93CA6E1E1CD}
 	EndGlobalSection
 EndGlobal
