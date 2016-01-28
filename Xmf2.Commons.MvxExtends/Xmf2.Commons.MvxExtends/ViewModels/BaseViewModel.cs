@@ -86,7 +86,7 @@ namespace Xmf2.Commons.MvxExtends.ViewModels
                 {
                     actionToLaunch = (cts) =>
                     {
-                        return this.ExecWithBusy(async () => await action(cts).ConfigureAwait(false));
+                        return this.ExecWithBusyAsync(async () => await action(cts).ConfigureAwait(false));
                     };
                 }
 
