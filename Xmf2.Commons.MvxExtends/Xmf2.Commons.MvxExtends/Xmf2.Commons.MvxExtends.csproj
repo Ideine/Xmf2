@@ -58,7 +58,9 @@
     <Compile Include="Converters\StringFormatConverter.cs" />
     <Compile Include="ErrorManagers\AccessDataException.cs" />
     <Compile Include="ErrorManagers\BaseErrorManager.cs" />
+    <Compile Include="ErrorManagers\BaseHttpErrorManager.cs" />
     <Compile Include="ErrorManagers\IErrorManager.cs" />
+    <Compile Include="ErrorManagers\IHttpErrorManager.cs" />
     <Compile Include="ErrorManagers\ManagedException.cs" />
     <Compile Include="Extensions\ViewModelLoaderExtensions.cs" />
     <Compile Include="Interactions\PopupMenuRequest.cs" />
@@ -71,6 +73,10 @@
   <ItemGroup>
     <Reference Include="Nito.AsyncEx, Version=3.0.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Nito.AsyncEx.3.0.1\lib\portable-net45+netcore45+wp8+wpa81\Nito.AsyncEx.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Polly, Version=3.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Polly.3.0.0\lib\portable-net45+netcore45+wpa81+wp8\Polly.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>
