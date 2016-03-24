@@ -9,13 +9,13 @@ using Android.OS;
 using Android.Runtime;
 using Android.Views;
 using Android.Widget;
-using Cirrious.MvvmCross.Binding.Droid.Target;
-using Cirrious.MvvmCross.ViewModels;
 using Xmf2.Commons.MvxExtends.Interactions;
-using Cirrious.CrossCore;
-using Cirrious.MvvmCross.Binding;
-using Cirrious.CrossCore.Platform;
-using Cirrious.CrossCore.Core;
+using MvvmCross.Platform;
+using MvvmCross.Core.ViewModels;
+using MvvmCross.Binding;
+using MvvmCross.Platform.Platform;
+using MvvmCross.Binding.Droid.Target;
+using MvvmCross.Platform.Core;
 
 
 namespace Xmf2.Commons.MvxExtends.DroidAppCompat.Target

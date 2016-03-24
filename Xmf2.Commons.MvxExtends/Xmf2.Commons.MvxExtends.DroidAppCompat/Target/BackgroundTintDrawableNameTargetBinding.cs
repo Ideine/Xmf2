@@ -9,14 +9,14 @@ using Android.OS;
 using Android.Runtime;
 using Android.Views;
 using Android.Widget;
-using Cirrious.MvvmCross.Binding.Droid.Target;
 using Android.Support.V4.View;
-using Cirrious.MvvmCross.Binding;
-using Cirrious.CrossCore.Platform;
 using Android.Content.Res;
 using Android.Support.V7.Widget;
 
 using Java.Lang;
+using MvvmCross.Binding.Droid.Target;
+using MvvmCross.Binding;
+using MvvmCross.Platform.Platform;
 
 namespace Xmf2.Commons.MvxExtends.DroidAppCompat.Target
 {

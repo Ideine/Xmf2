@@ -9,7 +9,7 @@ using Android.OS;
 using Android.Runtime;
 using Android.Views;
 using Android.Widget;
-using Cirrious.CrossCore.Converters;
+using MvvmCross.Platform.Converters;
 using Android.Graphics;
 using Android.Graphics.Drawables;
 

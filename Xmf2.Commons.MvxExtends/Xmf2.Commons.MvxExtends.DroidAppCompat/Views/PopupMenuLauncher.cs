@@ -10,8 +10,8 @@ using Android.Runtime;
 using Android.Views;
 using Android.Support.V7.Widget;
 using Android.Util;
-using Cirrious.MvvmCross.ViewModels;
 using Xmf2.Commons.MvxExtends.Interactions;
+using MvvmCross.Core.ViewModels;
 
 namespace Xmf2.Commons.MvxExtends.DroidAppCompat.Views
 {

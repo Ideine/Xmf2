@@ -9,9 +9,9 @@ using Android.OS;
 using Android.Runtime;
 using Android.Views;
 using Android.Widget;
-using Cirrious.MvvmCross.Binding.Droid.Target;
-using Cirrious.MvvmCross.Binding;
-using Cirrious.CrossCore.Platform;
+using MvvmCross.Binding.Droid.Target;
+using MvvmCross.Binding;
+using MvvmCross.Platform.Platform;
 
 namespace Xmf2.Commons.MvxExtends.Droid.Targets
 {

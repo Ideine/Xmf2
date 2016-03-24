@@ -1,10 +1,11 @@
-﻿using Cirrious.MvvmCross.ViewModels;
+﻿
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Cirrious.CrossCore.ExtensionMethods;
+using MvvmCross.Core.ViewModels;
+using MvvmCross.Platform.ExtensionMethods;
 
 namespace Xmf2.Commons.MvxExtends
 {

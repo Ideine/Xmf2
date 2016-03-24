@@ -9,8 +9,8 @@ using Android.OS;
 using Android.Runtime;
 using Android.Views;
 using Android.Widget;
-using Cirrious.MvvmCross.Droid.Views;
 using Xmf2.Commons.MvxExtends.ViewModels;
+using MvvmCross.Droid.Views;
 
 namespace Xmf2.Commons.MvxExtends.Droid.Views
 {

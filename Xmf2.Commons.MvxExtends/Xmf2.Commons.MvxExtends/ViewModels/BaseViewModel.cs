@@ -5,10 +5,10 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Cirrious.CrossCore;
-using Cirrious.MvvmCross.ViewModels;
+using MvvmCross.Platform;
 using Nito.AsyncEx;
 using Xmf2.Commons.MvxExtends.ErrorManagers;
+using MvvmCross.Core.ViewModels;
 
 namespace Xmf2.Commons.MvxExtends.ViewModels
 {
