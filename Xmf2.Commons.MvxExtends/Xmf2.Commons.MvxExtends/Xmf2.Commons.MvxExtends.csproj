@@ -63,13 +63,11 @@
     <Compile Include="ViewModels\BaseViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="Nito.AsyncEx, Version=3.0.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\HabitatApp\packages\Nito.AsyncEx.3.0.1\lib\portable-net45+netcore45+wp8+wpa81\Nito.AsyncEx.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Nito.AsyncEx, Version=3.0.1.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\packages\Nito.AsyncEx.3.0.1\lib\portable-net45+netcore45+wp8+wpa81\Nito.AsyncEx.dll</HintPath>
     </Reference>
-    <Reference Include="Polly, Version=4.3.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\HabitatApp\packages\Polly.4.3.0\lib\portable-net45+netcore45+wpa81+wp8\Polly.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Polly, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\packages\Polly.3.0.0\lib\portable-net45+netcore45+wpa81+wp8\Polly.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

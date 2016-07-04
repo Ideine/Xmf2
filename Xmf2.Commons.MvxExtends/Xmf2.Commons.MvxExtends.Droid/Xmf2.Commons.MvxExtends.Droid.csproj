@@ -101,6 +101,10 @@
       <Project>{7A6BE137-D0F1-46A1-AE5C-81FAEEDDDF02}</Project>
       <Name>MvvmCross.Droid</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\MvvmCross-AndroidSupport\MvvmCross.Droid.Support.V7.Fragging\MvvmCross.Droid.Support.V7.Fragging.csproj">
+      <Project>{5B74F15E-E377-4662-9636-4233049EDDC3}</Project>
+      <Name>MvvmCross.Droid.Support.V7.Fragging</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />

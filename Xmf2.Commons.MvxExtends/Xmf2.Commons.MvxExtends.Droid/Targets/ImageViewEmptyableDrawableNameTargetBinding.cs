@@ -20,7 +20,7 @@ namespace Xmf2.Commons.MvxExtends.Droid.Targets
         {
 
         }
-		/*
+
         protected override bool GetBitmap(object value, out Android.Graphics.Bitmap bitmap)
         {
             if (value == null)
@@ -41,6 +41,5 @@ namespace Xmf2.Commons.MvxExtends.Droid.Targets
 
             return base.GetBitmap(value, out bitmap);
         }
-		*/
     }
 }

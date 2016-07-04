@@ -24,7 +24,7 @@ namespace Xmf2.Commons.MvxExtends.ErrorManagers
                     .Or<Exception>(ex =>
                         ex.Message.IndexOf("Bad file descriptor", StringComparison.OrdinalIgnoreCase) != -1
                         || ex.Message.IndexOf("Invalid argument", StringComparison.OrdinalIgnoreCase) != -1)
-                    .RetryAsync(3, (Action<Exception, int>)LogRetryException);
+                    .RetryAsync(3, LogRetryException);
 
             Mvx.TryResolve<ILogger>(out _logger);
         }
