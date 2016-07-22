@@ -87,9 +87,10 @@ namespace RestSharp.Portable.Authenticators.OAuth2Password
             Configuration = configuration;
         }
 
+
         public async Task<UserInfo> GetUserInfo(string userName, string password)
         {
-            GrantType = GrantTypeAuthorizationKey;
+			GrantType = GrantTypeAuthorizationKey;
             Dictionary<string, string> dicoParameter = new Dictionary<string, string>();
             dicoParameter.Add(UsernameKey, userName);
             dicoParameter.Add(PasswordKey, password);
@@ -230,22 +231,22 @@ namespace RestSharp.Portable.Authenticators.OAuth2Password
                 Configuration = Configuration
             });
 
-            var response = await client.ExecuteAndVerify(request);
+			var response = await client.ExecuteAndVerify(request);
+			var content = response.GetContent();
+			AccessToken = ParseAccessTokenResponse(content);
 
-            var content = response.GetContent();
-            AccessToken = ParseAccessTokenResponse(content);
+			RefreshToken = ParseStringResponse(content, new[] { RefreshTokenKey })[RefreshTokenKey].FirstOrDefault();
+			TokenType = ParseStringResponse(content, new[] { TokenTypeKey })[TokenTypeKey].FirstOrDefault();
 
-            RefreshToken = ParseStringResponse(content, new[] { RefreshTokenKey })[RefreshTokenKey].FirstOrDefault();
-            TokenType = ParseStringResponse(content, new[] { TokenTypeKey })[TokenTypeKey].FirstOrDefault();
+			var expiresIn = ParseStringResponse(content, new[] { ExpiresKey })[ExpiresKey].Select(x => Convert.ToInt32(x, 10)).FirstOrDefault();
+			ExpiresAt = (expiresIn != 0 ? (DateTime?)DateTime.Now.AddSeconds(expiresIn) : null);
 
-            var expiresIn = ParseStringResponse(content, new[] { ExpiresKey })[ExpiresKey].Select(x => Convert.ToInt32(x, 10)).FirstOrDefault();
-            ExpiresAt = (expiresIn != 0 ? (DateTime?)DateTime.Now.AddSeconds(expiresIn) : null);
+			AfterGetAccessToken(new PasswordBeforeAfterRequestArgs
+			{
+				Response = response,
+				Parameters = parameters
+			});
 
-            AfterGetAccessToken(new PasswordBeforeAfterRequestArgs
-            {
-                Response = response,
-                Parameters = parameters
-            });
         }
 
         /// <summary>
