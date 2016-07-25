@@ -40,7 +40,7 @@
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Xml" />
     <Reference Include="Polly">
-      <HintPath>..\..\..\..\packages\Polly.3.0.0\lib\portable-net45+netcore45+wpa81+wp8\Polly.dll</HintPath>
+      <HintPath>..\..\..\..\packages\Polly.4.3.0\lib\portable-net45+netcore45+wpa81+wp8\Polly.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -59,7 +59,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />
-    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\Values\Strings.xml" />
@@ -100,6 +99,10 @@
     <ProjectReference Include="..\..\..\MvvmCross\MvvmCross\Droid\Droid\MvvmCross.Droid.csproj">
       <Project>{7A6BE137-D0F1-46A1-AE5C-81FAEEDDDF02}</Project>
       <Name>MvvmCross.Droid</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\MvvmCross-AndroidSupport\MvvmCross.Droid.Support.V7.Fragging\MvvmCross.Droid.Support.V7.Fragging.csproj">
+      <Project>{5B74F15E-E377-4662-9636-4233049EDDC3}</Project>
+      <Name>MvvmCross.Droid.Support.V7.Fragging</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

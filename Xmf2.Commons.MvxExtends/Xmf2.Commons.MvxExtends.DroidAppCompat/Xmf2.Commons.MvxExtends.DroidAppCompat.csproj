@@ -60,9 +60,9 @@
     <Compile Include="Views\PopupMenuLauncher.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
     <None Include="Resources\AboutResources.txt" />
     <None Include="Resources\Resource.Designer.cs" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\Values\Strings.xml" />
@@ -104,17 +104,9 @@
       <Project>{7A6BE137-D0F1-46A1-AE5C-81FAEEDDDF02}</Project>
       <Name>MvvmCross.Droid</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\MvvmCross-AndroidSupport\MvvmCross.Droid.Support.V4\MvvmCross.Droid.Support.V4.csproj">
-      <Project>{24C19002-AD02-4B88-9E57-1C254819D30E}</Project>
-      <Name>MvvmCross.Droid.Support.V4</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\..\MvvmCross-AndroidSupport\MvvmCross.Droid.Support.V7.Fragging\MvvmCross.Droid.Support.V7.Fragging.csproj">
       <Project>{5B74F15E-E377-4662-9636-4233049EDDC3}</Project>
       <Name>MvvmCross.Droid.Support.V7.Fragging</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\MvvmCross-AndroidSupport\MvvmCross.Droid.Support.V7.RecyclerView\MvvmCross.Droid.Support.V7.RecyclerView.csproj">
-      <Project>{31C39E0F-116E-4EAC-921D-A79E6AA28204}</Project>
-      <Name>MvvmCross.Droid.Support.V7.RecyclerView</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
