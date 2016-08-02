@@ -44,6 +44,8 @@ namespace Xmf2.RestSharp.Factories
             return handler;
         }
 
+	
+
         protected abstract HttpClientHandler GetMessageHandler();
         protected abstract PropertyInfo GetProxyPropertyInfo();
         
