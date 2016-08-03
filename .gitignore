@@ -15,7 +15,7 @@
 Components
 [Pp]ackages
 *.userprefs
-#Resource.designer.cs
+Resource.designer.cs
 
 # Build results
 
