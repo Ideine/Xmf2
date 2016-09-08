@@ -35,7 +35,7 @@ namespace Xmf2.Commons.MvxExtends.Droid.ErrorManagers
                     .Or<Exception> (ex =>
                         ex.Message.IndexOf ("Bad file descriptor", StringComparison.OrdinalIgnoreCase) != -1
 			|| ex.Message.IndexOf ("Invalid argument", StringComparison.OrdinalIgnoreCase) != -1)
-                    .RetryAsync (3, LogRetryException);
+                    .RetryAsync (3, (Action<Exception, int>)LogRetryException);
 		}
 
 		protected override Policy GetHttpHandlePolicy ()
