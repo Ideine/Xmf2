@@ -56,6 +56,7 @@
     <Compile Include="ErrorManagers\IHttpErrorManager.cs" />
     <Compile Include="ErrorManagers\ManagedException.cs" />
     <Compile Include="Extensions\ViewModelLoaderExtensions.cs" />
+    <Compile Include="Helpers\EnumMemberHelper.cs" />
     <Compile Include="Interactions\PopupMenuRequest.cs" />
     <Compile Include="Logs\BaseLogger.cs" />
     <Compile Include="Logs\ILogger.cs" />
