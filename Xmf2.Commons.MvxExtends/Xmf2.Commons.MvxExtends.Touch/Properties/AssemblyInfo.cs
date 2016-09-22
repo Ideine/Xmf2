@@ -7,9 +7,9 @@ using System.Runtime.CompilerServices;
 [assembly: AssemblyTitle ("Xmf2.Commons.MvxExtends.Touch")]
 [assembly: AssemblyDescription ("")]
 [assembly: AssemblyConfiguration ("")]
-[assembly: AssemblyCompany ("")]
-[assembly: AssemblyProduct ("")]
-[assembly: AssemblyCopyright ("Mouhamadi")]
+[assembly: AssemblyCompany("Idéine")]
+[assembly: AssemblyProduct ("Xmf2.Commons.MvxExtends.Touch")]
+[assembly: AssemblyCopyright("Copyright ©  2015")]
 [assembly: AssemblyTrademark ("")]
 [assembly: AssemblyCulture ("")]
 

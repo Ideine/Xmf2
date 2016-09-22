@@ -57,12 +57,12 @@ namespace Xmf2.Commons.MvxExtends.ViewModels
             return 60000;
         }
 
-        public Task<bool> ExecAsync(Func<CancellationTokenSource, Task> action, bool withBusy = true, bool isUserAction = true)
+        public Task<bool> ExecAsync(Func<CancellationTokenSource, Task> action, bool withBusy = true, bool isUserAction = true, Action<Exception> afterErrorCallBack = null)
         {
-            return this.ExecAsync(action, this.GetOperationInProgressDefaultDelay(), withBusy, isUserAction);
+            return this.ExecAsync(action, this.GetOperationInProgressDefaultDelay(), withBusy, isUserAction, afterErrorCallBack);
         }
 
-        public async Task<bool> ExecAsync(Func<CancellationTokenSource, Task> action, int millisecondsDelay, bool withBusy, bool isUserAction)
+        public async Task<bool> ExecAsync(Func<CancellationTokenSource, Task> action, int millisecondsDelay, bool withBusy, bool isUserAction, Action<Exception> afterErrorCallBack)
         {
             CancellationTokenSource currentCancellationToken = null;
 
@@ -98,6 +98,7 @@ namespace Xmf2.Commons.MvxExtends.ViewModels
             {
                 var errorMgr = this.GetService<IErrorManager>();
                 errorMgr.TreatError(e);
+                afterErrorCallBack?.Invoke(e);
                 return false;
             }
             finally
