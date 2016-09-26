@@ -17,7 +17,7 @@ namespace Xmf2.Commons.MvxExtends.ErrorManagers
             Mvx.TryResolve<ILogger>(out _logger);
         }
 
-        public virtual void TreatError(Exception e)
+        public virtual void TreatError(Exception e, bool promptErrorMessageToUser)
         {
             var ade = e as AccessDataException;
             if (ade != null)
@@ -25,7 +25,7 @@ namespace Xmf2.Commons.MvxExtends.ErrorManagers
                 this.LogAccessDataException(ade);
                 ade.IsLogged = true;
 
-                if (!ade.IsUserShown)
+                if (!ade.IsUserShown && promptErrorMessageToUser)
                 {
                     this.ShowMessageForAccessDataException(ade);
                     ade.IsUserShown = true;
@@ -39,7 +39,7 @@ namespace Xmf2.Commons.MvxExtends.ErrorManagers
                 this.LogManagedException(me);
                 me.IsLogged = true;
 
-                if (!me.IsUserShown)
+                if (!me.IsUserShown && promptErrorMessageToUser)
                 {
                     this.ShowMessageForManagedException(me);
                     me.IsUserShown = true;
@@ -48,7 +48,9 @@ namespace Xmf2.Commons.MvxExtends.ErrorManagers
             }
 
             this.LogException(e);
-            this.ShowMessageForException(e);
+
+            if (promptErrorMessageToUser)
+                this.ShowMessageForException(e);
         }
 
         protected virtual void LogAccessDataException(AccessDataException ade)

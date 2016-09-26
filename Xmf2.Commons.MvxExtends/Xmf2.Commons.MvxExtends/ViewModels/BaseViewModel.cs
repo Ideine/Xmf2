@@ -57,12 +57,12 @@ namespace Xmf2.Commons.MvxExtends.ViewModels
             return 60000;
         }
 
-        public Task<bool> ExecAsync(Func<CancellationTokenSource, Task> action, bool withBusy = true, bool isUserAction = true, Action<Exception> afterErrorCallBack = null)
+        public Task<bool> ExecAsync(Func<CancellationTokenSource, Task> action, bool withBusy = true, bool isUserAction = true, bool promptErrorMessageToUser = true, Action<Exception> afterErrorCallBack = null)
         {
-            return this.ExecAsync(action, this.GetOperationInProgressDefaultDelay(), withBusy, isUserAction, afterErrorCallBack);
+            return this.ExecAsync(action, this.GetOperationInProgressDefaultDelay(), withBusy, isUserAction, promptErrorMessageToUser, afterErrorCallBack);
         }
 
-        public async Task<bool> ExecAsync(Func<CancellationTokenSource, Task> action, int millisecondsDelay, bool withBusy, bool isUserAction, Action<Exception> afterErrorCallBack)
+        public async Task<bool> ExecAsync(Func<CancellationTokenSource, Task> action, int millisecondsDelay, bool withBusy, bool isUserAction, bool promptErrorMessageToUser, Action<Exception> afterErrorCallBack)
         {
             CancellationTokenSource currentCancellationToken = null;
 
@@ -97,7 +97,7 @@ namespace Xmf2.Commons.MvxExtends.ViewModels
             catch (Exception e)
             {
                 var errorMgr = this.GetService<IErrorManager>();
-                errorMgr.TreatError(e);
+                errorMgr.TreatError(e, promptErrorMessageToUser);
                 afterErrorCallBack?.Invoke(e);
                 return false;
             }

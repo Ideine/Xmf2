@@ -8,6 +8,6 @@ namespace Xmf2.Commons.MvxExtends.ErrorManagers
 {
     public interface IErrorManager
     {
-        void TreatError(Exception e);
+        void TreatError(Exception e, bool promptErrorMessageToUser);
     }
 }
