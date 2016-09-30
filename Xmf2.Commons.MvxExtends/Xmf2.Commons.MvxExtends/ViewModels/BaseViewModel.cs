@@ -97,7 +97,7 @@ namespace Xmf2.Commons.MvxExtends.ViewModels
             catch (Exception e)
             {
                 var errorMgr = this.GetService<IErrorManager>();
-                errorMgr.TreatError(e, promptErrorMessageToUser);
+                await errorMgr.TreatErrorAsync(e, promptErrorMessageToUser).ConfigureAwait(false);
                 afterErrorCallBack?.Invoke(e);
                 return false;
             }

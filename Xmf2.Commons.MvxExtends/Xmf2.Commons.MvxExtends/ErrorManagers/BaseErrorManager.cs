@@ -10,7 +10,7 @@ namespace Xmf2.Commons.MvxExtends.ErrorManagers
 {
     public abstract class BaseErrorManager : IErrorManager
     {
-        ILogger _logger;
+        protected ILogger _logger;
 
         public BaseErrorManager()
         {
@@ -18,6 +18,28 @@ namespace Xmf2.Commons.MvxExtends.ErrorManagers
         }
 
         public virtual void TreatError(Exception e, bool promptErrorMessageToUser)
+        {
+            this.InternalTreatError(e, promptErrorMessageToUser, null);
+        }
+
+        public virtual Task TreatErrorAsync(Exception e, bool promptErrorMessageToUser)
+        {
+            var tcs = new TaskCompletionSource<object>();
+            Action callbackAction = () => 
+            {
+                tcs.SetResult(null);
+            };
+
+            bool dialogInProgress = InternalTreatError(e, promptErrorMessageToUser, callbackAction);
+
+            if (!dialogInProgress)
+                callbackAction.Invoke();
+
+            return tcs.Task;
+        }
+
+        /// <returns>Indique si un dialog est en cours (la callbackAction est en attente</returns>
+        protected virtual bool InternalTreatError(Exception e, bool promptErrorMessageToUser, Action callbackAction)
         {
             var ade = e as AccessDataException;
             if (ade != null)
@@ -27,10 +49,10 @@ namespace Xmf2.Commons.MvxExtends.ErrorManagers
 
                 if (!ade.IsUserShown && promptErrorMessageToUser)
                 {
-                    this.ShowMessageForAccessDataException(ade);
                     ade.IsUserShown = true;
+                    return this.ShowMessageForAccessDataException(ade, callbackAction);
                 }
-                return;
+                return false;
             }
 
             var me = e as ManagedException;
@@ -41,16 +63,18 @@ namespace Xmf2.Commons.MvxExtends.ErrorManagers
 
                 if (!me.IsUserShown && promptErrorMessageToUser)
                 {
-                    this.ShowMessageForManagedException(me);
                     me.IsUserShown = true;
+                    return this.ShowMessageForManagedException(me, callbackAction);
                 }
-                return;
+                return false;
             }
 
             this.LogException(e);
 
             if (promptErrorMessageToUser)
-                this.ShowMessageForException(e);
+                return this.ShowMessageForException(e, callbackAction);
+
+            return false;
         }
 
         protected virtual void LogAccessDataException(AccessDataException ade)
@@ -68,11 +92,10 @@ namespace Xmf2.Commons.MvxExtends.ErrorManagers
             _logger?.LogCritical();
         }
 
-        protected abstract void ShowMessageForAccessDataException(AccessDataException ade);
+        protected abstract bool ShowMessageForAccessDataException(AccessDataException ade, Action dialogCallbackAction);
 
-        protected abstract void ShowMessageForManagedException(ManagedException me);
+        protected abstract bool ShowMessageForManagedException(ManagedException me, Action dialogCallbackAction);
 
-        protected abstract void ShowMessageForException(Exception e);
-
+        protected abstract bool ShowMessageForException(Exception e, Action dialogCallbackAction);
     }
 }
