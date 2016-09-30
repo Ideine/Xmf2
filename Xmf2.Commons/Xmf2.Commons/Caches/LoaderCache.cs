@@ -71,7 +71,25 @@ namespace Xmf2.Commons.Caches
 
             return await Task.Run<T>(async () =>
             {
-                T loadedValue = await _loaderFunc.Invoke(ct).ConfigureAwait(false);
+                T loadedValue = default(T);
+                try
+                {
+                    loadedValue = await _loaderFunc.Invoke(ct).ConfigureAwait(false);
+                }
+                catch
+                {
+                    lock (_lockObject)
+                    {
+                        // Le cache n'a pas été invalidé et une tache de load plus récente n'a pas terminé avant
+                        if (_lastInvalidateOnloadNumber < currentLoadNumber
+                            && _currentValueLoadNumber < currentLoadNumber)
+                        {
+                            _currentLoadTask = null;
+                        }
+                    }
+                    
+                    throw;
+                }
 
                 lock (_lockObject)
                 {
@@ -82,9 +100,8 @@ namespace Xmf2.Commons.Caches
                         _currentValueLoadNumber = currentLoadNumber;
                         _currentValue = loadedValue;
                         _currentValueInvalidationDate = DateTime.Now.AddSeconds(_cacheDurationInSecond);
+                        _currentLoadTask = null;
                     }
-
-                    _currentLoadTask = null;
                 }
 
                 return loadedValue;

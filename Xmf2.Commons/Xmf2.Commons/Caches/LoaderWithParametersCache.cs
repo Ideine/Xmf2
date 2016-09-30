@@ -53,14 +53,14 @@ namespace Xmf2.Commons.Caches
             lock (_lockObject)
             {
                 // La donnée en cache est encore bonne
-                if (DateTime.Now < _currentValueInvalidationDate 
+                if (DateTime.Now < _currentValueInvalidationDate
                     && loaderParams.ParametersAreTheSameAs(_currentValueParams))
                 {
                     return _currentValue;
                 }
 
                 // S'il n'y a pas de tache de load en attente on en crée une
-                if (_currentLoadTask == null 
+                if (_currentLoadTask == null
                     || !loaderParams.ParametersAreTheSameAs(_currentValueParams))
                 {
                     _currentLoadTask = this.Load(ct, loaderParams);
@@ -79,7 +79,25 @@ namespace Xmf2.Commons.Caches
 
             return await Task.Run<T>(async () =>
             {
-                T loadedValue = await _loaderFunc.Invoke(ct, loaderParams).ConfigureAwait(false);
+                T loadedValue = default(T);
+                try
+                {
+                    loadedValue = await _loaderFunc.Invoke(ct, loaderParams).ConfigureAwait(false);
+                }
+                catch
+                {
+                    lock (_lockObject)
+                    {
+                        // Le cache n'a pas été invalidé et une tache de load plus récente n'a pas terminé avant
+                        if (_lastInvalidateOnloadNumber < currentLoadNumber
+                            && _currentValueLoadNumber < currentLoadNumber)
+                        {
+                            _currentLoadTask = null;
+                        }
+                    }
+
+                    throw;
+                }
 
                 lock (_lockObject)
                 {
