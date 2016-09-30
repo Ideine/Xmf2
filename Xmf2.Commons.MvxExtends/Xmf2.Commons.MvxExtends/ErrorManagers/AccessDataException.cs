@@ -19,13 +19,19 @@ namespace Xmf2.Commons.MvxExtends.ErrorManagers
         public ErrorType Type { get; private set; }
 
         public AccessDataException(ErrorType type)
-            : base("Data access error")
+            : base(type == ErrorType.NoInternetConnexion ? "Acess Data Exception : No Internet Connection" :
+                  type == ErrorType.Timeout ? "Acess Data Exception : Timeout" :
+                  type == ErrorType.UnAuthorized ? "Acess Data Exception : Unauthorized" :
+                  "Acess Data Exception : Unknown data access error")
         {
             this.Type = type;
         }
 
         public AccessDataException(ErrorType type, Exception innerException)
-            : base("Unknown data access error", innerException)
+            : base(type == ErrorType.NoInternetConnexion ? "Acess Data Exception : No Internet Connection" :
+                  type == ErrorType.Timeout ? "Acess Data Exception : Timeout" :
+                  type == ErrorType.UnAuthorized ? "Acess Data Exception : Unauthorized" :
+                  "Acess Data Exception : Unknown data access error")
         {
             this.Type = type;
         }
