@@ -45,7 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Polly">
-      <HintPath>..\..\..\..\packages\Polly.4.3.0\lib\portable-net45+netcore45+wpa81+wp8\Polly.dll</HintPath>
+      <HintPath>..\packages\Polly.4.3.0\lib\portable-net45+netcore45+wpa81+wp8\Polly.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
