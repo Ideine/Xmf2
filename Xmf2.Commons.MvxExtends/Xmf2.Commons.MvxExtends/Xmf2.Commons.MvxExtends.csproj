@@ -79,29 +79,55 @@
     </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
+  <Choose>
+    <When Condition=" $([System.Text.RegularExpressions.Regex]::IsMatch('$(SolutionName)', '.+\.nuget')) ">
+      <PropertyGroup>
+        <CustomBuildInfoMessage>BuildSystem: Building from nuget packages</CustomBuildInfoMessage>
+      </PropertyGroup>
+      <ItemGroup>
+        <Reference Include="MvvmCross.Binding, Version=4.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+          <HintPath>..\..\..\..\packages\MvvmCross.Binding.4.3.0\lib\portable-net45+win+wpa81+wp80\MvvmCross.Binding.dll</HintPath>
+          <Private>True</Private>
+        </Reference>
+        <Reference Include="MvvmCross.Core, Version=4.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+          <HintPath>..\..\..\..\packages\MvvmCross.Core.4.3.0\lib\portable-net45+win+wpa81+wp80\MvvmCross.Core.dll</HintPath>
+          <Private>True</Private>
+        </Reference>
+        <Reference Include="MvvmCross.Localization, Version=4.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+          <HintPath>..\..\..\..\packages\MvvmCross.Binding.4.3.0\lib\portable-net45+win+wpa81+wp80\MvvmCross.Localization.dll</HintPath>
+          <Private>True</Private>
+        </Reference>
+        <Reference Include="MvvmCross.Platform, Version=4.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+          <HintPath>..\..\..\..\packages\MvvmCross.Platform.4.3.0\lib\portable-net45+win+wpa81+wp80\MvvmCross.Platform.dll</HintPath>
+          <Private>True</Private>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <Otherwise>
+      <PropertyGroup>
+        <CustomBuildInfoMessage>BuildSystem: Building from project references</CustomBuildInfoMessage>
+      </PropertyGroup>
+      <ItemGroup>
+        <ProjectReference Include="..\..\..\MvvmCross\MvvmCross\Core\Binding\MvvmCross.Binding.csproj">
+          <Project>{64dcd397-9019-41e8-a928-e5f5c5df185b}</Project>
+          <Name>MvvmCross.Binding</Name>
+        </ProjectReference>
+        <ProjectReference Include="..\..\..\MvvmCross\MvvmCross\Platform\Platform\MvvmCross.Platform.csproj">
+          <Project>{CFF6F25A-3C3B-44EE-A54C-2ED4AAFF3ADB}</Project>
+          <Name>MvvmCross.Platform</Name>
+        </ProjectReference>
+        <ProjectReference Include="..\..\..\MvvmCross\MvvmCross\Core\Localization\MvvmCross.Localization.csproj">
+          <Project>{D89351C1-D48F-4AD0-A0B9-353A93425AB7}</Project>
+          <Name>MvvmCross.Localization</Name>
+        </ProjectReference>
+        <ProjectReference Include="..\..\..\MvvmCross\MvvmCross\Core\Core\MvvmCross.Core.csproj">
+          <Project>{B6E27475-E7D0-448C-A5CC-5097DCA1E2DD}</Project>
+          <Name>MvvmCross.Core</Name>
+        </ProjectReference>
+      </ItemGroup>
+    </Otherwise>
+  </Choose>
+  <Target Name="CustomBuildInfo" BeforeTargets="BeforeBuild">
+    <Message Text="$(CustomBuildInfoMessage)" Importance="high" />
   </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\MvvmCross\MvvmCross\Core\Binding\MvvmCross.Binding.csproj">
-      <Project>{64dcd397-9019-41e8-a928-e5f5c5df185b}</Project>
-      <Name>MvvmCross.Binding</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\MvvmCross\MvvmCross\Platform\Platform\MvvmCross.Platform.csproj">
-      <Project>{CFF6F25A-3C3B-44EE-A54C-2ED4AAFF3ADB}</Project>
-      <Name>MvvmCross.Platform</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\MvvmCross\MvvmCross\Core\Localization\MvvmCross.Localization.csproj">
-      <Project>{D89351C1-D48F-4AD0-A0B9-353A93425AB7}</Project>
-      <Name>MvvmCross.Localization</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\MvvmCross\MvvmCross\Core\Core\MvvmCross.Core.csproj">
-      <Project>{B6E27475-E7D0-448C-A5CC-5097DCA1E2DD}</Project>
-      <Name>MvvmCross.Core</Name>
-    </ProjectReference>
-  </ItemGroup>
 </Project>
