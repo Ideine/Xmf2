@@ -92,7 +92,7 @@
   <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <Choose>
-    <When Condition=" $([System.Text.RegularExpressions.Regex]::IsMatch('$(SolutionName)', '.+\.nuget')) ">
+    <When Condition=" $([System.Text.RegularExpressions.Regex]::IsMatch('$(SolutionName)', '.+nuget')) ">
       <PropertyGroup>
         <CustomBuildInfoMessage>BuildSystem: Building from nuget packages</CustomBuildInfoMessage>
       </PropertyGroup>

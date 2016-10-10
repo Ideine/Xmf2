@@ -80,7 +80,7 @@
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Choose>
-    <When Condition=" $([System.Text.RegularExpressions.Regex]::IsMatch('$(SolutionName)', '.+\.nuget')) ">
+    <When Condition=" $([System.Text.RegularExpressions.Regex]::IsMatch('$(SolutionName)', '.+nuget')) ">
       <PropertyGroup>
         <CustomBuildInfoMessage>BuildSystem: Building from nuget packages</CustomBuildInfoMessage>
       </PropertyGroup>
