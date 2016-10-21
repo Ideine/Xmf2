@@ -50,8 +50,24 @@ public static class CustomAutoLayoutExtensions
 		containerView.ConstrainLayout(() => containerView.Bottom() == view.Bottom() + margin);
 	}
 
+	public static void AnchorRight(this UIView containerView, UIView view, int margin = 0)
+	{
+		containerView.ConstrainLayout(() => containerView.Right() == view.Right() + margin);
+	}
+
+	public static void AnchorLeft(this UIView containerView, UIView view, int margin = 0)
+	{
+		containerView.ConstrainLayout(() => view.Left() == containerView.Left() + margin);
+	}
+
 	public static void VerticalSpace(this UIView containerView, UIView top, UIView bottom, int margin = 0)
 	{
 		containerView.ConstrainLayout(() => bottom.Top() == top.Bottom() + margin);
+	}
+
+	public static UIView ConstrainHeight(this UIView view, int height)
+	{
+		view.ConstrainLayout(() => view.Height() == height);
+		return view;
 	}
 }
