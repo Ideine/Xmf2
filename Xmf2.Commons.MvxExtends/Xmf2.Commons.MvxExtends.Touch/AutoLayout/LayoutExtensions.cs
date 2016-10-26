@@ -161,6 +161,42 @@ public static class CustomAutoLayoutExtensions
 		return view;
 	}
 
+	public static UIView AlignOnLeft(this UIView view, UIView v1, UIView v2, int offset = 0)
+	{
+		view.ConstrainLayout(() => v1.Left() == v2.Left() + offset);
+		return view;
+	}
+
+	public static UIView AlignOnRight(this UIView view, UIView v1, UIView v2, int offset = 0)
+	{
+		view.ConstrainLayout(() => v1.Right() == v2.Right() + offset);
+		return view;
+	}
+
+	public static UIView AlignOnTop(this UIView view, UIView v1, UIView v2, int offset = 0)
+	{
+		view.ConstrainLayout(() => v1.Top() == v2.Top() + offset);
+		return view;
+	}
+
+	public static UIView AlignOnBottom(this UIView view, UIView v1, UIView v2, int offset = 0)
+	{
+		view.ConstrainLayout(() => v1.Bottom() == v2.Bottom() + offset);
+		return view;
+	}
+
+	public static UIView AlignOnCenterX(this UIView view, UIView v1, UIView v2, int offset = 0)
+	{
+		view.ConstrainLayout(() => v1.CenterX() == v2.CenterX() + offset);
+		return view;
+	}
+
+	public static UIView AlignOnCenterY(this UIView view, UIView v1, UIView v2, int offset = 0)
+	{
+		view.ConstrainLayout(() => v1.CenterY() == v2.CenterY() + offset);
+		return view;
+	}
+
 	public static UIView Same(this UIView view, UIView reference, UIView dest)
 	{
 		view.ConstrainLayout(() => reference.CenterY() == dest.CenterY()
@@ -168,5 +204,15 @@ public static class CustomAutoLayoutExtensions
 							 && reference.Height() == dest.Height()
 							 && reference.Width() == dest.Width());
 		return view;
+	}
+
+	public static UIScrollView VerticalScrollContentConstraint(this UIScrollView scroll, UIView content)
+	{
+		scroll.ConstrainLayout(() => scroll.Left() == content.Left()
+							   && scroll.Right() == content.Right()
+							   && scroll.Top() == content.Top()
+							   && scroll.Bottom() == content.Bottom()
+							   && scroll.CenterX() == content.CenterX());
+		return scroll;
 	}
 }
