@@ -3,7 +3,7 @@ using UIKit;
 
 public static class CustomAutoLayoutExtensions
 {
-	public static void CenterAndFillWidth(this UIView containerView, params UIView[] views)
+	public static UIView CenterAndFillWidth(this UIView containerView, params UIView[] views)
 	{
 		if (views == null)
 		{
@@ -17,6 +17,8 @@ public static class CustomAutoLayoutExtensions
 										  && view.Width() == containerView.Width()
 										 );
 		}
+
+		return containerView;
 	}
 
 	public static void VerticalFlow(this UIView containerView, params UIView[] views)
@@ -156,6 +158,15 @@ public static class CustomAutoLayoutExtensions
 	public static UIView ConstrainMaxWidth(this UIView view, int width)
 	{
 		view.ConstrainLayout(() => view.Width() <= width);
+		return view;
+	}
+
+	public static UIView Same(this UIView view, UIView reference, UIView dest)
+	{
+		view.ConstrainLayout(() => reference.CenterY() == dest.CenterY()
+							 && reference.CenterX() == dest.CenterX()
+							 && reference.Height() == dest.Height()
+							 && reference.Width() == dest.Width());
 		return view;
 	}
 }
