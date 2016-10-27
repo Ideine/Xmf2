@@ -206,6 +206,18 @@ public static class CustomAutoLayoutExtensions
 		return view;
 	}
 
+	public static UIView SameWidth(this UIView view, UIView v1, UIView v2)
+	{
+		view.ConstrainLayout(() => v1.Width() == v2.Width());
+		return view;
+	}
+
+	public static UIView SameHeight(this UIView view, UIView v1, UIView v2)
+	{
+		view.ConstrainLayout(() => v1.Height() == v2.Height());
+		return view;
+	}
+
 	public static UIScrollView VerticalScrollContentConstraint(this UIScrollView scroll, UIView content)
 	{
 		scroll.ConstrainLayout(() => scroll.Left() == content.Left()
