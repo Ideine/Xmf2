@@ -2,6 +2,7 @@
 using Xmf2.Commons.MvxExtends.ErrorManagers;
 using System.Net;
 using Polly;
+using Xmf2.Commons.ErrorManagers;
 
 namespace Xmf2.Commons.MvxExtends.Touch.ErrorManagers
 {
@@ -13,15 +14,15 @@ namespace Xmf2.Commons.MvxExtends.Touch.ErrorManagers
 		{
 			_touchHttpHandlePolicy = Policy
 				.Handle<WebException> (webEx =>
-					webEx.Status == System.Net.WebExceptionStatus.ConnectFailure
-					|| webEx.Status == System.Net.WebExceptionStatus.SendFailure
-					|| webEx.Status == System.Net.WebExceptionStatus.UnknownError
-					|| webEx.Status == System.Net.WebExceptionStatus.ConnectionClosed
-					|| webEx.Status == System.Net.WebExceptionStatus.KeepAliveFailure
-					|| webEx.Status == System.Net.WebExceptionStatus.PipelineFailure
-					|| webEx.Status == System.Net.WebExceptionStatus.ReceiveFailure
-					|| webEx.Status == System.Net.WebExceptionStatus.SecureChannelFailure
-					|| webEx.Status == System.Net.WebExceptionStatus.TrustFailure)
+					webEx.Status == WebExceptionStatus.ConnectFailure
+					|| webEx.Status == WebExceptionStatus.SendFailure
+					|| webEx.Status == WebExceptionStatus.UnknownError
+					|| webEx.Status == WebExceptionStatus.ConnectionClosed
+					|| webEx.Status == WebExceptionStatus.KeepAliveFailure
+					|| webEx.Status == WebExceptionStatus.PipelineFailure
+					|| webEx.Status == WebExceptionStatus.ReceiveFailure
+					|| webEx.Status == WebExceptionStatus.SecureChannelFailure
+					|| webEx.Status == WebExceptionStatus.TrustFailure)
 				.Or<Exception> (ex =>
 					ex.Message.IndexOf ("Bad file descriptor", StringComparison.OrdinalIgnoreCase) != -1
 			        || ex.Message.IndexOf ("Invalid argument", StringComparison.OrdinalIgnoreCase) != -1)

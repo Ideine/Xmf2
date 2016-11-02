@@ -42,6 +42,10 @@
     <Compile Include="Extensions\EnumerableExtensions.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ErrorManagers\AccessDataException.cs" />
+    <Compile Include="ErrorManagers\IErrorManager.cs" />
+    <Compile Include="ErrorManagers\IHttpErrorManager.cs" />
+    <Compile Include="ErrorManagers\ManagedException.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Polly">
@@ -50,6 +54,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="ErrorManagers\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

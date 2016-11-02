@@ -9,6 +9,7 @@ using MvvmCross.Platform;
 using Nito.AsyncEx;
 using Xmf2.Commons.MvxExtends.ErrorManagers;
 using MvvmCross.Core.ViewModels;
+using Xmf2.Commons.ErrorManagers;
 
 namespace Xmf2.Commons.MvxExtends.ViewModels
 {

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MvvmCross.Platform;
+using Xmf2.Commons.ErrorManagers;
 using Xmf2.Commons.MvxExtends.Logs;
 
 namespace Xmf2.Commons.MvxExtends.ErrorManagers
@@ -19,7 +20,7 @@ namespace Xmf2.Commons.MvxExtends.ErrorManagers
 
         public virtual void TreatError(Exception e, bool promptErrorMessageToUser)
         {
-            this.InternalTreatError(e, promptErrorMessageToUser, null);
+            InternalTreatError(e, promptErrorMessageToUser, null);
         }
 
         public virtual Task TreatErrorAsync(Exception e, bool promptErrorMessageToUser)
@@ -64,7 +65,7 @@ namespace Xmf2.Commons.MvxExtends.ErrorManagers
                 if (!me.IsUserShown && promptErrorMessageToUser)
                 {
                     me.IsUserShown = true;
-                    return this.ShowMessageForManagedException(me, callbackAction);
+                    return ShowMessageForManagedException(me, callbackAction);
                 }
                 return false;
             }

@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using MvvmCross.Platform;
 using Polly;
+using Xmf2.Commons.ErrorManagers;
 using Xmf2.Commons.MvxExtends.Logs;
 
 namespace Xmf2.Commons.MvxExtends.ErrorManagers

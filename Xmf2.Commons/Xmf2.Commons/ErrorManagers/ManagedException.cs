@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Xmf2.Commons.MvxExtends.ErrorManagers
+namespace Xmf2.Commons.ErrorManagers
 {
     public class ManagedException : Exception
     {

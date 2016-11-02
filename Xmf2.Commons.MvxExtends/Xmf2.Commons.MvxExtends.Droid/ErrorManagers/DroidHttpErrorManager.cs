@@ -11,6 +11,7 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using Polly;
+using Xmf2.Commons.ErrorManagers;
 using Xmf2.Commons.MvxExtends.ErrorManagers;
 
 namespace Xmf2.Commons.MvxExtends.Droid.ErrorManagers
