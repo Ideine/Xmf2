@@ -227,4 +227,19 @@ public static class CustomAutoLayoutExtensions
 							   && scroll.CenterX() == content.CenterX());
 		return scroll;
 	}
+
+	#if DEBUG
+	public static UIView NameConstraint(this UIView view, string name)
+	{
+		view.ConstrainLayout(() => view.Name() == name);
+
+		return view;
+	}
+
+	#else
+	public static UIView NameConstraint(this UIView view, string name)
+	{
+		return view;
+	}
+	#endif
 }

@@ -103,16 +103,39 @@ public static class Layout
 			return false;
 		}
 
-		if (binaryExpression.Right.NodeType != ExpressionType.Constant)
+		string name = null;
+		if (binaryExpression.Right.NodeType == ExpressionType.Constant)
+		{
+			name = (string)((ConstantExpression)binaryExpression.Right).Value;
+		}
+		else if(binaryExpression.Right.NodeType == ExpressionType.MemberAccess)
+		{
+			MemberExpression nameExpression = binaryExpression.Right as MemberExpression;
+			if (nameExpression != null)
+			{
+				name = GetValue<string>(nameExpression);
+			}
+		}
+		else
 		{
 			throw new NotSupportedException("When assigning a name to a control, only constants are supported.");
 		}
 
-		var name = (string)((ConstantExpression)binaryExpression.Right).Value;
 		var iOSName = view.Class.Name + ":0x" + view.Handle.ToString("x");
 		constraintSubstitutions[iOSName] = name;
 
 		return true;
+	}
+
+	private static T GetValue<T>(MemberExpression member)
+	{
+		var objectMember = Expression.Convert(member, typeof(T));
+
+		var getterLambda = Expression.Lambda<Func<T>>(objectMember);
+
+		var getter = getterLambda.Compile();
+
+		return getter();
 	}
 
 #endif
