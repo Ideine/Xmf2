@@ -101,6 +101,40 @@
         <CustomBuildInfoMessage>BuildSystem: Building from project references</CustomBuildInfoMessage>
       </PropertyGroup>
       <ItemGroup>
+        <ProjectReference Include="..\..\..\MvvmCross\MvvmCross\Binding\iOS\MvvmCross.Binding.iOS.csproj">
+          <Project>{913b13b5-7b2c-4dda-becb-dadc827ed895}</Project>
+          <Name>MvvmCross.Binding.iOS</Name>
+          <IsAppExtension>false</IsAppExtension>
+          <IsWatchApp>false</IsWatchApp>
+        </ProjectReference>
+        <ProjectReference Include="..\..\..\MvvmCross\MvvmCross\Core\Binding\MvvmCross.Binding.csproj">
+          <Project>{64dcd397-9019-41e8-a928-e5f5c5df185b}</Project>
+          <Name>MvvmCross.Binding</Name>
+        </ProjectReference>
+        <ProjectReference Include="..\..\..\MvvmCross\MvvmCross\Core\Core\MvvmCross.Core.csproj">
+          <Project>{b6e27475-e7d0-448c-a5cc-5097dca1e2dd}</Project>
+          <Name>MvvmCross.Core</Name>
+        </ProjectReference>
+        <ProjectReference Include="..\..\..\MvvmCross\MvvmCross\Core\Localization\MvvmCross.Localization.csproj">
+          <Project>{d89351c1-d48f-4ad0-a0b9-353a93425ab7}</Project>
+          <Name>MvvmCross.Localization</Name>
+        </ProjectReference>
+        <ProjectReference Include="..\..\..\MvvmCross\MvvmCross\iOS\iOS\MvvmCross.iOS.csproj">
+          <Project>{e042edd9-e89d-4928-bf4d-27f0fc29ceda}</Project>
+          <Name>MvvmCross.iOS</Name>
+          <IsAppExtension>false</IsAppExtension>
+          <IsWatchApp>false</IsWatchApp>
+        </ProjectReference>
+        <ProjectReference Include="..\..\..\MvvmCross\MvvmCross\Platform\iOS\MvvmCross.Platform.iOS.csproj">
+          <Project>{bbbcd850-e7cb-4b6c-86d9-ce01f2b1c81c}</Project>
+          <Name>MvvmCross.Platform.iOS</Name>
+          <IsAppExtension>false</IsAppExtension>
+          <IsWatchApp>false</IsWatchApp>
+        </ProjectReference>
+        <ProjectReference Include="..\..\..\MvvmCross\MvvmCross\Platform\Platform\MvvmCross.Platform.csproj">
+          <Project>{cff6f25a-3c3b-44ee-a54c-2ed4aaff3adb}</Project>
+          <Name>MvvmCross.Platform</Name>
+        </ProjectReference>
       </ItemGroup>
     </Otherwise>
   </Choose>
