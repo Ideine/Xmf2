@@ -81,11 +81,9 @@
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
+  <Import Project="../NugetSwitch.targets" />
   <Choose>
-    <When Condition=" $([System.Text.RegularExpressions.Regex]::IsMatch('$(SolutionName)', '.+nuget')) ">
-      <PropertyGroup>
-        <CustomBuildInfoMessage>BuildSystem: Building from nuget packages</CustomBuildInfoMessage>
-      </PropertyGroup>
+    <When Condition=" '$(NugetSwitch)' == 'true' ">
       <ItemGroup>
         <Reference Include="MvvmCross.Binding, Version=4.0.0.0, Culture=neutral, processorArchitecture=MSIL">
           <HintPath>..\..\..\..\packages\MvvmCross.Binding.4.3.0\lib\portable-net45+win+wpa81+wp80\MvvmCross.Binding.dll</HintPath>
@@ -106,9 +104,6 @@
       </ItemGroup>
     </When>
     <Otherwise>
-      <PropertyGroup>
-        <CustomBuildInfoMessage>BuildSystem: Building from project references</CustomBuildInfoMessage>
-      </PropertyGroup>
       <ItemGroup>
         <ProjectReference Include="..\..\..\MvvmCross\MvvmCross\Core\Binding\MvvmCross.Binding.csproj">
           <Project>{64dcd397-9019-41e8-a928-e5f5c5df185b}</Project>
@@ -129,7 +124,4 @@
       </ItemGroup>
     </Otherwise>
   </Choose>
-  <Target Name="CustomBuildInfo" BeforeTargets="BeforeBuild">
-    <Message Text="$(CustomBuildInfoMessage)" Importance="high" />
-  </Target>
 </Project>

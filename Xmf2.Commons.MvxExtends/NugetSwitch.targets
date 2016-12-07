@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+	<Choose>
+		<When Condition=" $([System.Text.RegularExpressions.Regex]::IsMatch('$(SolutionName)', '.+nuget')) Or $([System.String]::IsNullOrEmpty('$(SolutionName)')) ">
+			<PropertyGroup>
+				<NugetSwitch>true</NugetSwitch>
+				<CustomBuildInfoMessage>nuget packages</CustomBuildInfoMessage>
+			</PropertyGroup>
+		</When>
+		<Otherwise>
+			<PropertyGroup>
+				<NugetSwitch>false</NugetSwitch>
+				<CustomBuildInfoMessage>project references</CustomBuildInfoMessage>
+			</PropertyGroup>
+		</Otherwise>
+	</Choose>
+
+	<Target Name="CustomBuild_NugetSwitch" BeforeTargets="BeforeBuild">
+		<Message Importance="high" Text="CustomBuildEngine: Build project $(ProjectName) with $(CustomBuildInfoMessage)" />
+	</Target>
+</Project>
