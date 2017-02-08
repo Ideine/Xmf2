@@ -81,6 +81,26 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\MvvmCross-AndroidSupport\MvvmCross.Droid.Support.Compat\MvvmCross.Droid.Support.Compat.csproj">
+      <Project>{ea8563c7-102b-41d4-af04-4c92b1ddd132}</Project>
+      <Name>MvvmCross.Droid.Support.Compat</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\MvvmCross-AndroidSupport\MvvmCross.Droid.Support.Core.UI\MvvmCross.Droid.Support.Core.UI.csproj">
+      <Project>{ba68b924-17c4-41f7-9b02-53c0de9b8d4b}</Project>
+      <Name>MvvmCross.Droid.Support.Core.UI</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\MvvmCross-AndroidSupport\MvvmCross.Droid.Support.Core.Utils\MvvmCross.Droid.Support.Core.Utils.csproj">
+      <Project>{61c1eb25-483e-4c77-89cd-ca202c82c6bf}</Project>
+      <Name>MvvmCross.Droid.Support.Core.Utils</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\MvvmCross-AndroidSupport\MvvmCross.Droid.Support.Fragment\MvvmCross.Droid.Support.Fragment.csproj">
+      <Project>{fc0b3e3c-8b00-48fa-af93-981a45b2be4b}</Project>
+      <Name>MvvmCross.Droid.Support.Fragment</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\MvvmCross-AndroidSupport\MvvmCross.Droid.Support.Media.Compat\MvvmCross.Droid.Support.Media.Compat.csproj">
+      <Project>{240a1627-fbb5-4cdd-94d3-545e13ff0ad9}</Project>
+      <Name>MvvmCross.Droid.Support.Media.Compat</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Xmf2.Commons.MvxExtends\Xmf2.Commons.MvxExtends.csproj">
       <Project>{7D6A560F-5947-4ABA-AF63-902E40ACDA2B}</Project>
       <Name>Xmf2.Commons.MvxExtends</Name>
@@ -138,43 +158,39 @@
     </When>
     <Otherwise>
       <ItemGroup>
-        <ProjectReference Include="..\..\Libs\MvvmCross\MvvmCross\Core\Binding\MvvmCross.Binding.csproj">
+        <ProjectReference Include="..\..\..\MvvmCross\MvvmCross\Core\Binding\MvvmCross.Binding.csproj">
           <Project>{64DCD397-9019-41E8-A928-E5F5C5DF185B}</Project>
           <Name>MvvmCross.Binding</Name>
         </ProjectReference>
-        <ProjectReference Include="..\..\Libs\MvvmCross\MvvmCross\Binding\Droid\MvvmCross.Binding.Droid.csproj">
+        <ProjectReference Include="..\..\..\MvvmCross\MvvmCross\Binding\Droid\MvvmCross.Binding.Droid.csproj">
           <Project>{47FD89C3-19DC-4BD2-9B6D-FB8363BE7EB9}</Project>
           <Name>MvvmCross.Binding.Droid</Name>
         </ProjectReference>
-        <ProjectReference Include="..\..\Libs\MvvmCross\MvvmCross\Core\Core\MvvmCross.Core.csproj">
+        <ProjectReference Include="..\..\..\MvvmCross\MvvmCross\Core\Core\MvvmCross.Core.csproj">
           <Project>{B6E27475-E7D0-448C-A5CC-5097DCA1E2DD}</Project>
           <Name>MvvmCross.Core</Name>
         </ProjectReference>
-        <ProjectReference Include="..\..\Libs\MvvmCross\MvvmCross\Droid\Droid\MvvmCross.Droid.csproj">
+        <ProjectReference Include="..\..\..\MvvmCross\MvvmCross\Droid\Droid\MvvmCross.Droid.csproj">
           <Project>{7A6BE137-D0F1-46A1-AE5C-81FAEEDDDF02}</Project>
           <Name>MvvmCross.Droid</Name>
         </ProjectReference>
-        <ProjectReference Include="..\..\Libs\MvvmCross\MvvmCross\Droid\Shared\MvvmCross.Droid.Shared.csproj">
+        <ProjectReference Include="..\..\..\MvvmCross\MvvmCross\Droid\Shared\MvvmCross.Droid.Shared.csproj">
           <Project>{85EE0907-158C-481C-87B8-E4C0FA93C00A}</Project>
           <Name>MvvmCross.Droid.Shared</Name>
         </ProjectReference>
-        <ProjectReference Include="..\..\Libs\MvvmCross-AndroidSupport\MvvmCross.Droid.Support.V4\MvvmCross.Droid.Support.V4.csproj">
-          <Project>{24C19002-AD02-4B88-9E57-1C254819D30E}</Project>
-          <Name>MvvmCross.Droid.Support.V4</Name>
-        </ProjectReference>
-        <ProjectReference Include="..\..\Libs\MvvmCross-AndroidSupport\MvvmCross.Droid.Support.V7.AppCompat\MvvmCross.Droid.Support.V7.AppCompat.csproj">
+        <ProjectReference Include="..\..\..\MvvmCross-AndroidSupport\MvvmCross.Droid.Support.V7.AppCompat\MvvmCross.Droid.Support.V7.AppCompat.csproj">
           <Project>{911D9032-EA82-41B9-80D7-5DB84951B6E5}</Project>
           <Name>MvvmCross.Droid.Support.V7.AppCompat</Name>
         </ProjectReference>
-        <ProjectReference Include="..\..\Libs\MvvmCross\MvvmCross\Core\Localization\MvvmCross.Localization.csproj">
+        <ProjectReference Include="..\..\..\MvvmCross\MvvmCross\Core\Localization\MvvmCross.Localization.csproj">
           <Project>{D89351C1-D48F-4AD0-A0B9-353A93425AB7}</Project>
           <Name>MvvmCross.Localization</Name>
         </ProjectReference>
-        <ProjectReference Include="..\..\Libs\MvvmCross\MvvmCross\Platform\Platform\MvvmCross.Platform.csproj">
+        <ProjectReference Include="..\..\..\MvvmCross\MvvmCross\Platform\Platform\MvvmCross.Platform.csproj">
           <Project>{CFF6F25A-3C3B-44EE-A54C-2ED4AAFF3ADB}</Project>
           <Name>MvvmCross.Platform</Name>
         </ProjectReference>
-        <ProjectReference Include="..\..\Libs\MvvmCross\MvvmCross\Platform\Droid\MvvmCross.Platform.Droid.csproj">
+        <ProjectReference Include="..\..\..\MvvmCross\MvvmCross\Platform\Droid\MvvmCross.Platform.Droid.csproj">
           <Project>{CAF8935F-56FE-4485-9D34-4A38FE79F6C9}</Project>
           <Name>MvvmCross.Platform.Droid</Name>
         </ProjectReference>

@@ -67,10 +67,6 @@
       <Project>{cf7a2df4-2638-4991-81f5-dcf7a68a5911}</Project>
       <Name>RestSharp.Portable.PCL</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Xmf2.RestSharp.Factories\Xmf2.RestSharp.Factories.csproj">
-      <Project>{80E00467-418D-45A4-B0B7-477287677365}</Project>
-      <Name>Xmf2.RestSharp.Factories</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" />
