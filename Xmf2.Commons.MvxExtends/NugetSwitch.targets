@@ -16,6 +16,6 @@
 	</Choose>
 
 	<Target Name="CustomBuild_NugetSwitch" BeforeTargets="BeforeBuild">
-		<Message Importance="high" Text="CustomBuildEngine: Build project $(ProjectName) with $(CustomBuildInfoMessage)" />
+		<Message Importance="high" Text="CustomBuildEngine: Build project $(MSBuildProjectName) with $(CustomBuildInfoMessage) (solution: $(SolutionName), nuget switch: $(NugetSwitch))" />
 	</Target>
 </Project>

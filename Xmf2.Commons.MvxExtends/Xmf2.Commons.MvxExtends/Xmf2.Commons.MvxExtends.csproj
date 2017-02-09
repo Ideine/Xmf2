@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="4.0" DefaultTargets="Build" 
+  xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <MinimumVisualStudioVersion>10.0</MinimumVisualStudioVersion>
@@ -73,55 +74,47 @@
       <HintPath>..\packages\Polly.4.3.0\lib\portable-net45+netcore45+wpa81+wp8\Polly.dll</HintPath>
       <Private>True</Private>
     </Reference>
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\..\Xmf2.Commons\Xmf2.Commons\Xmf2.Commons.csproj">
       <Project>{6F547CA0-07E5-4D09-AF1C-E26AEF8BC45A}</Project>
       <Name>Xmf2.Commons</Name>
     </ProjectReference>
   </ItemGroup>
-  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="../NugetSwitch.targets" />
-  <Choose>
-    <When Condition=" '$(NugetSwitch)' == 'true' ">
-      <ItemGroup>
-        <Reference Include="MvvmCross.Binding, Version=4.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-          <HintPath>..\..\..\..\packages\MvvmCross.Binding.4.3.0\lib\portable-net45+win+wpa81+wp80\MvvmCross.Binding.dll</HintPath>
-          <Private>True</Private>
-        </Reference>
-        <Reference Include="MvvmCross.Core, Version=4.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-          <HintPath>..\..\..\..\packages\MvvmCross.Core.4.3.0\lib\portable-net45+win+wpa81+wp80\MvvmCross.Core.dll</HintPath>
-          <Private>True</Private>
-        </Reference>
-        <Reference Include="MvvmCross.Localization, Version=4.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-          <HintPath>..\..\..\..\packages\MvvmCross.Binding.4.3.0\lib\portable-net45+win+wpa81+wp80\MvvmCross.Localization.dll</HintPath>
-          <Private>True</Private>
-        </Reference>
-        <Reference Include="MvvmCross.Platform, Version=4.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-          <HintPath>..\..\..\..\packages\MvvmCross.Platform.4.3.0\lib\portable-net45+win+wpa81+wp80\MvvmCross.Platform.dll</HintPath>
-          <Private>True</Private>
-        </Reference>
-      </ItemGroup>
-    </When>
-    <Otherwise>
-      <ItemGroup>
-        <ProjectReference Include="..\..\..\MvvmCross\MvvmCross\Core\Binding\MvvmCross.Binding.csproj">
-          <Project>{64dcd397-9019-41e8-a928-e5f5c5df185b}</Project>
-          <Name>MvvmCross.Binding</Name>
-        </ProjectReference>
-        <ProjectReference Include="..\..\..\MvvmCross\MvvmCross\Platform\Platform\MvvmCross.Platform.csproj">
-          <Project>{CFF6F25A-3C3B-44EE-A54C-2ED4AAFF3ADB}</Project>
-          <Name>MvvmCross.Platform</Name>
-        </ProjectReference>
-        <ProjectReference Include="..\..\..\MvvmCross\MvvmCross\Core\Localization\MvvmCross.Localization.csproj">
-          <Project>{D89351C1-D48F-4AD0-A0B9-353A93425AB7}</Project>
-          <Name>MvvmCross.Localization</Name>
-        </ProjectReference>
-        <ProjectReference Include="..\..\..\MvvmCross\MvvmCross\Core\Core\MvvmCross.Core.csproj">
-          <Project>{B6E27475-E7D0-448C-A5CC-5097DCA1E2DD}</Project>
-          <Name>MvvmCross.Core</Name>
-        </ProjectReference>
-      </ItemGroup>
-    </Otherwise>
-  </Choose>
+  <ItemGroup Condition=" '$(NugetSwitch)' == 'true' ">
+    <Reference Include="MvvmCross.Binding, Version=4.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MvvmCross.Binding.4.4.0\lib\portable-net45+win+wpa81+wp80\MvvmCross.Binding.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="MvvmCross.Core, Version=4.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MvvmCross.Core.4.4.0\lib\portable-net45+win+wpa81+wp80\MvvmCross.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="MvvmCross.Localization, Version=4.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MvvmCross.Binding.4.4.0\lib\portable-net45+win+wpa81+wp80\MvvmCross.Localization.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="MvvmCross.Platform, Version=4.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MvvmCross.Platform.4.4.0\lib\portable-net45+win+wpa81+wp80\MvvmCross.Platform.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup Condition=" '$(NugetSwitch)' != 'true' ">
+    <ProjectReference Include="..\..\..\MvvmCross\MvvmCross\Core\Binding\MvvmCross.Binding.csproj">
+      <Project>{64DCD397-9019-41E8-A928-E5F5C5DF185B}</Project>
+      <Name>MvvmCross.Binding</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\MvvmCross\MvvmCross\Core\Core\MvvmCross.Core.csproj">
+      <Project>{B6E27475-E7D0-448C-A5CC-5097DCA1E2DD}</Project>
+      <Name>MvvmCross.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\MvvmCross\MvvmCross\Core\Localization\MvvmCross.Localization.csproj">
+      <Project>{D89351C1-D48F-4AD0-A0B9-353A93425AB7}</Project>
+      <Name>MvvmCross.Localization</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\MvvmCross\MvvmCross\Platform\Platform\MvvmCross.Platform.csproj">
+      <Project>{CFF6F25A-3C3B-44EE-A54C-2ED4AAFF3ADB}</Project>
+      <Name>MvvmCross.Platform</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
 </Project>
