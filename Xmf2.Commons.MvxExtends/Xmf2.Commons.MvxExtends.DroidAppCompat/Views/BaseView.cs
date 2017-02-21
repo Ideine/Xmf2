@@ -17,6 +17,10 @@ namespace Xmf2.Commons.MvxExtends.DroidAppCompat.Views
 {
     public abstract class BaseView<TViewModel> : MvxAppCompatActivity<TViewModel> where TViewModel : BaseViewModel
     {
+		public BaseView() : base() { }
+
+		protected BaseView(IntPtr javaReference, Android.Runtime.JniHandleOwnership transfer) : base(javaReference, transfer) { }
+
         protected override void OnDestroy()
         {
             base.OnDestroy();
