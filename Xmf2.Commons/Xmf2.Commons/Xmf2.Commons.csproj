@@ -40,6 +40,7 @@
     <Compile Include="Caches\LoaderWithParametersCache.cs" />
     <Compile Include="Caches\LoaderCache.cs" />
     <Compile Include="Extensions\EnumerableExtensions.cs" />
+    <Compile Include="Extensions\EnumExtensions.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ErrorManagers\AccessDataException.cs" />
@@ -47,9 +48,7 @@
     <Compile Include="ErrorManagers\IHttpErrorManager.cs" />
     <Compile Include="ErrorManagers\ManagedException.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="ErrorManagers\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Reference Include="System.Runtime.InteropServices.RuntimeInformation">
       <HintPath>..\..\..\..\packages\System.Runtime.InteropServices.RuntimeInformation.4.3.0\lib\netstandard1.1\System.Runtime.InteropServices.RuntimeInformation.dll</HintPath>

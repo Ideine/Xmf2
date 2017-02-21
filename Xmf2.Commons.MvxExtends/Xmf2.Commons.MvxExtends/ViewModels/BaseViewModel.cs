@@ -58,10 +58,10 @@ namespace Xmf2.Commons.MvxExtends.ViewModels
 			return this.ExecAsync(action, this.GetOperationInProgressDefaultDelay(), withBusy, isUserAction, promptErrorMessageToUser, afterErrorCallBack);
 		}
 
+		/// <returns>Retourne <c>true</c> si l'appel a pu être effectué, <c>false s'il a échoué.</c></returns>
 		public async Task<bool> ExecAsync(Func<CancellationTokenSource, Task> action, int millisecondsDelay, bool withBusy, bool isUserAction, bool promptErrorMessageToUser, Action<Exception> afterErrorCallBack)
 		{
 			CancellationTokenSource currentCancellationToken = null;
-
 			try
 			{
 				await _operationInProgressLock.WaitAsync();
