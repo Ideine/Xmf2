@@ -49,6 +49,7 @@
     <Compile Include="Converters\NotConverter.cs" />
     <Compile Include="Converters\PercentageFormatConverter.cs" />
     <Compile Include="Converters\StringFormatConverter.cs" />
+    <Compile Include="Converters\FormattableValueConverter.cs" />
     <Compile Include="ErrorManagers\BaseErrorManager.cs" />
     <Compile Include="ErrorManagers\BaseHttpErrorManager.cs" />
     <Compile Include="Extensions\ViewModelLoaderExtensions.cs" />
