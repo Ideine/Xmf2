@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using MvvmCross.Platform;
 using Polly;
 using Xmf2.Commons.ErrorManagers;
+using Xmf2.Commons.Logs;
 using Xmf2.Commons.MvxExtends.Logs;
 
 namespace Xmf2.Commons.MvxExtends.ErrorManagers
@@ -75,10 +76,9 @@ namespace Xmf2.Commons.MvxExtends.ErrorManagers
                 return ade;
 
             OperationCanceledException oce = e as OperationCanceledException;
-            if (oce != null)
-            {
-                if (oce.CancellationToken != null && !oce.CancellationToken.IsCancellationRequested)
-                    return new AccessDataException(AccessDataException.ErrorType.Timeout);
+            if (oce != null && !oce.CancellationToken.IsCancellationRequested)
+            {                   
+				return new AccessDataException(AccessDataException.ErrorType.Timeout);
             }
 
             return new AccessDataException(AccessDataException.ErrorType.Unknown, e);

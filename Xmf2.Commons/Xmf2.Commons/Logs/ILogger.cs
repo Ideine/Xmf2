@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Xmf2.Commons.MvxExtends.Logs
+namespace Xmf2.Commons.Logs
 {
     public enum LogLevel
     {
