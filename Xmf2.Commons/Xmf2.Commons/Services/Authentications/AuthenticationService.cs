@@ -20,6 +20,7 @@ namespace Xmf2.Commons.Services.Authentications
 			_client = client;
 			_storageService = storageService;
 			_logger = logger;
+			_errorManager = errorManager;
 
 			_client.OnAuthSuccess += OnClientAuthenticationSuccess;
 			_client.OnAuthError += OnClientAuthenticationError;

@@ -120,7 +120,7 @@
     </ProjectReference>
     <ProjectReference Include="..\..\..\MvvmCross-iOSSupport\MvvmCross.iOS.Support\MvvmCross.iOS.Support.csproj">
       <Project>{E6A71CD5-82A0-49E9-A04D-166F9E8F76F9}</Project>
-      <Name>MvvmCross.iOS.Support.csproj</Name>
+      <Name>MvvmCross.iOS.Support</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\MvvmCross\MvvmCross\Core\Localization\MvvmCross.Localization.csproj">
       <Project>{D89351C1-D48F-4AD0-A0B9-353A93425AB7}</Project>
