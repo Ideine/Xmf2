@@ -5,43 +5,16 @@ using System.Threading.Tasks;
 using MvvmCross.Platform;
 using MvvmCross.Core.ViewModels;
 using Xmf2.Commons.ErrorManagers;
+using Xmf2.Commons.MvxExtends.Extensions;
 
 namespace Xmf2.Commons.MvxExtends.ViewModels
 {
 	public abstract class BaseViewModel : MvxViewModel
 	{
-		/// <summary>
-		/// Gets the service.
-		/// </summary>
-		/// <typeparam name="TService">The type of the service.</typeparam>
-		/// <returns>An instance of the service.</returns>
-		public TService GetService<TService>() where TService : class
-		{
-			return Mvx.Resolve<TService>();
-		}
+		private static Task CompletedTask = Task.FromResult<object>(null);
 
-		/// <summary>
-		/// Checks if a property already matches a desired value.  Sets the property and
-		/// notifies listeners only when necessary.
-		/// </summary>
-		/// <typeparam name="T">Type of the property.</typeparam>
-		/// <param name="backingStore">Reference to a property with both getter and setter.</param>
-		/// <param name="value">Desired value for the property.</param>
-		/// <param name="property">The property.</param>
-		protected void SetProperty<T>(
-			ref T backingStore,
-			T value,
-			Expression<Func<T>> property)
-		{
-			if (Equals(backingStore, value))
-			{
-				return;
-			}
-
-			backingStore = value;
-
-			this.RaisePropertyChanged(property);
-		}
+		private Lazy<IErrorManager> _errorManager = new Lazy<IErrorManager>(() => Mvx.Resolve<IErrorManager>());
+		protected IErrorManager ErrorManager => _errorManager.Value;
 
 		#region ExecAsync
 
@@ -55,61 +28,61 @@ namespace Xmf2.Commons.MvxExtends.ViewModels
 
 		public Task<bool> ExecAsync(Func<CancellationTokenSource, Task> action, bool withBusy = true, bool isUserAction = true, bool promptErrorMessageToUser = true, Action<Exception> afterErrorCallBack = null)
 		{
-			return this.ExecAsync(action, this.GetOperationInProgressDefaultDelay(), withBusy, isUserAction, promptErrorMessageToUser, afterErrorCallBack);
+			return ExecAsync(action, this.GetOperationInProgressDefaultDelay(), withBusy, isUserAction, promptErrorMessageToUser, afterErrorCallBack);
+		}
+
+		public Task<bool> Exec(Action action, bool withBusy = true, bool isUserAction = true, bool promptErrorMessageToUser = true, Action<Exception> afterErrorCallBack = null)
+		{
+			return ExecAsync(cts =>
+			{
+				action();
+				return CompletedTask;
+			}, this.GetOperationInProgressDefaultDelay(), withBusy, isUserAction, promptErrorMessageToUser, afterErrorCallBack);
 		}
 
 		/// <returns>Retourne <c>true</c> si l'appel a pu être effectué, <c>false s'il a échoué.</c></returns>
-		public async Task<bool> ExecAsync(Func<CancellationTokenSource, Task> action, int millisecondsDelay, bool withBusy, bool isUserAction, bool promptErrorMessageToUser, Action<Exception> afterErrorCallBack)
+		private async Task<bool> ExecAsync(Func<CancellationTokenSource, Task> action, int millisecondsDelay, bool withBusy, bool isUserAction, bool promptErrorMessageToUser, Action<Exception> afterErrorCallBack)
 		{
 			CancellationTokenSource currentCancellationToken = null;
 			try
 			{
-				await _operationInProgressLock.WaitAsync();
-				try
+				currentCancellationToken = new CancellationTokenSource(millisecondsDelay);
+				if (isUserAction)
 				{
-					if (isUserAction && _operationInProgressCTS != null)
+					using (await _operationInProgressLock.LockAsync().DontStickOnThread())
 					{
-						Mvx.Warning("Operation already in progress. ExecAsync canceled");
-						return false;
-					}
-
-					currentCancellationToken = new CancellationTokenSource(millisecondsDelay);
-					if (isUserAction)
+						if (isUserAction && _operationInProgressCTS != null)
+						{
+							Mvx.Warning("User operation already in progress. ExecAsync canceled");
+							return false;
+						}
 						_operationInProgressCTS = currentCancellationToken;
-				}
-				finally
-				{
-					_operationInProgressLock.Release();
+					}
 				}
 
-				var actionToLaunch = action;
+				Func<CancellationTokenSource, Task> actionToLaunch = action;
 				if (withBusy)
 				{
-					actionToLaunch = (cts) =>
-					{
-						return this.ExecWithBusyAsync(async () => await action(cts).ConfigureAwait(false));
-					};
+					actionToLaunch = (cts) => ExecWithBusy(() => action(cts));
 				}
 
 				// on fait un Task.Run pour changer de thread
-				await Task.Run(async () => await actionToLaunch(currentCancellationToken).ConfigureAwait(false)).ConfigureAwait(false);
+				await Task.Run(() => actionToLaunch(currentCancellationToken)).ConfigureAwait(false);
 				return true;
 			}
 			catch (Exception e)
 			{
-				var errorMgr = this.GetService<IErrorManager>();
-				await errorMgr.TreatErrorAsync(e, promptErrorMessageToUser).ConfigureAwait(false);
+				await ErrorManager.TreatErrorAsync(e, promptErrorMessageToUser).ConfigureAwait(false);
 				afterErrorCallBack?.Invoke(e);
 				return false;
 			}
 			finally
 			{
-				if (currentCancellationToken != null)
+				if (_operationInProgressCTS == currentCancellationToken)
 				{
-					if (_operationInProgressCTS == currentCancellationToken)
-						_operationInProgressCTS = null;
-					currentCancellationToken.Dispose();
+					_operationInProgressCTS = null;
 				}
+				currentCancellationToken?.Dispose();
 			}
 		}
 
@@ -118,86 +91,125 @@ namespace Xmf2.Commons.MvxExtends.ViewModels
 		#region Gestion IsBusy
 
 		private int _busyCount = 0;
-		private object _busyLock = new object();
+		private SemaphoreSlim _busyLock = new SemaphoreSlim(1);
 
 		private bool _isBusy;
+
 		public bool IsBusy
 		{
 			get { return _isBusy; }
-			private set { this.SetProperty(ref _isBusy, value, () => this.IsBusy); }
+			private set { SetProperty(ref _isBusy, value); }
 		}
 
-		public void MoreBusy()
+		private void MoreBusy()
 		{
-			lock (_busyLock)
+			using (_busyLock.Lock())
 			{
 				_busyCount++;
-				this.IsBusy = true;
+				if (!IsBusy)
+				{
+					IsBusy = true;
+				}
 			}
 		}
 
-		public void LessBusy()
+		private async Task MoreBusyAsync()
 		{
-			lock (_busyLock)
+			using (await _busyLock.LockAsync().DontStickOnThread())
+			{
+				_busyCount++;
+				if (!IsBusy)
+				{
+					IsBusy = true;
+				}
+			}
+		}
+
+		private void LessBusy()
+		{
+			using (_busyLock.Lock())
 			{
 				_busyCount--;
 
 				if (_busyCount < 0)
+				{
 					throw new InvalidOperationException("LessBusy called without MoreBusy. BusyCount < 0");
-				else if (_busyCount == 0)
-					this.IsBusy = false;
+				}
+
+				if (_busyCount == 0)
+				{
+					IsBusy = false;
+				}
 			}
 		}
 
-		public void ExecWithBusy(Action action)
+		private async Task LessBusyAsync()
+		{
+			using (await _busyLock.LockAsync().DontStickOnThread())
+			{
+				_busyCount--;
+
+				if (_busyCount < 0)
+				{
+					throw new InvalidOperationException("LessBusy called without MoreBusy. BusyCount < 0");
+				}
+
+				if (_busyCount == 0)
+				{
+					IsBusy = false;
+				}
+			}
+		}
+
+		private void ExecWithBusy(Action action)
 		{
 			try
 			{
-				this.MoreBusy();
+				MoreBusy();
 				action();
 			}
 			finally
 			{
-				this.LessBusy();
+				LessBusy();
 			}
 		}
 
-		public T ExecWithBusy<T>(Func<T> func)
+		private T ExecWithBusy<T>(Func<T> func)
 		{
 			try
 			{
-				this.MoreBusy();
+				MoreBusy();
 				return func();
 			}
 			finally
 			{
-				this.LessBusy();
+				LessBusy();
 			}
 		}
 
-		public async Task ExecWithBusyAsync(Func<Task> action)
+		private async Task ExecWithBusy(Func<Task> action)
 		{
 			try
 			{
-				this.MoreBusy();
-				await action().ConfigureAwait(false);
+				await MoreBusyAsync().DontStickOnThread();
+				await action().DontStickOnThread();
 			}
 			finally
 			{
-				this.LessBusy();
+				await LessBusyAsync().DontStickOnThread();
 			}
 		}
 
-		public async Task<T> ExecWithBusyAsync<T>(Func<Task<T>> action)
+		private async Task<T> ExecWithBusy<T>(Func<Task<T>> action)
 		{
 			try
 			{
-				this.MoreBusy();
-				return await action().ConfigureAwait(false);
+				await MoreBusyAsync().DontStickOnThread();
+				return await action().DontStickOnThread();
 			}
 			finally
 			{
-				this.LessBusy();
+				await LessBusyAsync().DontStickOnThread();
 			}
 		}
 
@@ -212,6 +224,7 @@ namespace Xmf2.Commons.MvxExtends.ViewModels
 			Dispose(true);
 			GC.SuppressFinalize(this);
 		}
+
 		protected virtual void Dispose(bool disposing)
 		{
 			try
@@ -229,7 +242,10 @@ namespace Xmf2.Commons.MvxExtends.ViewModels
 					disposed = true;
 				}
 			}
-			catch { }
+			catch 
+			{ 
+				//ignored
+			}
 		}
 
 		~BaseViewModel()
@@ -238,10 +254,14 @@ namespace Xmf2.Commons.MvxExtends.ViewModels
 		}
 
 		protected virtual void DisposeManagedObjects()
-		{ }
+		{ 
+		
+		}
 
 		protected virtual void DisposeUnmanagedObjects()
-		{ }
+		{ 
+		
+		}
 
 		#endregion
 	}

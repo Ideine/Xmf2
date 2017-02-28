@@ -24,6 +24,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <NoWarn>RECS0165</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -47,18 +48,49 @@
     <Compile Include="ErrorManagers\IErrorManager.cs" />
     <Compile Include="ErrorManagers\IHttpErrorManager.cs" />
     <Compile Include="ErrorManagers\ManagedException.cs" />
+    <Compile Include="Logs\ILogger.cs" />
+    <Compile Include="Services\Authentications\AuthenticationService.cs" />
+    <Compile Include="Services\Authentications\IAuthenticationService.cs" />
+    <Compile Include="Services\Authentications\InMemoryUserStorageService.cs" />
+    <Compile Include="Services\Authentications\IUserStorageService.cs" />
+    <Compile Include="Services\Authentications\Models\AuthenticationDetailStorageModel.cs" />
+    <Compile Include="Services\OAuth2\BodyOAuth2Configuration.cs" />
+    <Compile Include="Services\OAuth2\Models\AuthenticationResponse.cs" />
+    <Compile Include="Services\OAuth2\Models\LoginRequest.cs" />
+    <Compile Include="Services\OAuth2\Models\RefreshRequest.cs" />
+    <Compile Include="Services\OAuth2\OAuth2ClientFactory.cs" />
+    <Compile Include="Services\DataAccess\RequestService.cs" />
+    <Compile Include="Services\DataAccess\OAuth2RequestService.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
     <Reference Include="System.Runtime.InteropServices.RuntimeInformation">
       <HintPath>..\..\..\..\packages\System.Runtime.InteropServices.RuntimeInformation.4.3.0\lib\netstandard1.1\System.Runtime.InteropServices.RuntimeInformation.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\..\..\..\packages\Newtonsoft.Json.9.0.1\lib\portable-net45+wp80+win8+wpa81\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Ideine.Rest">
+      <HintPath>..\..\..\..\packages\Ideine.Rest.1.0.0\lib\netstandard1.1\Ideine.Rest.dll</HintPath>
+    </Reference>
+    <Reference Include="FubarCoder.RestSharp.Portable.Core">
+      <HintPath>..\..\..\..\packages\FubarCoder.RestSharp.Portable.Core.4.0.7\lib\portable45-net45+win8+wp8+wpa81\FubarCoder.RestSharp.Portable.Core.dll</HintPath>
+    </Reference>
     <Reference Include="Polly">
-      <HintPath>..\..\..\..\packages\Polly.5.0.5\lib\netstandard1.0\Polly.dll</HintPath>
+      <HintPath>..\..\..\..\packages\Polly.5.0.7\lib\netstandard1.0\Polly.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Services\" />
+    <Folder Include="Logs\" />
+    <Folder Include="Services\Authentications\" />
+    <Folder Include="Services\Authentications\Models\" />
+    <Folder Include="Services\OAuth2\" />
+    <Folder Include="Services\OAuth2\Models\" />
+    <Folder Include="Services\DataAccess\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
