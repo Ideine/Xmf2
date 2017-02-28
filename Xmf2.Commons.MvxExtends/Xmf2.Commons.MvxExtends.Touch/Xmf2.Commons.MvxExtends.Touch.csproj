@@ -50,6 +50,7 @@
     <Compile Include="ViewsAdapter\TableView\MvxDeselectRowTableViewSource.cs" />
     <Compile Include="AutoLayout\Layout.cs" />
     <Compile Include="AutoLayout\LayoutExtensions.cs" />
+    <Compile Include="Views\BaseViewController.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <ItemGroup>
@@ -95,6 +96,10 @@
       <HintPath>..\..\..\..\packages\MvvmCross.Binding.4.4.0\lib\Xamarin.iOS10\MvvmCross.Localization.dll</HintPath>
       <Name>MvvmCross.Localization.dll</Name>
     </Reference>
+    <Reference Include="MvvmCross.iOS.Support">
+      <HintPath>..\..\..\..\packages\MvvmCross.iOS.Support.4.4.0\lib\Xamarin.iOS10\MvvmCross.iOS.Support.dll</HintPath>
+      <Name>MvvmCross.iOS.Support.dll</Name>
+    </Reference>
   </ItemGroup>
   <ItemGroup Condition=" '$(NugetSwitch)' != 'true' ">
     <ProjectReference Include="..\..\..\MvvmCross\MvvmCross\Core\Core\MvvmCross.Core.csproj">
@@ -112,6 +117,10 @@
     <ProjectReference Include="..\..\..\MvvmCross\MvvmCross\iOS\iOS\MvvmCross.iOS.csproj">
       <Project>{E042EDD9-E89D-4928-BF4D-27F0FC29CEDA}</Project>
       <Name>MvvmCross.iOS.csproj</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\MvvmCross-iOSSupport\MvvmCross.iOS.Support\MvvmCross.iOS.Support.csproj">
+      <Project>{E6A71CD5-82A0-49E9-A04D-166F9E8F76F9}</Project>
+      <Name>MvvmCross.iOS.Support.csproj</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\MvvmCross\MvvmCross\Core\Localization\MvvmCross.Localization.csproj">
       <Project>{D89351C1-D48F-4AD0-A0B9-353A93425AB7}</Project>

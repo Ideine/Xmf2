@@ -28,10 +28,7 @@ namespace Xmf2.Commons.MvxExtends.ViewModels
 		/// <param name="backingStore">Reference to a property with both getter and setter.</param>
 		/// <param name="value">Desired value for the property.</param>
 		/// <param name="property">The property.</param>
-		protected void SetProperty<T>(
-			ref T backingStore,
-			T value,
-			Expression<Func<T>> property)
+		protected void SetProperty<T>(ref T backingStore, T value, Expression<Func<T>> property)
 		{
 			if (Equals(backingStore, value))
 			{
@@ -41,6 +38,26 @@ namespace Xmf2.Commons.MvxExtends.ViewModels
 			backingStore = value;
 
 			this.RaisePropertyChanged(property);
+		}
+
+		public virtual void OnEnter()
+		{
+
+		}
+
+		public virtual void OnResume()
+		{
+
+		}
+
+		public virtual void OnPause()
+		{
+
+		}
+
+		public virtual void OnStop()
+		{
+
 		}
 
 		#region ExecAsync
@@ -201,7 +218,7 @@ namespace Xmf2.Commons.MvxExtends.ViewModels
 			}
 		}
 
-		#endregion
+		#endregion  Gestion IsBusy
 
 		#region Dispose
 
@@ -243,6 +260,6 @@ namespace Xmf2.Commons.MvxExtends.ViewModels
 		protected virtual void DisposeUnmanagedObjects()
 		{ }
 
-		#endregion
+		#endregion Dispose
 	}
 }
