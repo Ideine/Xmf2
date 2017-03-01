@@ -46,6 +46,7 @@
     <Compile Include="AutoLayout\AnimationExtensions.cs" />
     <Compile Include="AutoLayout\CreatorExtensions.cs" />
     <Compile Include="ErrorsManagers\TouchHttpErrorManager.cs" />
+    <Compile Include="Layout\LayoutConsts.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewsAdapter\TableView\MvxDeselectRowTableViewSource.cs" />
     <Compile Include="AutoLayout\Layout.cs" />
