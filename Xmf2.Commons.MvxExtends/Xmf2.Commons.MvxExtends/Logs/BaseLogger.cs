@@ -29,34 +29,37 @@ namespace Xmf2.Commons.MvxExtends.Logs
 					break;
 			}
 
+			message = message.Replace("{", "{{").Replace("}", "}}");
 			Mvx.Trace(traceLevel, this.FormatException(e, message));
 		}
 
 		public virtual void LogCritical(Exception e = null, string message = null)
 		{
-			this.Log(LogLevel.Critical, e, message);
+			Log(LogLevel.Critical, e, message);
 		}
 
 		public virtual void LogError(Exception e = null, string message = null)
 		{
-			this.Log(LogLevel.Error, e, message);
+			Log(LogLevel.Error, e, message);
 		}
 
 		public virtual void LogWarning(Exception e = null, string message = null)
 		{
-			this.Log(LogLevel.Warning, e, message);
+			Log(LogLevel.Warning, e, message);
 		}
 
 		public virtual void LogInfo(Exception e = null, string message = null)
 		{
-			this.Log(LogLevel.Info, e, message);
+			Log(LogLevel.Info, e, message);
 		}
 
 		protected virtual string FormatException(Exception e = null, string message = null)
 		{
 			StringBuilder builder = new StringBuilder();
 			if (!string.IsNullOrWhiteSpace(message))
+			{
 				builder.AppendLine(message);
+			}
 
 			var ex = e;
 			while (ex != null)
