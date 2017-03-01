@@ -76,9 +76,7 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Target\BackgroundTintDrawableNameTargetBinding.cs" />
-    <Compile Include="Target\PopupMenuTargetBinding.cs" />
     <Compile Include="Views\BaseView.cs" />
-    <Compile Include="Views\PopupMenuLauncher.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />
