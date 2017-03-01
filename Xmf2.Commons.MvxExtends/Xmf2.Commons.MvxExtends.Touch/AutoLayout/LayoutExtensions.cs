@@ -21,6 +21,24 @@ public static class CustomAutoLayoutExtensions
 		return containerView;
 	}
 
+    public static UIView CenterAndFillWidth(this UIView containerView, int margin, params UIView[] views)
+    {
+        if (views == null)
+        {
+            throw new ArgumentNullException(nameof(views));
+        }
+
+        foreach (UIView view in views)
+        {
+            containerView.ConstrainLayout(() =>
+                                          view.CenterX() == containerView.CenterX()
+                                          && view.Width() == containerView.Width() - margin
+                                         );
+        }
+
+        return containerView;
+    }
+
 	public static void VerticalFlow(this UIView containerView, params UIView[] views)
 	{
 		if (views == null)

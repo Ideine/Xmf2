@@ -221,6 +221,15 @@ public static class CreatorExtensions
 		input.AutocapitalizationType = UITextAutocapitalizationType.None;
 		return input;
 	}
+    public static UITextField AsNumpadField(this UITextField input, UIReturnKeyType returnKeyType)
+    {
+        input.KeyboardType = UIKeyboardType.NumberPad;
+        input.SpellCheckingType = UITextSpellCheckingType.No;
+        input.ReturnKeyType = returnKeyType;
+        input.AutocorrectionType = UITextAutocorrectionType.No;
+        input.AutocapitalizationType = UITextAutocapitalizationType.None;
+        return input;
+    }
 
 	public static UITextField WithTextColor(this UITextField input, UIColor color)
 	{
