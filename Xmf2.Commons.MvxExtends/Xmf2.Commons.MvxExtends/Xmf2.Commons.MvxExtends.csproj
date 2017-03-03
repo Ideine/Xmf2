@@ -113,5 +113,10 @@
       <Name>MvvmCross.Platform</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Helpers\propx.snippet" />
+    <None Include="Helpers\cmdxx.snippet" />
+    <None Include="Helpers\cmdx.snippet" />
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
 </Project>
