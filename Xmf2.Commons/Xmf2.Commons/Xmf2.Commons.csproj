@@ -43,6 +43,7 @@
     <Compile Include="Extensions\EnumerableExtensions.cs" />
     <Compile Include="Extensions\EnumExtensions.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
+    <Compile Include="Helpers\ActionHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ErrorManagers\AccessDataException.cs" />
     <Compile Include="ErrorManagers\IErrorManager.cs" />
@@ -83,15 +84,7 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Services\" />
-    <Folder Include="Logs\" />
-    <Folder Include="Services\Authentications\" />
-    <Folder Include="Services\Authentications\Models\" />
-    <Folder Include="Services\OAuth2\" />
-    <Folder Include="Services\OAuth2\Models\" />
-    <Folder Include="Services\DataAccess\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
