@@ -34,7 +34,12 @@ namespace Xmf2.Commons.MvxExtends.Touch.Views
 				_layoutDone = true;
 				this.AutoLayout();
 			}
+
 			this.NavigationController.SetNavigationBarHidden(true, false);
+
+			if (this.RespondsToSelector(new ObjCRuntime.Selector("edgesForExtendedLayout")))
+				EdgesForExtendedLayout = UIRectEdge.None;
+
 			this.NavigationController.NavigationBar.BarStyle = UIBarStyle.Default;
 			this.ViewModel?.OnResume();
 		}
