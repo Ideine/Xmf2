@@ -13,6 +13,11 @@ public static class CreatorExtensions
 		return new UIButton(UIButtonType.Custom);
 	}
 
+	public static UIButton CreateButton(this object parent, UIButtonType type)
+	{
+		return new UIButton(type);
+	}
+
 	public static TUIButton WithTitle<TUIButton>(this TUIButton button, string title) where TUIButton : UIButton
 	{
 		button.SetTitle(title, UIControlState.Normal);
@@ -199,6 +204,11 @@ public static class CreatorExtensions
 	public static UITextField CreateTextField(this object parent)
 	{
 		return new UITextField();
+	}
+
+	public static UITextView CreateTextView(this object parent)
+	{
+		return new UITextView();
 	}
 
 	public static UITextField AsPasswordField(this UITextField input, UIReturnKeyType returnKeyType)

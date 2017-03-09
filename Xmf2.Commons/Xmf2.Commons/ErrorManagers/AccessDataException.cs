@@ -1,39 +1,39 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Xmf2.Commons.ErrorManagers
 {
-    public class AccessDataException : ManagedException
-    {
-        public enum ErrorType
-        {
-            Unknown = 0,
-            NoInternetConnexion = 1,
-            UnAuthorized = 2,
-            Timeout = 3
-        }
+	public class AccessDataException : ManagedException
+	{
+		public enum ErrorType
+		{
+			Unknown = 0,
+			NoInternetConnexion = 1,
+			UnAuthorized = 2,
+			Timeout = 3
+		}
 
-        public ErrorType Type { get; private set; }
+		public ErrorType Type { get; private set; }
 
-        public AccessDataException(ErrorType type)
-            : base(type == ErrorType.NoInternetConnexion ? "Acess Data Exception : No Internet Connection" :
-                  type == ErrorType.Timeout ? "Acess Data Exception : Timeout" :
-                  type == ErrorType.UnAuthorized ? "Acess Data Exception : Unauthorized" :
-                  "Acess Data Exception : Unknown data access error")
-        {
-            this.Type = type;
-        }
+		public AccessDataException(ErrorType type) : base(GetDescriptionFor(type))
+		{
+			this.Type = type;
+		}
 
-        public AccessDataException(ErrorType type, Exception innerException)
-            : base(type == ErrorType.NoInternetConnexion ? "Acess Data Exception : No Internet Connection" :
-                  type == ErrorType.Timeout ? "Acess Data Exception : Timeout" :
-                  type == ErrorType.UnAuthorized ? "Acess Data Exception : Unauthorized" :
-                  "Acess Data Exception : Unknown data access error")
-        {
-            this.Type = type;
-        }
-    }
+		public AccessDataException(ErrorType type, Exception innerException) : base(GetDescriptionFor(type), innerException)
+		{
+			this.Type = type;
+		}
+
+		private static string GetDescriptionFor(ErrorType type)
+		{
+			switch (type)
+			{
+				case ErrorType.NoInternetConnexion: return "Access Data Exception : No Internet Connection";
+				case ErrorType.Timeout: return "Access Data Exception : Timeout";
+				case ErrorType.UnAuthorized: return "Access Data Exception : Unauthorized";
+				default:
+					return "Access Data Exception : Unknown data access error";
+			}
+		}
+	}
 }
