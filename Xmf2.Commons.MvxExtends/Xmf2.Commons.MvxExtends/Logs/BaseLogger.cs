@@ -29,7 +29,7 @@ namespace Xmf2.Commons.MvxExtends.Logs
 					break;
 			}
 
-			message = message.Replace("{", "{{").Replace("}", "}}");
+			message = message?.Replace("{", "{{").Replace("}", "}}");
 			Mvx.Trace(traceLevel, this.FormatException(e, message));
 		}
 
