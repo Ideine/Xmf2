@@ -29,7 +29,9 @@ namespace Xmf2.Commons.MvxExtends.Logs
 					break;
 			}
 
-			message = message.Replace("{", "{{").Replace("}", "}}");
+			message = (message != null)
+					? message.Replace("{", "{{").Replace("}", "}}")
+					: String.Empty;
 			Mvx.Trace(traceLevel, this.FormatException(e, message));
 		}
 
@@ -60,15 +62,10 @@ namespace Xmf2.Commons.MvxExtends.Logs
 			{
 				builder.AppendLine(message);
 			}
-
-			var ex = e;
-			while (ex != null)
+			if (e != null)
 			{
-				builder.AppendLine(ex.Message);
-				builder.AppendLine(ex.StackTrace);
-				ex = ex.InnerException;
+				builder.AppendLine(e.ToString());
 			}
-
 			return builder.ToString();
 		}
 	}
