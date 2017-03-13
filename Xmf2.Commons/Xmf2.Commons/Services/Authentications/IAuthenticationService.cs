@@ -6,6 +6,8 @@ namespace Xmf2.Commons.Services.Authentications
 
 	public interface IAuthenticationService
 	{
+		bool IsLogged { get; }
+
 		Task<bool> LoginWithCredentials(string login, string password);
 
 		Task<bool> LoginWithCredentials(string login, string password, CancellationToken ct);

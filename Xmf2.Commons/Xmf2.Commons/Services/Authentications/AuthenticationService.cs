@@ -15,6 +15,8 @@ namespace Xmf2.Commons.Services.Authentications
 		private readonly ILogger _logger;
 		private readonly IHttpErrorManager _errorManager;
 
+		public bool IsLogged { get; private set; }
+
 		public AuthenticationService(IOAuth2Client client, IUserStorageService storageService, ILogger logger, IHttpErrorManager errorManager)
 		{
 			_client = client;
@@ -28,6 +30,7 @@ namespace Xmf2.Commons.Services.Authentications
 
 		protected virtual async void OnClientAuthenticationSuccess(object sender, OAuth2AuthResult result)
 		{
+			IsLogged = true;
 			await _storageService.Store(new AuthenticationDetailStorageModel
 			{
 				AccessToken = result.AccessToken,
@@ -87,6 +90,7 @@ namespace Xmf2.Commons.Services.Authentications
 
 		public Task Logout(CancellationToken ct)
 		{
+			IsLogged = false;
 			_storageService.Delete(ct);
 			_client.Logout();
 			CacheEngine.InvalidateScope(CacheEngine.SCOPE_USER);
