@@ -206,11 +206,6 @@ public static class CreatorExtensions
 		return new UITextField();
 	}
 
-	public static UITextView CreateTextView(this object parent)
-	{
-		return new UITextView();
-	}
-
 	public static UITextField AsPasswordField(this UITextField input, UIReturnKeyType returnKeyType)
 	{
 		input.KeyboardType = UIKeyboardType.Default;
@@ -292,6 +287,21 @@ public static class CreatorExtensions
 	}
 
 	#endregion UITextField
+
+	#region UITextView
+
+	public static UITextView CreateTextView(this object parent)
+	{
+		return new UITextView();
+	}
+
+	public static UITextView WithText(this UITextView input, string text)
+	{
+		input.Text = text;
+		return input;
+	}
+
+	#endregion UITextView
 
 	#region UIImageView
 
@@ -380,4 +390,3 @@ public static class CreatorExtensions
 	#endregion
 
 }
-
