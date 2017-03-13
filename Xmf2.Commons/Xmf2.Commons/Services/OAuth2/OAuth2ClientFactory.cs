@@ -13,6 +13,7 @@ namespace Xmf2.Commons.Services.OAuth2
 			{
 				Configuration = configuration,
 				LogRequest = logMethod,
+				Timeout = TimeSpan.FromSeconds(30)
 			};
 		}
 
