@@ -37,7 +37,7 @@ namespace Xmf2.Commons.MvxExtends.Touch.Views
 
 			this.NavigationController.SetNavigationBarHidden(true, false);
 
-			if (this.RespondsToSelector(new ObjCRuntime.Selector("edgesForExtendedLayout")))
+			if (RespondsToSelector(new ObjCRuntime.Selector("edgesForExtendedLayout")))
 				EdgesForExtendedLayout = UIRectEdge.None;
 
 			this.NavigationController.NavigationBar.BarStyle = UIBarStyle.Default;

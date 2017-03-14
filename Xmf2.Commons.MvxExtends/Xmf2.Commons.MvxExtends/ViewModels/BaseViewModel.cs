@@ -1,11 +1,11 @@
 ﻿using System;
-using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
 using MvvmCross.Platform;
 using MvvmCross.Core.ViewModels;
 using Xmf2.Commons.ErrorManagers;
 using Xmf2.Commons.MvxExtends.Extensions;
+using System.Windows.Input;
 
 namespace Xmf2.Commons.MvxExtends.ViewModels
 {
@@ -15,6 +15,9 @@ namespace Xmf2.Commons.MvxExtends.ViewModels
 
 		private Lazy<IErrorManager> _errorManager = new Lazy<IErrorManager>(() => Mvx.Resolve<IErrorManager>());
 		protected IErrorManager ErrorManager => _errorManager.Value;
+
+		private ICommand _closeCommand;
+		public ICommand CloseCommand => _closeCommand ?? (_closeCommand = new MvxCommand(CloseAction));
 
 		public virtual void OnEnter()
 		{
@@ -34,6 +37,16 @@ namespace Xmf2.Commons.MvxExtends.ViewModels
 		public virtual void OnStop()
 		{
 
+		}
+
+		protected virtual void CloseViewModel()
+		{
+			Close(this);
+		}
+
+		protected virtual void CloseAction()
+		{
+			CloseViewModel();
 		}
 
 		#region ExecAsync

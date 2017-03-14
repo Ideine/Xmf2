@@ -1,6 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="4.0" 
-  xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -42,6 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\" />
+    <Folder Include="ViewComponents\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AutoLayout\AnimationExtensions.cs" />
@@ -54,6 +54,12 @@
     <Compile Include="AutoLayout\Layout.cs" />
     <Compile Include="AutoLayout\LayoutExtensions.cs" />
     <Compile Include="Views\BaseViewController.cs" />
+    <Compile Include="ViewComponents\SimpleNavbarComponent.cs" />
+    <Compile Include="ViewComponents\IUIComponent.cs" />
+    <Compile Include="ViewComponents\BaseUIComponent.cs" />
+    <Compile Include="ViewComponents\ItemsControl.cs" />
+    <Compile Include="ViewComponents\IUIModelComponent.cs" />
+    <Compile Include="ViewComponents\BaseUIModelComponent.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <ItemGroup>
