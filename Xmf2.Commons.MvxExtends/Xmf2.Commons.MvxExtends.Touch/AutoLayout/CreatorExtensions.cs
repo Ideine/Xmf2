@@ -191,6 +191,12 @@ public static class CreatorExtensions
 		return label;
 	}
 
+	public static UILabel WithEllipsis(this UILabel label)
+	{
+		label.LineBreakMode = UILineBreakMode.TailTruncation;
+		return label;
+	}
+
 	public static UILabel WithSystemFont(this UILabel label, int size, UIFontWeight weight = UIFontWeight.Regular)
 	{
 		label.Font = UIFont.SystemFontOfSize(size, weight);
