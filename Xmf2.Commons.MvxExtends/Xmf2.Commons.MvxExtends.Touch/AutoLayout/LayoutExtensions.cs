@@ -39,7 +39,7 @@ public static class CustomAutoLayoutExtensions
         return containerView;
     }
 
-	public static void VerticalFlow(this UIView containerView, params UIView[] views)
+	public static UIView VerticalFlow(this UIView containerView, params UIView[] views)
 	{
 		if (views == null)
 		{
@@ -58,6 +58,7 @@ public static class CustomAutoLayoutExtensions
 		{
 			containerView.VerticalSpace(views[i - 1], views[i]);
 		}
+		return containerView;
 	}
 
 	public static UIView ViewsEqualWidth(this UIView containerView, params UIView[] views)
