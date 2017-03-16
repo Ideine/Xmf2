@@ -62,6 +62,7 @@
     <Compile Include="Services\OAuth2\OAuth2ClientFactory.cs" />
     <Compile Include="Services\DataAccess\RequestService.cs" />
     <Compile Include="Services\DataAccess\OAuth2RequestService.cs" />
+    <Compile Include="Extensions\CommandExtensions.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
