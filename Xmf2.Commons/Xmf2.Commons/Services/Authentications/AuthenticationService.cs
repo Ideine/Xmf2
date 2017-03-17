@@ -52,6 +52,7 @@ namespace Xmf2.Commons.Services.Authentications
 		public async Task<bool> LoginWithCredentials(string login, string password, CancellationToken ct)
 		{
 			OAuth2AuthResult result = await _errorManager.ExecuteAsync(() => _client.Login(login, password, ct));
+			CacheEngine.InvalidateScope(CacheEngine.SCOPE_USER);
 			return result.IsSuccess;
 		}
 
