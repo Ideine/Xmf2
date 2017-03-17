@@ -11,9 +11,8 @@ namespace Xmf2.Commons.MvxExtends.ViewModels
 {
 	public abstract class BaseViewModel : MvxViewModel
 	{
-		private static Task CompletedTask = Task.FromResult<object>(null);
-
-		private Lazy<IErrorManager> _errorManager = new Lazy<IErrorManager>(() => Mvx.Resolve<IErrorManager>());
+		private static readonly Task CompletedTask = Task.FromResult<object>(null);
+		private readonly Lazy<IErrorManager> _errorManager = new Lazy<IErrorManager>(Mvx.Resolve<IErrorManager>);
 		protected IErrorManager ErrorManager => _errorManager.Value;
 
 		private ICommand _closeCommand;
