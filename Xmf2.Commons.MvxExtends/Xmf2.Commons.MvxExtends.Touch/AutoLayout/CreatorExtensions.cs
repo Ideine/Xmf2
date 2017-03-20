@@ -108,11 +108,22 @@ public static class CreatorExtensions
         return button;
     }
 
-    #endregion
+	public static TUIButton OnClick<TUIButton>(this TUIButton button, Action action, out Action unregisterAction) where TUIButton : UIButton
+	{
+		EventHandler onTouchUpInside = (sender, e) => action?.Invoke();
+		button.TouchUpInside += onTouchUpInside;
+		unregisterAction = () =>
+		{
+			button.TouchUpInside -= onTouchUpInside;
+		};
+		return button;
+	}
 
-    #region UIView
+	#endregion
 
-    public static UIView CreateSeparator(this object parent)
+	#region UIView
+
+	public static UIView CreateSeparator(this object parent)
     {
         return new UIView();
     }
