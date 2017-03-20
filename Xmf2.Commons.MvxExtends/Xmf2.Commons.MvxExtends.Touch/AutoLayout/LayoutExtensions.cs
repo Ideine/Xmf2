@@ -144,13 +144,13 @@ public static class CustomAutoLayoutExtensions
 		return containerView;
 	}
 
-	public static TUIView ConstrainHeight<TUIView>(this TUIView view, int height) where TUIView : UIView
+	public static UIView ConstrainHeight(this UIView view, int height)
 	{
 		view.ConstrainLayout(() => view.Height() == height);
 		return view;
 	}
 
-	public static TUIView ConstrainWidth<TUIView>(this TUIView view, int width) where TUIView : UIView
+	public static UIView ConstrainWidth(this UIView view, int width)
 	{
 		view.ConstrainLayout(() => view.Width() == width);
 		return view;
