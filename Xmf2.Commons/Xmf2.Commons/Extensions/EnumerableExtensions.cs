@@ -21,7 +21,7 @@ namespace Xmf2.Commons.Extensions
 		/// <returns>false si la séquence source contient est vide ou est null; sinon, true.</returns>
 		public static bool NullOrNone<T>(this IEnumerable<T> source)
 		{
-			return source == null && source.Any();
+			return source == null || source.None();
 		}
 
 		/// <summary>
