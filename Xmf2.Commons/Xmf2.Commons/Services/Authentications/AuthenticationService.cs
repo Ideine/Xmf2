@@ -28,10 +28,10 @@ namespace Xmf2.Commons.Services.Authentications
 			_client.OnAuthError += OnClientAuthenticationError;
 		}
 
-		protected virtual async void OnClientAuthenticationSuccess(object sender, OAuth2AuthResult result)
+		protected virtual void OnClientAuthenticationSuccess(object sender, OAuth2AuthResult result)
 		{
 			IsLogged = true;
-			await _storageService.Store(new AuthenticationDetailStorageModel
+			_storageService.Store(new AuthenticationDetailStorageModel
 			{
 				AccessToken = result.AccessToken,
 				RefreshToken = result.RefreshToken,
@@ -53,6 +53,12 @@ namespace Xmf2.Commons.Services.Authentications
 		{
 			OAuth2AuthResult result = await _errorManager.ExecuteAsync(() => _client.Login(login, password, ct));
 			CacheEngine.InvalidateScope(CacheEngine.SCOPE_USER);
+
+			if (result.IsSuccess)
+			{
+				OnLogged();
+			}
+
 			return result.IsSuccess;
 		}
 
@@ -71,6 +77,12 @@ namespace Xmf2.Commons.Services.Authentications
 			AuthenticationDetailStorageModel authDetail = await _storageService.Get(ct);
 
 			OAuth2AuthResult result = await _errorManager.ExecuteAsync(() => _client.Refresh(authDetail.RefreshToken, ct));
+
+			if (result.IsSuccess)
+			{
+				OnLogged();
+			}
+
 			return result.IsSuccess;
 		}
 
@@ -95,8 +107,18 @@ namespace Xmf2.Commons.Services.Authentications
 			_storageService.Delete(ct);
 			_client.Logout();
 			CacheEngine.InvalidateScope(CacheEngine.SCOPE_USER);
-
+			OnLogout();
 			return TaskHelper.CompletedTask;
+		}
+
+		protected virtual void OnLogged()
+		{
+
+		}
+
+		protected virtual void OnLogout()
+		{
+
 		}
 	}
 }
