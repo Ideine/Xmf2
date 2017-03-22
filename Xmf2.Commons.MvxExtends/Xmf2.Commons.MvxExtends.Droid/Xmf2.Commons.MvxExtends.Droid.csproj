@@ -49,7 +49,7 @@
     <Reference Include="System.IO.Compression" />
     <Reference Include="System.Net.Http" />
     <Reference Include="Polly">
-      <HintPath>..\packages\Polly.5.0.7\lib\netstandard1.0\Polly.dll</HintPath>
+      <HintPath>..\packages\Polly.5.0.6\lib\netstandard1.0\Polly.dll</HintPath>
     </Reference>
     <Reference Include="Xamarin.Android.Support.Compat">
       <HintPath>..\packages\Xamarin.Android.Support.Compat.25.1.1\lib\MonoAndroid70\Xamarin.Android.Support.Compat.dll</HintPath>
@@ -115,51 +115,39 @@
   <ItemGroup>
     <Reference Include="MvvmCross.Platform">
       <HintPath>..\packages\MvvmCross.Platform.4.4.0\lib\MonoAndroid\MvvmCross.Platform.dll</HintPath>
-      <Name>MvvmCross.Platform.dll</Name>
     </Reference>
     <Reference Include="MvvmCross.Platform.Droid">
       <HintPath>..\packages\MvvmCross.Platform.4.4.0\lib\MonoAndroid\MvvmCross.Platform.Droid.dll</HintPath>
-      <Name>MvvmCross.Platform.Droid.dll</Name>
     </Reference>
     <Reference Include="MvvmCross.Core">
       <HintPath>..\packages\MvvmCross.Core.4.4.0\lib\MonoAndroid\MvvmCross.Core.dll</HintPath>
-      <Name>MvvmCross.Core.dll</Name>
     </Reference>
     <Reference Include="MvvmCross.Droid">
       <HintPath>..\packages\MvvmCross.Core.4.4.0\lib\MonoAndroid\MvvmCross.Droid.dll</HintPath>
-      <Name>MvvmCross.Droid.dll</Name>
     </Reference>
     <Reference Include="MvvmCross.Binding">
       <HintPath>..\packages\MvvmCross.Binding.4.4.0\lib\MonoAndroid\MvvmCross.Binding.dll</HintPath>
-      <Name>MvvmCross.Binding.dll</Name>
     </Reference>
     <Reference Include="MvvmCross.Binding.Droid">
       <HintPath>..\packages\MvvmCross.Binding.4.4.0\lib\MonoAndroid\MvvmCross.Binding.Droid.dll</HintPath>
-      <Name>MvvmCross.Binding.Droid.dll</Name>
     </Reference>
     <Reference Include="MvvmCross.Localization">
       <HintPath>..\packages\MvvmCross.Binding.4.4.0\lib\MonoAndroid\MvvmCross.Localization.dll</HintPath>
-      <Name>MvvmCross.Localization.dll</Name>
     </Reference>
     <Reference Include="MvvmCross.Droid.Shared">
       <HintPath>..\packages\MvvmCross.Droid.Shared.4.4.0\lib\MonoAndroid\MvvmCross.Droid.Shared.dll</HintPath>
-      <Name>MvvmCross.Droid.Shared.dll</Name>
     </Reference>
     <Reference Include="MvvmCross.Droid.Support.Core.UI">
       <HintPath>..\packages\MvvmCross.Droid.Support.Core.UI.4.4.0\lib\MonoAndroid70\MvvmCross.Droid.Support.Core.UI.dll</HintPath>
-      <Name>MvvmCross.Droid.Support.Core.UI.dll</Name>
     </Reference>
     <Reference Include="MvvmCross.Droid.Support.Fragment">
       <HintPath>..\packages\MvvmCross.Droid.Support.Fragment.4.4.0\lib\MonoAndroid70\MvvmCross.Droid.Support.Fragment.dll</HintPath>
-      <Name>MvvmCross.Droid.Support.Fragment.dll</Name>
     </Reference>
     <Reference Include="MvvmCross.Droid.Support.V7.AppCompat">
       <HintPath>..\packages\MvvmCross.Droid.Support.V7.AppCompat.4.4.0\lib\MonoAndroid70\MvvmCross.Droid.Support.V7.AppCompat.dll</HintPath>
-      <Name>MvvmCross.Droid.Support.V7.AppCompat.dll</Name>
     </Reference>
     <Reference Include="MvvmCross.Droid.Support.Core.Utils">
       <HintPath>..\packages\MvvmCross.Droid.Support.Core.Utils.4.4.1\lib\MonoAndroid70\MvvmCross.Droid.Support.Core.Utils.dll</HintPath>
-      <Name>MvvmCross.Droid.Support.Core.Utils.dll</Name>
     </Reference>
   </ItemGroup>
   <Import Project="..\packages\Xamarin.Build.Download.0.4.2\build\Xamarin.Build.Download.targets" Condition="Exists('..\packages\Xamarin.Build.Download.0.4.2\build\Xamarin.Build.Download.targets')" />
