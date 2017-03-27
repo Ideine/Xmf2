@@ -400,6 +400,33 @@ public static class CreatorExtensions
         return view;
     }
 
+	public static TView WithBorder<TView>(this TView view, UIColor borderColor, int size) where TView : UIView
+	{
+		view.Layer.BorderColor = borderColor.CGColor;
+		view.Layer.BorderWidth = size;
+		return view;
+	}
+
+	public static TView WithShadow<TView>(this TView view, UIColor shadowColor, int left, int top, float radius = 8f, float opacity = 1f) where TView : UIView
+	{
+		view.Layer.ShadowColor = shadowColor.CGColor;
+		view.Layer.ShadowOpacity = opacity;
+		view.Layer.ShadowRadius = radius;
+		view.Layer.ShadowOffset = new CGSize(left, top);
+
+		return view;
+	}
+
+	public static TView WithoutShadow<TView>(this TView view) where TView : UIView
+	{
+		view.Layer.ShadowColor = UIColor.Clear.CGColor;
+		view.Layer.ShadowOpacity = 0;
+		view.Layer.ShadowRadius = 0;
+		view.Layer.ShadowOffset = CGSize.Empty;
+
+		return view;
+	}
+
     public static TView WithCornerRadius<TView>(this TView view, int size) where TView : UIView
     {
         view.Layer.CornerRadius = size;
