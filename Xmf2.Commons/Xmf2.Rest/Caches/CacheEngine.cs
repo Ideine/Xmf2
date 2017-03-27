@@ -17,6 +17,7 @@ namespace Xmf2.Rest.Caches
 			private readonly Func<TParam, CancellationToken, Task<T>> _loader;
 			private readonly SemaphoreSlim _mutex = new SemaphoreSlim(1, 1);
 			private T _value;
+			private TParam _lastParam;
 			private DateTime _expireDate;
 
 			public T Value => _value;
@@ -41,15 +42,16 @@ namespace Xmf2.Rest.Caches
 
 			public async Task<T> Load(TParam param, CancellationToken ct, bool force = false)
 			{
-				if (_value == null || DateTime.Now > _expireDate || force)
+				if (_value == null || DateTime.Now > _expireDate || force || !object.Equals(_lastParam, param))
 				{
 					await _mutex.WaitAsync(ct);
 					ct.ThrowIfCancellationRequested();
 					try
 					{
-						if (_value == null || DateTime.Now > _expireDate || force)
+						if (_value == null || DateTime.Now > _expireDate || force || !object.Equals(_lastParam, param))
 						{
 							_expireDate = DateTime.Now.Add(_validityTime);
+							_lastParam = param;
 							_value = await _loader(param, ct);
 						}
 					}

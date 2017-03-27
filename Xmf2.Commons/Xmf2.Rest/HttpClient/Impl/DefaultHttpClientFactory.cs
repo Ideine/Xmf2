@@ -49,7 +49,7 @@ namespace Xmf2.Rest.HttpClient.Impl
         {
             var handler = CreateMessageHandler(client);
 
-            var httpClient = new System.Net.Http.HttpClient(handler, true)
+			var httpClient = new System.Net.Http.HttpClient(handler, true)
             {
                 BaseAddress = GetBaseAddress(client)
             };
@@ -90,6 +90,10 @@ namespace Xmf2.Rest.HttpClient.Impl
         /// <returns>The base URL</returns>
         protected virtual Uri GetBaseAddress(IRestClient client)
         {
+			if (client.BaseUrl == null)
+			{
+				return null;
+			}
             return client.BuildUri(null, false);
         }
 
@@ -102,6 +106,11 @@ namespace Xmf2.Rest.HttpClient.Impl
         protected virtual Uri GetMessageAddress(IRestClient client, IRestRequest request)
         {
             var fullUrl = client.BuildUri(request);
+			if (client.BaseUrl == null)
+			{
+				return fullUrl;
+			}
+
             var url = client.BuildUri(null, false).MakeRelativeUri(fullUrl);
             return url;
         }
