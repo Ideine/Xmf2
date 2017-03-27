@@ -67,6 +67,7 @@
     <Compile Include="Services\DataAccess\RequestService.cs" />
     <Compile Include="Services\DataAccess\OAuth2RequestService.cs" />
     <Compile Include="Extensions\CommandExtensions.cs" />
+    <Compile Include="Extensions\TaskExtensions.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
