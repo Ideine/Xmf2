@@ -1,5 +1,5 @@
 ﻿using System;
-using Ideine.Rest.OAuth2;
+using Xmf2.Rest.OAuth2;
 using RestSharp.Portable;
 using Xmf2.Commons.Logs;
 
