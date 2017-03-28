@@ -417,6 +417,13 @@ public static class CreatorExtensions
 		return view;
 	}
 
+	public static TView WithClipping<TView>(this TView view) where TView : UIView
+	{
+		view.ClipsToBounds = true;
+
+		return view;
+	}
+
 	public static TView WithoutShadow<TView>(this TView view) where TView : UIView
 	{
 		view.Layer.ShadowColor = UIColor.Clear.CGColor;

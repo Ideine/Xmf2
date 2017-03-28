@@ -10,7 +10,9 @@ namespace Xmf2.Rest.Caches
 		public const string SCOPE_SESSION = nameof(SCOPE_SESSION);
 		public const string SCOPE_USER = nameof(SCOPE_USER);
 		public const string SCOPE_APP = nameof(SCOPE_APP);
-		
+
+		//TODO: ajouter la déclaration des scopes utilisable afin d'éviter les erreurs lors de la déclaration des caches
+
 		private class CacheItem<T, TParam> : ICacheItem<T>, ICacheItem<T, TParam> where T : class
 		{
 			private readonly TimeSpan _validityTime;
