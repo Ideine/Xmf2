@@ -9,6 +9,7 @@ namespace Xmf2.Commons.MvxExtends.Touch.ViewComponents
 		private readonly UIButton _backButton;
 		private readonly UILabel _titleLabel;
 		private readonly UIView _navBarSeparator;
+		private readonly UIView _container;
 
 		public UIColor SeparatorColor
 		{
@@ -19,7 +20,11 @@ namespace Xmf2.Commons.MvxExtends.Touch.ViewComponents
 		public UIColor TextColor
 		{
 			get { return _titleLabel.TextColor; }
-			set { _titleLabel.WithTextColor(value); }
+			set
+			{
+				_titleLabel.WithTextColor(value);
+				_backButton.WithTextColor(value);
+			}
 		}
 
 		public UIFont TextFont
@@ -28,23 +33,37 @@ namespace Xmf2.Commons.MvxExtends.Touch.ViewComponents
 			set { _titleLabel.WithFont(value); }
 		}
 
+		public UIFont ButtonFont
+		{
+			get { return _backButton.Font; }
+			set { _backButton.WithFont(value); }
+		}
+
 		public string Title
 		{
 			get { return _titleLabel.Text; }
 			set { _titleLabel.WithText(value); }
 		}
 
-		public SimpleNavbarComponent(string titleText, string backImage)
+		public SimpleNavbarComponent(string titleText, string backImage, string backText = "")
 		{
 			this.WithBackgroundColor(UIColor.Clear);
 			_navBarSeparator = this.CreateView().WithBackgroundColor(UIColor.LightGray);
-			_backButton = this.CreateButton().WithImage(backImage);
+			_container = this.CreateView();
+			_backButton = this.CreateButton()
+			                  .WithImage(backImage)
+			                  .WithTitle(backText);
+			
+			_backButton.TitleEdgeInsets = new UIEdgeInsets(0, 8, 0, 0);
+			_backButton.HorizontalAlignment = UIControlContentHorizontalAlignment.Left;
+
 			_titleLabel = this.CreateLabel()
 							  .WithSystemFont(16, UIFontWeight.Medium)
 							  .WithAlignment(UITextAlignment.Center)
 							  .WithTextColor(UIColor.Black)
 							  .WithText(titleText);
-			AddSubviews(_titleLabel, _backButton, _navBarSeparator);
+			_container.AddSubviews(_titleLabel, _backButton);
+			AddSubviews(_container, _navBarSeparator);
 		}
 
 		public override void AutoLayout()
@@ -53,14 +72,18 @@ namespace Xmf2.Commons.MvxExtends.Touch.ViewComponents
 
 			_navBarSeparator.ConstrainHeight(1);
 
-			this.CenterVertically(_backButton)
-				.CenterVertically(_titleLabel)
+			_container.CenterVertically(_backButton)
+					  .CenterVertically(_titleLabel)
+					  .AnchorLeft(_backButton, 10)
+					  .CenterAndFillWidth(_titleLabel);
+			this.AnchorTop(_container, 20)
+			    .VerticalSpace(_container, _navBarSeparator)
 				.AnchorBottom(_navBarSeparator)
-				.AnchorLeft(_backButton)
-				.CenterAndFillWidth(_titleLabel, _navBarSeparator);
+				.AnchorLeft(_container)
+				.CenterAndFillWidth(_container, _navBarSeparator);
 
-			_backButton.ConstrainWidth(43).ConstrainHeight(45);
-			this.ConstrainHeight(46);
+			_backButton.ConstrainHeight(45).ConstrainWidth(100);
+			this.ConstrainHeight(65);
 		}
 
 		public override void Bind()
