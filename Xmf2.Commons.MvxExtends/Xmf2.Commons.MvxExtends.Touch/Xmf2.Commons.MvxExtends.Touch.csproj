@@ -41,6 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\" />
+    <Folder Include="Controls\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AutoLayout\AnimationExtensions.cs" />
@@ -60,6 +61,8 @@
     <Compile Include="ViewComponents\ItemsControl.cs" />
     <Compile Include="ViewComponents\IUIModelComponent.cs" />
     <Compile Include="ViewComponents\BaseUIModelComponent.cs" />
+    <Compile Include="Controls\UIHighlightButton.cs" />
+    <Compile Include="Extensions\UIColorExtension.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <ItemGroup>

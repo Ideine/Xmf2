@@ -18,6 +18,17 @@ public static class CreatorExtensions
         return new UIButton(type);
     }
 
+	public static UIHighlightButton CreateHighlightButton(this object parent)
+	{
+		return new UIHighlightButton();
+	}
+
+	public static TUIButton WithHighlightBackgroundColor<TUIButton>(this TUIButton button, UIColor color) where TUIButton : UIHighlightButton
+	{
+		button.HighlightColor = color;
+		return button;
+	}
+
     public static TUIButton WithTitle<TUIButton>(this TUIButton button, string title) where TUIButton : UIButton
     {
         button.SetTitle(title, UIControlState.Normal);
