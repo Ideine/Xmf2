@@ -22,38 +22,40 @@ namespace Xmf2.Commons.MvxExtends.Touch.Views
 		public override void ViewDidLoad()
 		{
 			base.ViewDidLoad();
-			this.ViewModel?.OnEnter();
-			this.BindControls();
+			ViewModel?.OnEnter();
+			BindControls();
 		}
 
 		public override void ViewWillAppear(bool animated)
 		{
 			base.ViewWillAppear(animated);
+			ViewModel?.OnResume();
 			if (!_layoutDone)
 			{
 				_layoutDone = true;
-				this.AutoLayout();
+				AutoLayout();
 			}
 
-			this.NavigationController.SetNavigationBarHidden(true, false);
+			NavigationController.SetNavigationBarHidden(true, false);
 
 			if (RespondsToSelector(new ObjCRuntime.Selector("edgesForExtendedLayout")))
+			{
 				EdgesForExtendedLayout = UIRectEdge.None;
+			}
 
-			this.NavigationController.NavigationBar.BarStyle = UIBarStyle.Default;
-			this.ViewModel?.OnResume();
+			NavigationController.NavigationBar.BarStyle = UIBarStyle.Default;
 		}
 
 		public override void ViewDidDisappear(bool animated)
 		{
 			base.ViewDidDisappear(animated);
-			this.ViewModel?.OnPause();
+			ViewModel?.OnPause();
 		}
 
 		public override void ViewWillUnload()
 		{
 			base.ViewWillUnload();
-			this.ViewModel?.OnStop();
+			ViewModel?.OnStop();
 		}
 
 		protected virtual void BindControls()
