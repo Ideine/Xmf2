@@ -41,12 +41,12 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\" />
-    <Folder Include="ViewComponents\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AutoLayout\AnimationExtensions.cs" />
     <Compile Include="AutoLayout\CreatorExtensions.cs" />
     <Compile Include="ErrorsManagers\TouchHttpErrorManager.cs" />
+    <Compile Include="Extensions\UIExtractFontWeight.cs" />
     <Compile Include="Extensions\UINavigationControllerExtension.cs" />
     <Compile Include="Layout\LayoutConsts.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
