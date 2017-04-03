@@ -102,6 +102,7 @@ public static class CreatorExtensions
         return button;
     }
 
+	[Obsolete("Please use OnClick<TUIButton>(TUIButton, Action, Action) instead")]
     public static TUIButton OnClick<TUIButton>(this TUIButton button, Action action) where TUIButton : UIButton
     {
         button.TouchUpInside += (sender, e) => action?.Invoke();

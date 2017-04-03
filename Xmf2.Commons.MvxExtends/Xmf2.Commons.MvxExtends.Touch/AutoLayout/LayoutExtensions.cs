@@ -156,6 +156,13 @@ public static class CustomAutoLayoutExtensions
 		return view;
 	}
 
+	public static UIView ConstrainSides(this UIView view, int widthAndHeight)
+	{
+		view.ConstrainLayout(() => view.Width()  == widthAndHeight
+								&& view.Height() == widthAndHeight);
+		return view;
+	}
+
 	public static UIView ConstrainMinHeight(this UIView view, int height)
 	{
 		view.ConstrainLayout(() => view.Height() >= height);
