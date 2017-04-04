@@ -60,6 +60,13 @@
     <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="Extensions\SemaphoreSlimExtensions.cs" />
     <Compile Include="Extensions\TaskExtensions.cs" />
+    <Compile Include="Licences\ILicenceReaderService.cs" />
+    <Compile Include="Licences\LicenceStyle.cs" />
+    <Compile Include="Licences\NoticesHtmlBuilder.cs" />
+    <Compile Include="Licences\Models\Notice.cs" />
+    <Compile Include="Licences\Models\Notices.cs" />
+    <Compile Include="Licences\Models\Licence.cs" />
+    <Compile Include="Licences\LicencesLoader.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Xmf2.Commons\Xmf2.Commons\Xmf2.Commons.csproj">
@@ -97,6 +104,10 @@
     <None Include="Helpers\propx.snippet" />
     <None Include="Helpers\cmdxx.snippet" />
     <None Include="Helpers\cmdx.snippet" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Licences\" />
+    <Folder Include="Licences\Models\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
 </Project>
