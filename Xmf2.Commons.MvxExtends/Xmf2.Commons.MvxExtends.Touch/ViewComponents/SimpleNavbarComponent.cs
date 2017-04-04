@@ -51,8 +51,11 @@ namespace Xmf2.Commons.MvxExtends.Touch.ViewComponents
 			_navBarSeparator = this.CreateView().WithBackgroundColor(UIColor.LightGray);
 			_container = this.CreateView();
 			_backButton = this.CreateButton()
-			                  .WithImage(backImage)
-			                  .WithTitle(backText);
+			                  .WithTitle(backText ?? string.Empty);
+			if (backImage != null)
+			{
+				_backButton.WithImage(backImage);
+			}
 			
 			_backButton.TitleEdgeInsets = new UIEdgeInsets(0, 8, 0, 0);
 			_backButton.HorizontalAlignment = UIControlContentHorizontalAlignment.Left;
