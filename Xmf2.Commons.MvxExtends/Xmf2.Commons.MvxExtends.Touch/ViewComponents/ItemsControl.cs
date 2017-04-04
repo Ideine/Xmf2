@@ -53,6 +53,8 @@ namespace Xmf2.Commons.MvxExtends.Touch.ViewComponents
 
 		public UIColor FeedbackColor { get; set; } = UIColor.LightGray;
 
+		public Func<UIView> CreateSeparator { get; set; }
+
 		private bool _canLayout;
 
 		public ItemsControl(int cellHeight, bool hasSeparator = true)
@@ -183,11 +185,7 @@ namespace Xmf2.Commons.MvxExtends.Touch.ViewComponents
 				_usingSeparators.Add(oldSep);
 				return oldSep;
 			}
-
-			UIView sep = this.CreateView()
-							 .WithBackgroundColor(SeparatorColor)
-							 .ConstrainHeight(1);
-
+			UIView sep = (this.CreateSeparator ?? this.CreateDefaultSeparator)();
 			_usingSeparators.Add(sep);
 			return sep;
 		}
@@ -255,6 +253,11 @@ namespace Xmf2.Commons.MvxExtends.Touch.ViewComponents
 				MvxTrace.Trace($"ItemSelected: Exception: {ex}");
 #endif
 			}
+		}
+
+		private UIView CreateDefaultSeparator()
+		{
+			return new UIView() { BackgroundColor = SeparatorColor }.ConstrainHeight(1);
 		}
 	}
 }
