@@ -67,6 +67,7 @@
     <Compile Include="Licences\Models\Notices.cs" />
     <Compile Include="Licences\Models\Licence.cs" />
     <Compile Include="Licences\LicencesLoader.cs" />
+    <Compile Include="Services\NotificationService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Xmf2.Commons\Xmf2.Commons\Xmf2.Commons.csproj">
@@ -108,6 +109,7 @@
   <ItemGroup>
     <Folder Include="Licences\" />
     <Folder Include="Licences\Models\" />
+    <Folder Include="Services\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
 </Project>

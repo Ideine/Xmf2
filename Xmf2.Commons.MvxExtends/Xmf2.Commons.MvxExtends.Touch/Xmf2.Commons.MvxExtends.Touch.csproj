@@ -65,6 +65,7 @@
     <Compile Include="Controls\UIHighlightButton.cs" />
     <Compile Include="Extensions\UIColorExtension.cs" />
     <Compile Include="Services\LicenceReaderService.cs" />
+    <Compile Include="Services\NotificationService.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <ItemGroup>
