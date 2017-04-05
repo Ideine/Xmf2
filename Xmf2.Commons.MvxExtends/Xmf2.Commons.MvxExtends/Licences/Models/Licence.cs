@@ -5,7 +5,7 @@ namespace Xmf2.Commons.MvxExtends.Licences.Models
 {
     public class Licence
     {
-        private ILicenceReaderService _licenceReaderService;         protected ILicenceReaderService LicenceReaderService => _licenceReaderService ?? (_licenceReaderService = Mvx.Resolve<ILicenceReaderService>());
+        private readonly ILicenceReaderService _licenceReaderService;
 
         public virtual string LicencePathFile { get; set; } = "";
 
@@ -22,7 +22,7 @@ namespace Xmf2.Commons.MvxExtends.Licences.Models
 
         public Licence()
         {
-          
+            _licenceReaderService = Mvx.Resolve<ILicenceReaderService>();
         }
 
         public String GetSummaryText(string licencePathFile)
@@ -47,7 +47,7 @@ namespace Xmf2.Commons.MvxExtends.Licences.Models
 
         protected string GetContent(string licencePathFile)
         {
-            return LicenceReaderService.GetContent(licencePathFile);
+            return _licenceReaderService.GetContent(licencePathFile);
         }
 
 
