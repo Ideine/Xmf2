@@ -134,6 +134,33 @@ public static class CreatorExtensions
         return new UIView();
     }
 
+	public static TParentView WithSubviews<TParentView>(this TParentView parentView, UIView subView) where TParentView : UIView
+	{
+		parentView.AddSubviews(subView);
+		return parentView;
+	}
+	public static TParentView WithSubviews<TParentView>(this TParentView parentView, UIView subView1, UIView subView2) where TParentView : UIView
+	{
+		parentView.AddSubviews(subView1, subView2);
+		return parentView;
+	}
+	public static TParentView WithSubviews<TParentView>(this TParentView parentView, UIView subView1, UIView subView2, UIView subView3) where TParentView : UIView
+	{
+		parentView.AddSubviews(subView1, subView2, subView3);
+		return parentView;
+	}
+	public static TParentView WithSubviews<TParentView>(this TParentView parentView, UIView subView1, UIView subView2, UIView subView3, UIView subView4) where TParentView : UIView
+	{
+		parentView.AddSubviews(subView1, subView2, subView3, subView4);
+		return parentView;
+	}
+	public static TParentView WithSubviews<TParentView>(this TParentView parentView, UIView subView1, UIView subView2, UIView subView3, UIView subView4, params UIView[] views) where TParentView : UIView
+	{
+		parentView.AddSubviews(subView1, subView2, subView3, subView4);
+		parentView.AddSubviews(views);
+		return parentView;
+	}
+
     #endregion
 
     #region ScrollView
