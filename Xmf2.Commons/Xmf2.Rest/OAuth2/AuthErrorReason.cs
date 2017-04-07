@@ -6,5 +6,6 @@ namespace Xmf2.Rest.OAuth2
 		ServerError,
 		InvalidCredentials,
 		BadRequest,
+		InvalidAppVersion
 	}
 }

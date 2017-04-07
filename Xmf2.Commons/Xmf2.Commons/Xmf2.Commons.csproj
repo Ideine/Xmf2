@@ -68,6 +68,7 @@
     <Compile Include="Services\DataAccess\OAuth2RequestService.cs" />
     <Compile Include="Extensions\CommandExtensions.cs" />
     <Compile Include="Extensions\TaskExtensions.cs" />
+    <Compile Include="ErrorManagers\InvalidAppVersionException.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

@@ -54,6 +54,13 @@ namespace Xmf2.Rest.OAuth2
 						ErrorReason = AuthErrorReason.BadRequest,
 						ErrorMessage = response.Content,
 					};
+				case (HttpStatusCode)449:
+					return new OAuth2AuthResult
+					{
+						IsSuccess = false,
+						ErrorReason = AuthErrorReason.InvalidAppVersion,
+						ErrorMessage = response.Content,
+					};
 				default:
 					return new OAuth2AuthResult
 					{

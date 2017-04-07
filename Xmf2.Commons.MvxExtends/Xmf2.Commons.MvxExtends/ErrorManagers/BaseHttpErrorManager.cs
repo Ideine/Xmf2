@@ -81,6 +81,11 @@ namespace Xmf2.Commons.MvxExtends.ErrorManagers
 				return new AccessDataException(AccessDataException.ErrorType.Timeout);
             }
 
+			if (e is InvalidAppVersionException)
+			{
+				return new AccessDataException(AccessDataException.ErrorType.InvalidAppVersion, e);
+			}
+
             return new AccessDataException(AccessDataException.ErrorType.Unknown, e);
         }
 

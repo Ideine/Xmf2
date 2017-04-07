@@ -9,7 +9,8 @@ namespace Xmf2.Commons.ErrorManagers
 			Unknown = 0,
 			NoInternetConnexion = 1,
 			UnAuthorized = 2,
-			Timeout = 3
+			Timeout = 3,
+			InvalidAppVersion = 4
 		}
 
 		public ErrorType Type { get; private set; }
@@ -31,6 +32,7 @@ namespace Xmf2.Commons.ErrorManagers
 				case ErrorType.NoInternetConnexion: return "Access Data Exception : No Internet Connection";
 				case ErrorType.Timeout: return "Access Data Exception : Timeout";
 				case ErrorType.UnAuthorized: return "Access Data Exception : Unauthorized";
+				case ErrorType.InvalidAppVersion: return "Access Data Exception : Invalid app version";
 				default:
 					return "Access Data Exception : Unknown data access error";
 			}
