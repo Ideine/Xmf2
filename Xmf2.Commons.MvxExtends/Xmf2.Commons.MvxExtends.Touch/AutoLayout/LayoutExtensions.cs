@@ -247,6 +247,18 @@ public static class CustomAutoLayoutExtensions
 		return scroll;
 	}
 
+	public static UILabel ConstrainHeightForOneLiner(this UILabel label)
+	{
+		var textSize = new Foundation.NSString("lq").GetSizeUsingAttributes(new UIStringAttributes
+		{
+			Font = label.Font,
+		});
+
+		label.ConstrainHeight(((int)textSize.Height) + 1);
+
+		return label;
+	}
+
 	#if DEBUG
 	public static UIView NameConstraint(this UIView view, string name)
 	{
