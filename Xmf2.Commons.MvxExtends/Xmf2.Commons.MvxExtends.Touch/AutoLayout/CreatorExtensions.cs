@@ -134,17 +134,48 @@ public static class CreatorExtensions
         return new UIView();
     }
 
-	public static TParentView WithSubviews<TParentView>(this TParentView parentView, params UIView[] subViews) where TParentView : UIView
+	public static TParentView WithSubviews<TParentView>(this TParentView parentView, UIView view) where TParentView : UIView
 	{
-		parentView.AddSubviews(subViews);
+		parentView.AddSubview(view);
+		return parentView;
+	}
+	public static TParentView WithSubviews<TParentView>(this TParentView parentView, UIView view1, UIView view2) where TParentView : UIView
+	{
+		parentView.AddSubviews(view1, view2);
+		return parentView;
+	}
+	public static TParentView WithSubviews<TParentView>(this TParentView parentView, UIView view1, UIView view2, UIView view3) where TParentView : UIView
+	{
+		parentView.AddSubviews(view1, view2, view3);
+		return parentView;
+	}
+	public static TParentView WithSubviews<TParentView>(this TParentView parentView, UIView view1, UIView view2, UIView view3, UIView view4) where TParentView : UIView
+	{
+		parentView.AddSubviews(view1, view2, view3, view4);
+		return parentView;
+	}
+	public static TParentView WithSubviews<TParentView>(this TParentView parentView, UIView view1, UIView view2, UIView view3, UIView view4, UIView view5) where TParentView : UIView
+	{
+		parentView.AddSubviews(view1, view2, view3, view4, view5);
+		return parentView;
+	}
+	public static TParentView WithSubviews<TParentView>(this TParentView parentView, UIView view1, UIView view2, UIView view3, UIView view4, UIView view5, UIView view6) where TParentView : UIView
+	{
+		parentView.AddSubviews(view1, view2, view3, view4, view5, view6);
+		return parentView;
+	}
+	public static TParentView WithSubviews<TParentView>(this TParentView parentView, UIView view1, UIView view2, UIView view3, UIView view4, UIView view5, UIView view6, params UIView[] views) where TParentView : UIView
+	{
+		parentView.AddSubviews(view1, view2, view3, view4, view5, view6);
+		parentView.AddSubviews(views);
 		return parentView;
 	}
 
-    #endregion
+	#endregion
 
-    #region ScrollView
+	#region ScrollView
 
-    public static UIScrollView CreateVerticalScroll(this object parent)
+	public static UIScrollView CreateVerticalScroll(this object parent)
     {
         return new UIScrollView
         {

@@ -35,25 +35,26 @@ public static class Layout
 
 	public static void ConstrainLayout(this UIView view, Expression<Func<bool>> constraintsExpression, float priority = RequiredPriority)
 	{
+		NSLayoutConstraint[] garbageParam;
+		ConstrainLayout(view, constraintsExpression, out garbageParam, priority);
+	}
+	public static void ConstrainLayout(this UIView view, Expression<Func<bool>> constraintsExpression, out NSLayoutConstraint[] addedConstraints, float priority = RequiredPriority)
+	{
 		var body = constraintsExpression.Body;
-		var constraints = FindBinaryExpressionsRecursive(body)
+		addedConstraints = FindBinaryExpressionsRecursive(body)
 			.Select(e =>
 			{
 #if DEBUG
-
 				if (ExtractAndRegisterName(e, view))
 				{
 					return null;
 				}
-
 #endif
-
 				return CompileConstraint(e, view, priority);
 			})
 			.Where(x => x != null)
 			.ToArray();
-
-		view.AddConstraints(constraints);
+		view.AddConstraints(addedConstraints);
 	}
 
 	private static IEnumerable<BinaryExpression> FindBinaryExpressionsRecursive(Expression expression)

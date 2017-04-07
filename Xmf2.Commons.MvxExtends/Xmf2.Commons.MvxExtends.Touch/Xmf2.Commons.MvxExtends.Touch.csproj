@@ -44,6 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AutoLayout\AnimationExtensions.cs" />
+    <Compile Include="AutoLayout\ConstrainSet.cs" />
     <Compile Include="AutoLayout\CreatorExtensions.cs" />
     <Compile Include="ErrorsManagers\TouchHttpErrorManager.cs" />
     <Compile Include="Extensions\UIExtractFontWeight.cs" />

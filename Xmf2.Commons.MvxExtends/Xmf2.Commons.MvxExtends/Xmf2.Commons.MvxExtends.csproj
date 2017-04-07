@@ -39,6 +39,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Converters\BytesToStringConverter.cs" />
+    <Compile Include="Converters\IsStringNotNullOrEmptyConverter.cs" />
+    <Compile Include="Converters\IsNotNullValueConverter.cs" />
     <Compile Include="Converters\OrConverter.cs" />
     <Compile Include="Converters\AndConverter.cs" />
     <Compile Include="Converters\DefaultValueConverter.cs" />
