@@ -43,6 +43,7 @@
     <Folder Include="Resources\" />
     <Folder Include="Controls\" />
     <Folder Include="Services\" />
+    <Folder Include="ViewComponents\FloatLabels\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AutoLayout\AnimationExtensions.cs" />
@@ -66,6 +67,8 @@
     <Compile Include="Extensions\UIColorExtension.cs" />
     <Compile Include="Services\LicenceReaderService.cs" />
     <Compile Include="Services\NotificationService.cs" />
+    <Compile Include="ViewComponents\FloatLabels\FloatLabeledTextField.cs" />
+    <Compile Include="ViewComponents\FloatLabels\FloatLabelDesigner.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <ItemGroup>
