@@ -8,6 +8,9 @@ namespace Xmf2.Commons.MvxExtends.Converters
 	{
 		public const string Name = "IsNotNull";
 
+		private static IsNotNullValueConverter _instance;
+		public static IsNotNullValueConverter Instance => _instance ?? (_instance = new IsNotNullValueConverter());
+
 		public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
 		{
 			return value != null;
