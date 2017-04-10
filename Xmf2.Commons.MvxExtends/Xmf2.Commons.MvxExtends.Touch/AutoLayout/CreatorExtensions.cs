@@ -347,7 +347,8 @@ public static class CreatorExtensions
         return input;
     }
 
-    public static UITextField OnReturnNextResponder(this UITextField input, UITextField nextReponder, UIReturnKeyType returnKeyType = UIReturnKeyType.Default, Action action = null)
+	[Obsolete("Please use OnReturnNextResponder<TUIButton>(UITextField, UITextField, out Action, UIReturnKeyType, Action) instead")]
+	public static UITextField OnReturnNextResponder(this UITextField input, UITextField nextReponder, UIReturnKeyType returnKeyType = UIReturnKeyType.Default, Action action = null)
     {
         input.ReturnKeyType = returnKeyType;
         input.ShouldReturn += (textField) =>
@@ -361,12 +362,28 @@ public static class CreatorExtensions
         };
         return input;
     }
+	public static UITextField OnReturnNextResponder(this UITextField input, UITextField nextReponder, out Action unregisterAction, UIReturnKeyType returnKeyType = UIReturnKeyType.Default, Action action = null)
+	{
+		UITextFieldCondition shouldReturn = textField =>
+		{
+			action?.Invoke();
+			if (nextReponder == null)
+			{
+				return false;
+			}
+			return nextReponder.BecomeFirstResponder();
+		};
+		input.ReturnKeyType = returnKeyType;
+		input.ShouldReturn += shouldReturn;
+		unregisterAction = () => { input.ShouldReturn -= shouldReturn; };
+		return input;
+	}
 
-    #endregion UITextField
+	#endregion UITextField
 
-    #region UITextView
+	#region UITextView
 
-    public static UITextView CreateTextView(this object parent)
+	public static UITextView CreateTextView(this object parent)
     {
         return new UITextView();
     }
