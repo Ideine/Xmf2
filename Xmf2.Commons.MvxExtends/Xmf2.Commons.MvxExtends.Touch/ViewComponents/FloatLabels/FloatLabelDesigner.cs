@@ -5,9 +5,9 @@ using UIKit;
 
 namespace Xmf2.Commons.MvxExtends.Touch.ViewComponents.FloatLabels
 {
-    public class FloatLabelDesigner
+    public static class FloatLabelDesigner
     {
-        public static void SetupFloatingLabelLightTheme(FloatLabeledTextField input, string placeholder, UIResponder next = null, Action onEnterCallback = null)
+        public static FloatLabeledTextField SetupFloatingLabelLightTheme(this FloatLabeledTextField input, string placeholder, UIResponder next = null, Action onEnterCallback = null)
         {
             UIColor placeholderColor = UIColor.FromRGBA(0f, 0f, 0f, 0.5f);
             UIColor textColor = UIColor.Black;
@@ -16,10 +16,10 @@ namespace Xmf2.Commons.MvxExtends.Touch.ViewComponents.FloatLabels
             string clearImage = null;
             bool isEditable = true;
 
-            SetupFloatingLabel(input, placeholder, next, placeholderColor, textColor, placeholderFont, textFont, clearImage, isEditable, onEnterCallback);
+            return SetupFloatingLabel(input, placeholder, next, placeholderColor, textColor, placeholderFont, textFont, clearImage, isEditable, onEnterCallback);
         }
 
-        public void SetupFloatingLabelDarkTheme(FloatLabeledTextField input, string placeholder, UIResponder next = null, Action onEnterCallback = null)
+        public static FloatLabeledTextField SetupFloatingLabelDarkTheme(this FloatLabeledTextField input, string placeholder, UIResponder next = null, Action onEnterCallback = null)
         {
             UIColor placeholderColor = UIColor.FromRGBA(1f, 1f, 1f, 0.5f);
             UIColor textColor = UIColor.White;
@@ -28,10 +28,10 @@ namespace Xmf2.Commons.MvxExtends.Touch.ViewComponents.FloatLabels
             string clearImage = null;
             bool isEditable = true;
 
-            SetupFloatingLabel(input, placeholder, next, placeholderColor, textColor, placeholderFont, textFont, clearImage, isEditable, onEnterCallback);
+            return SetupFloatingLabel(input, placeholder, next, placeholderColor, textColor, placeholderFont, textFont, clearImage, isEditable, onEnterCallback);
         }
 
-        public void SetupFloatingLabelLightThemeDisabled(FloatLabeledTextField input, string placeholder)
+        public static FloatLabeledTextField SetupFloatingLabelLightThemeDisabled(this FloatLabeledTextField input, string placeholder)
         {
             UIColor placeholderColor = UIColor.FromRGBA(0f, 0f, 0f, 0.5f);
             UIColor textColor = UIColor.Black;
@@ -40,10 +40,10 @@ namespace Xmf2.Commons.MvxExtends.Touch.ViewComponents.FloatLabels
             string clearImage = null;
             bool isEditable = false;
 
-            SetupFloatingLabel(input, placeholder, null, placeholderColor, textColor, placeholderFont, textFont, clearImage, isEditable, null);
+            return SetupFloatingLabel(input, placeholder, null, placeholderColor, textColor, placeholderFont, textFont, clearImage, isEditable, null);
         }
 
-        public void SetupFloatingLabelDarkThemeDisabled(FloatLabeledTextField input, string placeholder)
+        public static FloatLabeledTextField SetupFloatingLabelDarkThemeDisabled(this FloatLabeledTextField input, string placeholder)
         {
             UIColor placeholderColor = UIColor.FromRGBA(1f, 1f, 1f, 0.5f);
             UIColor textColor = UIColor.White;
@@ -52,14 +52,14 @@ namespace Xmf2.Commons.MvxExtends.Touch.ViewComponents.FloatLabels
             string clearImage = null;
             bool isEditable = false;
 
-            SetupFloatingLabel(input, placeholder, null, placeholderColor, textColor, placeholderFont, textFont, clearImage, isEditable, null);
+            return SetupFloatingLabel(input, placeholder, null, placeholderColor, textColor, placeholderFont, textFont, clearImage, isEditable, null);
         }
 
-        public static void SetupFloatingLabel(FloatLabeledTextField input, string placeholder, UIResponder next, UIColor placeholderColor, UIColor textColor, UIFont placeholderFont, UIFont textFont, string clearImage, bool isEditable, Action onEnterCallback = null)
+        public static FloatLabeledTextField SetupFloatingLabel(this FloatLabeledTextField input, string placeholder, UIResponder next, UIColor placeholderColor, UIColor textColor, UIFont placeholderFont, UIFont textFont, string clearImage, bool isEditable, Action onEnterCallback = null)
         {
             if (input == null)
             {
-                return;
+                return input;
             }
 
             //placeholder
@@ -121,6 +121,7 @@ namespace Xmf2.Commons.MvxExtends.Touch.ViewComponents.FloatLabels
             {
                 input.RightViewMode = UITextFieldViewMode.Never;
             }
+			return input;
         }
 
         private static bool NextFirstResponder(UIResponder nextReponder)
