@@ -1,5 +1,6 @@
 ﻿using System;
 using CoreGraphics;
+using Foundation;
 using UIKit;
 
 
@@ -102,29 +103,29 @@ public static class CreatorExtensions
         return button;
     }
 
-	[Obsolete("Please use OnClick<TUIButton>(TUIButton, Action, Action) instead")]
+    [Obsolete("Please use OnClick<TUIButton>(TUIButton, Action, Action) instead")]
     public static TUIButton OnClick<TUIButton>(this TUIButton button, Action action) where TUIButton : UIButton
     {
         button.TouchUpInside += (sender, e) => action?.Invoke();
         return button;
     }
 
-	public static TUIButton OnClick<TUIButton>(this TUIButton button, Action action, out Action unregisterAction) where TUIButton : UIButton
-	{
-		EventHandler onTouchUpInside = (sender, e) => action?.Invoke();
-		button.TouchUpInside += onTouchUpInside;
-		unregisterAction = () =>
-		{
-			button.TouchUpInside -= onTouchUpInside;
-		};
-		return button;
-	}
+    public static TUIButton OnClick<TUIButton>(this TUIButton button, Action action, out Action unregisterAction) where TUIButton : UIButton
+    {
+        EventHandler onTouchUpInside = (sender, e) => action?.Invoke();
+        button.TouchUpInside += onTouchUpInside;
+        unregisterAction = () =>
+        {
+            button.TouchUpInside -= onTouchUpInside;
+        };
+        return button;
+    }
 
-	#endregion
+    #endregion
 
-	#region UIView
+    #region UIView
 
-	public static UIView CreateSeparator(this object parent)
+    public static UIView CreateSeparator(this object parent)
     {
         return new UIView();
     }
@@ -134,48 +135,48 @@ public static class CreatorExtensions
         return new UIView();
     }
 
-	public static TParentView WithSubviews<TParentView>(this TParentView parentView, UIView view) where TParentView : UIView
-	{
-		parentView.AddSubview(view);
-		return parentView;
-	}
-	public static TParentView WithSubviews<TParentView>(this TParentView parentView, UIView view1, UIView view2) where TParentView : UIView
-	{
-		parentView.AddSubviews(view1, view2);
-		return parentView;
-	}
-	public static TParentView WithSubviews<TParentView>(this TParentView parentView, UIView view1, UIView view2, UIView view3) where TParentView : UIView
-	{
-		parentView.AddSubviews(view1, view2, view3);
-		return parentView;
-	}
-	public static TParentView WithSubviews<TParentView>(this TParentView parentView, UIView view1, UIView view2, UIView view3, UIView view4) where TParentView : UIView
-	{
-		parentView.AddSubviews(view1, view2, view3, view4);
-		return parentView;
-	}
-	public static TParentView WithSubviews<TParentView>(this TParentView parentView, UIView view1, UIView view2, UIView view3, UIView view4, UIView view5) where TParentView : UIView
-	{
-		parentView.AddSubviews(view1, view2, view3, view4, view5);
-		return parentView;
-	}
-	public static TParentView WithSubviews<TParentView>(this TParentView parentView, UIView view1, UIView view2, UIView view3, UIView view4, UIView view5, UIView view6) where TParentView : UIView
-	{
-		parentView.AddSubviews(view1, view2, view3, view4, view5, view6);
-		return parentView;
-	}
-	public static TParentView WithSubviews<TParentView>(this TParentView parentView, UIView view1, UIView view2, UIView view3, UIView view4, UIView view5, UIView view6, params UIView[] views) where TParentView : UIView
-	{
-		parentView.AddSubviews(view1, view2, view3, view4, view5, view6);
-		parentView.AddSubviews(views);
-		return parentView;
-	}
+    public static TParentView WithSubviews<TParentView>(this TParentView parentView, UIView view) where TParentView : UIView
+    {
+        parentView.AddSubview(view);
+        return parentView;
+    }
+    public static TParentView WithSubviews<TParentView>(this TParentView parentView, UIView view1, UIView view2) where TParentView : UIView
+    {
+        parentView.AddSubviews(view1, view2);
+        return parentView;
+    }
+    public static TParentView WithSubviews<TParentView>(this TParentView parentView, UIView view1, UIView view2, UIView view3) where TParentView : UIView
+    {
+        parentView.AddSubviews(view1, view2, view3);
+        return parentView;
+    }
+    public static TParentView WithSubviews<TParentView>(this TParentView parentView, UIView view1, UIView view2, UIView view3, UIView view4) where TParentView : UIView
+    {
+        parentView.AddSubviews(view1, view2, view3, view4);
+        return parentView;
+    }
+    public static TParentView WithSubviews<TParentView>(this TParentView parentView, UIView view1, UIView view2, UIView view3, UIView view4, UIView view5) where TParentView : UIView
+    {
+        parentView.AddSubviews(view1, view2, view3, view4, view5);
+        return parentView;
+    }
+    public static TParentView WithSubviews<TParentView>(this TParentView parentView, UIView view1, UIView view2, UIView view3, UIView view4, UIView view5, UIView view6) where TParentView : UIView
+    {
+        parentView.AddSubviews(view1, view2, view3, view4, view5, view6);
+        return parentView;
+    }
+    public static TParentView WithSubviews<TParentView>(this TParentView parentView, UIView view1, UIView view2, UIView view3, UIView view4, UIView view5, UIView view6, params UIView[] views) where TParentView : UIView
+    {
+        parentView.AddSubviews(view1, view2, view3, view4, view5, view6);
+        parentView.AddSubviews(views);
+        return parentView;
+    }
 
-	#endregion
+    #endregion
 
-	#region ScrollView
+    #region ScrollView
 
-	public static UIScrollView CreateVerticalScroll(this object parent)
+    public static UIScrollView CreateVerticalScroll(this object parent)
     {
         return new UIScrollView
         {
@@ -326,6 +327,23 @@ public static class CreatorExtensions
         input.Placeholder = placeholder;
         return input;
     }
+    public static UITextField WithPlaceholderAndTextColor(this UITextField input, string placeholder, UIColor color)
+    {
+        input.AttributedPlaceholder = new NSAttributedString(placeholder, input.Font, color);
+        return input;
+    }
+
+    public static UITextField WithPlaceholderTextColor(this UITextField input, UIColor color)
+    {
+        input.AttributedPlaceholder = new NSAttributedString(string.Empty, input.Font, color);
+        return input;
+    }
+
+    public static UITextField WithCursorColor(this UITextField input, UIColor color)
+    {
+        input.TintColor = color;
+        return input;
+    }
 
     public static UITextField OnReturn(this UITextField input, Action action, bool dismissKeyboard)
     {
@@ -438,32 +456,32 @@ public static class CreatorExtensions
         return view;
     }
 
-	public static TView WithBorder<TView>(this TView view, UIColor borderColor, int size) where TView : UIView
-	{
-		view.Layer.BorderColor = borderColor.CGColor;
-		view.Layer.BorderWidth = size;
-		return view;
-	}
+    public static TView WithBorder<TView>(this TView view, UIColor borderColor, int size) where TView : UIView
+    {
+        view.Layer.BorderColor = borderColor.CGColor;
+        view.Layer.BorderWidth = size;
+        return view;
+    }
 
-	public static TView WithShadow<TView>(this TView view, UIColor shadowColor, int left, int top, float radius = 8f, float opacity = 1f) where TView : UIView
-	{
-		view.Layer.ShadowColor = shadowColor.CGColor;
-		view.Layer.ShadowOpacity = opacity;
-		view.Layer.ShadowRadius = radius;
-		view.Layer.ShadowOffset = new CGSize(left, top);
+    public static TView WithShadow<TView>(this TView view, UIColor shadowColor, int left, int top, float radius = 8f, float opacity = 1f) where TView : UIView
+    {
+        view.Layer.ShadowColor = shadowColor.CGColor;
+        view.Layer.ShadowOpacity = opacity;
+        view.Layer.ShadowRadius = radius;
+        view.Layer.ShadowOffset = new CGSize(left, top);
 
-		return view;
-	}
+        return view;
+    }
 
-	public static TView WithoutShadow<TView>(this TView view) where TView : UIView
-	{
-		view.Layer.ShadowColor = UIColor.Clear.CGColor;
-		view.Layer.ShadowOpacity = 0;
-		view.Layer.ShadowRadius = 0;
-		view.Layer.ShadowOffset = CGSize.Empty;
+    public static TView WithoutShadow<TView>(this TView view) where TView : UIView
+    {
+        view.Layer.ShadowColor = UIColor.Clear.CGColor;
+        view.Layer.ShadowOpacity = 0;
+        view.Layer.ShadowRadius = 0;
+        view.Layer.ShadowOffset = CGSize.Empty;
 
-		return view;
-	}
+        return view;
+    }
 
     public static TView WithCornerRadius<TView>(this TView view, int size) where TView : UIView
     {
