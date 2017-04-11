@@ -103,21 +103,9 @@ public static class CreatorExtensions
         return button;
     }
 
-    [Obsolete("Please use OnClick<TUIButton>(TUIButton, Action, Action) instead")]
     public static TUIButton OnClick<TUIButton>(this TUIButton button, Action action) where TUIButton : UIButton
     {
         button.TouchUpInside += (sender, e) => action?.Invoke();
-        return button;
-    }
-
-    public static TUIButton OnClick<TUIButton>(this TUIButton button, Action action, out Action unregisterAction) where TUIButton : UIButton
-    {
-        EventHandler onTouchUpInside = (sender, e) => action?.Invoke();
-        button.TouchUpInside += onTouchUpInside;
-        unregisterAction = () =>
-        {
-            button.TouchUpInside -= onTouchUpInside;
-        };
         return button;
     }
 
@@ -365,37 +353,20 @@ public static class CreatorExtensions
         return input;
     }
 
-	[Obsolete("Please use OnReturnNextResponder<TUIButton>(UITextField, UITextField, out Action, UIReturnKeyType, Action) instead")]
-	public static UITextField OnReturnNextResponder(this UITextField input, UITextField nextReponder, UIReturnKeyType returnKeyType = UIReturnKeyType.Default, Action action = null)
+	public static UITextField OnReturnNextResponder(this UITextField input, UITextField nextResponder, UIReturnKeyType returnKeyType = UIReturnKeyType.Default, Action action = null)
     {
         input.ReturnKeyType = returnKeyType;
         input.ShouldReturn += (textField) =>
         {
             action?.Invoke();
-            if (nextReponder == null)
+            if (nextResponder == null)
             {
                 return false;
             }
-            return nextReponder.BecomeFirstResponder();
+            return nextResponder.BecomeFirstResponder();
         };
         return input;
     }
-	public static UITextField OnReturnNextResponder(this UITextField input, UITextField nextReponder, out Action unregisterAction, UIReturnKeyType returnKeyType = UIReturnKeyType.Default, Action action = null)
-	{
-		UITextFieldCondition shouldReturn = textField =>
-		{
-			action?.Invoke();
-			if (nextReponder == null)
-			{
-				return false;
-			}
-			return nextReponder.BecomeFirstResponder();
-		};
-		input.ReturnKeyType = returnKeyType;
-		input.ShouldReturn += shouldReturn;
-		unregisterAction = () => { input.ShouldReturn -= shouldReturn; };
-		return input;
-	}
 
 	#endregion UITextField
 
