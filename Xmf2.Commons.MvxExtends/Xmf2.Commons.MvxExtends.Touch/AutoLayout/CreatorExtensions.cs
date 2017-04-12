@@ -310,7 +310,13 @@ public static class CreatorExtensions
         return input;
     }
 
-    public static UITextField WithPlaceholder(this UITextField input, string placeholder)
+	public static UITextView WithSystemFont(this UITextView input, int size, UIFontWeight weight = UIFontWeight.Regular)
+	{
+		input.Font = UIFont.SystemFontOfSize(size, weight);
+		return input;
+	}
+
+	public static UITextField WithPlaceholder(this UITextField input, string placeholder)
     {
         input.Placeholder = placeholder;
         return input;
@@ -383,6 +389,7 @@ public static class CreatorExtensions
         return input;
     }
 
+
     #endregion UITextView
 
     #region UIImageView
@@ -413,6 +420,13 @@ public static class CreatorExtensions
 	public static UIImageView UniformToFill(this UIImageView view)
 	{
 		view.ContentMode = UIViewContentMode.ScaleAspectFill;
+		return view;
+	}
+
+	public static UIImageView UniformToFill(this UIImageView view, bool clipsToBounds)
+	{
+		view.ContentMode = UIViewContentMode.ScaleAspectFill;
+		view.ClipsToBounds = clipsToBounds;
 		return view;
 	}
 
