@@ -410,6 +410,12 @@ public static class CreatorExtensions
         return view;
     }
 
+	public static UIImageView UniformToFill(this UIImageView view)
+	{
+		view.ContentMode = UIViewContentMode.ScaleAspectFill;
+		return view;
+	}
+
     #endregion
 
     #region Generic

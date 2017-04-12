@@ -57,6 +57,12 @@ public static class Layout
 		view.AddConstraints(addedConstraints);
 	}
 
+	public static TUIView WithLayoutConstraint<TUIView>(this TUIView view, Expression<Func<bool>> constraintsExpression, float priority = RequiredPriority) where TUIView : UIView
+	{
+		ConstrainLayout(view, constraintsExpression, priority);
+		return view;
+	}
+
 	private static IEnumerable<BinaryExpression> FindBinaryExpressionsRecursive(Expression expression)
 	{
 		var binaryExpression = expression as BinaryExpression;
