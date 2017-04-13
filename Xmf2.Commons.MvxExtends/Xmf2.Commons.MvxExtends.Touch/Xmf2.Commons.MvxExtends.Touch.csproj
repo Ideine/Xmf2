@@ -62,6 +62,7 @@
     <Compile Include="ViewComponents\ItemsControl.cs" />
     <Compile Include="ViewComponents\IUIModelComponent.cs" />
     <Compile Include="ViewComponents\BaseUIModelComponent.cs" />
+    <Compile Include="Services\LicenceReaderService.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <ItemGroup>

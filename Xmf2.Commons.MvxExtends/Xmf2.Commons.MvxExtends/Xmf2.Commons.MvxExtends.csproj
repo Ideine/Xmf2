@@ -62,6 +62,13 @@
     <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="Extensions\SemaphoreSlimExtensions.cs" />
     <Compile Include="Extensions\TaskExtensions.cs" />
+    <Compile Include="Licences\ILicenceReaderService.cs" />
+    <Compile Include="Licences\LicenceStyle.cs" />
+    <Compile Include="Licences\LicencesLoader.cs" />
+    <Compile Include="Licences\NoticesHtmlBuilder.cs" />
+    <Compile Include="Licences\Models\Licence.cs" />
+    <Compile Include="Licences\Models\Notice.cs" />
+    <Compile Include="Licences\Models\Notices.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Xmf2.Commons\Xmf2.Commons\Xmf2.Commons.csproj">

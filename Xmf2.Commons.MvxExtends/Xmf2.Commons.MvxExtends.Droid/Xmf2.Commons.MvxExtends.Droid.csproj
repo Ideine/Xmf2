@@ -92,6 +92,7 @@
     <Compile Include="Targets\TextViewTextColorTargetBinding.cs" />
     <Compile Include="Views\BaseView.cs" />
     <Compile Include="Views\CircleImageView.cs" />
+    <Compile Include="Services\LicenceReaderService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />
