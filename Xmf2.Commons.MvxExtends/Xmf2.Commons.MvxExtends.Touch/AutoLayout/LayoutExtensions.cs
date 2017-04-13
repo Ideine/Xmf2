@@ -201,6 +201,11 @@ public static class CustomAutoLayoutExtensions
 		containerView.ConstrainLayout(() => view.CenterY() == containerView.CenterY());
 		return containerView;
 	}
+	public static UIView CenterVertically(this UIView containerView, UIView view, int margin = 0)
+	{
+		containerView.ConstrainLayout(() => view.CenterY() == containerView.CenterY() + margin);
+		return containerView;
+	}
 	public static ConstrainSet<UIView> CenterVertically(this ConstrainSet<UIView> constrainSet, UIView view)
 	{
 		var containerView = constrainSet.View;
