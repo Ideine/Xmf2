@@ -511,6 +511,7 @@ public static class CreatorExtensions
 
     public static TView AddTapAction<TView>(this TView view, Action tapped) where TView : UIView
     {
+        view.UserInteractionEnabled = true;
         UITapGestureRecognizer recognizer = new UITapGestureRecognizer(tapped);
         view.AddGestureRecognizer(recognizer);
         return view;
