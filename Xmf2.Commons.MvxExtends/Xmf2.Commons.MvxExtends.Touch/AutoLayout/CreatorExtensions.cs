@@ -332,6 +332,13 @@ public static class CreatorExtensions
         input.Placeholder = placeholder;
         return input;
     }
+
+	public static UITextField WithCarretColor(this UITextField input, UIColor color)
+	{
+		input.TintColor = color;
+		return input;
+	}
+
     public static UITextField WithPlaceholderAndTextColor(this UITextField input, string placeholder, UIColor color)
     {
         input.AttributedPlaceholder = new NSAttributedString(placeholder, input.Font, color);
@@ -350,19 +357,20 @@ public static class CreatorExtensions
         return input;
     }
 
-    public static UITextField OnReturn(this UITextField input, Action action, bool dismissKeyboard)
-    {
-        input.ShouldReturn += (textField) =>
-        {
-            if (dismissKeyboard)
-            {
-                textField.ResignFirstResponder();
-            }
-            action?.Invoke();
-            return true;
-        };
-        return input;
-    }
+	public static UITextField OnReturn(this UITextField input, Action action, bool dismissKeyboard, UIReturnKeyType returnKeyType = UIReturnKeyType.Default)
+	{
+		input.ReturnKeyType = returnKeyType;
+		input.ShouldReturn += (textField) =>
+		{
+			if (dismissKeyboard)
+			{
+				textField.ResignFirstResponder();
+			}
+			action?.Invoke();
+			return true;
+		};
+		return input;
+	}
 
     public static UITextField WithAutocapitalization(this UITextField input, UITextAutocapitalizationType autocapitalizationType = UITextAutocapitalizationType.Words)
     {
