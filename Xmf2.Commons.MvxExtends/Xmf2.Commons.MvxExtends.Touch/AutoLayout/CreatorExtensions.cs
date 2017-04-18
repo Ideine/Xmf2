@@ -449,11 +449,17 @@ public static class CreatorExtensions
 		return view;
 	}
 
-    #endregion
+	public static UIImageView WithContentMode(this UIImageView view, UIViewContentMode contentMode)
+	{
+		view.ContentMode = contentMode;
+		return view;
+	}
 
-    #region Generic
+	#endregion UIImageView
 
-    public static TView Hide<TView>(this TView view) where TView : UIView
+	#region Generic
+
+	public static TView Hide<TView>(this TView view) where TView : UIView
     {
         view.Hidden = true;
         return view;
