@@ -19,6 +19,11 @@ public static class CreatorExtensions
         return new UIButton(type);
     }
 
+	public static UIHighlightButton CreateHighlightButton(this object parent)
+	{
+		return new UIHighlightButton();
+	}
+
     public static TUIButton WithTitle<TUIButton>(this TUIButton button, string title) where TUIButton : UIButton
     {
         button.SetTitle(title, UIControlState.Normal);
@@ -36,6 +41,12 @@ public static class CreatorExtensions
         button.SetTitleColor(color, UIControlState.Highlighted);
         return button;
     }
+
+	public static TUIButton WithBackgroundColorHighlight<TUIButton>(this TUIButton button, UIColor color) where TUIButton : UIHighlightButton
+	{
+		button.HighlightColor = color;
+		return button;
+	}
 
     public static TUIButton WithTextColorSelected<TUIButton>(this TUIButton button, UIColor color) where TUIButton : UIButton
     {
