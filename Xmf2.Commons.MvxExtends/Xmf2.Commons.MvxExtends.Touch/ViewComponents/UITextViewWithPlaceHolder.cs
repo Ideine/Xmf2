@@ -32,6 +32,14 @@ namespace Xmf2.Commons.MvxExtends.Touch.ViewComponents
 				this.DrawPlaceholder();
 			}
 		}
+		public override string Text
+		{
+			set
+			{
+				base.Text = value;
+				this.UpdatePlaceHolderVisibility();
+			}
+		}
 		public UIColor PlaceholderColor { get { return _placeholderLabel.TextColor; } set { _placeholderLabel.TextColor = value; } }
 		public UIFont PlaceholderFont { get { return _placeholderLabel.Font; } set { _placeholderLabel.Font = value; } }
 
@@ -58,6 +66,11 @@ namespace Xmf2.Commons.MvxExtends.Touch.ViewComponents
 		}
 
 		private void OnEnded(object sender, EventArgs e)
+		{
+			this.UpdatePlaceHolderVisibility();
+		}
+
+		private void UpdatePlaceHolderVisibility()
 		{
 			this._placeholderLabel.Hidden = !string.IsNullOrWhiteSpace(this.Text);
 		}
