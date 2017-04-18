@@ -10,27 +10,46 @@ namespace Xmf2.Commons.MvxExtends.Touch.ViewComponents
 
 		public UITextViewWithPlaceHolder() : base()
 		{
-			this._placeholderLabel = new UILabel() { BackgroundColor = UIColor.Clear };
+			this._placeholderLabel = new UILabel()
+			{
+				BackgroundColor = UIColor.Clear,
+				LineBreakMode = UILineBreakMode.WordWrap,
+				TextAlignment = UITextAlignment.Natural,
+				Lines = 0
+			};
 			this.PlaceholderColor = UIColor.Gray;
 			this.Started += this.OnStarted;
 			this.Ended += this.OnEnded;
 			this.Add(this._placeholderLabel);
 		}
 
-		public string Placeholder { get { return _placeholderLabel.Text; } set { _placeholderLabel.Text = value; } }
+		public UILabel Placeholder { get { return _placeholderLabel; } }
+		public string PlaceholderText {
+			get { return _placeholderLabel.Text; }
+			set
+			{
+				_placeholderLabel.Text = value;
+				this.DrawPlaceholder();
+			}
+		}
 		public UIColor PlaceholderColor { get { return _placeholderLabel.TextColor; } set { _placeholderLabel.TextColor = value; } }
 		public UIFont PlaceholderFont { get { return _placeholderLabel.Font; } set { _placeholderLabel.Font = value; } }
 
 		public override void Draw(CGRect rect)
 		{
 			base.Draw(rect);
+			this.DrawPlaceholder();
+		}
+
+		private void DrawPlaceholder()
+		{
 			var inset	   = this.TextContainerInset;
 			var leftInset  = this.TextContainer.LineFragmentPadding + inset.Left;
 			var rightInset = this.TextContainer.LineFragmentPadding + inset.Right;
 			var placeHolderMaxSize = new CGSize(width: this.Frame.Width  - (leftInset + rightInset)
 											 , height: this.Frame.Height - (inset.Top + inset.Bottom));
-			var size = _placeholderLabel.Text.StringSize(_placeholderLabel.Font, placeHolderMaxSize, UILineBreakMode.WordWrap);
-			this._placeholderLabel.Frame = new CGRect(new CGPoint(leftInset, inset.Top), size);
+			this._placeholderLabel.Frame = new CGRect(new CGPoint(leftInset, inset.Top), placeHolderMaxSize);
+			this._placeholderLabel.SizeToFit();
 		}
 
 		private void OnStarted(object sender, EventArgs e)
