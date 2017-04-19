@@ -301,7 +301,14 @@ public static class CreatorExtensions
 		return input;
 	}
 
-    public static UITextField WithTextColor(this UITextField input, UIColor color)
+	public static UITextField With(this UITextField input, UIReturnKeyType returnKeyType)
+	{
+		input.ReturnKeyType = returnKeyType;
+		return input;
+	}
+
+
+	public static UITextField WithTextColor(this UITextField input, UIColor color)
     {
         input.TextColor = color;
         return input;
