@@ -559,6 +559,11 @@ public static class CreatorExtensions
         return view;
     }
 
-    #endregion
+	#endregion
+
+	public static UIEdgeInsets Add(this UIEdgeInsets insets, float top = 0f, float left = 0f, float bottom = 0f, float right = 0f)
+	{
+		return new UIEdgeInsets(top + insets.Top, left + insets.Left, bottom + insets.Bottom, right + insets.Right);
+	}
 
 }
