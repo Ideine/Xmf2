@@ -22,5 +22,17 @@ namespace Xmf2.Commons.Extensions
         {
             return lst.Contains(str);
         }
+
+		/// <summary>
+		/// Concatène les membres d'une collection System.Collections.Generic.IEnumerable`1
+		/// construite de type System.String, en utilisant le séparateur spécifié entre chaque
+		/// membre.
+		/// </summary>
+		/// <param name="values">Collection qui contient les chaînes à concaténer.</param>
+		/// <param name="separator">Chaîne à utiliser comme séparateur. separator est inclus dans la chaîne retournée  uniquement si values contient plusieurs éléments.</param>
+		public static string Join(this IEnumerable<string> values, string separator)
+		{
+			return String.Join(separator, values);
+		}
     }
 }
