@@ -291,6 +291,16 @@ public static class CreatorExtensions
         return input;
     }
 
+	public static UITextField AsPhonepadField(this UITextField input, UIReturnKeyType returnKeyType)
+	{
+		input.KeyboardType = UIKeyboardType.PhonePad;
+		input.SpellCheckingType = UITextSpellCheckingType.No;
+		input.ReturnKeyType = returnKeyType;
+		input.AutocorrectionType = UITextAutocorrectionType.No;
+		input.AutocapitalizationType = UITextAutocapitalizationType.None;
+		return input;
+	}
+
     public static UITextField WithTextColor(this UITextField input, UIColor color)
     {
         input.TextColor = color;
