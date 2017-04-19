@@ -69,6 +69,7 @@
     <Compile Include="Licences\Models\Licence.cs" />
     <Compile Include="Licences\Models\Notice.cs" />
     <Compile Include="Licences\Models\Notices.cs" />
+    <Compile Include="Converters\LambdaConverter.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Xmf2.Commons\Xmf2.Commons\Xmf2.Commons.csproj">
