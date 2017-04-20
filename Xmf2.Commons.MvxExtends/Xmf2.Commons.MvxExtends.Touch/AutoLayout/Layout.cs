@@ -6,6 +6,7 @@ using System.Reflection;
 using Foundation;
 using ObjCRuntime;
 using UIKit;
+using Xmf2.Commons.MvxExtends.Touch.AutoLayout;
 
 public static class Layout
 {
@@ -61,6 +62,15 @@ public static class Layout
 	{
 		ConstrainLayout(view, constraintsExpression, priority);
 		return view;
+	}
+
+	public static ConstrainSet<UIView> WithLayoutConstraint(this ConstrainSet<UIView> constrainSet, Expression<Func<bool>> constraintsExpression, float priority = RequiredPriority)
+	{
+		var containerView = constrainSet.View;
+		NSLayoutConstraint[] addedConstraints;
+		containerView.ConstrainLayout(constraintsExpression, out addedConstraints);
+		constrainSet.Constraints.AddRange(addedConstraints);
+		return constrainSet;
 	}
 
 	private static IEnumerable<BinaryExpression> FindBinaryExpressionsRecursive(Expression expression)

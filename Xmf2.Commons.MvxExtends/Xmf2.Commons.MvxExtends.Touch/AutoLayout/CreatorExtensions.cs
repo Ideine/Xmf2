@@ -533,7 +533,7 @@ public static class CreatorExtensions
         return view;
     }
 
-    public static TView WithCornerRadius<TView>(this TView view, int size) where TView : UIView
+    public static TView WithCornerRadius<TView>(this TView view, nfloat size) where TView : UIView
     {
         view.Layer.CornerRadius = size;
         return view;
