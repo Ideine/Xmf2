@@ -73,14 +73,14 @@
     <Reference Include="Ideine.Rest">
       <HintPath>..\packages\Ideine.Rest.1.0.0\lib\netstandard1.1\Ideine.Rest.dll</HintPath>
     </Reference>
-    <Reference Include="Polly">
-      <HintPath>..\packages\Polly.5.0.7\lib\netstandard1.0\Polly.dll</HintPath>
-    </Reference>
     <Reference Include="FubarCoder.RestSharp.Portable.Core">
       <HintPath>..\..\..\..\packages\FubarCoder.RestSharp.Portable.Core.4.0.8\lib\portable45-net45+win8+wp8+wpa81\FubarCoder.RestSharp.Portable.Core.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\..\..\..\packages\Newtonsoft.Json.10.0.2\lib\portable-net45+win8+wpa81+wp8\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Polly">
+      <HintPath>..\..\..\..\packages\Polly.5.0.6\lib\netstandard1.0\Polly.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
