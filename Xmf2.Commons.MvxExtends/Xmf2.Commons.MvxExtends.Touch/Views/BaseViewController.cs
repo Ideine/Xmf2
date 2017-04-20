@@ -3,6 +3,7 @@ using MvvmCross.iOS.Support.Views;
 using System;
 using UIKit;
 using Xmf2.Commons.MvxExtends.ViewModels;
+using MvvmCross.Platform.Platform;
 
 namespace Xmf2.Commons.MvxExtends.Touch.Views
 {
@@ -24,6 +25,8 @@ namespace Xmf2.Commons.MvxExtends.Touch.Views
 			base.ViewDidLoad();
 			this.ViewModel?.OnEnter();
 			this.BindControls();
+
+			EdgesForExtendedLayout = UIRectEdge.None;
 		}
 
 		public override void ViewWillAppear(bool animated)
@@ -37,8 +40,7 @@ namespace Xmf2.Commons.MvxExtends.Touch.Views
 
 			this.NavigationController.SetNavigationBarHidden(true, false);
 
-			if (RespondsToSelector(new ObjCRuntime.Selector("edgesForExtendedLayout")))
-				EdgesForExtendedLayout = UIRectEdge.None;
+			EdgesForExtendedLayout = UIRectEdge.None;
 
 			this.NavigationController.NavigationBar.BarStyle = UIBarStyle.Default;
 			this.ViewModel?.OnResume();
