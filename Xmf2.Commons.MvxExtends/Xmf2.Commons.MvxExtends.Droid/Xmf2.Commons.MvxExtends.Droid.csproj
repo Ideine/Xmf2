@@ -94,6 +94,7 @@
     <Compile Include="Views\BaseView.cs" />
     <Compile Include="Views\CircleImageView.cs" />
     <Compile Include="Services\LicenceReaderService.cs" />
+    <Compile Include="Views\MvxTopCropImageView.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />
