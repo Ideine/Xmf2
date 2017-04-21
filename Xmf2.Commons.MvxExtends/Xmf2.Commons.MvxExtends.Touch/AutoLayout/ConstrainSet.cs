@@ -16,14 +16,16 @@ namespace Xmf2.Commons.MvxExtends.Touch.AutoLayout
 
 		public List<NSLayoutConstraint> Constraints { get; private set; }
 
-		public void Activate()
+		public ConstrainSet<TUIView> Activate()
 		{
 			NSLayoutConstraint.ActivateConstraints(this.Constraints.ToArray());
+			return this;
 		}
 
-		public void Deactivate()
+		public ConstrainSet<TUIView> Deactivate()
 		{
 			NSLayoutConstraint.DeactivateConstraints(this.Constraints.ToArray());
+			return this;
 		}
 
 		#region IDisposable
