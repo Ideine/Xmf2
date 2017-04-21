@@ -55,7 +55,7 @@ public static class CustomAutoLayoutExtensions
 		foreach (UIView view in views)
 		{
 			containerView.ConstrainLayout(() =>
-										  view.CenterX() == containerView.CenterX()
+										  view.CenterY() == containerView.CenterY()
 										  && view.Height() == containerView.Height()
 										 );
 		}
