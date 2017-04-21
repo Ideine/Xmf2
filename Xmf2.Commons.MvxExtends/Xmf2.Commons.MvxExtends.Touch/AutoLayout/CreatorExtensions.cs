@@ -404,7 +404,7 @@ public static class CreatorExtensions
 
 
 
-	public static UITextField OnReturnNextResponder(this UITextField input, UITextField nextResponder, UIReturnKeyType returnKeyType = UIReturnKeyType.Default, Action action = null)
+	public static UITextField OnReturnNextResponder(this UITextField input, UIResponder nextResponder, UIReturnKeyType returnKeyType = UIReturnKeyType.Default, Action action = null)
 	{
 		input.ReturnKeyType = returnKeyType;
 		input.ShouldReturn += (textField) =>
