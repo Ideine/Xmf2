@@ -201,9 +201,9 @@ public static class CustomAutoLayoutExtensions
 		containerView.ConstrainLayout(() => view.CenterY() == containerView.CenterY());
 		return containerView;
 	}
-	public static UIView CenterVertically(this UIView containerView, UIView view, int margin = 0)
+	public static UIView CenterVertically(this UIView containerView, UIView view, int margin = 0, float priority = 1000)
 	{
-		containerView.ConstrainLayout(() => view.CenterY() == containerView.CenterY() + margin);
+		containerView.ConstrainLayout(() => view.CenterY() == containerView.CenterY() + margin, priority: priority);
 		return containerView;
 	}
 	public static ConstrainSet<UIView> CenterVertically(this ConstrainSet<UIView> constrainSet, UIView view)
@@ -248,6 +248,12 @@ public static class CustomAutoLayoutExtensions
 		containerView.ConstrainLayout(() => bottom.Top() == top.Bottom() + margin);
 		return containerView;
 	}
+	public static UIView MinimumVerticalSpace(this UIView containerView, UIView top, UIView bottom, int margin = 0)
+	{
+		containerView.ConstrainLayout(() => bottom.Top() >= top.Bottom() + margin);
+		return containerView;
+	}
+
 	public static ConstrainSet<UIView> VerticalSpace(this ConstrainSet<UIView> constrainSet, UIView top, UIView bottom, int margin = 0)
 	{
 		var containerView = constrainSet.View;
