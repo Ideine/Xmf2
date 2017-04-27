@@ -1,14 +1,29 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Xmf2.Commons.Extensions
 {
-    public static class StringExtensions
-    {
-        public static bool IsEmpty(this string str)
+	public static class StringExtensions
+	{
+		/// <summary>
+		/// Retourne une valeur qui indique si l'objet System.String spécifié apparaît dans cette chaîne.
+		/// </summary>
+		/// <param name="str">String sur laquelle effectuer la recherche.</param>
+		/// <param name="value">Chaîne à rechercher.</param>
+		/// <param name="comparisonType">Une des valeurs d'énumération qui spécifie le mode de comparaison des chaînes.</param>
+		/// <returns>true si le paramètre value apparaît dans cette chaîne, ou si value est la chaîne vide ("") ; sinon, false.</returns>
+		/// <exception cref="System.ArgumentNullException"><paramref name="Value"/> ou <paramref name="str"/> a la valeur null</exception>
+		public static bool Contains(this string str, string value, StringComparison comparisonType)
+		{
+			if (str == null)
+			{
+				throw new ArgumentNullException(nameof(str));
+			}
+			return (str.IndexOf(value, comparisonType) != -1);
+		}
+
+		public static bool IsEmpty(this string str)
         {
             return string.IsNullOrEmpty(str);
         }
@@ -34,5 +49,5 @@ namespace Xmf2.Commons.Extensions
 		{
 			return String.Join(separator, values);
 		}
-    }
+	}
 }
