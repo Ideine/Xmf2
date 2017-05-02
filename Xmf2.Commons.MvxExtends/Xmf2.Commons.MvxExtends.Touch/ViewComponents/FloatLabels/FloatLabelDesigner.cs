@@ -72,7 +72,6 @@ namespace Xmf2.Commons.MvxExtends.Touch.ViewComponents.FloatLabels
             NSMutableAttributedString ph = new NSMutableAttributedString(placeholder);
             ph.SetAttributes(firstAttributes.Dictionary, new NSRange(0, placeholder.Length));
             input.AttributedPlaceholder = ph;
-
             input.FloatingLabelActiveTextColor = placeholderColor;
             input.FloatingLabelFont = placeholderFont;
             input.FloatingLabelTextColor = placeholderColor;
@@ -82,8 +81,12 @@ namespace Xmf2.Commons.MvxExtends.Touch.ViewComponents.FloatLabels
             input.UserInteractionEnabled = isEditable;
             input.ClearButtonMode = UITextFieldViewMode.Never;
 
-            if (isEditable)
-            {
+            if (!isEditable)
+			{
+				input.RightViewMode = UITextFieldViewMode.Never;
+			}
+			else
+			{
                 if (next != null)
                 {
                     input.ShouldReturn += (textField) =>
@@ -117,14 +120,10 @@ namespace Xmf2.Commons.MvxExtends.Touch.ViewComponents.FloatLabels
                 input.RightViewMode = UITextFieldViewMode.Always;
                 input.RightView = button;
             }
-            else
-            {
-                input.RightViewMode = UITextFieldViewMode.Never;
-            }
 			return input;
         }
 
-        private static bool NextFirstResponder(UIResponder nextReponder)
+		private static bool NextFirstResponder(UIResponder nextReponder)
         {
             if (nextReponder == null)
             {

@@ -8,12 +8,18 @@ namespace Xmf2.Commons.MvxExtends.Touch.ViewComponents.FloatLabels
 {
     [Register("FloatLabeledTextField"), DesignTimeVisible(true)]
     public class FloatLabeledTextField : UITextField
-    {
-        private readonly UILabel _floatingLabel;
+	{
+		#region Fields
+
+		private UILabel _floatingLabel;
+		
+		#endregion Fields
 
         public event EventHandler TextCleared;
 
-        public UIColor FloatingLabelTextColor { get; set; }
+		#region Properties
+		public UIColor FloatingLabelTextColor { get; set; }
+
         public UIColor FloatingLabelActiveTextColor { get; set; }
 
         public UIFont FloatingLabelFont
@@ -21,68 +27,60 @@ namespace Xmf2.Commons.MvxExtends.Touch.ViewComponents.FloatLabels
             get { return _floatingLabel.Font; }
             set { _floatingLabel.Font = value; }
         }
+		public override string Placeholder
+		{
+			get { return base.Placeholder; }
+			set
+			{
+				base.Placeholder = value;
 
-        public FloatLabeledTextField(IntPtr p) : base(p)
-        {
-            _floatingLabel = new UILabel()
-            {
-                Alpha = 0.0f
-            };
+				_floatingLabel.Text = value.ToUpper();
+				_floatingLabel.TextColor = UIColor.White;
+				_floatingLabel.SizeToFit();
+				_floatingLabel.Frame =
+					new CGRect(
+						0, _floatingLabel.Font.LineHeight,
+						_floatingLabel.Frame.Size.Width, _floatingLabel.Frame.Size.Height);
+			}
+		}
 
-            AddSubview(_floatingLabel);
+		#endregion Properties
 
-            FloatingLabelTextColor = UIColor.Gray;
-            FloatingLabelActiveTextColor = UIColor.Blue;
-            FloatingLabelFont = UIFont.BoldSystemFontOfSize(12);
-        }
+		#region Constructors
+
+		public FloatLabeledTextField(IntPtr p) : base(p)
+		{
+			this.ConstructorInit();
+		}
 
         public FloatLabeledTextField() : base()
-        {
-            _floatingLabel = new UILabel()
-            {
-                Alpha = 0.0f
-            };
-
-            AddSubview(_floatingLabel);
-
-            FloatingLabelTextColor = UIColor.Gray;
-            FloatingLabelActiveTextColor = UIColor.Blue;
-            FloatingLabelFont = UIFont.BoldSystemFontOfSize(12);
-        }
+		{
+			this.ConstructorInit();
+		}
 
         public FloatLabeledTextField(CGRect frame)
             : base(frame)
         {
-            _floatingLabel = new UILabel()
-            {
-                Alpha = 0.0f
-            };
-
-            AddSubview(_floatingLabel);
-
-            FloatingLabelTextColor = UIColor.Gray;
-            FloatingLabelActiveTextColor = UIColor.Blue;
-            FloatingLabelFont = UIFont.BoldSystemFontOfSize(12);
+			this.ConstructorInit();
         }
 
-        public override string Placeholder
-        {
-            get { return base.Placeholder; }
-            set
-            {
-                base.Placeholder = value;
+		#endregion Constructors
 
-                _floatingLabel.Text = value.ToUpper(); ;
-                _floatingLabel.TextColor = UIColor.White;
-                _floatingLabel.SizeToFit();
-                _floatingLabel.Frame =
-                    new CGRect(
-                        0, _floatingLabel.Font.LineHeight,
-                        _floatingLabel.Frame.Size.Width, _floatingLabel.Frame.Size.Height);
-            }
-        }
+		#region Methods
 
-        public override CGRect TextRect(CGRect forBounds)
+		private void ConstructorInit()
+		{
+			_floatingLabel = new UILabel()
+			{
+				Alpha = 0.0f
+			};
+			AddSubview(_floatingLabel);
+			FloatingLabelTextColor = UIColor.Gray;
+			FloatingLabelActiveTextColor = UIColor.Blue;
+			FloatingLabelFont = UIFont.BoldSystemFontOfSize(12);
+		}
+
+		public override CGRect TextRect(CGRect forBounds)
         {
             if (_floatingLabel == null)
                 return base.TextRect(forBounds);
@@ -114,29 +112,7 @@ namespace Xmf2.Commons.MvxExtends.Touch.ViewComponents.FloatLabels
         {
             base.LayoutSubviews();
 
-            Action updateLabel = () =>
-            {
-                if (!string.IsNullOrEmpty(Text))
-                {
-                    _floatingLabel.Alpha = 1.0f;
-                    _floatingLabel.Frame =
-                        new CGRect(
-                            _floatingLabel.Frame.Location.X,
-                            2.0f,
-                            _floatingLabel.Frame.Size.Width,
-                            _floatingLabel.Frame.Size.Height);
-                }
-                else
-                {
-                    _floatingLabel.Alpha = 0.0f;
-                    _floatingLabel.Frame =
-                        new CGRect(
-                            _floatingLabel.Frame.Location.X,
-                            _floatingLabel.Font.LineHeight,
-                            _floatingLabel.Frame.Size.Width,
-                            _floatingLabel.Frame.Size.Height);
-                }
-            };
+            
 
             if (IsFirstResponder)
             {
@@ -147,27 +123,49 @@ namespace Xmf2.Commons.MvxExtends.Touch.ViewComponents.FloatLabels
 
                 if (shouldFloat == isFloating)
                 {
-                    updateLabel();
+                    UpdateFloatingLabelPositionAndAlpha();
                 }
                 else
                 {
-                    UIView.Animate(
-                        0.3f, 0.0f,
-                        UIViewAnimationOptions.BeginFromCurrentState
-                        | UIViewAnimationOptions.CurveEaseOut,
-                        () => updateLabel(),
-                        () => { });
+                    UIView.Animate(0.3f,
+								   0.0f,
+								   UIViewAnimationOptions.BeginFromCurrentState| UIViewAnimationOptions.CurveEaseOut,
+								   UpdateFloatingLabelPositionAndAlpha,
+								   ActionHelper.NoOp);
                 }
             }
             else
             {
                 _floatingLabel.TextColor = FloatingLabelTextColor;
-
-                updateLabel();
+                UpdateFloatingLabelPositionAndAlpha();
             }
         }
 
-        public void ClearText()
+		private void UpdateFloatingLabelPositionAndAlpha()
+		{
+			if (!string.IsNullOrEmpty(Text))
+			{
+				_floatingLabel.Alpha = 1.0f;
+				_floatingLabel.Frame =
+					new CGRect(
+						_floatingLabel.Frame.Location.X,
+						2.0f,
+						_floatingLabel.Frame.Size.Width,
+						_floatingLabel.Frame.Size.Height);
+			}
+			else
+			{
+				_floatingLabel.Alpha = 0.0f;
+				_floatingLabel.Frame =
+					new CGRect(
+						_floatingLabel.Frame.Location.X,
+						_floatingLabel.Font.LineHeight,
+						_floatingLabel.Frame.Size.Width,
+						_floatingLabel.Frame.Size.Height);
+			}
+		}
+
+		public void ClearText()
         {
             Text = string.Empty;
             TextCleared?.Invoke(this, EventArgs.Empty);
@@ -181,5 +179,7 @@ namespace Xmf2.Commons.MvxExtends.Touch.ViewComponents.FloatLabels
                 rect.Width - insets.Left - insets.Right,
                 rect.Height - insets.Top - insets.Bottom);
         }
-    }
+
+		#endregion Methods
+	}
 }
