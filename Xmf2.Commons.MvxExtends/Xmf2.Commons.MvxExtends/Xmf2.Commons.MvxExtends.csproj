@@ -58,6 +58,7 @@
     <Compile Include="Helpers\EnumMemberHelper.cs" />
     <Compile Include="Helpers\NavigationJsonConverter.cs" />
     <Compile Include="Logs\BaseLogger.cs" />
+    <Compile Include="Services\NotificationService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="Extensions\SemaphoreSlimExtensions.cs" />
