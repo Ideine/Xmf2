@@ -1,7 +1,7 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
-using Xmf2.Rest.Caches;
-using Xmf2.Rest.OAuth2;
+using Ideine.Rest.Caches;
+using Ideine.Rest.OAuth2;
 using Xmf2.Commons.ErrorManagers;
 using Xmf2.Commons.Logs;
 using Xmf2.Commons.Services.Authentications.Models;
@@ -42,11 +42,6 @@ namespace Xmf2.Commons.Services.Authentications
 		protected virtual void OnClientAuthenticationError(object sender, OAuth2AuthResult e)
 		{
 			_logger.LogWarning(message: $"{nameof(AuthenticationService)}/Unable to authenticate {e.ErrorReason} : {e.ErrorMessage}");
-
-			if (e.ErrorReason == AuthErrorReason.InvalidAppVersion)
-			{
-				throw new InvalidAppVersionException();
-			}
 		}
 
 		public Task<bool> LoginWithCredentials(string login, string password)

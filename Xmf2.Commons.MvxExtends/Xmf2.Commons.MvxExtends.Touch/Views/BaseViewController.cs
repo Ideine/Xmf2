@@ -3,6 +3,7 @@ using MvvmCross.iOS.Support.Views;
 using System;
 using UIKit;
 using Xmf2.Commons.MvxExtends.ViewModels;
+using MvvmCross.Platform.Platform;
 
 namespace Xmf2.Commons.MvxExtends.Touch.Views
 {
@@ -22,40 +23,39 @@ namespace Xmf2.Commons.MvxExtends.Touch.Views
 		public override void ViewDidLoad()
 		{
 			base.ViewDidLoad();
-			ViewModel?.OnEnter();
-			BindControls();
+			this.ViewModel?.OnEnter();
+			this.BindControls();
+
+			EdgesForExtendedLayout = UIRectEdge.None;
 		}
 
 		public override void ViewWillAppear(bool animated)
 		{
 			base.ViewWillAppear(animated);
-			ViewModel?.OnResume();
 			if (!_layoutDone)
 			{
 				_layoutDone = true;
-				AutoLayout();
+				this.AutoLayout();
 			}
 
-			NavigationController.SetNavigationBarHidden(true, false);
+			this.NavigationController.SetNavigationBarHidden(true, false);
 
-			if (RespondsToSelector(new ObjCRuntime.Selector("edgesForExtendedLayout")))
-			{
-				EdgesForExtendedLayout = UIRectEdge.None;
-			}
+			EdgesForExtendedLayout = UIRectEdge.None;
 
-			NavigationController.NavigationBar.BarStyle = UIBarStyle.Default;
+			this.NavigationController.NavigationBar.BarStyle = UIBarStyle.Default;
+			this.ViewModel?.OnResume();
 		}
 
 		public override void ViewDidDisappear(bool animated)
 		{
 			base.ViewDidDisappear(animated);
-			ViewModel?.OnPause();
+			this.ViewModel?.OnPause();
 		}
 
 		public override void ViewWillUnload()
 		{
 			base.ViewWillUnload();
-			ViewModel?.OnStop();
+			this.ViewModel?.OnStop();
 		}
 
 		protected virtual void BindControls()
