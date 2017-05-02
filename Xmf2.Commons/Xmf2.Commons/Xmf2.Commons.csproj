@@ -40,9 +40,11 @@
   <ItemGroup>
     <Compile Include="Caches\LoaderWithParametersCache.cs" />
     <Compile Include="Caches\LoaderCache.cs" />
+    <Compile Include="ErrorManagers\InvalidAppVersionException.cs" />
     <Compile Include="Extensions\EnumerableExtensions.cs" />
     <Compile Include="Extensions\EnumExtensions.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
+    <Compile Include="Extensions\TaskExtensions.cs" />
     <Compile Include="Helpers\ActionHelper.cs" />
     <Compile Include="Helpers\StringHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -84,6 +86,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup />
