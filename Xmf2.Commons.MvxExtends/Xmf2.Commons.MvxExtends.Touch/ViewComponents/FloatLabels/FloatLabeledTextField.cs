@@ -34,7 +34,7 @@ namespace Xmf2.Commons.MvxExtends.Touch.ViewComponents.FloatLabels
 			{
 				base.Placeholder = value;
 
-				_floatingLabel.Text = value.ToUpper();
+				_floatingLabel.Text = value;
 				_floatingLabel.TextColor = UIColor.White;
 				_floatingLabel.SizeToFit();
 				_floatingLabel.Frame =

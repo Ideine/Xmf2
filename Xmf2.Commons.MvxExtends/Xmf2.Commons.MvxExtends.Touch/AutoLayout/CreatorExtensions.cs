@@ -134,6 +134,11 @@ public static class CreatorExtensions
 		return new UIView();
 	}
 
+	public static TUIView WithAlpha<TUIView>(this TUIView view, nfloat alpha) where TUIView : UIView
+	{
+		view.Alpha = alpha;
+		return view;
+	}
 	public static TParentView WithSubviews<TParentView>(this TParentView parentView, UIView view) where TParentView : UIView
 	{
 		parentView.AddSubview(view);
@@ -261,41 +266,54 @@ public static class CreatorExtensions
 		return new UITextField();
 	}
 
-	public static UITextField AsPasswordField(this UITextField input, UIReturnKeyType returnKeyType)
+	public static UITextField AsPasswordField(this UITextField input, UIReturnKeyType? returnKeyType = null)
 	{
 		input.KeyboardType = UIKeyboardType.Default;
 		input.SpellCheckingType = UITextSpellCheckingType.No;
-		input.ReturnKeyType = returnKeyType;
+		if (returnKeyType.HasValue)
+		{
+			input.ReturnKeyType = returnKeyType.Value;
+		}
 		input.AutocorrectionType = UITextAutocorrectionType.No;
 		input.AutocapitalizationType = UITextAutocapitalizationType.None;
 		input.SecureTextEntry = true;
 		return input;
 	}
 
-	public static UITextField AsEmailField(this UITextField input, UIReturnKeyType returnKeyType)
+	public static UITextField AsEmailField(this UITextField input, UIReturnKeyType? returnKeyType = null)
 	{
 		input.KeyboardType = UIKeyboardType.EmailAddress;
 		input.SpellCheckingType = UITextSpellCheckingType.No;
-		input.ReturnKeyType = returnKeyType;
-		input.AutocorrectionType = UITextAutocorrectionType.No;
-		input.AutocapitalizationType = UITextAutocapitalizationType.None;
-		return input;
-	}
-	public static UITextField AsNumpadField(this UITextField input, UIReturnKeyType returnKeyType)
-	{
-		input.KeyboardType = UIKeyboardType.NumberPad;
-		input.SpellCheckingType = UITextSpellCheckingType.No;
-		input.ReturnKeyType = returnKeyType;
+		if (returnKeyType.HasValue)
+		{
+			input.ReturnKeyType = returnKeyType.Value;
+		}
 		input.AutocorrectionType = UITextAutocorrectionType.No;
 		input.AutocapitalizationType = UITextAutocapitalizationType.None;
 		return input;
 	}
 
-	public static UITextField AsPhonepadField(this UITextField input, UIReturnKeyType returnKeyType)
+	public static UITextField AsNumpadField(this UITextField input, UIReturnKeyType? returnKeyType = null)
+	{
+		input.KeyboardType = UIKeyboardType.NumberPad;
+		input.SpellCheckingType = UITextSpellCheckingType.No;
+		if (returnKeyType.HasValue)
+		{
+			input.ReturnKeyType = returnKeyType.Value;
+		}
+		input.AutocorrectionType = UITextAutocorrectionType.No;
+		input.AutocapitalizationType = UITextAutocapitalizationType.None;
+		return input;
+	}
+
+	public static UITextField AsPhonepadField(this UITextField input, UIReturnKeyType? returnKeyType = null)
 	{
 		input.KeyboardType = UIKeyboardType.PhonePad;
 		input.SpellCheckingType = UITextSpellCheckingType.No;
-		input.ReturnKeyType = returnKeyType;
+		if (returnKeyType.HasValue)
+		{
+			input.ReturnKeyType = returnKeyType.Value;
+		}
 		input.AutocorrectionType = UITextAutocorrectionType.No;
 		input.AutocapitalizationType = UITextAutocapitalizationType.None;
 		return input;
