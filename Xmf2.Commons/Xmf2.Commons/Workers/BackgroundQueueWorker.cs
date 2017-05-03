@@ -91,6 +91,14 @@ namespace Xmf2.Commons.Workers
 			_mutex.Release();
 		}
 
+        public void InitializeWith(IEnumerable<Tuple<TKey, TResult>> existingData)
+        {
+            foreach(var items in existingData)
+            {
+                _previousResult.Add(items.Item1, items.Item2);
+            }
+        }
+
 		private async void Run()
 		{
 			while (true)
