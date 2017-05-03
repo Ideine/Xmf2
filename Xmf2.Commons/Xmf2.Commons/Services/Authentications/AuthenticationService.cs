@@ -1,7 +1,7 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
-using Ideine.Rest.Caches;
-using Ideine.Rest.OAuth2;
+using Xmf2.Rest.Caches;
+using Xmf2.Rest.OAuth2;
 using Xmf2.Commons.ErrorManagers;
 using Xmf2.Commons.Logs;
 using Xmf2.Commons.Services.Authentications.Models;

@@ -1,6 +1,6 @@
 using System.Threading;
 using System.Threading.Tasks;
-using Ideine.Rest.OAuth2;
+using Xmf2.Rest.OAuth2;
 using RestSharp.Portable;
 using Xmf2.Commons.ErrorManagers;
 
