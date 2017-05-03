@@ -29,22 +29,24 @@ namespace Xmf2.Rest.OAuth2
 		public event EventHandler<OAuth2AuthResult> OnAuthSuccess;
 
 	    public event EventHandler<OAuth2AuthResult> OnAuthError;
-		
-	    public OAuth2RestClient() : base(new DefaultHttpClientFactory())
-	    {
-		    IgnoreResponseStatusCode = true;
-		    Timeout = TimeSpan.FromSeconds(5);
-	    }
 
-	    public OAuth2RestClient(string baseUrl) : this(new Uri(baseUrl))
-	    {
-		    
-	    }
+		public OAuth2RestClient(IHttpClientFactory factory) : base(factory)
+		{
+			IgnoreResponseStatusCode = true;
+		    Timeout = TimeSpan.FromSeconds(30);
+		}
 
-	    public OAuth2RestClient(Uri baseUrl) : this()
-	    {
-		    BaseUrl = baseUrl;
-	    }
+		public OAuth2RestClient(IHttpClientFactory factory, string baseUrl) : this(factory, new Uri(baseUrl))
+		{
+			IgnoreResponseStatusCode = true;
+		    Timeout = TimeSpan.FromSeconds(30);
+		}
+
+		public OAuth2RestClient(IHttpClientFactory factory, Uri baseUrl) : base(factory, baseUrl)
+		{
+			IgnoreResponseStatusCode = true;
+		    Timeout = TimeSpan.FromSeconds(30);
+		}
 
 		protected override IHttpContent GetContent(IRestRequest request, RequestParameters parameters)
 		{
