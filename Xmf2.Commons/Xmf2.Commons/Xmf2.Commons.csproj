@@ -69,6 +69,7 @@
     <Compile Include="Extensions\CommandExtensions.cs" />
     <Compile Include="Extensions\TaskExtensions.cs" />
     <Compile Include="ErrorManagers\InvalidAppVersionException.cs" />
+    <Compile Include="Workers\BackgroundQueueWorker.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
@@ -91,6 +92,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Workers\" />
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
