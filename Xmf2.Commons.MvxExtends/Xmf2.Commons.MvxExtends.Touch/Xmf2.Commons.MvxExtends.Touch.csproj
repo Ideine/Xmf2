@@ -79,6 +79,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Helpers\YourViewController.workbook" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

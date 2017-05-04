@@ -14,13 +14,15 @@ This workbook includes extensions/helpers methods from :
 
 * Xmf2.Commons.MvxExtends.Touch.AutoLayout
 
+* Xmf2.Commons.MvxExtends.Touch.Layout
+
+* Xmf2.Commons.MvxExtends.Touch.CustomAutoLayoutExtensions
+
 Plus a sample controller, and a basic initialization.
 
 Helper : Xmf2.Commons.MvxExtends.Touch.CreatorExtensions
 
 ```csharp
-#region UIButton
-
 public static UIButton CreateButton(this object parent)
 {
 	return new UIButton(UIButtonType.Custom);
@@ -34,111 +36,84 @@ public static TUIButton WithTitle<TUIButton>(this TUIButton button, string title
 	button.SetTitle(title, UIControlState.Normal);
 	return button;
 }
-
 public static TUIButton WithTextColor<TUIButton>(this TUIButton button, UIColor color) where TUIButton : UIButton
 {
 	button.SetTitleColor(color, UIControlState.Normal);
 	return button;
 }
-
 public static TUIButton WithTextColorHighlight<TUIButton>(this TUIButton button, UIColor color) where TUIButton : UIButton
 {
 	button.SetTitleColor(color, UIControlState.Highlighted);
 	return button;
 }
-
-//public static TUIButton WithBackgroundColorHighlight<TUIButton>(this TUIButton button, UIColor color) where TUIButton : UIHighlightButton
-//{
-//	button.HighlightColor = color;
-//	return button;
-//}
-
 public static TUIButton WithTextColorSelected<TUIButton>(this TUIButton button, UIColor color) where TUIButton : UIButton
 {
 	button.SetTitleColor(color, UIControlState.Selected);
 	return button;
 }
-
 public static TUIButton WithImage<TUIButton>(this TUIButton button, string image) where TUIButton : UIButton
 {
 	button.SetImage(new UIImage(image), UIControlState.Normal);
 	return button;
 }
-
 public static TUIButton WithImage<TUIButton>(this TUIButton button, UIImage image) where TUIButton : UIButton
 {
 	button.SetImage(image, UIControlState.Normal);
 	return button;
 }
-
 public static TUIButton WithImageHighlight<TUIButton>(this TUIButton button, string image) where TUIButton : UIButton
 {
 	button.SetImage(new UIImage(image), UIControlState.Highlighted);
 	return button;
 }
-
 public static TUIButton WithImageHighlight<TUIButton>(this TUIButton button, UIImage image) where TUIButton : UIButton
 {
 	button.SetImage(image, UIControlState.Highlighted);
 	return button;
 }
-
 public static TUIButton WithImageSelected<TUIButton>(this TUIButton button, string image) where TUIButton : UIButton
 {
 	button.SetImage(new UIImage(image), UIControlState.Selected);
 	return button;
 }
-
 public static TUIButton WithImageSelected<TUIButton>(this TUIButton button, UIImage image) where TUIButton : UIButton
 {
 	button.SetImage(image, UIControlState.Selected);
 	return button;
 }
-
 public static TUIButton WithImageFocused<TUIButton>(this TUIButton button, string image) where TUIButton : UIButton
 {
 	button.SetImage(new UIImage(image), UIControlState.Focused);
 	return button;
 }
-
 public static TUIButton WithImageFocused<TUIButton>(this TUIButton button, UIImage image) where TUIButton : UIButton
 {
 	button.SetImage(image, UIControlState.Focused);
 	return button;
 }
-
 public static TUIButton WithFont<TUIButton>(this TUIButton button, UIFont font) where TUIButton : UIButton
 {
 	button.Font = font;
 	return button;
 }
-
 public static TUIButton WithSystemFont<TUIButton>(this TUIButton button, int size, UIFontWeight weight = UIFontWeight.Regular) where TUIButton : UIButton
 {
 	button.Font = UIFont.SystemFontOfSize(size, weight);
 	return button;
 }
-
 public static TUIButton OnClick<TUIButton>(this TUIButton button, Action action) where TUIButton : UIButton
 {
 	button.TouchUpInside += (sender, e) => action?.Invoke();
 	return button;
 }
-
-#endregion
-
-#region UIView
-
 public static UIView CreateSeparator(this object parent)
 {
 	return new UIView();
 }
-
 public static UIView CreateView(this object parent)
 {
 	return new UIView();
 }
-
 public static TUIView WithAlpha<TUIView>(this TUIView view, nfloat alpha) where TUIView : UIView
 {
 	view.Alpha = alpha;
@@ -180,11 +155,6 @@ public static TParentView WithSubviews<TParentView>(this TParentView parentView,
 	parentView.AddSubviews(views);
 	return parentView;
 }
-
-#endregion
-
-#region ScrollView
-
 public static UIScrollView CreateVerticalScroll(this object parent)
 {
 	return new UIScrollView
@@ -197,80 +167,60 @@ public static UIScrollView CreateVerticalScroll(this object parent)
 		ShowsHorizontalScrollIndicator = false
 	};
 }
-
 public static UIScrollView Disable(this UIScrollView view)
 {
 	view.ScrollEnabled = false;
 	return view;
 }
-
 public static UIScrollView Enable(this UIScrollView view)
 {
 	view.ScrollEnabled = true;
 	return view;
 }
-
-#endregion
-
-#region UILabel
-
 public static UILabel CreateLabel(this object parent)
 {
 	return new UILabel();
 }
-
 public static UILabel WithText(this UILabel label, string text)
 {
 	label.Text = text;
 	return label;
 }
-
 public static UILabel WithTextColor(this UILabel label, UIColor color)
 {
 	label.TextColor = color;
 	return label;
 }
-
 public static UILabel WithFont(this UILabel label, UIFont font)
 {
 	label.Font = font;
 	return label;
 }
-
 public static UILabel WithAlignment(this UILabel label, UITextAlignment alignment)
 {
 	label.TextAlignment = alignment;
 	return label;
 }
-
 public static UILabel WithTextWrapping(this UILabel label, int maxLine = 0)
 {
 	label.Lines = maxLine;
 	label.LineBreakMode = UILineBreakMode.WordWrap;
 	return label;
 }
-
 public static UILabel WithEllipsis(this UILabel label)
 {
 	label.LineBreakMode = UILineBreakMode.TailTruncation;
 	return label;
 }
-
 public static UILabel WithSystemFont(this UILabel label, int size, UIFontWeight weight = UIFontWeight.Regular)
 {
 	label.Font = UIFont.SystemFontOfSize(size, weight);
 	return label;
 }
-
-#endregion UILabel
-
-#region UITextField
-
 public static UITextField CreateTextField(this object parent)
 {
 	return new UITextField();
 }
-
 public static UITextField AsPasswordField(this UITextField input, UIReturnKeyType returnKeyType)
 {
 	input.KeyboardType = UIKeyboardType.Default;
@@ -281,7 +231,6 @@ public static UITextField AsPasswordField(this UITextField input, UIReturnKeyTyp
 	input.SecureTextEntry = true;
 	return input;
 }
-
 public static UITextField AsEmailField(this UITextField input, UIReturnKeyType returnKeyType)
 {
 	input.KeyboardType = UIKeyboardType.EmailAddress;
@@ -300,7 +249,6 @@ public static UITextField AsNumpadField(this UITextField input, UIReturnKeyType 
 	input.AutocapitalizationType = UITextAutocapitalizationType.None;
 	return input;
 }
-
 public static UITextField AsPhonepadField(this UITextField input, UIReturnKeyType returnKeyType)
 {
 	input.KeyboardType = UIKeyboardType.PhonePad;
@@ -310,80 +258,66 @@ public static UITextField AsPhonepadField(this UITextField input, UIReturnKeyTyp
 	input.AutocapitalizationType = UITextAutocapitalizationType.None;
 	return input;
 }
-
 public static UITextField With(this UITextField input, UIReturnKeyType returnKeyType)
 {
 	input.ReturnKeyType = returnKeyType;
 	return input;
 }
-
-
 public static UITextField WithTextColor(this UITextField input, UIColor color)
 {
 	input.TextColor = color;
 	return input;
 }
-
 public static UITextField WithText(this UITextField input, string text)
 {
 	input.Text = text;
 	return input;
 }
-
 public static UITextField WithFont(this UITextField input, UIFont font)
 {
 	input.Font = font;
 	return input;
 }
-
 public static UITextField WithAlignment(this UITextField input, UITextAlignment alignment)
 {
 	input.TextAlignment = alignment;
 	return input;
 }
-
 public static UITextField WithSystemFont(this UITextField input, int size, UIFontWeight weight = UIFontWeight.Regular)
 {
 	input.Font = UIFont.SystemFontOfSize(size, weight);
 	return input;
 }
-
 public static UITextView WithSystemFont(this UITextView input, int size, UIFontWeight weight = UIFontWeight.Regular)
 {
 	input.Font = UIFont.SystemFontOfSize(size, weight);
 	return input;
 }
-
 public static UITextField WithPlaceholder(this UITextField input, string placeholder)
 {
 	input.Placeholder = placeholder;
 	return input;
 }
-
 public static UITextField WithCarretColor(this UITextField input, UIColor color)
 {
 	input.TintColor = color;
 	return input;
 }
-
 public static UITextField WithPlaceholderAndTextColor(this UITextField input, string placeholder, UIColor color)
 {
 	input.AttributedPlaceholder = new NSAttributedString(placeholder, input.Font, color);
 	return input;
 }
-
 public static UITextField WithPlaceholderTextColor(this UITextField input, UIColor color)
 {
 	input.AttributedPlaceholder = new NSAttributedString(string.Empty, input.Font, color);
 	return input;
 }
-
 public static UITextField WithCursorColor(this UITextField input, UIColor color)
 {
 	input.TintColor = color;
 	return input;
 }
-
 public static UITextField OnReturn(this UITextField input, Action action, bool dismissKeyboard, UIReturnKeyType returnKeyType = UIReturnKeyType.Default)
 {
 	input.ReturnKeyType = returnKeyType;
@@ -398,22 +332,17 @@ public static UITextField OnReturn(this UITextField input, Action action, bool d
 	};
 	return input;
 }
-
 public static UITextField WithAutocapitalization(this UITextField input, UITextAutocapitalizationType autocapitalizationType = UITextAutocapitalizationType.Words)
 {
 	input.AutocapitalizationType = autocapitalizationType;
 	return input;
 }
-
 public static UITextField WithoutSuggestion(this UITextField input, UITextAutocapitalizationType autocapitalizationType = UITextAutocapitalizationType.Words)
 {
 	input.SpellCheckingType = UITextSpellCheckingType.No;
 	input.AutocorrectionType = UITextAutocorrectionType.No;
 	return input;
 }
-
-
-
 public static UITextField OnReturnNextResponder(this UITextField input, UIResponder nextResponder, UIReturnKeyType returnKeyType = UIReturnKeyType.Default, Action action = null)
 {
 	input.ReturnKeyType = returnKeyType;
@@ -428,110 +357,81 @@ public static UITextField OnReturnNextResponder(this UITextField input, UIRespon
 	};
 	return input;
 }
-
-#endregion UITextField
-
-#region UITextView
-
 public static UITextView CreateTextView(this object parent)
 {
 	return new UITextView();
 }
-
 public static UITextView WithText(this UITextView input, string text)
 {
 	input.Text = text;
 	return input;
 }
-
-
-#endregion UITextView
-
-#region UIImageView
-
 public static UIImageView CreateImageView(this object parent)
 {
 	return new UIImageView();
 }
-
 public static UIImageView WithImage(this UIImageView view, UIImage image)
 {
 	view.Image = image;
 	return view;
 }
-
 public static UIImageView WithImage(this UIImageView view, string imageName)
 {
 	view.Image = new UIImage(imageName);
 	return view;
 }
-
 public static UIImageView UniformToFit(this UIImageView view)
 {
 	view.ContentMode = UIViewContentMode.ScaleAspectFit;
 	return view;
 }
-
 public static UIImageView UniformToFill(this UIImageView view)
 {
 	view.ContentMode = UIViewContentMode.ScaleAspectFill;
 	return view;
 }
-
 public static UIImageView UniformToFill(this UIImageView view, bool clipsToBounds)
 {
 	view.ContentMode = UIViewContentMode.ScaleAspectFill;
 	view.ClipsToBounds = clipsToBounds;
 	return view;
 }
-
 public static UIImageView WithContentMode(this UIImageView view, UIViewContentMode contentMode)
 {
 	view.ContentMode = contentMode;
 	return view;
 }
-
-#endregion UIImageView
-
-#region Generic
-
 public static TView Hide<TView>(this TView view) where TView : UIView
 {
 	view.Hidden = true;
 	return view;
 }
-
 public static TView Show<TView>(this TView view) where TView : UIView
 {
 	view.Hidden = false;
 	return view;
 }
-
 public static TView Invisible<TView>(this TView view) where TView : UIView
 {
 	view.Alpha = 0f;
 	return view;
 }
-
 public static TView Visible<TView>(this TView view) where TView : UIView
 {
 	view.Alpha = 1f;
 	return view;
 }
-
 public static TView WithBackgroundColor<TView>(this TView view, UIColor color) where TView : UIView
 {
 	view.BackgroundColor = color;
 	return view;
 }
-
 public static TView WithBorder<TView>(this TView view, UIColor borderColor, int size) where TView : UIView
 {
 	view.Layer.BorderColor = borderColor.CGColor;
 	view.Layer.BorderWidth = size;
 	return view;
 }
-
 public static TView WithShadow<TView>(this TView view, UIColor shadowColor, int left, int top, float radius = 8f, float opacity = 1f) where TView : UIView
 {
 	view.Layer.ShadowColor = shadowColor.CGColor;
@@ -541,7 +441,6 @@ public static TView WithShadow<TView>(this TView view, UIColor shadowColor, int 
 
 	return view;
 }
-
 public static TView WithoutShadow<TView>(this TView view) where TView : UIView
 {
 	view.Layer.ShadowColor = UIColor.Clear.CGColor;
@@ -551,25 +450,21 @@ public static TView WithoutShadow<TView>(this TView view) where TView : UIView
 
 	return view;
 }
-
 public static TView WithCornerRadius<TView>(this TView view, nfloat size) where TView : UIView
 {
 	view.Layer.CornerRadius = size;
 	return view;
 }
-
 public static TView Disable<TView>(this TView view) where TView : UIView
 {
 	view.UserInteractionEnabled = false;
 	return view;
 }
-
 public static TView Enable<TView>(this TView view) where TView : UIView
 {
 	view.UserInteractionEnabled = true;
 	return view;
 }
-
 public static TView AddTapAction<TView>(this TView view, Action tapped) where TView : UIView
 {
 	view.UserInteractionEnabled = true;
@@ -577,9 +472,6 @@ public static TView AddTapAction<TView>(this TView view, Action tapped) where TV
 	view.AddGestureRecognizer(recognizer);
 	return view;
 }
-
-#endregion
-
 public static UIEdgeInsets Add(this UIEdgeInsets insets, float top = 0f, float left = 0f, float bottom = 0f, float right = 0f)
 {
 	return new UIEdgeInsets(top + insets.Top, left + insets.Left, bottom + insets.Bottom, right + insets.Right);
@@ -590,31 +482,18 @@ Helpers : Xmf2.Commons.MvxExtends.LayoutExtensions
 
 ```csharp
 public static int Width(this UIView @this) => 0;
-
 public static int Height(this UIView @this) => 0;
-
 public static int Left(this UIView @this) => 0;
-
 public static int X(this UIView @this) => 0;
-
 public static int Top(this UIView @this) => 0;
-
 public static int Y(this UIView @this) => 0;
-
 public static int Right(this UIView @this) => 0;
-
 public static int Bottom(this UIView @this) => 0;
-
 public static int Baseline(this UIView @this) => 0;
-
 public static int Leading(this UIView @this) => 0;
-
 public static int Trailing(this UIView @this) => 0;
-
 public static int CenterX(this UIView @this) => 0;
-
 public static int CenterY(this UIView @this) => 0;
-
 public static string Name(this UIView @this) => null;
 ```
 
@@ -686,14 +565,921 @@ public class ConstrainSet<TUIView> : IDisposable
 }
 ```
 
+Helper : Xmf2.Commons.MvxExtends.Touch.Layout
+
+```csharp
+using System.Reflection;
+using System.Linq.Expressions;
+
+    public const int StandardSiblingViewSpacing = 8;
+
+    // half the standard spacing between sibling views
+    public const int HalfSiblingViewSpacing = StandardSiblingViewSpacing / 2;
+
+    // the standard spacing between a view and its superview
+    public const int StandardSuperviewSpacing = 20;
+
+    // half the standard spacing between superviews
+    public const int HalfSuperviewSpacing = StandardSuperviewSpacing / 2;
+
+    public const float RequiredPriority = (float)UILayoutPriority.Required;
+
+    public const float HighPriority = (float)UILayoutPriority.DefaultHigh;
+
+    public const float LowPriority = (float)UILayoutPriority.DefaultLow;
+
+
+    public static void ConstrainLayout(this UIView view, Expression<Func<bool>> constraintsExpression, float priority = RequiredPriority)
+    {
+    NSLayoutConstraint[] garbageParam;
+    ConstrainLayout(view, constraintsExpression, out garbageParam, priority);
+    }
+    public static void ConstrainLayout(this UIView view, Expression<Func<bool>> constraintsExpression, out NSLayoutConstraint[] addedConstraints, float priority = RequiredPriority)
+    {
+    var body = constraintsExpression.Body;
+    addedConstraints = FindBinaryExpressionsRecursive(body)
+        .Select(e =>
+        {
+    #if DEBUG
+            if (ExtractAndRegisterName(e, view))
+            {
+                return null;
+            }
+    #endif
+            return CompileConstraint(e, view, priority);
+        })
+        .Where(x => x != null)
+        .ToArray();
+    view.AddConstraints(addedConstraints);
+    }
+
+    public static TUIView WithLayoutConstraint<TUIView>(this TUIView view, Expression<Func<bool>> constraintsExpression, float priority = RequiredPriority) where TUIView : UIView
+    {
+    ConstrainLayout(view, constraintsExpression, priority);
+    return view;
+    }
+
+    public static ConstrainSet<UIView> WithLayoutConstraint(this ConstrainSet<UIView> constrainSet, Expression<Func<bool>> constraintsExpression, float priority = RequiredPriority)
+    {
+    var containerView = constrainSet.View;
+    NSLayoutConstraint[] addedConstraints;
+    containerView.ConstrainLayout(constraintsExpression, out addedConstraints);
+    constrainSet.Constraints.AddRange(addedConstraints);
+    return constrainSet;
+    }
+
+    private static IEnumerable<BinaryExpression> FindBinaryExpressionsRecursive(Expression expression)
+    {
+    var binaryExpression = expression as BinaryExpression;
+
+    if (binaryExpression == null)
+    {
+        yield break;
+    }
+
+    if (binaryExpression.NodeType == ExpressionType.AndAlso)
+    {
+        foreach (var childBinaryExpression in FindBinaryExpressionsRecursive(binaryExpression.Left))
+        {
+            yield return childBinaryExpression;
+        }
+
+        foreach (var childBinaryExpression in FindBinaryExpressionsRecursive(binaryExpression.Right))
+        {
+            yield return childBinaryExpression;
+        }
+    }
+    else
+    {
+        yield return binaryExpression;
+    }
+    }
+
+
+    private static NSLayoutConstraint CompileConstraint(BinaryExpression binaryExpression, UIView constrainedView, float priority)
+    {
+    NSLayoutRelation layoutRelation;
+
+    switch (binaryExpression.NodeType)
+    {
+        case ExpressionType.Equal:
+            layoutRelation = NSLayoutRelation.Equal;
+            break;
+        case ExpressionType.LessThanOrEqual:
+            layoutRelation = NSLayoutRelation.LessThanOrEqual;
+            break;
+        case ExpressionType.GreaterThanOrEqual:
+            layoutRelation = NSLayoutRelation.GreaterThanOrEqual;
+            break;
+        default:
+            throw new NotSupportedException("Not a valid relationship for a constraint: " + binaryExpression.NodeType);
+    }
+
+    MethodCallExpression methodCallExpression;
+    UIView leftView;
+    NSLayoutAttribute leftLayoutAttribute;
+    DetermineConstraintInformationFromExpression(binaryExpression.Left, out methodCallExpression, out leftView, out leftLayoutAttribute);
+
+    if (leftView != null && leftView != constrainedView)
+    {
+        leftView.TranslatesAutoresizingMaskIntoConstraints = false;
+    }
+
+    UIView rightView;
+    NSLayoutAttribute rightLayoutAttribute;
+    float multiplier;
+    float constant;
+    DetermineConstraintInformationFromExpression(binaryExpression.Right, out rightView, out rightLayoutAttribute, out multiplier, out constant);
+
+    if (rightView != null && rightView != constrainedView)
+    {
+        rightView.TranslatesAutoresizingMaskIntoConstraints = false;
+    }
+
+    var constraint = NSLayoutConstraint.Create(
+        leftView,
+        leftLayoutAttribute,
+        layoutRelation,
+        rightView,
+        rightLayoutAttribute,
+        multiplier,
+        constant);
+    constraint.Priority = priority;
+    return constraint;
+    }
+
+    private static void DetermineConstraintInformationFromExpression(
+    Expression expression,
+    out MethodCallExpression methodCallExpression,
+    out UIView view,
+    out NSLayoutAttribute layoutAttribute,
+    bool throwOnError = true)
+    {
+    methodCallExpression = FindExpressionOfType<MethodCallExpression>(expression);
+
+    if (methodCallExpression == null)
+    {
+        if (throwOnError)
+        {
+            throw new NotSupportedException("Constraint expression must be a method call.");
+        }
+        else
+        {
+            view = null;
+            layoutAttribute = default(NSLayoutAttribute);
+            return;
+        }
+    }
+
+    layoutAttribute = NSLayoutAttribute.NoAttribute;
+
+    switch (methodCallExpression.Method.Name)
+    {
+        case "Width":
+            layoutAttribute = NSLayoutAttribute.Width;
+            break;
+        case "Height":
+            layoutAttribute = NSLayoutAttribute.Height;
+            break;
+        case "Left":
+        case "X":
+            layoutAttribute = NSLayoutAttribute.Left;
+            break;
+        case "Top":
+        case "Y":
+            layoutAttribute = NSLayoutAttribute.Top;
+            break;
+        case "Right":
+            layoutAttribute = NSLayoutAttribute.Right;
+            break;
+        case "Bottom":
+            layoutAttribute = NSLayoutAttribute.Bottom;
+            break;
+        case "CenterX":
+            layoutAttribute = NSLayoutAttribute.CenterX;
+            break;
+        case "CenterY":
+            layoutAttribute = NSLayoutAttribute.CenterY;
+            break;
+        case "Baseline":
+            layoutAttribute = NSLayoutAttribute.Baseline;
+            break;
+        case "Leading":
+            layoutAttribute = NSLayoutAttribute.Leading;
+            break;
+        case "Trailing":
+            layoutAttribute = NSLayoutAttribute.Trailing;
+            break;
+        default:
+            if (throwOnError)
+            {
+                throw new NotSupportedException("Method call '" + methodCallExpression.Method.Name + "' is not recognized as a valid constraint.");
+            }
+            break;
+    }
+
+    if (methodCallExpression.Arguments.Count != 1)
+    {
+        if (throwOnError)
+        {
+            throw new NotSupportedException("Method call '" + methodCallExpression.Method.Name + "' has " + methodCallExpression.Arguments.Count + " arguments, where only 1 is allowed.");
+        }
+        else
+        {
+            view = null;
+            return;
+        }
+    }
+
+    var viewExpression = methodCallExpression.Arguments.FirstOrDefault() as MemberExpression;
+
+    if (viewExpression == null)
+    {
+        if (throwOnError)
+        {
+            throw new NotSupportedException("The argument to method call '" + methodCallExpression.Method.Name + "' must be a member expression that resolves to the view being constrained.");
+        }
+        else
+        {
+            view = null;
+            return;
+        }
+    }
+
+    view = Evaluate<UIView>(viewExpression);
+
+    if (view == null)
+    {
+        if (throwOnError)
+        {
+            throw new NotSupportedException("The argument to method call '" + methodCallExpression.Method.Name + "' resolved to null, so the view to be constrained could not be determined.");
+        }
+        else
+        {
+            view = null;
+            return;
+        }
+    }
+    }
+
+    private static void DetermineConstraintInformationFromExpression(
+    Expression expression,
+    out UIView view,
+    out NSLayoutAttribute layoutAttribute,
+    out float multiplier,
+    out float constant)
+    {
+    var viewExpression = expression;
+
+    view = null;
+    layoutAttribute = NSLayoutAttribute.NoAttribute;
+    multiplier = 1.0f;
+    constant = 0.0f;
+
+    if (viewExpression.NodeType == ExpressionType.Add || viewExpression.NodeType == ExpressionType.Subtract)
+    {
+        var binaryExpression = (BinaryExpression)viewExpression;
+        constant = Evaluate<float>(binaryExpression.Right);
+
+        if (viewExpression.NodeType == ExpressionType.Subtract)
+        {
+            constant = -constant;
+        }
+
+        viewExpression = binaryExpression.Left;
+    }
+
+    if (viewExpression.NodeType == ExpressionType.Multiply || viewExpression.NodeType == ExpressionType.Divide)
+    {
+        var binaryExpression = (BinaryExpression)viewExpression;
+        multiplier = Evaluate<float>(binaryExpression.Right);
+
+        if (viewExpression.NodeType == ExpressionType.Divide)
+        {
+            multiplier = 1 / multiplier;
+        }
+
+        viewExpression = binaryExpression.Left;
+    }
+
+    if (viewExpression is MethodCallExpression)
+    {
+        MethodCallExpression methodCallExpression;
+        DetermineConstraintInformationFromExpression(viewExpression, out methodCallExpression, out view, out layoutAttribute);
+    }
+    else
+    {
+        // constraint must be something like: view.Width() == 50
+        constant = Evaluate<float>(viewExpression);
+    }
+    }
+
+    private static T Evaluate<T>(Expression expression)
+    {
+    var result = Evaluate(expression);
+
+    if (result is T)
+    {
+        return (T)result;
+    }
+
+    return (T)Convert.ChangeType(Evaluate(expression), typeof(T));
+    }
+
+    private static object Evaluate(Expression expression)
+    {
+    if (expression.NodeType == ExpressionType.Constant)
+    {
+        return ((ConstantExpression)expression).Value;
+    }
+
+    if (expression.NodeType == ExpressionType.MemberAccess)
+    {
+        var memberExpression = (MemberExpression)expression;
+        var member = memberExpression.Member;
+
+        if (member.MemberType == MemberTypes.Field)
+        {
+            var fieldInfo = (FieldInfo)member;
+
+            if (fieldInfo.IsStatic)
+            {
+                return fieldInfo.GetValue(null);
+            }
+        }
+    }
+
+    return Expression.Lambda(expression).Compile().DynamicInvoke();
+    }
+
+    // searches for an expression of type T within expression, skipping through "irrelevant" nodes
+    private static T FindExpressionOfType<T>(Expression expression)
+    where T : Expression
+    {
+    while (!(expression is T))
+    {
+        switch (expression.NodeType)
+        {
+            case ExpressionType.Convert:
+                expression = ((UnaryExpression)expression).Operand;
+                break;
+            default:
+                return default(T);
+        }
+    }
+
+    return (T)expression;
+    }
+```
+
+Helper : Xmf2.Commons.MvxExtends.Touch.CustomAutoLayoutExtensions
+
+```csharp
+	public static ConstrainSet<UIView> CreateConstrainSet(this UIView view)
+	{
+		return new ConstrainSet<UIView>(view);
+	}
+
+	public static UIView CenterAndFillWidth(this UIView containerView, params UIView[] views)
+	{
+		if (views == null)
+		{
+			throw new ArgumentNullException(nameof(views));
+		}
+
+		foreach (UIView view in views)
+		{
+			containerView.ConstrainLayout(() =>
+										  view.CenterX() == containerView.CenterX()
+										  && view.Width() == containerView.Width()
+										 );
+		}
+
+		return containerView;
+	}
+
+    public static UIView CenterAndFillWidth(this UIView containerView, int margin, params UIView[] views)
+    {
+        if (views == null)
+        {
+            throw new ArgumentNullException(nameof(views));
+        }
+
+        foreach (UIView view in views)
+        {
+            containerView.ConstrainLayout(() =>
+                                          view.CenterX() == containerView.CenterX()
+                                          && view.Width() == containerView.Width() - margin
+                                         );
+        }
+
+        return containerView;
+    }
+
+	public static UIView CenterAndFillHeight(this UIView containerView, params UIView[] views)
+	{
+		if (views == null)
+		{
+			throw new ArgumentNullException(nameof(views));
+		}
+
+		foreach (UIView view in views)
+		{
+			containerView.ConstrainLayout(() =>
+										  view.CenterY() == containerView.CenterY()
+										  && view.Height() == containerView.Height()
+										 );
+		}
+
+		return containerView;
+	}
+
+	public static UIView CenterAndFillHeight(this UIView containerView, int margin, params UIView[] views)
+	{
+		if (views == null)
+		{
+			throw new ArgumentNullException(nameof(views));
+		}
+
+		foreach (UIView view in views)
+		{
+			containerView.ConstrainLayout(() =>
+										  view.CenterY() == containerView.CenterY()
+										  && view.Height() == containerView.Height() - margin
+										 );
+		}
+
+		return containerView;
+	}
+
+	public static UIView VerticalFlow(this UIView containerView, params UIView[] views)
+	{
+		if (views == null)
+		{
+			throw new ArgumentNullException(nameof(views));
+		}
+
+		if (views.Length == 0)
+		{
+			throw new ArgumentException("views must contains at least one element", nameof(views));
+		}
+
+		containerView.AnchorTop(views[0]);
+		containerView.AnchorBottom(views[views.Length - 1]);
+
+		for (int i = 1; i < views.Length; ++i)
+		{
+			containerView.VerticalSpace(views[i - 1], views[i]);
+		}
+		return containerView;
+	}
+
+	public static UIView ViewsEqualWidth(this UIView containerView, params UIView[] views)
+	{
+		if (views == null)
+		{
+			throw new ArgumentNullException(nameof(views));
+		}
+
+		if (views.Length < 2)
+		{
+			throw new ArgumentException("views must contains at least two elements", nameof(views));
+		}
+
+		for (int i = 1; i < views.Length; ++i)
+		{
+			UIView v1 = views[i - 1];
+			UIView v2 = views[i];
+
+			containerView.ConstrainLayout(() => v1.Width() == v2.Width());
+		}
+
+		return containerView;
+	}
+
+	public static UIView IncloseFromBottom(this UIView containerView, UIView view)
+	{
+		return IncloseFromBottom(containerView, view, 0);
+	}
+	public static UIView IncloseFromBottom(this UIView containerView, UIView view, int margin)
+	{
+		containerView.ConstrainLayout(() => containerView.Bottom() >= view.Bottom() + margin);
+		return containerView;
+	}
+	public static UIView IncloseFromTop(this UIView containerView, UIView view)
+	{
+		return IncloseFromTop(containerView, view, 0);
+	}
+	public static UIView IncloseFromTop(this UIView containerView, UIView view, int margin)
+	{
+		containerView.ConstrainLayout(() => containerView.Top() <= view.Top() - margin);
+		return containerView;
+	}
+
+
+	public static UIView AnchorTop(this UIView containerView, UIView view, int margin = 0)
+	{
+		containerView.ConstrainLayout(() => view.Top() == containerView.Top() + margin);
+		return containerView;
+	}
+	public static ConstrainSet<UIView> AnchorTop(this ConstrainSet<UIView> constrainSet, UIView view, int margin = 0)
+	{
+		var containerView = constrainSet.View;
+		NSLayoutConstraint[] addedConstraints;
+		containerView.ConstrainLayout(() => view.Top() == containerView.Top() + margin, out addedConstraints);
+		constrainSet.Constraints.AddRange(addedConstraints);
+		return constrainSet;
+	}
+
+	public static UIView AnchorBottom(this UIView containerView, UIView view, int margin = 0)
+	{
+		containerView.ConstrainLayout(() => containerView.Bottom() == view.Bottom() + margin);
+		return containerView;
+	}
+	public static ConstrainSet<UIView> AnchorBottom(this ConstrainSet<UIView> constrainSet, UIView view, int margin = 0)
+	{
+		var containerView = constrainSet.View;
+		NSLayoutConstraint[] addedConstraints;
+		containerView.ConstrainLayout(() => containerView.Bottom() == view.Bottom() + margin, out addedConstraints);
+		constrainSet.Constraints.AddRange(addedConstraints);
+		return constrainSet;
+	}
+
+	public static UIView AnchorRight(this UIView containerView, UIView view, int margin = 0)
+	{
+		containerView.ConstrainLayout(() => containerView.Right() == view.Right() + margin);
+		return containerView;
+	}
+	public static ConstrainSet<UIView> AnchorRight(this ConstrainSet<UIView> constrainSet, UIView view, int margin = 0)
+	{
+		var containerView = constrainSet.View;
+		NSLayoutConstraint[] addedConstraints;
+		containerView.ConstrainLayout(() => containerView.Right() == view.Right() + margin, out addedConstraints);
+		constrainSet.Constraints.AddRange(addedConstraints);
+		return constrainSet;
+	}
+
+	public static UIView AnchorLeft(this UIView containerView, UIView view, int margin = 0)
+	{
+		containerView.ConstrainLayout(() => view.Left() == containerView.Left() + margin);
+		return containerView;
+	}
+	public static ConstrainSet<UIView> AnchorLeft(this ConstrainSet<UIView> constrainSet, UIView view, int margin = 0)
+	{
+		var containerView = constrainSet.View;
+		NSLayoutConstraint[] addedConstraints;
+		containerView.ConstrainLayout(() => view.Left() == containerView.Left() + margin, out addedConstraints);
+		constrainSet.Constraints.AddRange(addedConstraints);
+		return constrainSet;
+	}
+
+	public static UIView CenterHorizontally(this UIView containerView, UIView view)
+	{
+		containerView.ConstrainLayout(() => view.CenterX() == containerView.CenterX());
+		return containerView;
+	}
+	public static ConstrainSet<UIView> CenterHorizontally(this ConstrainSet<UIView> constrainSet, UIView view)
+	{
+		var containerView = constrainSet.View;
+		NSLayoutConstraint[] addedConstraints;
+		containerView.ConstrainLayout(() => view.CenterX() == containerView.CenterX(), out addedConstraints);
+		constrainSet.Constraints.AddRange(addedConstraints);
+		return constrainSet;
+	}
+
+	public static UIView CenterVertically(this UIView containerView, UIView view)
+	{
+		containerView.ConstrainLayout(() => view.CenterY() == containerView.CenterY());
+		return containerView;
+	}
+	public static UIView CenterVertically(this UIView containerView, UIView view, int margin = 0, float priority = 1000)
+	{
+		containerView.ConstrainLayout(() => view.CenterY() == containerView.CenterY() + margin, priority: priority);
+		return containerView;
+	}
+	public static ConstrainSet<UIView> CenterVertically(this ConstrainSet<UIView> constrainSet, UIView view)
+	{
+		var containerView = constrainSet.View;
+		NSLayoutConstraint[] addedConstraints;
+		containerView.ConstrainLayout(() => view.CenterY() == containerView.CenterY(), out addedConstraints);
+		constrainSet.Constraints.AddRange(addedConstraints);
+		return constrainSet;
+	}
+
+	public static UIView FillWidth(this UIView containerView, UIView view, int margin = 0)
+	{
+		containerView.ConstrainLayout(() => containerView.Width() == view.Width() + margin);
+		return containerView;
+	}
+	public static ConstrainSet<UIView> FillWidth(this ConstrainSet<UIView> constrainSet, UIView view, int margin = 0)
+	{
+		var containerView = constrainSet.View;
+		NSLayoutConstraint[] addedConstraints;
+		containerView.ConstrainLayout(() => containerView.Width() == view.Width() + margin, out addedConstraints);
+		constrainSet.Constraints.AddRange(addedConstraints);
+		return constrainSet;
+	}
+
+	public static UIView FillHeight(this UIView containerView, UIView view, int margin = 0)
+	{
+		containerView.ConstrainLayout(() => containerView.Height() == view.Height() + margin);
+		return containerView;
+	}
+	public static ConstrainSet<UIView> FillHeight(this ConstrainSet<UIView> constrainSet, UIView view, int margin = 0)
+	{
+		var containerView = constrainSet.View;
+		NSLayoutConstraint[] addedConstraints;
+		containerView.ConstrainLayout(() => containerView.Height() == view.Height() + margin, out addedConstraints);
+		constrainSet.Constraints.AddRange(addedConstraints);
+		return constrainSet;
+	}
+
+	public static UIView VerticalSpace(this UIView containerView, UIView top, UIView bottom, int margin = 0)
+	{
+		containerView.ConstrainLayout(() => bottom.Top() == top.Bottom() + margin);
+		return containerView;
+	}
+	public static UIView MinimumVerticalSpace(this UIView containerView, UIView top, UIView bottom, int margin = 0)
+	{
+		containerView.ConstrainLayout(() => bottom.Top() >= top.Bottom() + margin);
+		return containerView;
+	}
+
+	public static ConstrainSet<UIView> VerticalSpace(this ConstrainSet<UIView> constrainSet, UIView top, UIView bottom, int margin = 0)
+	{
+		var containerView = constrainSet.View;
+		NSLayoutConstraint[] addedConstraints;
+		containerView.ConstrainLayout(() => bottom.Top() == top.Bottom() + margin, out addedConstraints);
+		constrainSet.Constraints.AddRange(addedConstraints);
+		return constrainSet;
+	}
+
+	public static UIView HorizontalSpace(this UIView containerView, UIView left, UIView right, int margin = 0)
+	{
+		containerView.ConstrainLayout(() => right.Left() == left.Right() + margin);
+		return containerView;
+	}
+	public static ConstrainSet<UIView> HorizontalSpace(this ConstrainSet<UIView> constrainSet, UIView left, UIView right, int margin = 0)
+	{
+		var containerView = constrainSet.View;
+		NSLayoutConstraint[] addedConstraints;
+		containerView.ConstrainLayout(() => right.Left() == left.Right() + margin, out addedConstraints);
+		constrainSet.Constraints.AddRange(addedConstraints);
+		return constrainSet;
+	}
+
+	public static UIView ConstrainHeight(this UIView view, int height)
+	{
+		view.ConstrainLayout(() => view.Height() == height);
+		return view;
+	}
+	public static ConstrainSet<UIView> ConstrainHeight(this ConstrainSet<UIView> constrainSet, int height)
+	{
+		var view = constrainSet.View;
+		NSLayoutConstraint[] addedConstraints;
+		view.ConstrainLayout(() => view.Height() == height, out addedConstraints);
+		constrainSet.Constraints.AddRange(addedConstraints);
+		return constrainSet;
+	}
+
+	public static UIView ConstrainWidth(this UIView view, int width)
+	{
+		view.ConstrainLayout(() => view.Width() == width);
+		return view;
+	}
+	public static ConstrainSet<UIView> ConstrainWidth(this ConstrainSet<UIView> constrainSet, int width)
+	{
+		var view = constrainSet.View;
+		NSLayoutConstraint[] addedConstraints;
+		view.ConstrainLayout(() => view.Width() == width, out addedConstraints);
+		constrainSet.Constraints.AddRange(addedConstraints);
+		return constrainSet;
+	}
+
+	public static UIView ConstrainSides(this UIView view, int widthAndHeight)
+	{
+		view.ConstrainLayout(() => view.Width()  == widthAndHeight
+								&& view.Height() == widthAndHeight);
+		return view;
+	}
+
+	public static UIView ConstrainMinHeight(this UIView view, int height)
+	{
+		view.ConstrainLayout(() => view.Height() >= height);
+		return view;
+	}
+	public static ConstrainSet<UIView> ConstrainMinHeight(this ConstrainSet<UIView> constrainSet, int height)
+	{
+		var view = constrainSet.View;
+		NSLayoutConstraint[] addedConstraints;
+			view.ConstrainLayout(() => view.Height() >= height, out addedConstraints);
+		constrainSet.Constraints.AddRange(addedConstraints);
+		return constrainSet;
+	}
+
+	public static UIView ConstrainMinWidth(this UIView view, int width)
+	{
+		view.ConstrainLayout(() => view.Width() >= width);
+		return view;
+	}
+	public static ConstrainSet<UIView> ConstrainMinWidth(this ConstrainSet<UIView> constrainSet, int width)
+	{
+		var view = constrainSet.View;
+		NSLayoutConstraint[] addedConstraints;
+		view.ConstrainLayout(() => view.Width() >= width, out addedConstraints);
+		constrainSet.Constraints.AddRange(addedConstraints);
+		return constrainSet;
+	}
+
+	public static UIView ConstrainMaxHeight(this UIView view, int height)
+	{
+		view.ConstrainLayout(() => view.Height() <= height);
+		return view;
+	}
+	public static ConstrainSet<UIView> ConstrainMaxHeight(this ConstrainSet<UIView> constrainSet, int height)
+	{
+		var view = constrainSet.View;
+		NSLayoutConstraint[] addedConstraints;
+		view.ConstrainLayout(() => view.Height() <= height, out addedConstraints);
+		constrainSet.Constraints.AddRange(addedConstraints);
+		return constrainSet;
+	}
+
+	public static UIView ConstrainMaxWidth(this UIView view, int width)
+	{
+		view.ConstrainLayout(() => view.Width() <= width);
+		return view;
+	}
+	public static ConstrainSet<UIView> ConstrainMaxWidth(this ConstrainSet<UIView> constrainSet, int width)
+	{
+		var view = constrainSet.View;
+		NSLayoutConstraint[] addedConstraints;
+			view.ConstrainLayout(() => view.Width() <= width, out addedConstraints);
+		constrainSet.Constraints.AddRange(addedConstraints);
+		return constrainSet;
+	}
+
+	public static UIView AlignOnLeft(this UIView view, UIView v1, UIView v2, int offset = 0)
+	{
+		view.ConstrainLayout(() => v1.Left() == v2.Left() + offset);
+		return view;
+	}
+	public static ConstrainSet<UIView> AlignOnLeft(this ConstrainSet<UIView> constrainSet, UIView v1, UIView v2, int offset = 0)
+	{
+		var view = constrainSet.View;
+		NSLayoutConstraint[] addedConstraints;
+		view.ConstrainLayout(() => v1.Left() == v2.Left() + offset, out addedConstraints);
+		constrainSet.Constraints.AddRange(addedConstraints);
+		return constrainSet;
+	}
+
+	public static UIView AlignOnRight(this UIView view, UIView v1, UIView v2, int offset = 0)
+	{
+		view.ConstrainLayout(() => v1.Right() == v2.Right() + offset);
+		return view;
+	}
+	public static ConstrainSet<UIView> AlignOnRight(this ConstrainSet<UIView> constrainSet, UIView v1, UIView v2, int offset = 0)
+	{
+		var view = constrainSet.View;
+		NSLayoutConstraint[] addedConstraints;
+		view.ConstrainLayout(() => v1.Right() == v2.Right() + offset, out addedConstraints);
+		constrainSet.Constraints.AddRange(addedConstraints);
+		return constrainSet;
+	}
+
+	public static UIView AlignOnTop(this UIView view, UIView v1, UIView v2, int offset = 0)
+	{
+		view.ConstrainLayout(() => v1.Top() == v2.Top() + offset);
+		return view;
+	}
+	public static ConstrainSet<UIView> AlignOnTop(this ConstrainSet<UIView> constrainSet, UIView v1, UIView v2, int offset = 0)
+	{
+		var view = constrainSet.View;
+		NSLayoutConstraint[] addedConstraints;
+		view.ConstrainLayout(() => v1.Top() == v2.Top() + offset, out addedConstraints);
+		constrainSet.Constraints.AddRange(addedConstraints);
+		return constrainSet;
+	}
+
+	public static UIView AlignOnBottom(this UIView view, UIView v1, UIView v2, int offset = 0)
+	{
+		view.ConstrainLayout(() => v1.Bottom() == v2.Bottom() + offset);
+		return view;
+	}
+	public static ConstrainSet<UIView> AlignOnBottom(this ConstrainSet<UIView> constrainSet, UIView v1, UIView v2, int offset = 0)
+	{
+		var view = constrainSet.View;
+		NSLayoutConstraint[] addedConstraints;
+		view.ConstrainLayout(() => v1.Bottom() == v2.Bottom() + offset, out addedConstraints);
+		constrainSet.Constraints.AddRange(addedConstraints);
+		return constrainSet;
+	}
+
+	public static UIView AlignOnCenterX(this UIView view, UIView v1, UIView v2, int offset = 0)
+	{
+		view.ConstrainLayout(() => v1.CenterX() == v2.CenterX() + offset);
+		return view;
+	}
+	public static ConstrainSet<UIView> AlignOnCenterX(this ConstrainSet<UIView> constrainSet, UIView v1, UIView v2, int offset = 0)
+	{
+		var view = constrainSet.View;
+		NSLayoutConstraint[] addedConstraints;
+		view.ConstrainLayout(() => v1.CenterX() == v2.CenterX() + offset, out addedConstraints);
+		constrainSet.Constraints.AddRange(addedConstraints);
+		return constrainSet;
+	}
+
+	public static UIView AlignOnCenterY(this UIView view, UIView v1, UIView v2, int offset = 0)
+	{
+		view.ConstrainLayout(() => v1.CenterY() == v2.CenterY() + offset);
+		return view;
+	}
+	public static ConstrainSet<UIView> AlignOnCenterY(this ConstrainSet<UIView> constrainSet, UIView v1, UIView v2, int offset = 0)
+	{
+		var view = constrainSet.View;
+		NSLayoutConstraint[] addedConstraints;
+		view.ConstrainLayout(() => v1.CenterY() == v2.CenterY() + offset, out addedConstraints);
+		constrainSet.Constraints.AddRange(addedConstraints);
+		return constrainSet;
+	}
+
+	public static UIView Same(this UIView view, UIView reference, UIView dest)
+	{
+		view.ConstrainLayout(() => reference.CenterY() == dest.CenterY()
+							 && reference.CenterX() == dest.CenterX()
+							 && reference.Height() == dest.Height()
+							 && reference.Width() == dest.Width());
+		return view;
+	}
+
+	public static UIView SameWidth(this UIView view, UIView v1, UIView v2)
+	{
+		view.ConstrainLayout(() => v1.Width() == v2.Width());
+		return view;
+	}
+	public static ConstrainSet<UIView> SameWidth(this ConstrainSet<UIView> constrainSet, UIView v1, UIView v2)
+	{
+		var view = constrainSet.View;
+		NSLayoutConstraint[] addedConstraints;
+		view.ConstrainLayout(() => v1.Width() == v2.Width(), out addedConstraints);
+		constrainSet.Constraints.AddRange(addedConstraints);
+		return constrainSet;
+	}
+
+	public static UIView SameHeight(this UIView view, UIView v1, UIView v2)
+	{
+		view.ConstrainLayout(() => v1.Height() == v2.Height());
+		return view;
+	}
+	public static ConstrainSet<UIView> SameHeight(this ConstrainSet<UIView> constrainSet, UIView v1, UIView v2)
+	{
+		var view = constrainSet.View;
+		NSLayoutConstraint[] addedConstraints;
+		view.ConstrainLayout(() => v1.Height() == v2.Height(), out addedConstraints);
+		constrainSet.Constraints.AddRange(addedConstraints);
+		return constrainSet;
+	}
+
+	public static UIScrollView VerticalScrollContentConstraint(this UIScrollView scroll, UIView content)
+	{
+		scroll.ConstrainLayout(() => scroll.Left() == content.Left()
+							   && scroll.Right() == content.Right()
+							   && scroll.Top() == content.Top()
+							   && scroll.Bottom() == content.Bottom()
+							   && scroll.CenterX() == content.CenterX());
+		return scroll;
+	}
+	
+	public static UIView NameConstraint(this UIView view, string name)
+	{
+		view.ConstrainLayout(() => view.Name() == name);
+
+		return view;
+	}
+	public static ConstrainSet<UIView> NameConstraint(this ConstrainSet<UIView> constrainSet, string name)
+	{
+		var view = constrainSet.View;
+		NSLayoutConstraint[] addedConstraints;
+		view.ConstrainLayout(() => view.Name() == name, out addedConstraints);
+		constrainSet.Constraints.AddRange(addedConstraints);
+		return constrainSet;
+	}
+```
+
 TODO: Add your code in this controller
 
 ```csharp
 public class MyUIViewController : UIViewController
 {
+    public UIImageView _imageView;
+    public UIButton _button;
+
     public MyUIViewController()
     {
+        var redSquareImage = UIImage.FromFile("./RedSquare_50.png");
         //TODO: Add your controls initialisation here.
+        _imageView = this.CreateImageView()
+                         .WithImage(redSquareImage);
     }
 
     public override void ViewWillAppear(bool animated)
