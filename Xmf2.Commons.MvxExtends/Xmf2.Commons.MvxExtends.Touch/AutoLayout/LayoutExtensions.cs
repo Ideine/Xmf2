@@ -21,23 +21,23 @@ public static class CustomAutoLayoutExtensions
 		return containerView;
 	}
 
-    public static UIView CenterAndFillWidth(this UIView containerView, int margin, params UIView[] views)
-    {
-        if (views == null)
-        {
-            throw new ArgumentNullException(nameof(views));
-        }
+	public static UIView CenterAndFillWidth(this UIView containerView, int margin, params UIView[] views)
+	{
+		if (views == null)
+		{
+			throw new ArgumentNullException(nameof(views));
+		}
 
-        foreach (UIView view in views)
-        {
-            containerView.ConstrainLayout(() =>
-                                          view.CenterX() == containerView.CenterX()
-                                          && view.Width() == containerView.Width() - margin
-                                         );
-        }
+		foreach (UIView view in views)
+		{
+			containerView.ConstrainLayout(() =>
+										  view.CenterX() == containerView.CenterX()
+										  && view.Width() == containerView.Width() - margin
+										 );
+		}
 
-        return containerView;
-    }
+		return containerView;
+	}
 
 	public static UIView VerticalFlow(this UIView containerView, params UIView[] views)
 	{
@@ -117,6 +117,15 @@ public static class CustomAutoLayoutExtensions
 	public static UIView CenterVertically(this UIView containerView, UIView view)
 	{
 		containerView.ConstrainLayout(() => view.CenterY() == containerView.CenterY());
+		return containerView;
+	}
+
+	public static UIView CenterVertically(this UIView containerView, params UIView[] views)
+	{
+		foreach (UIView view in views)
+		{
+			containerView.ConstrainLayout(() => view.CenterY() == containerView.CenterY());
+		}
 		return containerView;
 	}
 
@@ -259,7 +268,7 @@ public static class CustomAutoLayoutExtensions
 		return label;
 	}
 
-	#if DEBUG
+#if DEBUG
 	public static UIView NameConstraint(this UIView view, string name)
 	{
 		view.ConstrainLayout(() => view.Name() == name);
@@ -267,10 +276,10 @@ public static class CustomAutoLayoutExtensions
 		return view;
 	}
 
-	#else
+#else
 	public static UIView NameConstraint(this UIView view, string name)
 	{
 		return view;
 	}
-	#endif
+#endif
 }
