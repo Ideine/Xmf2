@@ -63,6 +63,7 @@
     <Compile Include="ViewComponents\IUIModelComponent.cs" />
     <Compile Include="ViewComponents\NavBarWithTwoActions.cs" />
     <Compile Include="ViewComponents\SimpleNavbarComponent.cs" />
+    <Compile Include="ViewComponents\UIEdgeableLabel.cs" />
     <Compile Include="ViewComponents\UITextViewWithPlaceHolder.cs" />
     <Compile Include="Views\BaseViewController.cs" />
     <Compile Include="ViewsAdapter\TableView\MvxDeselectRowTableViewSource.cs" />
