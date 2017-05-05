@@ -38,6 +38,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Converters\ToUpperConverter.cs" />
     <Compile Include="Converters\BytesToStringConverter.cs" />
     <Compile Include="Converters\IsStringNotNullOrEmptyConverter.cs" />
     <Compile Include="Converters\IsNotNullValueConverter.cs" />

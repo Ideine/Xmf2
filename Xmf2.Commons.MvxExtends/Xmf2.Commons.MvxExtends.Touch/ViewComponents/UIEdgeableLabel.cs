@@ -42,5 +42,10 @@ namespace Xmf2.Commons.MvxExtends.Touch.ViewComponents
 			this.EdgeInsets = new UIEdgeInsets(top, left, bottom, right);
 			return this;
 		}
+		public UIEdgeableLabel WithEdgeInsets(UIEdgeInsets insets)
+		{
+			this.EdgeInsets = insets;
+			return this;
+		}
 	}
 }
