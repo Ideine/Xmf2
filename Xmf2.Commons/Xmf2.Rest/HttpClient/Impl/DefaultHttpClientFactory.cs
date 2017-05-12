@@ -163,7 +163,7 @@ namespace Xmf2.Rest.HttpClient.Impl
         /// <returns>A new HttpMessageHandler object</returns>
         protected virtual HttpMessageHandler CreateMessageHandler(IRestClient client)
         {
-            var handler = new HttpClientHandler();
+            var handler = NewHandler();
 
 #if !NO_PROXY
             if (handler.SupportsProxy && client.Proxy != null)
@@ -194,5 +194,10 @@ namespace Xmf2.Rest.HttpClient.Impl
 
             return handler;
         }
+
+		protected virtual HttpClientHandler NewHandler()
+		{
+			return new HttpClientHandler();
+		}
     }
 }
