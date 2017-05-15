@@ -4,6 +4,7 @@ using MvvmCross.iOS.Platform;
 using MvvmCross.Platform;
 using MvvmCross.Platform.Platform;
 using UIKit;
+using UserNotifications;
 using Xmf2.Commons.MvxExtends.Services;
 
 namespace Xmf2.Commons.MvxExtends.Touch.Services
@@ -52,6 +53,12 @@ namespace Xmf2.Commons.MvxExtends.Touch.Services
 
 		public override void ReceivedRemoteNotification(UIApplication application, NSDictionary userInfo)
 		{
+			if (application.ApplicationState != UIApplicationState.Active)
+			{
+				//TODO: add some deeplinking code
+				return;
+			}
+
 			if (userInfo.ContainsKey(new NSString("aps")))
 			{
 				//Get the aps dictionary
@@ -74,7 +81,42 @@ namespace Xmf2.Commons.MvxExtends.Touch.Services
 
 		protected virtual void ShowNotification(string alert)
 		{
-			UIAlertView notificationAlert = new UIAlertView("Notification", alert, null, "Ok", null);
+			ShowLocalNotification(alert);
+		}
+
+		protected void ShowLocalNotification(string text)
+		{
+			if (UIDevice.CurrentDevice.CheckSystemVersion(10, 0))
+			{
+				var notificationCenter = UNUserNotificationCenter.Current;
+				var notification = new UNMutableNotificationContent
+				{
+					Body = text,
+					Sound = UNNotificationSound.Default
+				};
+
+				var trigger = UNTimeIntervalNotificationTrigger.CreateTrigger(1, false);
+				var notificationRequest = UNNotificationRequest.FromIdentifier(new Guid().ToString(), notification, trigger);
+
+				notificationCenter.AddNotificationRequest(notificationRequest, (err) => 
+				{
+					MvxTrace.Trace($"LocalNotificationError: Code={err.Code} / Description={err.Description} / FailureReason={err.LocalizedFailureReason}");
+				});
+			}
+			else
+			{
+				UILocalNotification notification = new UILocalNotification
+				{
+					AlertBody = text,
+					SoundName = UILocalNotification.DefaultSoundName
+				};
+				UIApplication.SharedApplication.PresentLocalNotificationNow(notification);
+			}
+		}
+
+		protected void ShowAlertNotification(string title, string text, string button)
+		{
+			UIAlertView notificationAlert = new UIAlertView(title, text, null, button, null);
 			notificationAlert.Show();
 		}
 
