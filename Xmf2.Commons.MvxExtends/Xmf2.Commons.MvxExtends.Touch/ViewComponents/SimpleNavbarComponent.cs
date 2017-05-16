@@ -27,6 +27,15 @@ namespace Xmf2.Commons.MvxExtends.Touch.ViewComponents
 			}
 		}
 
+		public UIColor TextColorHighlight
+		{
+			get { return _backButton.TitleColor(UIControlState.Highlighted); }
+			set
+			{
+				_backButton.WithTextColorHighlight(value);
+			}
+		}
+
 		public UIFont TextFont
 		{
 			get { return _titleLabel.Font; }
@@ -57,7 +66,7 @@ namespace Xmf2.Commons.MvxExtends.Touch.ViewComponents
 				_backButton.WithImage(backImage);
 			}
 			
-			_backButton.TitleEdgeInsets = new UIEdgeInsets(0, 8, 0, 0);
+			_backButton.TitleEdgeInsets = new UIEdgeInsets(0, 0, 0, 0);
 			_backButton.HorizontalAlignment = UIControlContentHorizontalAlignment.Left;
 
 			_titleLabel = this.CreateLabel()
