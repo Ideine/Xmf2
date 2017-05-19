@@ -7,219 +7,226 @@ using CoreGraphics;
 
 namespace Xmf2.Commons.MvxExtends.Touch.ViewComponents
 {
-	public class NavBarWithTwoActions : UIView
-	{
+    public class NavBarWithTwoActions : UIView
+    {
 
-		private static readonly UIColor _DEFAULT_TEXT_HIGHLIGHT_COLOR = UIColorExtension.ColorFromHex(0x757575);
-		private bool _layoutDone;
+        private static readonly UIColor _DEFAULT_TEXT_HIGHLIGHT_COLOR = UIColorExtension.ColorFromHex(0x757575);
+        private bool _layoutDone;
 
-		private readonly UIView _container;
+        private readonly UIView _container;
 
-		#region Public Properties
+        #region Public Properties
 
-		public Action LeftAction { get; set; }
-		public Action RightAction { get; set; }
-		public ICommand LeftCommand
-		{
-			get { return null; }
-			set { LeftAction = () => value?.TryExecute(); }
-		}
-		public ICommand RightCommand
-		{
-			get { return null; }
-			set { RightAction = () => value?.TryExecute(); }
-		}
-		public string LeftActionTitle
-		{
-			get { return LeftButton?.Title(UIControlState.Normal); }
-			set { LeftButton.WithTitle(value); }
-		}
-		public string RightActionTitle
-		{
-			get { return RightButton?.Title(UIControlState.Normal); }
-			set { RightButton.WithTitle(value); }
-		}
-		public string TextTitle
-		{
-			get { return Title?.Text; }
-			set { Title.WithText(value); }
-		}
-		public UIFont TextTitleFont
-		{
-			get { return Title?.Font; }
-			set { Title.WithFont(value); }
-		}
-		public bool HasLeftAction
-		{
-			get { return LeftButton?.Hidden ?? false; }
-			set { LeftButton.Hidden = !value; }
-		}
-		public bool HasRightAction
-		{
-			get { return RightButton?.Hidden ?? false; }
-			set { RightButton.Hidden = !value; }
-		}
-		public UIButton LeftButton { get; }
-		public UIButton RightButton { get; }
-		public UILabel Title { get; }
+        public Action LeftAction { get; set; }
+        public Action RightAction { get; set; }
+        public ICommand LeftCommand
+        {
+            get { return null; }
+            set { LeftAction = () => value?.TryExecute(); }
+        }
+        public ICommand RightCommand
+        {
+            get { return null; }
+            set { RightAction = () => value?.TryExecute(); }
+        }
+        public string LeftActionTitle
+        {
+            get { return LeftButton?.Title(UIControlState.Normal); }
+            set { LeftButton.WithTitle(value); }
+        }
+        public string RightActionTitle
+        {
+            get { return RightButton?.Title(UIControlState.Normal); }
+            set { RightButton.WithTitle(value); }
+        }
+        public string TextTitle
+        {
+            get { return Title?.Text; }
+            set { Title.WithText(value); }
+        }
+        public UIFont TextTitleFont
+        {
+            get { return Title?.Font; }
+            set { Title.WithFont(value); }
+        }
 
-		#endregion Public Properties
+        public UIColor TitleColor
+        {
+            get { return Title?.TextColor; }
+            set { Title.TextColor = value; }
+        }
 
-		private static readonly CGAffineTransform _flipTransform = CGAffineTransform.MakeScale(-1.0f, 1.0f);
-		public NavBarWithTwoActions(string leftImage, string rightImage)
-		{
-			this.LeftButton  = this.CreateButton().WithTitle(LeftActionTitle).OnClick(OnClickLeftButton).WithTextColorHighlight(_DEFAULT_TEXT_HIGHLIGHT_COLOR);
-			this.RightButton = this.CreateButton().WithTitle(RightActionTitle).OnClick(OnClickRightButton).WithTextColorHighlight(_DEFAULT_TEXT_HIGHLIGHT_COLOR);
-			this.Title = this.CreateLabel().WithText(TextTitle).WithAlignment(UITextAlignment.Center);
+        public bool HasLeftAction
+        {
+            get { return LeftButton?.Hidden ?? false; }
+            set { LeftButton.Hidden = !value; }
+        }
+        public bool HasRightAction
+        {
+            get { return RightButton?.Hidden ?? false; }
+            set { RightButton.Hidden = !value; }
+        }
+        public UIButton LeftButton { get; }
+        public UIButton RightButton { get; }
+        public UILabel Title { get; }
 
-			bool hasLeftImage = !string.IsNullOrEmpty(leftImage);
-			bool hasRightImage = !string.IsNullOrEmpty(rightImage);
-			if (hasLeftImage)
-			{
-				LeftButton.WithImage(leftImage);
-			}
-			if (hasRightImage)
-			{
-				RightButton.WithImage(rightImage);
-				RightButton.Transform = _flipTransform;
-				RightButton.TitleLabel.Transform = _flipTransform;
-				RightButton.ImageView.Transform = _flipTransform;
-			}
-			_container = this.CreateView()
-							 .WithSubviews(Title, LeftButton, RightButton);
-			this.Add(_container);
-		}
+        #endregion Public Properties
 
-		public void AutoLayout()
-		{
-			if (!_layoutDone)
-			{
-				_layoutDone = true;
-				ApplyAutoLayout();
-			}
-		}
+        private static readonly CGAffineTransform _flipTransform = CGAffineTransform.MakeScale(-1.0f, 1.0f);
+        public NavBarWithTwoActions(string leftImage, string rightImage)
+        {
+            this.LeftButton = this.CreateButton().WithTitle(LeftActionTitle).OnClick(OnClickLeftButton).WithTextColorHighlight(_DEFAULT_TEXT_HIGHLIGHT_COLOR);
+            this.RightButton = this.CreateButton().WithTitle(RightActionTitle).OnClick(OnClickRightButton).WithTextColorHighlight(_DEFAULT_TEXT_HIGHLIGHT_COLOR);
+            this.Title = this.CreateLabel().WithText(TextTitle).WithAlignment(UITextAlignment.Center);
 
-		protected virtual void ApplyAutoLayout()
-		{
-			//Vertical Layout
-			this.AnchorTop(_container, LayoutConsts.UIStatusBar_DefaultHeight)
-				.AnchorBottom(_container);
+            bool hasLeftImage = !string.IsNullOrEmpty(leftImage);
+            bool hasRightImage = !string.IsNullOrEmpty(rightImage);
+            if (hasLeftImage)
+            {
+                LeftButton.WithImage(leftImage);
+            }
+            if (hasRightImage)
+            {
+                RightButton.WithImage(rightImage);
+                RightButton.Transform = _flipTransform;
+                RightButton.TitleLabel.Transform = _flipTransform;
+                RightButton.ImageView.Transform = _flipTransform;
+            }
+            _container = this.CreateView()
+                             .WithSubviews(Title, LeftButton, RightButton);
+            this.Add(_container);
+        }
 
-			_container.CenterVertically(LeftButton)
-					  .CenterVertically(Title)
-					  .CenterVertically(RightButton)
-					  //.FillHeight(LeftButton)
-					  //.FillHeight(RightButton)
-					  ;
+        public void AutoLayout()
+        {
+            if (!_layoutDone)
+            {
+                _layoutDone = true;
+                ApplyAutoLayout();
+            }
+        }
 
-			//Horizontal Layout
-			this.CenterAndFillWidth(_container);
-			_container.AnchorLeft(LeftButton, 30 / 2)
-					  .AnchorRight(RightButton, 30 / 2)
-					  .CenterAndFillWidth(Title);
-		}
+        protected virtual void ApplyAutoLayout()
+        {
+            //Vertical Layout
+            this.AnchorTop(_container, LayoutConsts.UIStatusBar_DefaultHeight)
+                .AnchorBottom(_container);
 
-		public virtual void OnClickLeftButton()
-		{
-			LeftAction?.Invoke();
-		}
+            _container.CenterVertically(LeftButton)
+                      .CenterVertically(Title)
+                      .CenterVertically(RightButton)
+                      //.FillHeight(LeftButton)
+                      //.FillHeight(RightButton)
+                      ;
 
-		public virtual void OnClickRightButton()
-		{
-			RightAction?.Invoke();
-		}
+            //Horizontal Layout
+            this.CenterAndFillWidth(_container);
+            _container.AnchorLeft(LeftButton, 30 / 2)
+                      .AnchorRight(RightButton, 30 / 2)
+                      .CenterAndFillWidth(Title);
+        }
 
-		#region Dispose
+        public virtual void OnClickLeftButton()
+        {
+            LeftAction?.Invoke();
+        }
 
-		private bool _disposed;
-		protected override void Dispose(bool disposing)
-		{
-			if (!_disposed)
-			{
-				try
-				{
-					if (disposing)// Release managed resources.
-					{
-						LeftAction = null;
-						RightAction = null;
-					}
-					// Release unmanaged resources...
-					_disposed = true;
-				}
-				finally
-				{
-					base.Dispose(disposing);
-				}
-			}
-		}
+        public virtual void OnClickRightButton()
+        {
+            RightAction?.Invoke();
+        }
 
-		#endregion Dispose
+        #region Dispose
 
-		#region Static methods helper
+        private bool _disposed;
+        protected override void Dispose(bool disposing)
+        {
+            if (!_disposed)
+            {
+                try
+                {
+                    if (disposing)// Release managed resources.
+                    {
+                        LeftAction = null;
+                        RightAction = null;
+                    }
+                    // Release unmanaged resources...
+                    _disposed = true;
+                }
+                finally
+                {
+                    base.Dispose(disposing);
+                }
+            }
+        }
 
-		public static NavBarWithTwoActions Create(string title)
-		{
-			return new NavBarWithTwoActions(null, null)
-			{
-				TextTitle = title,
-				HasLeftAction = false,
-				HasRightAction = false
-			};
-		}
+        #endregion Dispose
 
-		public static NavBarWithTwoActions CreateSimpleBack(string title, string leftText)
-		{
-			return new NavBarWithTwoActions(null, null)
-			{
-				TextTitle = title,
-				LeftActionTitle = leftText,
-				HasRightAction = false
-			};
-		}
+        #region Static methods helper
 
-		public static NavBarWithTwoActions Create(string title, string leftText, string leftImage = null)
-		{
-			return new NavBarWithTwoActions(leftImage, null)
-			{
-				TextTitle = title,
-				LeftActionTitle = leftText,
-				HasRightAction = false
-			};
-		}
+        public static NavBarWithTwoActions Create(string title)
+        {
+            return new NavBarWithTwoActions(null, null)
+            {
+                TextTitle = title,
+                HasLeftAction = false,
+                HasRightAction = false
+            };
+        }
 
-		public static NavBarWithTwoActions Create(string title, string leftText, string rightText, string leftImage = null)
-		{
-			return new NavBarWithTwoActions(leftImage, null)
-			{
-				TextTitle = title,
-				LeftActionTitle = leftText,
-				RightActionTitle = rightText
-			};
-		}
+        public static NavBarWithTwoActions CreateSimpleBack(string title, string leftText)
+        {
+            return new NavBarWithTwoActions(null, null)
+            {
+                TextTitle = title,
+                LeftActionTitle = leftText,
+                HasRightAction = false
+            };
+        }
 
-		public static NavBarWithTwoActions Create(string title, string leftText, Action leftAction, string leftImage = null)
-		{
-			return new NavBarWithTwoActions(leftImage, null)
-			{
-				TextTitle = title,
-				LeftActionTitle = leftText,
-				LeftAction = leftAction,
-				HasRightAction = false
-			};
-		}
+        public static NavBarWithTwoActions Create(string title, string leftText, string leftImage = null)
+        {
+            return new NavBarWithTwoActions(leftImage, null)
+            {
+                TextTitle = title,
+                LeftActionTitle = leftText,
+                HasRightAction = false
+            };
+        }
 
-		public static NavBarWithTwoActions Create(string title, string leftText, string rightText, Action leftAction, Action rightAction, string leftImage, string rightImage)
-		{
-			return new NavBarWithTwoActions(leftImage, rightImage)
-			{
-				TextTitle = title,
-				LeftActionTitle = leftText,
-				RightActionTitle = rightText,
-				LeftAction = leftAction,
-				RightAction = rightAction,
-			};
-		}
+        public static NavBarWithTwoActions Create(string title, string leftText, string rightText, string leftImage = null)
+        {
+            return new NavBarWithTwoActions(leftImage, null)
+            {
+                TextTitle = title,
+                LeftActionTitle = leftText,
+                RightActionTitle = rightText
+            };
+        }
 
-		#endregion  Static methods helper
-	}
+        public static NavBarWithTwoActions Create(string title, string leftText, Action leftAction, string leftImage = null)
+        {
+            return new NavBarWithTwoActions(leftImage, null)
+            {
+                TextTitle = title,
+                LeftActionTitle = leftText,
+                LeftAction = leftAction,
+                HasRightAction = false
+            };
+        }
+
+        public static NavBarWithTwoActions Create(string title, string leftText, string rightText, Action leftAction, Action rightAction, string leftImage, string rightImage)
+        {
+            return new NavBarWithTwoActions(leftImage, rightImage)
+            {
+                TextTitle = title,
+                LeftActionTitle = leftText,
+                RightActionTitle = rightText,
+                LeftAction = leftAction,
+                RightAction = rightAction,
+            };
+        }
+
+        #endregion  Static methods helper
+    }
 }
