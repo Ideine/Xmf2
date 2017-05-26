@@ -44,6 +44,7 @@ namespace Xmf2.Commons.MvxExtends.Services
 		private readonly IKeyValueStorageService _settingsService;
 		private readonly INotificationDataService _notificationDataService;
 		private TaskCompletionSource<string> _tokenTcs;
+		private readonly object _tcsMutex = new object();
 
 		protected BaseNotificationService(IKeyValueStorageService settingsService, INotificationDataService notificationDataService)
 		{
@@ -89,22 +90,28 @@ namespace Xmf2.Commons.MvxExtends.Services
 
 		public void SetToken(string token)
 		{
-			_tokenTcs?.SetResult(token);
-			_tokenTcs = null;
+			lock (_tcsMutex)
+			{
+				_tokenTcs?.TrySetResult(token);
+				_tokenTcs = null;
+			}
 		}
 
 		protected Task<string> GetToken()
 		{
-			if (_tokenTcs != null)
+			lock (_tcsMutex)
 			{
+				if (_tokenTcs != null)
+				{
+					return _tokenTcs.Task;
+				}
+
+				_tokenTcs = new TaskCompletionSource<string>();
+
+				RequestToken();
+
 				return _tokenTcs.Task;
 			}
-
-			_tokenTcs = new TaskCompletionSource<string>();
-
-			RequestToken();
-
-			return _tokenTcs.Task;
 		}
 
 		protected virtual void DeleteRegisterId()
