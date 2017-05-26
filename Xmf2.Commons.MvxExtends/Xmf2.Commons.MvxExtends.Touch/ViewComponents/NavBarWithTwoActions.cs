@@ -84,14 +84,16 @@ namespace Xmf2.Commons.MvxExtends.Touch.ViewComponents
             if (hasLeftImage)
             {
                 LeftButton.WithImage(leftImage);
-            }
+				LeftButton.ContentEdgeInsets = new UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 0);
+			}
             if (hasRightImage)
             {
                 RightButton.WithImage(rightImage);
                 RightButton.Transform = _flipTransform;
                 RightButton.TitleLabel.Transform = _flipTransform;
                 RightButton.ImageView.Transform = _flipTransform;
-            }
+				RightButton.ContentEdgeInsets = new UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 0);
+			}
             _container = this.CreateView()
                              .WithSubviews(Title, LeftButton, RightButton);
             this.Add(_container);
@@ -115,14 +117,14 @@ namespace Xmf2.Commons.MvxExtends.Touch.ViewComponents
             _container.CenterVertically(LeftButton)
                       .CenterVertically(Title)
                       .CenterVertically(RightButton)
-                      //.FillHeight(LeftButton)
-                      //.FillHeight(RightButton)
-                      ;
+					  .FillHeight(LeftButton)
+					  .FillHeight(RightButton)
+					  ;
 
             //Horizontal Layout
             this.CenterAndFillWidth(_container);
-            _container.AnchorLeft(LeftButton, 30 / 2)
-                      .AnchorRight(RightButton, 30 / 2)
+            _container.AnchorLeft(LeftButton)
+                      .AnchorRight(RightButton)
                       .CenterAndFillWidth(Title);
         }
 
