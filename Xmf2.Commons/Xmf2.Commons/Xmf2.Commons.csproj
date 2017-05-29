@@ -70,6 +70,15 @@
     <Compile Include="Extensions\TaskExtensions.cs" />
     <Compile Include="ErrorManagers\InvalidAppVersionException.cs" />
     <Compile Include="Workers\BackgroundQueueWorker.cs" />
+    <Compile Include="Services\Notifications\NotificationService.cs" />
+    <Compile Include="Services\Licences\ILicenceReaderService.cs" />
+    <Compile Include="Services\Licences\LicenceStyle.cs" />
+    <Compile Include="Services\Licences\LicencesLoader.cs" />
+    <Compile Include="Services\Licences\NoticesHtmlBuilder.cs" />
+    <Compile Include="Services\Licences\Models\Licence.cs" />
+    <Compile Include="Services\Licences\Models\Notice.cs" />
+    <Compile Include="Services\Licences\Models\Notices.cs" />
+    <Compile Include="Extensions\SemaphoreSlimExtensions.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
