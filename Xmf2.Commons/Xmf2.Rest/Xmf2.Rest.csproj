@@ -34,8 +34,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Caches\CacheEngine.cs" />
-    <Compile Include="Caches\ICacheItem.cs" />
     <Compile Include="HttpClient\DefaultHttpExtensions.cs" />
     <Compile Include="HttpClient\HttpMethodExtensions.cs" />
     <Compile Include="HttpClient\Impl\DefaultHttpClientFactory.cs" />

@@ -67,6 +67,8 @@
     <Compile Include="Services\DataAccess\RequestService.cs" />
     <Compile Include="Services\DataAccess\OAuth2RequestService.cs" />
     <Compile Include="Extensions\CommandExtensions.cs" />
+    <Compile Include="Caches\CacheEngine.cs" />
+    <Compile Include="Caches\ICacheItem.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

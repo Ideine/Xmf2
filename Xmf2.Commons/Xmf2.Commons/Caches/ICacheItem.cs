@@ -1,7 +1,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Xmf2.Rest.Caches
+namespace Xmf2.Commons.Caches
 {
 	public interface ICacheItem
 	{
