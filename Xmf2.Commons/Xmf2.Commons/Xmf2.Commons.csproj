@@ -79,6 +79,7 @@
     <Compile Include="Services\Licences\Models\Notice.cs" />
     <Compile Include="Services\Licences\Models\Notices.cs" />
     <Compile Include="Extensions\SemaphoreSlimExtensions.cs" />
+    <Compile Include="Helpers\TaskHelper.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
