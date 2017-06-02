@@ -17,16 +17,16 @@ public static class CreatorExtensions
         return new UIButton(type);
     }
 
-	public static UIHighlightButton CreateHighlightButton(this object parent)
-	{
-		return new UIHighlightButton();
-	}
+    public static UIHighlightButton CreateHighlightButton(this object parent)
+    {
+        return new UIHighlightButton();
+    }
 
-	public static TUIButton WithHighlightBackgroundColor<TUIButton>(this TUIButton button, UIColor color) where TUIButton : UIHighlightButton
-	{
-		button.HighlightColor = color;
-		return button;
-	}
+    public static TUIButton WithHighlightBackgroundColor<TUIButton>(this TUIButton button, UIColor color) where TUIButton : UIHighlightButton
+    {
+        button.HighlightColor = color;
+        return button;
+    }
 
     public static TUIButton WithTitle<TUIButton>(this TUIButton button, string title) where TUIButton : UIButton
     {
@@ -118,22 +118,22 @@ public static class CreatorExtensions
         return button;
     }
 
-	public static TUIButton OnClick<TUIButton>(this TUIButton button, Action action, out Action unregisterAction) where TUIButton : UIButton
-	{
-		EventHandler onTouchUpInside = (sender, e) => action?.Invoke();
-		button.TouchUpInside += onTouchUpInside;
-		unregisterAction = () =>
-		{
-			button.TouchUpInside -= onTouchUpInside;
-		};
-		return button;
-	}
+    public static TUIButton OnClick<TUIButton>(this TUIButton button, Action action, out Action unregisterAction) where TUIButton : UIButton
+    {
+        EventHandler onTouchUpInside = (sender, e) => action?.Invoke();
+        button.TouchUpInside += onTouchUpInside;
+        unregisterAction = () =>
+        {
+            button.TouchUpInside -= onTouchUpInside;
+        };
+        return button;
+    }
 
-	#endregion
+    #endregion
 
-	#region UIView
+    #region UIView
 
-	public static UIView CreateSeparator(this object parent)
+    public static UIView CreateSeparator(this object parent)
     {
         return new UIView();
     }
@@ -334,7 +334,71 @@ public static class CreatorExtensions
         return input;
     }
 
+    public static UITextField WithBorderStyle(this UITextField input, UITextBorderStyle style)
+	{
+        input.BorderStyle = style;
+		return input;
+	}
+
     #endregion UITextField
+
+    #region UISearchBar
+
+    public static UISearchBar CreateSearchBar(this object parent)
+    {
+        return new UISearchBar();
+    }
+
+    public static UISearchBar WithPlaceholder(this UISearchBar input, string text)
+    {
+        input.Placeholder = text;
+        return input;
+    }
+
+    public static UISearchBar WithTintColor(this UISearchBar input, UIColor color)
+    {
+        input.TintColor = color;
+        return input;
+    }
+
+    public static UISearchBar WithBarTintColor(this UISearchBar input, UIColor color)
+    {
+        input.BarTintColor = color;
+        return input;
+    }
+
+	public static UISearchBar WithBorderWidthAndColor(this UISearchBar input, UIColor color, int width)
+	{
+        input.Layer.BorderColor = color.CGColor;
+        input.Layer.BorderWidth = width;
+		return input;
+	}
+
+	public static UISearchBar WithSearchBarStyle(this UISearchBar input, UISearchBarStyle style)
+    {
+        input.SearchBarStyle = style;
+        return input;
+    }
+
+    public static UISearchBar WithBarStyle(this UISearchBar input, UIBarStyle style)
+	{
+        input.BarStyle = style;
+		return input;
+	}
+
+    public static UISearchBar WithTranslucent(this UISearchBar input, bool isTranslucent = true)
+    {
+        input.Translucent = isTranslucent;
+        return input;
+    }
+
+    public static UISearchBar WithOpaque(this UISearchBar input, bool isOpaque = true)
+    {
+        input.Opaque = isOpaque;
+        return input;
+    }
+
+    #endregion
 
     #region UITextView
 
@@ -410,39 +474,39 @@ public static class CreatorExtensions
         return view;
     }
 
-	public static TView WithBorder<TView>(this TView view, UIColor borderColor, int size) where TView : UIView
-	{
-		view.Layer.BorderColor = borderColor.CGColor;
-		view.Layer.BorderWidth = size;
-		return view;
-	}
+    public static TView WithBorder<TView>(this TView view, UIColor borderColor, int size) where TView : UIView
+    {
+        view.Layer.BorderColor = borderColor.CGColor;
+        view.Layer.BorderWidth = size;
+        return view;
+    }
 
-	public static TView WithShadow<TView>(this TView view, UIColor shadowColor, int left, int top, float radius = 8f, float opacity = 1f) where TView : UIView
-	{
-		view.Layer.ShadowColor = shadowColor.CGColor;
-		view.Layer.ShadowOpacity = opacity;
-		view.Layer.ShadowRadius = radius;
-		view.Layer.ShadowOffset = new CGSize(left, top);
+    public static TView WithShadow<TView>(this TView view, UIColor shadowColor, int left, int top, float radius = 8f, float opacity = 1f) where TView : UIView
+    {
+        view.Layer.ShadowColor = shadowColor.CGColor;
+        view.Layer.ShadowOpacity = opacity;
+        view.Layer.ShadowRadius = radius;
+        view.Layer.ShadowOffset = new CGSize(left, top);
 
-		return view;
-	}
+        return view;
+    }
 
-	public static TView WithClipping<TView>(this TView view) where TView : UIView
-	{
-		view.ClipsToBounds = true;
+    public static TView WithClipping<TView>(this TView view) where TView : UIView
+    {
+        view.ClipsToBounds = true;
 
-		return view;
-	}
+        return view;
+    }
 
-	public static TView WithoutShadow<TView>(this TView view) where TView : UIView
-	{
-		view.Layer.ShadowColor = UIColor.Clear.CGColor;
-		view.Layer.ShadowOpacity = 0;
-		view.Layer.ShadowRadius = 0;
-		view.Layer.ShadowOffset = CGSize.Empty;
+    public static TView WithoutShadow<TView>(this TView view) where TView : UIView
+    {
+        view.Layer.ShadowColor = UIColor.Clear.CGColor;
+        view.Layer.ShadowOpacity = 0;
+        view.Layer.ShadowRadius = 0;
+        view.Layer.ShadowOffset = CGSize.Empty;
 
-		return view;
-	}
+        return view;
+    }
 
     public static TView WithCornerRadius<TView>(this TView view, int size) where TView : UIView
     {
