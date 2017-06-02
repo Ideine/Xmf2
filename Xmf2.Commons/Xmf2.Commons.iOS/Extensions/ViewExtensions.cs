@@ -1,8 +1,6 @@
 ﻿using System;
 using Foundation;
-using UIKit;
-
-namespace Xmf2.Commons.iOS.Extensions
+namespace UIKit
 {
     public static class ViewExtensions
     {
