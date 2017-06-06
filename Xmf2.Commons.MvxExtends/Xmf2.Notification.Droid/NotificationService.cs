@@ -1,4 +1,4 @@
-﻿using System;
+﻿﻿using System;
 using Android.App;
 using MvvmCross.Platform;
 using MvvmCross.Platform.Droid.Platform;
@@ -14,7 +14,7 @@ namespace Xmf2.Notification.Droid
 		private readonly string _gcmId;
 
 		private readonly object _initializeLock = new object();
-		private bool _initialized;
+		private bool _initialized = false;
 
 		private Activity CurrentActivity => Mvx.Resolve<IMvxAndroidCurrentTopActivity>().Activity;
 
@@ -96,7 +96,21 @@ namespace Xmf2.Notification.Droid
 					return;;
 				}
 
-				Firebase.FirebaseApp.InitializeApp(CurrentActivity.Application);
+				Android.Util.Log.Error("Xmf2/Token", $"Initialize firebase app with token {_gcmId}");
+				try
+				{
+					Firebase.FirebaseApp.InitializeApp(CurrentActivity.Application,
+													   new Firebase.FirebaseOptions.Builder()
+													   .SetGcmSenderId(_gcmId)
+														  .Build());
+					Android.Util.Log.Error("Xmf2/Token", $"Firebase app initialized !");
+					Android.Util.Log.Error("Xmf2/Token", $"Has instance ? => {(Firebase.FirebaseApp.Instance != null ? "true" : "false")}");
+				}
+				catch(Exception ex)
+				{
+					Android.Util.Log.Error("Xmf2/Token", $"Exception while initializing firebase app {ex}");
+				}
+				_initialized = true;
 			}
 		}
 	}
