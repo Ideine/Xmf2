@@ -13,6 +13,9 @@ namespace Xmf2.Notification.Droid
 	{
 		private readonly string _gcmId;
 
+		private readonly object _initializeLock = new object();
+		private bool _initialized;
+
 		private Activity CurrentActivity => Mvx.Resolve<IMvxAndroidCurrentTopActivity>().Activity;
 
 		public NotificationService(string gcmId, IKeyValueStorageService settingsService, INotificationDataService notificationDataService) : base(settingsService, notificationDataService)
@@ -28,6 +31,7 @@ namespace Xmf2.Notification.Droid
 			{
 				try
 				{
+					EnsureInitialized();
 					Firebase.Iid.FirebaseInstanceId.Instance.DeleteInstanceId();
 				}
 				catch (Exception ex)
@@ -65,6 +69,7 @@ namespace Xmf2.Notification.Droid
 					return;
 				}
 
+				EnsureInitialized();
 				string token = Firebase.Iid.FirebaseInstanceId.Instance.GetToken(_gcmId, Firebase.Messaging.FirebaseMessaging.InstanceIdScope);
 
 				Android.Util.Log.Warn("Xmf2/Token", $"PickToken : {token}");
@@ -74,6 +79,24 @@ namespace Xmf2.Notification.Droid
 			catch (Exception ex)
 			{
 				Android.Util.Log.Error("Xmf2/Token", $"Can not get token from firebase {ex}");
+			}
+		}
+
+		private void EnsureInitialized()
+		{
+			if(_initialized)
+			{
+				return;
+			}
+
+			lock(_initializeLock)
+			{
+				if(_initialized)
+				{
+					return;;
+				}
+
+				Firebase.FirebaseApp.InitializeApp(CurrentActivity.Application);
 			}
 		}
 	}
