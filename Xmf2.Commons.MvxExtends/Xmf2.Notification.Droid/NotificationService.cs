@@ -99,10 +99,7 @@ namespace Xmf2.Notification.Droid
 				Android.Util.Log.Error("Xmf2/Token", $"Initialize firebase app with token {_gcmId}");
 				try
 				{
-					Firebase.FirebaseApp.InitializeApp(CurrentActivity.Application,
-													   new Firebase.FirebaseOptions.Builder()
-													   .SetGcmSenderId(_gcmId)
-														  .Build());
+					Firebase.FirebaseApp.InitializeApp(CurrentActivity.Application);
 					Android.Util.Log.Error("Xmf2/Token", $"Firebase app initialized !");
 					Android.Util.Log.Error("Xmf2/Token", $"Has instance ? => {(Firebase.FirebaseApp.Instance != null ? "true" : "false")}");
 				}
