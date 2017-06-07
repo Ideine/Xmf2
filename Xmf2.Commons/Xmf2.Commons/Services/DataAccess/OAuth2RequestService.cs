@@ -1,8 +1,8 @@
+using System;
 using System.Threading;
-using System.Threading.Tasks;
-using Xmf2.Rest.OAuth2;
 using RestSharp.Portable;
-using Xmf2.Commons.ErrorManagers;
+using Xmf2.Commons.Errors;
+using Xmf2.Rest.OAuth2;
 
 namespace Xmf2.Commons.Services
 {
@@ -10,12 +10,12 @@ namespace Xmf2.Commons.Services
 	{
 		private readonly IOAuth2Client _client;
 
-		public OAuth2RequestService(IRestClient client, IOAuth2Client authenticatedClient, IHttpErrorManager errorManager) : base(client, errorManager)
+		public OAuth2RequestService(IRestClient client, IOAuth2Client authenticatedClient, IHttpErrorHandler errorManager) : base(client, errorManager)
 		{
 			_client = authenticatedClient;
 		}
 
-		public override Task<IRestResponse> Execute(IRestRequest request, CancellationToken ct, bool withAuthentication = true)
+		public override IObservable<IRestResponse> Execute(IRestRequest request, CancellationToken ct, bool withAuthentication = true)
 		{
 			if (withAuthentication)
 			{
@@ -25,7 +25,7 @@ namespace Xmf2.Commons.Services
 			return base.Execute(request, ct, withAuthentication);
 		}
 
-		public override Task<IRestResponse<T>> Execute<T>(IRestRequest request, CancellationToken ct, bool withAuthentication = true)
+		public override IObservable<IRestResponse<T>> Execute<T>(IRestRequest request, CancellationToken ct, bool withAuthentication = true)
 		{
 			if (withAuthentication)
 			{

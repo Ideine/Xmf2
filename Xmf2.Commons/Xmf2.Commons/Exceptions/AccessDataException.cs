@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Xmf2.Commons.ErrorManagers
+namespace Xmf2.Commons.Exceptions
 {
 	public class AccessDataException : ManagedException
 	{
