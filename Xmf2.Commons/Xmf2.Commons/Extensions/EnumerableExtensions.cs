@@ -10,7 +10,7 @@ namespace Xmf2.Commons.Extensions
     {
         public static IEnumerable<T> EmptyIfNull<T>(this IEnumerable<T> source)
         {
-			return source ?? new T[0];
+			return source ?? Enumerable.Empty<T>();
         }
 
 		/// <summary>
@@ -34,7 +34,9 @@ namespace Xmf2.Commons.Extensions
 		public static bool None<T>(this IEnumerable<T> source)
 		{
 			if (source == null)
+			{
 				throw new ArgumentNullException(nameof(source));
+			}
 			return !source.Any();
 		}
     }
