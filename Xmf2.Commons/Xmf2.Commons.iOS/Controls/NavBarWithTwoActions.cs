@@ -111,7 +111,7 @@ namespace Xmf2.Commons.iOS.Controls
         protected virtual void ApplyAutoLayout()
         {
             //Vertical Layout
-            this.AnchorTop(_container)
+            this.AnchorTop(_container, LayoutConsts.UIStatusBar_DefaultHeight)
                 .AnchorBottom(_container);
 
             _container.CenterVertically(LeftButton)
