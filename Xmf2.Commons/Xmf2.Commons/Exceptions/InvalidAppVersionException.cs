@@ -1,10 +1,6 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Xmf2.Commons.ErrorManagers
+namespace Xmf2.Commons.Exceptions
 {
 
 	public class InvalidAppVersionException : ManagedException

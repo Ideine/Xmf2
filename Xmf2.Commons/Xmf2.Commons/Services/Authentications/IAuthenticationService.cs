@@ -1,20 +1,20 @@
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace Xmf2.Commons.Services.Authentications
 {
-
 	public interface IAuthenticationService
 	{
 		bool IsLogged { get; }
 
-		Task<bool> LoginWithCredentials(string login, string password);
+		IObservable<bool> LoginWithCredentials(string login, string password);
 
-		Task<bool> LoginWithCredentials(string login, string password, CancellationToken ct);
+		IObservable<bool> LoginWithCredentials(string login, string password, CancellationToken ct);
 
-		Task<bool> LoginWithRefreshToken();
+		IObservable<bool> LoginWithRefreshToken();
 
-		Task<bool> LoginWithRefreshToken(CancellationToken ct);
+		IObservable<bool> LoginWithRefreshToken(CancellationToken ct);
 
 		Task<bool> CanLoginWithRefreshToken();
 
