@@ -72,7 +72,6 @@
     <Compile Include="Controls\FloatLabelDesigner.cs" />
     <Compile Include="Extensions\ViewExtensions.cs" />
     <Compile Include="Controls\NavBarWithTwoActions.cs" />
-    <Compile Include="Extensions\CommandExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Xmf2.Commons\Xmf2.Commons.csproj">
