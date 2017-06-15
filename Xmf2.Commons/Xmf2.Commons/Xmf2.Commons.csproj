@@ -79,6 +79,7 @@
     <Compile Include="Errors\CustomErrorHandler.cs" />
     <Compile Include="Services\DataAccess\OAuth2RequestService.cs" />
     <Compile Include="Services\DataAccess\RequestService.cs" />
+    <Compile Include="Services\Versions\IAppVersionService.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
@@ -91,15 +92,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup />
-  <ItemGroup>
-    <Folder Include="Workers\" />
-    <Folder Include="Services\Authentications\" />
-    <Folder Include="Services\Authentications\Models\" />
-    <Folder Include="Services\OAuth2\" />
-    <Folder Include="Errors\" />
-    <Folder Include="Services\DataAccess\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
