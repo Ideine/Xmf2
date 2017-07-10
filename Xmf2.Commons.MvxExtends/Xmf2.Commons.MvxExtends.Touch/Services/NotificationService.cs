@@ -68,14 +68,12 @@ namespace Xmf2.Commons.MvxExtends.Touch.Services
 
 				if (aps.ContainsKey(new NSString("alert")))
 				{
-					alert = (aps[new NSString("alert")] as NSString).ToString();
+					//even if ContainsKey return true, it can be null when the json contains alert:null
+					alert = (aps[new NSString("alert")] as NSString)?.ToString();
 				}
 
 				//Manually show an alert
-				if (!string.IsNullOrEmpty(alert))
-				{
-					ShowNotification(alert);
-				}
+				ShowNotification(alert);
 			}
 		}
 
@@ -86,6 +84,11 @@ namespace Xmf2.Commons.MvxExtends.Touch.Services
 
 		protected void ShowLocalNotification(string text)
 		{
+			if(string.IsNullOrEmpty(text))
+			{
+				return;
+			}
+
 			if (UIDevice.CurrentDevice.CheckSystemVersion(10, 0))
 			{
 				var notificationCenter = UNUserNotificationCenter.Current;
