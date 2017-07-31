@@ -34,7 +34,13 @@ public static class CreatorExtensions
         return button;
     }
 
-    public static TUIButton WithTextColor<TUIButton>(this TUIButton button, UIColor color) where TUIButton : UIButton
+	public static TUIButton WithTextColor<TUIButton>(this TUIButton button, int color) where TUIButton : UIButton
+	{
+		button.SetTitleColor(color.ColorFromHex(), UIControlState.Normal);
+		return button;
+	}
+
+	public static TUIButton WithTextColor<TUIButton>(this TUIButton button, UIColor color) where TUIButton : UIButton
     {
         button.SetTitleColor(color, UIControlState.Normal);
         return button;
@@ -143,11 +149,48 @@ public static class CreatorExtensions
         return new UIView();
     }
 
-    #endregion
+	public static TParentView WithSubviews<TParentView>(this TParentView parentView, UIView view) where TParentView : UIView
+	{
+		parentView.AddSubview(view);
+		return parentView;
+	}
+	public static TParentView WithSubviews<TParentView>(this TParentView parentView, UIView view1, UIView view2) where TParentView : UIView
+	{
+		parentView.AddSubviews(view1, view2);
+		return parentView;
+	}
+	public static TParentView WithSubviews<TParentView>(this TParentView parentView, UIView view1, UIView view2, UIView view3) where TParentView : UIView
+	{
+		parentView.AddSubviews(view1, view2, view3);
+		return parentView;
+	}
+	public static TParentView WithSubviews<TParentView>(this TParentView parentView, UIView view1, UIView view2, UIView view3, UIView view4) where TParentView : UIView
+	{
+		parentView.AddSubviews(view1, view2, view3, view4);
+		return parentView;
+	}
+	public static TParentView WithSubviews<TParentView>(this TParentView parentView, UIView view1, UIView view2, UIView view3, UIView view4, UIView view5) where TParentView : UIView
+	{
+		parentView.AddSubviews(view1, view2, view3, view4, view5);
+		return parentView;
+	}
+	public static TParentView WithSubviews<TParentView>(this TParentView parentView, UIView view1, UIView view2, UIView view3, UIView view4, UIView view5, UIView view6) where TParentView : UIView
+	{
+		parentView.AddSubviews(view1, view2, view3, view4, view5, view6);
+		return parentView;
+	}
+	public static TParentView WithSubviews<TParentView>(this TParentView parentView, UIView view1, UIView view2, UIView view3, UIView view4, UIView view5, UIView view6, params UIView[] views) where TParentView : UIView
+	{
+		parentView.AddSubviews(view1, view2, view3, view4, view5, view6);
+		parentView.AddSubviews(views);
+		return parentView;
+	}
 
-    #region ScrollView
+	#endregion
 
-    public static UIScrollView CreateVerticalScroll(this object parent)
+	#region ScrollView
+
+	public static UIScrollView CreateVerticalScroll(this object parent)
     {
         return new UIScrollView
         {
@@ -187,7 +230,11 @@ public static class CreatorExtensions
         return label;
     }
 
-    public static UILabel WithTextColor(this UILabel label, UIColor color)
+	public static UILabel WithTextColor(this UILabel label, int color)
+	{
+		return WithTextColor(label, color.ColorFromHex());
+	}
+	public static UILabel WithTextColor(this UILabel label, UIColor color)
     {
         label.TextColor = color;
         return label;
@@ -340,11 +387,20 @@ public static class CreatorExtensions
 		return input;
 	}
 
-    #endregion UITextField
+	#endregion UITextField
 
-    #region UISearchBar
+	#region static FloatLabeledTextField
 
-    public static UISearchBar CreateSearchBar(this object parent)
+	public static FloatLabeledTextField CreateFloatLabeledTextField(this object _)
+	{
+		return new FloatLabeledTextField();
+	}
+
+	#endregion static FloatLabeledTextField
+
+	#region UISearchBar
+
+	public static UISearchBar CreateSearchBar(this object parent)
     {
         return new UISearchBar();
     }
@@ -468,7 +524,13 @@ public static class CreatorExtensions
         return view;
     }
 
-    public static TView WithBackgroundColor<TView>(this TView view, UIColor color) where TView : UIView
+	public static TView WithBackgroundColor<TView>(this TView view, int color) where TView : UIView
+	{
+		view.BackgroundColor = color.ColorFromHex();
+		return view;
+	}
+
+	public static TView WithBackgroundColor<TView>(this TView view, UIColor color) where TView : UIView
     {
         view.BackgroundColor = color;
         return view;
@@ -533,6 +595,22 @@ public static class CreatorExtensions
         return view;
     }
 
-    #endregion
+	#endregion
+
+	#region UIDatePicker
+
+	public static UIDatePicker CreateDatePicker(this object _)
+	{
+		return new UIDatePicker();
+	}
+
+	public static UIDatePicker WithMode(this UIDatePicker view, UIDatePickerMode pickerMode)
+	{
+		view.Mode = pickerMode;
+		return view;
+	}
+
+	#endregion UIDatePicker
+
 
 }

@@ -84,6 +84,39 @@ public static class CustomAutoLayoutExtensions
 		return containerView;
 	}
 
+	public static UIView IncloseFromBottom(this UIView containerView, UIView view)
+	{
+		return IncloseFromBottom(containerView, view, 0);
+	}
+
+	public static UIView IncloseFromBottom(this UIView containerView, UIView view, int margin)
+	{
+		containerView.ConstrainLayout(() => containerView.Bottom() >= view.Bottom() + margin);
+		return containerView;
+	}
+
+	public static UIView IncloseFromTop(this UIView containerView, UIView view)
+	{
+		return IncloseFromTop(containerView, view, 0);
+	}
+
+	public static UIView IncloseFromTop(this UIView containerView, UIView view, int margin)
+	{
+		containerView.ConstrainLayout(() => containerView.Top() <= view.Top() - margin);
+		return containerView;
+	}
+
+	public static UIView IncloseFromRight(this UIView containerView, UIView view)
+	{
+		return IncloseFromRight(containerView, view, 0);
+	}
+
+	public static UIView IncloseFromRight(this UIView containerView, UIView view, int margin)
+	{
+		containerView.ConstrainLayout(() => containerView.Right() >= view.Right() + margin);
+		return containerView;
+	}
+
 	public static UIView AnchorTop(this UIView containerView, UIView view, int margin = 0)
 	{
 		containerView.ConstrainLayout(() => view.Top() == containerView.Top() + margin);
