@@ -62,9 +62,14 @@ public static class CreatorExtensions
     {
         button.SetImage(new UIImage(image), UIControlState.Normal);
         return button;
-    }
+	}
+	public static TUIButton WithImage<TUIButton>(this TUIButton button, string image, UIControlState state) where TUIButton : UIButton
+	{
+		button.SetImage(new UIImage(image), state);
+		return button;
+	}
 
-    public static TUIButton WithImage<TUIButton>(this TUIButton button, UIImage image) where TUIButton : UIButton
+	public static TUIButton WithImage<TUIButton>(this TUIButton button, UIImage image) where TUIButton : UIButton
     {
         button.SetImage(image, UIControlState.Normal);
         return button;
@@ -124,7 +129,13 @@ public static class CreatorExtensions
         return button;
     }
 
-    public static TUIButton OnClick<TUIButton>(this TUIButton button, Action action, out Action unregisterAction) where TUIButton : UIButton
+	public static TUIButton OnClick<TUIButton>(this TUIButton button, Action<TUIButton, EventArgs> action) where TUIButton : UIButton
+	{
+		button.TouchUpInside += (sender, e) => action?.Invoke((TUIButton)sender, e);
+		return button;
+	}
+
+	public static TUIButton OnClick<TUIButton>(this TUIButton button, Action action, out Action unregisterAction) where TUIButton : UIButton
     {
         EventHandler onTouchUpInside = (sender, e) => action?.Invoke();
         button.TouchUpInside += onTouchUpInside;
