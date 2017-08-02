@@ -55,7 +55,7 @@ namespace Xmf2.Commons.iOS.Controls
             return SetupFloatingLabel(input, placeholder, null, placeholderColor, textColor, placeholderFont, textFont, clearImage, isEditable, null);
         }
 
-        public static FloatLabeledTextField SetupFloatingLabel(this FloatLabeledTextField input, string placeholder, UIResponder next, UIColor placeholderColor, UIColor textColor, UIFont placeholderFont, UIFont textFont, string clearImage, bool isEditable, Action onEnterCallback = null)
+        public static FloatLabeledTextField SetupFloatingLabel(this FloatLabeledTextField input, string placeholder, UIResponder next, UIColor placeholderColor, UIColor textColor, UIFont floatingLabelFont, UIFont textFont, string clearImage, bool isEditable, Action onEnterCallback = null)
         {
             if (input == null)
             {
@@ -67,14 +67,14 @@ namespace Xmf2.Commons.iOS.Controls
             UIStringAttributes firstAttributes = new UIStringAttributes
             {
                 ForegroundColor = placeholderColor,
-                Font = placeholderFont
+                Font = floatingLabelFont
             };
             NSMutableAttributedString ph = new NSMutableAttributedString(placeholder);
             ph.SetAttributes(firstAttributes.Dictionary, new NSRange(0, placeholder.Length));
             input.AttributedPlaceholder = ph;
 
             input.FloatingLabelActiveTextColor = placeholderColor;
-            input.FloatingLabelFont = placeholderFont;
+            input.FloatingLabelFont = floatingLabelFont;
             input.FloatingLabelTextColor = placeholderColor;
             input.TextColor = textColor;
             input.Font = textFont;

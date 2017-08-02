@@ -22,7 +22,13 @@ public static class CreatorExtensions
         return new UIHighlightButton();
     }
 
-    public static TUIButton WithHighlightBackgroundColor<TUIButton>(this TUIButton button, UIColor color) where TUIButton : UIHighlightButton
+
+	public static TUIButton WithHighlightBackgroundColor<TUIButton>(this TUIButton button, int color) where TUIButton : UIHighlightButton
+	{
+		button.HighlightColor = color.ColorFromHex();
+		return button;
+	}
+	public static TUIButton WithHighlightBackgroundColor<TUIButton>(this TUIButton button, UIColor color) where TUIButton : UIHighlightButton
     {
         button.HighlightColor = color;
         return button;
