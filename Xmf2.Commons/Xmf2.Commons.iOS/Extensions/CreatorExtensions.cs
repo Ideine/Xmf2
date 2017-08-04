@@ -34,11 +34,17 @@ public static class CreatorExtensions
         return button;
     }
 
-    public static TUIButton WithTitle<TUIButton>(this TUIButton button, string title) where TUIButton : UIButton
-    {
-        button.SetTitle(title, UIControlState.Normal);
-        return button;
-    }
+	public static TUIButton WithTitle<TUIButton>(this TUIButton button, string title) where TUIButton : UIButton
+	{
+		button.SetTitle(title, UIControlState.Normal);
+		return button;
+	}
+
+	public static TUIButton WithTextColor<TUIButton>(this TUIButton button, int color, UIControlState forState) where TUIButton : UIButton
+	{
+		button.SetTitleColor(color.ColorFromHex(), forState);
+		return button;
+	}
 
 	public static TUIButton WithTextColor<TUIButton>(this TUIButton button, int color) where TUIButton : UIButton
 	{
