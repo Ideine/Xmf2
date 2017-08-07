@@ -105,17 +105,15 @@ namespace Xmf2.Commons.iOS.Controls
                 const int clearSize = 30;
                 const int height = 40;
 
-                UIButton button = new UIButton(new CGRect(0, height / 2 - clearSize / 2, clearSize, clearSize));
-
                 if (clearImage != null)
-                {
-                    button.SetImage(UIImage.FromFile(clearImage), UIControlState.Normal);
-                }
-
-                button.TouchUpInside += (sender, e) => input.ClearText();
+				{
+					UIButton button = new UIButton(new CGRect(0, height / 2 - clearSize / 2, clearSize, clearSize));
+					button.SetImage(UIImage.FromFile(clearImage), UIControlState.Normal);
+					button.TouchUpInside += (sender, e) => input.ClearText();
+					input.RightView = button;
+				}
                 input.Enabled = true;
                 input.RightViewMode = UITextFieldViewMode.Always;
-                input.RightView = button;
             }
             else
             {

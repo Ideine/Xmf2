@@ -9,7 +9,7 @@ namespace Xmf2.Commons.iOS.Controls
     [Register("FloatLabeledTextField"), DesignTimeVisible(true)]
     public class FloatLabeledTextField : UITextField
     {
-        private readonly UILabel _floatingLabel;
+        private UILabel _floatingLabel;
 
         public event EventHandler TextCleared;
 
@@ -23,47 +23,34 @@ namespace Xmf2.Commons.iOS.Controls
         }
 
         public FloatLabeledTextField(IntPtr p) : base(p)
-        {
-            _floatingLabel = new UILabel()
-            {
-                Alpha = 0.0f
-            };
-
-            AddSubview(_floatingLabel);
-
-            FloatingLabelTextColor = UIColor.Gray;
-            FloatingLabelActiveTextColor = UIColor.Blue;
-            FloatingLabelFont = UIFont.BoldSystemFontOfSize(12);
-        }
+		{
+			this.InitFloatingLabel();
+		}
 
         public FloatLabeledTextField() : base()
-        {
-            _floatingLabel = new UILabel()
-            {
-                Alpha = 0.0f
-            };
-
-            AddSubview(_floatingLabel);
-
-            FloatingLabelTextColor = UIColor.Gray;
-            FloatingLabelActiveTextColor = UIColor.Blue;
-            FloatingLabelFont = UIFont.BoldSystemFontOfSize(12);
-        }
+		{
+			this.InitFloatingLabel();
+		}
 
         public FloatLabeledTextField(CGRect frame)
             : base(frame)
         {
-            _floatingLabel = new UILabel()
-            {
-                Alpha = 0.0f
-            };
-
-            AddSubview(_floatingLabel);
-
-            FloatingLabelTextColor = UIColor.Gray;
-            FloatingLabelActiveTextColor = UIColor.Blue;
-            FloatingLabelFont = UIFont.BoldSystemFontOfSize(12);
+			this.InitFloatingLabel();
         }
+
+		private void InitFloatingLabel()
+		{
+			_floatingLabel = new UILabel()
+			{
+				Alpha = 0.0f
+			};
+
+			AddSubview(_floatingLabel);
+
+			FloatingLabelTextColor = UIColor.Gray;
+			FloatingLabelActiveTextColor = UIColor.Blue;
+			FloatingLabelFont = UIFont.BoldSystemFontOfSize(12);
+		}
 
         public override string Placeholder
         {
@@ -110,16 +97,15 @@ namespace Xmf2.Commons.iOS.Controls
                 rect.Size.Width, rect.Size.Height);
         }
 
-        public override void LayoutSubviews()
-        {
-            base.LayoutSubviews();
-
+		private void HandleChange()
+		{
             Action updateLabel = () =>
             {
                 if (!string.IsNullOrEmpty(Text))
                 {
                     _floatingLabel.Alpha = 1.0f;
-                    _floatingLabel.Frame =
+					_floatingLabel.TextColor = FloatingLabelTextColor;
+					_floatingLabel.Frame =
                         new CGRect(
                             _floatingLabel.Frame.Location.X,
                             2.0f,
@@ -129,7 +115,8 @@ namespace Xmf2.Commons.iOS.Controls
                 else
                 {
                     _floatingLabel.Alpha = 0.0f;
-                    _floatingLabel.Frame =
+					_floatingLabel.TextColor = FloatingLabelTextColor;
+					_floatingLabel.Frame =
                         new CGRect(
                             _floatingLabel.Frame.Location.X,
                             _floatingLabel.Font.LineHeight,
@@ -141,10 +128,8 @@ namespace Xmf2.Commons.iOS.Controls
             if (IsFirstResponder)
             {
                 _floatingLabel.TextColor = FloatingLabelActiveTextColor;
-
                 var shouldFloat = !string.IsNullOrEmpty(Text);
                 var isFloating = _floatingLabel.Alpha == 1f;
-
                 if (shouldFloat == isFloating)
                 {
                     updateLabel();
@@ -162,12 +147,18 @@ namespace Xmf2.Commons.iOS.Controls
             else
             {
                 _floatingLabel.TextColor = FloatingLabelTextColor;
-
                 updateLabel();
             }
+		}
+
+        public override void LayoutSubviews()
+        {
+            base.LayoutSubviews();
+			this.HandleChange();
         }
 
-        public void ClearText()
+
+		public void ClearText()
         {
             Text = string.Empty;
             TextCleared?.Invoke(this, EventArgs.Empty);
