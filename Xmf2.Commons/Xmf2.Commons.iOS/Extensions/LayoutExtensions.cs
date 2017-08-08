@@ -113,7 +113,7 @@ public static class CustomAutoLayoutExtensions
 
 	public static UIView IncloseFromRight(this UIView containerView, UIView view, int margin)
 	{
-		containerView.ConstrainLayout(() => containerView.Left() <= view.Left() - margin);
+		containerView.ConstrainLayout(() => containerView.Right() >= view.Right() + margin);
 		return containerView;
 	}
 
