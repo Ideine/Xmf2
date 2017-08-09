@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using UIKit;
 
 public static class CustomAutoLayoutExtensions
@@ -332,4 +334,18 @@ public static class CustomAutoLayoutExtensions
 		return view;
 	}
 #endif
+
+	public static UIView EnsureRemove(this UIView view, IEnumerable<NSLayoutConstraint> constraintsToRemove)
+	{
+		var delta = view.Constraints.Intersect(constraintsToRemove).ToArray();
+		view.RemoveConstraints(delta);
+		return view;
+	}
+
+	public static UIView EnsureAdd(this UIView view, IEnumerable<NSLayoutConstraint> constraintsToAdd)
+	{
+		var delta = constraintsToAdd.Except(view.Constraints).ToArray();
+		view.AddConstraints(delta);
+		return view;
+	}
 }
