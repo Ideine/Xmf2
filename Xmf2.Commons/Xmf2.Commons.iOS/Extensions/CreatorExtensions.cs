@@ -545,7 +545,12 @@ public static class CreatorExtensions
     {
         view.Alpha = 1f;
         return view;
-    }
+	}
+
+	public static TView Visible<TView>(this TView view, bool value) where TView : UIView
+	{
+		return value ? view.Visible() : view.Invisible();
+	}
 
 	public static TView WithBackgroundColor<TView>(this TView view, int color) where TView : UIView
 	{
@@ -609,9 +614,13 @@ public static class CreatorExtensions
     {
         view.UserInteractionEnabled = true;
         return view;
-    }
+	}
+	public static TView Enable<TView>(this TView view, bool value) where TView : UIView
+	{
+		return value ? view.Enable() : view.Disable();
+	}
 
-    public static TView AddTapAction<TView>(this TView view, Action tapped) where TView : UIView
+	public static TView AddTapAction<TView>(this TView view, Action tapped) where TView : UIView
     {
         UITapGestureRecognizer recognizer = new UITapGestureRecognizer(tapped);
         view.AddGestureRecognizer(recognizer);
