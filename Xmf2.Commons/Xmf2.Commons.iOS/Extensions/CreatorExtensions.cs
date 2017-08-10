@@ -72,12 +72,19 @@ public static class CreatorExtensions
 
     public static TUIButton WithImage<TUIButton>(this TUIButton button, string image) where TUIButton : UIButton
     {
-        button.SetImage(new UIImage(image), UIControlState.Normal);
+        button.WithImage(image, UIControlState.Normal);
         return button;
 	}
 	public static TUIButton WithImage<TUIButton>(this TUIButton button, string image, UIControlState state) where TUIButton : UIButton
 	{
-		button.SetImage(new UIImage(image), state);
+		if (String.IsNullOrEmpty(image))
+		{
+			button.SetImage(null, state);
+		}
+		else
+		{
+			button.SetImage(new UIImage(image), state);
+		}
 		return button;
 	}
 
