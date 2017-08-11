@@ -348,4 +348,20 @@ public static class CustomAutoLayoutExtensions
 		view.AddConstraints(delta);
 		return view;
 	}
+	public static UIView EnsureRemove(this UIView view, params UIView[] subviewsToRemove)
+	{
+		var delta = view.Subviews.Intersect(subviewsToRemove).ToArray();
+		foreach (var subView in delta)
+		{
+			subView.RemoveFromSuperview();
+		}
+		return view;
+	}
+
+	public static UIView EnsureAdd(this UIView view, params UIView[] subviewsToAdd)
+	{
+		var delta = subviewsToAdd.Except(view.Subviews).ToArray();
+		view.AddSubviews(delta);
+		return view;
+	}
 }
