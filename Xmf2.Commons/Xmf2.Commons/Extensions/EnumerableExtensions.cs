@@ -39,5 +39,21 @@ namespace Xmf2.Commons.Extensions
 			}
 			return !source.Any();
 		}
-    }
+
+		/// <summary>
+		/// Détermine si la séquence passée est vide.
+		/// </summary>
+		/// <typeparam name="T">Type des éléments de source.</typeparam>
+		/// <param name="source">IEnumerable à vérifier pour savoir si des éléments y sont présents.</param>
+		/// <returns>false si la séquence source contient est vide; sinon, true.</returns>
+		/// <exception cref="ArgumentNullException"><paramref name="source"/> a la valeur null</exception>
+		public static bool None<T>(this IEnumerable<T> source, Func<T,bool> predicate)
+		{
+			if (source == null)
+			{
+				throw new ArgumentNullException(nameof(source));
+			}
+			return !source.Any(predicate);
+		}
+	}
 }
