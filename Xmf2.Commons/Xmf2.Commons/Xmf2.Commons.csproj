@@ -80,6 +80,7 @@
     <Compile Include="Services\DataAccess\OAuth2RequestService.cs" />
     <Compile Include="Services\DataAccess\RequestService.cs" />
     <Compile Include="Services\Versions\IAppVersionService.cs" />
+    <Compile Include="Services\Versions\IAppStoreService.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

@@ -78,6 +78,7 @@
     <Compile Include="Extensions\ViewExtensions.cs" />
     <Compile Include="Controls\NavBarWithTwoActions.cs" />
     <Compile Include="Services\AppVersionService.cs" />
+    <Compile Include="Services\AppStoreService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Xmf2.Commons\Xmf2.Commons.csproj">
