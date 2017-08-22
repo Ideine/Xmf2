@@ -1,7 +1,7 @@
 ﻿using Android.App;
 using Firebase.Iid;
-using MvvmCross.Platform;
-using Xmf2.Commons.MvxExtends.Services;
+using Splat;
+using Xmf2.Commons.Services;
 
 namespace Xmf2.Notification.Droid
 {
@@ -16,9 +16,7 @@ namespace Xmf2.Notification.Droid
 
 		private INotificationService GetNotificationService()
 		{
-			INotificationService result;
-			Mvx.TryResolve(out result);
-			return result;
+			return Locator.Current.GetService<INotificationService>();
 		}
 	}
 }

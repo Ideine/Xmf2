@@ -1,11 +1,10 @@
 ﻿using System;
 using Android.App;
-using MvvmCross.Platform;
-using MvvmCross.Platform.Droid.Platform;
-using Xmf2.Commons.MvxExtends.Services;
 using System.Threading.Tasks;
 using Android.Content;
 using Android.Gms.Common;
+using Xmf2.Commons.Services;
+using Firebase;
 
 namespace Xmf2.Notification.Droid
 {
@@ -13,11 +12,16 @@ namespace Xmf2.Notification.Droid
 	{
 		private readonly string _gcmId;
 
-		private Activity CurrentActivity => Mvx.Resolve<IMvxAndroidCurrentTopActivity>().Activity;
+		private readonly object _initializeLock = new object();
+		private bool _initialized = false;
+		private FirebaseApp _app = null;
 
-		public NotificationService(string gcmId, IKeyValueStorageService settingsService, INotificationDataService notificationDataService) : base(settingsService, notificationDataService)
+		private Context _context;
+
+		public NotificationService(string gcmId, Context applicationContext, IKeyValueStorageService settingsService, INotificationDataService notificationDataService) : base(settingsService, notificationDataService)
 		{
 			_gcmId = gcmId;
+			_context = applicationContext;
 		}
 
 		protected override DeviceType Device => DeviceType.Android;
@@ -28,7 +32,10 @@ namespace Xmf2.Notification.Droid
 			{
 				try
 				{
+					//*
+					//EnsureInitialized();
 					Firebase.Iid.FirebaseInstanceId.Instance.DeleteInstanceId();
+					// */
 				}
 				catch (Exception ex)
 				{
@@ -44,7 +51,7 @@ namespace Xmf2.Notification.Droid
 
 		protected virtual bool IsNotificationAvailable()
 		{
-			Context context = CurrentActivity;
+			Context context = _context;
 
 			if (context == null)
 			{
@@ -65,7 +72,10 @@ namespace Xmf2.Notification.Droid
 					return;
 				}
 
+				//*
+				//EnsureInitialized();
 				string token = Firebase.Iid.FirebaseInstanceId.Instance.GetToken(_gcmId, Firebase.Messaging.FirebaseMessaging.InstanceIdScope);
+				// */
 
 				Android.Util.Log.Warn("Xmf2/Token", $"PickToken : {token}");
 
@@ -74,6 +84,36 @@ namespace Xmf2.Notification.Droid
 			catch (Exception ex)
 			{
 				Android.Util.Log.Error("Xmf2/Token", $"Can not get token from firebase {ex}");
+			}
+		}
+
+		private FirebaseApp EnsureInitialized()
+		{
+			if (_initialized)
+			{
+				return _app;
+			}
+
+			lock (_initializeLock)
+			{
+				if (_initialized)
+				{
+					return _app;
+				}
+
+				Android.Util.Log.Error("Xmf2/Token", $"Initialize firebase app with token {_gcmId}");
+				try
+				{
+					_app = FirebaseApp.InitializeApp(_context);
+					Android.Util.Log.Error("Xmf2/Token", $"Firebase app initialized !");
+					Android.Util.Log.Error("Xmf2/Token", $"Has instance ? => {(Firebase.FirebaseApp.Instance != null ? "true" : "false")}");
+				}
+				catch (Exception ex)
+				{
+					Android.Util.Log.Error("Xmf2/Token", $"Exception while initializing firebase app {ex}");
+				}
+				_initialized = true;
+				return _app;
 			}
 		}
 	}

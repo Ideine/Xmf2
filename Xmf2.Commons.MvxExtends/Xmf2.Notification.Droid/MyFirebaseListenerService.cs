@@ -1,12 +1,11 @@
 using System;
 using System.Linq;
 using Android.App;
+using Android.Content;
 using Android.Util;
 using Firebase.Iid;
 using Firebase.Messaging;
-using MvvmCross.Droid.Platform;
-using MvvmCross.Platform;
-using Xmf2.Commons.MvxExtends.Services;
+using Splat;
 
 namespace Xmf2.Notification.Droid
 {
@@ -44,23 +43,23 @@ namespace Xmf2.Notification.Droid
 
 						content = notification.Body;
 					}
-					else if(message.Data.ContainsKey("message"))
+					else if (message.Data.ContainsKey("message"))
 					{
 						content = message.Data["message"];
 					}
 
 					if (content != null)
 					{
-						var setupSingleton = MvxAndroidSetupSingleton.EnsureSingletonAvailable(ApplicationContext);
-						setupSingleton.EnsureInitialized();
+						InitializeSetup(ApplicationContext);
 
 						try
 						{
-							Mvx.Resolve<INotificationDisplayService>().ShowNotification(this, notification, content);
+							Locator.Current.GetService<INotificationDisplayService>()
+								.ShowNotification(this, notification, content);
 						}
 						catch (Exception e)
 						{
-							Log.Wtf("Geotraceur/Notification", $"Exception while trying to display notification from content: {e.Message} {e.StackTrace}");
+							Log.Wtf("Xmf2/Notification", $"Exception while trying to display notification from content: {e.Message} {e.StackTrace}");
 						}
 					}
 					else
@@ -73,6 +72,25 @@ namespace Xmf2.Notification.Droid
 			{
 				Log.Wtf("Xmf2/Notification", $"Exception(general) while trying to display notification: {e.Message} {e.StackTrace}");
 			}
+		}
+
+		private void InitializeSetup(Context applicationContext)
+		{
+			var query = from assembly in AppDomain.CurrentDomain.GetAssemblies()
+						from type in assembly.GetTypes()
+						where type.Name == "Bootstrapper"
+						where typeof(INotificationSetup).IsAssignableFrom(type)
+						select type;
+
+			Type setupType = query.FirstOrDefault();
+
+			if (setupType == null)
+			{
+				return;
+			}
+
+			INotificationSetup setup = Activator.CreateInstance(setupType, applicationContext) as INotificationSetup;
+			setup.Initialize();
 		}
 	}
 }
