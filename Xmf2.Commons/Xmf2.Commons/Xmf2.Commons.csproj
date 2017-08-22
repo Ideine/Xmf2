@@ -81,6 +81,7 @@
     <Compile Include="Services\DataAccess\RequestService.cs" />
     <Compile Include="Services\Versions\IAppVersionService.cs" />
     <Compile Include="Services\Versions\IAppStoreService.cs" />
+    <Compile Include="Services\IUIDispatcher.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

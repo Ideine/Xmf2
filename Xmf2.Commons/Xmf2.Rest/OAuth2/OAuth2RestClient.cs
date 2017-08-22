@@ -13,6 +13,8 @@ namespace Xmf2.Rest.OAuth2
 {
 	public class OAuth2RestClient : RestClientBase, IOAuth2Client
     {
+		private readonly SemaphoreSlim _locker = new SemaphoreSlim(1, 1);
+
 		protected OAuth2Authenticator OAuth2Authenticator { get; set; }
 
 		public OAuth2ConfigurationBase Configuration { get; set; }
@@ -96,7 +98,7 @@ namespace Xmf2.Rest.OAuth2
 		    return Login(login, password, CancellationToken.None);
 	    }
 
-		public Task<OAuth2AuthResult> Login(string login, string password, CancellationToken ct)
+		public async Task<OAuth2AuthResult> Login(string login, string password, CancellationToken ct)
 		{
 			if (Configuration == null)
 			{
@@ -104,9 +106,16 @@ namespace Xmf2.Rest.OAuth2
 			}
 
 			IRestRequest request = new RestRequest(Configuration.LoginUrl, Configuration.LoginMethod);
-			Configuration.PopulateLoginRequest(request, login, password);
-
-			return ExecuteAuthRequest(request, ct);
+			await _locker.WaitAsync();
+			try
+			{
+				Configuration.PopulateLoginRequest(request, login, password);
+				return await ExecuteAuthRequest(request, ct);
+			}
+			finally
+			{
+				_locker.Release();
+			}
 		}
 
 		public Task<OAuth2AuthResult> Refresh()
@@ -114,7 +123,7 @@ namespace Xmf2.Rest.OAuth2
 		    return Refresh(CancellationToken.None);
 	    }
 
-		public Task<OAuth2AuthResult> Refresh(CancellationToken ct)
+		public async Task<OAuth2AuthResult> Refresh(CancellationToken ct)
 		{
 			if (Configuration == null)
 			{
@@ -127,8 +136,18 @@ namespace Xmf2.Rest.OAuth2
 			}
 
 			IRestRequest request = new RestRequest(Configuration.RefreshUrl, Configuration.RefreshMethod);
-			Configuration.PopulateRefreshRequest(request, RefreshToken);
-			return ExecuteAuthRequest(request, ct);
+
+			await _locker.WaitAsync();
+			try
+			{
+				Configuration.PopulateRefreshRequest(request, RefreshToken);
+				return await ExecuteAuthRequest(request, ct);
+			}
+			finally
+			{
+				_locker.Release();
+			}
+
 		}
 
 		public Task<OAuth2AuthResult> Refresh(string refreshToken) 

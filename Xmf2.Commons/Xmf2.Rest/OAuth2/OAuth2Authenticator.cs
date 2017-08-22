@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using System.Net;
+using System.Threading;
 using System.Threading.Tasks;
 using RestSharp.Portable;
 
@@ -8,6 +9,7 @@ namespace Xmf2.Rest.OAuth2
 {
 	public class OAuth2Authenticator : IAuthenticator
 	{
+		private static readonly SemaphoreSlim _refreshMutex = new SemaphoreSlim(1, 1);
 		public const string NO_AUTH_HEADER = "X-No-Authenticator";
 
 		public virtual string AuthorizationHeader { get; } = "Authorization";
@@ -52,10 +54,29 @@ namespace Xmf2.Rest.OAuth2
 					throw new NotSupportedException("This authenticator can only be used with an IOAuth2Client");
 				}
 
-				OAuth2AuthResult result = await oauth2Client.Refresh();
-				if (result.IsSuccess)
+				await _refreshMutex.WaitAsync();
+				try
 				{
-					accessToken = result.AccessToken;
+					accessToken = Access?.AccessToken;
+					expireDate = Access?.ExpiresAt;
+
+					if (accessToken == null || !expireDate.HasValue)
+					{
+						throw new InvalidOperationException("Missing Access data");
+					}
+
+					if (DateTime.Now.Add(Configuration.TokenSafetyMargin) > expireDate.Value)
+					{
+						OAuth2AuthResult result = await oauth2Client.Refresh();
+						if (result.IsSuccess)
+						{
+							accessToken = result.AccessToken;
+						}
+					}
+				}
+				finally
+				{
+					_refreshMutex.Release();
 				}
 			}
 
