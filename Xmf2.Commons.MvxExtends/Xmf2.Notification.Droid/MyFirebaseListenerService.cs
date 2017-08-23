@@ -55,7 +55,7 @@ namespace Xmf2.Notification.Droid
 						try
 						{
 							Locator.Current.GetService<INotificationDisplayService>()
-								.ShowNotification(this, notification, content);
+								.ShowNotification(this, notification, message.Data, content);
 						}
 						catch (Exception e)
 						{
