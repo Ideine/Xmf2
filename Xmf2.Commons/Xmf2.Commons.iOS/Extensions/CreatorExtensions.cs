@@ -165,14 +165,19 @@ public static class CreatorExtensions
         return button;
     }
 
-    #endregion
+	#endregion
 
-    #region UIView
+	#region UIView
 
-    public static UIView CreateSeparator(this object parent)
-    {
-        return new UIView();
-    }
+	public static UIView CreateSeparator(this object parent)
+	{
+		return new UIView();
+	}
+
+	public static UIView CreateSeparator(this object parent, UIColor backgroundColor)
+	{
+		return new UIView().WithBackgroundColor(backgroundColor);
+	}
 
     public static UIView CreateView(this object parent)
     {
