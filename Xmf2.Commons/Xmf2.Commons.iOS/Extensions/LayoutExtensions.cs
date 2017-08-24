@@ -194,6 +194,14 @@ public static class CustomAutoLayoutExtensions
 		containerView.ConstrainLayout(() => containerView.Height() == view.Height() + margin);
 		return containerView;
 	}
+	public static UIView FillHeight(this UIView containerView, params UIView[] views)
+	{
+		foreach (var view in views)
+		{
+			containerView.ConstrainLayout(() => containerView.Height() == view.Height() + 0);
+		}
+		return containerView;
+	}
 
 	public static UIView VerticalSpace(this UIView containerView, UIView top, UIView bottom, int margin = 0)
 	{
