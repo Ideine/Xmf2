@@ -39,12 +39,12 @@ namespace Xmf2.Commons.MvxExtends.Touch.Services
 
 		public override bool FinishedLaunching(UIApplication application, NSDictionary launchOptions)
 		{
-			if(UIDevice.CurrentDevice.CheckSystemVersion(10, 0))
+			if (UIDevice.CurrentDevice.CheckSystemVersion(10, 0))
 			{
 				UNUserNotificationCenter.Current.Delegate = new LocalNotificationDelegate(DeeplinkFromNotification);
 			}
 
-			if(launchOptions != null)
+			if (launchOptions != null)
 			{
 				HandleLaunchOptions(launchOptions);
 			}
@@ -83,8 +83,6 @@ namespace Xmf2.Commons.MvxExtends.Touch.Services
 
 		public override void ReceivedLocalNotification(UIApplication application, UILocalNotification notification)
 		{
-			base.ReceivedLocalNotification(application, notification);
-
 			if (notification.UserInfo != null)
 			{
 				DeeplinkFromNotification(notification.UserInfo);
@@ -93,12 +91,12 @@ namespace Xmf2.Commons.MvxExtends.Touch.Services
 
 		protected virtual void DeeplinkFromNotification(NSDictionary userInfo)
 		{
-			
+
 		}
 
 		protected virtual void BackroundProcessFromNotification(NSDictionary userInfo)
 		{
-			
+
 		}
 
 		public override void RegisteredForRemoteNotifications(UIApplication application, NSData deviceToken)
@@ -135,14 +133,14 @@ namespace Xmf2.Commons.MvxExtends.Touch.Services
 					{
 						alert = alertText?.ToString();
 					}
-					else if(aps[alertKey] is NSDictionary alertDictionary)
+					else if (aps[alertKey] is NSDictionary alertDictionary)
 					{
 						NSString localizedKey = null;
-						if(alertDictionary.ContainsKey(locKeyKey) && alertDictionary[locKeyKey] is NSString rawLocKey)
+						if (alertDictionary.ContainsKey(locKeyKey) && alertDictionary[locKeyKey] is NSString rawLocKey)
 						{
 							localizedKey = rawLocKey;
 						}
-						if(localizedKey != null && alertDictionary.ContainsKey(locArgsKey) && alertDictionary[locArgsKey] is NSArray args)
+						if (localizedKey != null && alertDictionary.ContainsKey(locArgsKey) && alertDictionary[locArgsKey] is NSArray args)
 						{
 							string format = NSBundle.MainBundle.LocalizedString(localizedKey, null) ?? localizedKey;
 							alert = NSString.LocalizedFormat(format, args).ToString();
@@ -178,7 +176,7 @@ namespace Xmf2.Commons.MvxExtends.Touch.Services
 				var trigger = UNTimeIntervalNotificationTrigger.CreateTrigger(1, false);
 				var notificationRequest = UNNotificationRequest.FromIdentifier(new Guid().ToString(), notification, trigger);
 
-				notificationCenter.AddNotificationRequest(notificationRequest, (err) => 
+				notificationCenter.AddNotificationRequest(notificationRequest, (err) =>
 				{
 					System.Diagnostics.Debug.WriteLine($"LocalNotificationError: Code={err.Code} / Description={err.Description} / FailureReason={err.LocalizedFailureReason}");
 				});
