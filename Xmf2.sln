@@ -7,6 +7,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xmf2.Commons", "src\Xmf2.Co
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xmf2.Commons.iOS", "src\Xmf2.Commons.iOS\Xmf2.Commons.iOS.csproj", "{DDF35A3E-8D9C-4255-8436-D7926236D5F9}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Rx", "Rx", "{4845F38D-11B0-464D-8B7A-A33241482674}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xmf2.Commons.Rx", "src\Xmf2.Commons.Rx\Xmf2.Commons.Rx.csproj", "{1546EC50-D2E8-4D3A-A235-72D8FC1D8E34}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,9 +25,14 @@ Global
 		{DDF35A3E-8D9C-4255-8436-D7926236D5F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DDF35A3E-8D9C-4255-8436-D7926236D5F9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DDF35A3E-8D9C-4255-8436-D7926236D5F9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1546EC50-D2E8-4D3A-A235-72D8FC1D8E34}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1546EC50-D2E8-4D3A-A235-72D8FC1D8E34}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1546EC50-D2E8-4D3A-A235-72D8FC1D8E34}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1546EC50-D2E8-4D3A-A235-72D8FC1D8E34}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{636EDD70-3A6F-4CC8-B406-7BD3DB7CEF21} = {E65AA62D-2ECB-4DB8-B8FF-B22EC3369AAE}
 		{DDF35A3E-8D9C-4255-8436-D7926236D5F9} = {E65AA62D-2ECB-4DB8-B8FF-B22EC3369AAE}
+		{1546EC50-D2E8-4D3A-A235-72D8FC1D8E34} = {4845F38D-11B0-464D-8B7A-A33241482674}
 	EndGlobalSection
 EndGlobal
