@@ -1,0 +1,29 @@
+
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Commons", "Commons", "{E65AA62D-2ECB-4DB8-B8FF-B22EC3369AAE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xmf2.Commons", "src\Xmf2.Commons\Xmf2.Commons.csproj", "{636EDD70-3A6F-4CC8-B406-7BD3DB7CEF21}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xmf2.Commons.iOS", "src\Xmf2.Commons.iOS\Xmf2.Commons.iOS.csproj", "{DDF35A3E-8D9C-4255-8436-D7926236D5F9}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{636EDD70-3A6F-4CC8-B406-7BD3DB7CEF21}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{636EDD70-3A6F-4CC8-B406-7BD3DB7CEF21}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{636EDD70-3A6F-4CC8-B406-7BD3DB7CEF21}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{636EDD70-3A6F-4CC8-B406-7BD3DB7CEF21}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DDF35A3E-8D9C-4255-8436-D7926236D5F9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DDF35A3E-8D9C-4255-8436-D7926236D5F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DDF35A3E-8D9C-4255-8436-D7926236D5F9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DDF35A3E-8D9C-4255-8436-D7926236D5F9}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{636EDD70-3A6F-4CC8-B406-7BD3DB7CEF21} = {E65AA62D-2ECB-4DB8-B8FF-B22EC3369AAE}
+		{DDF35A3E-8D9C-4255-8436-D7926236D5F9} = {E65AA62D-2ECB-4DB8-B8FF-B22EC3369AAE}
+	EndGlobalSection
+EndGlobal
