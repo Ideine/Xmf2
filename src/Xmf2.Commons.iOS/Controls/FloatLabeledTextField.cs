@@ -46,7 +46,6 @@ namespace Xmf2.Commons.iOS.Controls
 			};
 
 			AddSubview(_floatingLabel);
-
 			FloatingLabelTextColor = UIColor.Gray;
 			FloatingLabelActiveTextColor = UIColor.Blue;
 			FloatingLabelFont = UIFont.BoldSystemFontOfSize(12);
@@ -57,32 +56,43 @@ namespace Xmf2.Commons.iOS.Controls
             get { return base.Placeholder; }
             set
             {
-                base.Placeholder = value;
-
-                _floatingLabel.Text = value.ToUpper(); ;
+				//TODO: Contournement pour ne pas avoir une largeur suffisante évitant les points de suspension. Voir pourquoi on a une mauvais largeur de calculée...
+				//...plutôt que d'utiliser ce contournement.
+				const float SECURITY_MARGIN = 10;
+				base.Placeholder	= value.ToUpper();
+                _floatingLabel.Text		 = value.ToUpper();
                 _floatingLabel.TextColor = UIColor.White;
                 _floatingLabel.SizeToFit();
                 _floatingLabel.Frame =
-                    new CGRect(
-                        0, _floatingLabel.Font.LineHeight,
-                        _floatingLabel.Frame.Size.Width, _floatingLabel.Frame.Size.Height);
+                    new CGRect(x:0,
+							   y:		_floatingLabel.Font.LineHeight,
+							   width:	_floatingLabel.Frame.Size.Width + SECURITY_MARGIN,
+							   height:	_floatingLabel.Frame.Size.Height);
             }
         }
 
-        public override CGRect TextRect(CGRect forBounds)
+		/// <summary>
+		/// This method return the computed rectangle for drawing the text.
+		/// </summary>
+		public override CGRect TextRect(CGRect forBounds)
         {
             if (_floatingLabel == null)
                 return base.TextRect(forBounds);
 
-            return InsetRect(base.TextRect(forBounds), new UIEdgeInsets(_floatingLabel.Font.LineHeight, 0, 0, 0));
-        }
+			var result = InsetRect(base.TextRect(forBounds), new UIEdgeInsets(_floatingLabel.Font.LineHeight, 0, 0, 0));
+			return result;
+		}
 
-        public override CGRect EditingRect(CGRect forBounds)
+		/// <summary>
+		/// Returns the rectangle to display the editable text.
+		/// </summary>
+		public override CGRect EditingRect(CGRect forBounds)
         {
             if (_floatingLabel == null)
                 return base.EditingRect(forBounds);
 
-            return InsetRect(base.EditingRect(forBounds), new UIEdgeInsets(_floatingLabel.Font.LineHeight, 0, 0, 0));
+            var result = InsetRect(base.EditingRect(forBounds), new UIEdgeInsets(_floatingLabel.Font.LineHeight, 0, 0, 0));
+			return result;
         }
 
         public override CGRect ClearButtonRect(CGRect forBounds)
@@ -97,40 +107,47 @@ namespace Xmf2.Commons.iOS.Controls
                 rect.Size.Width, rect.Size.Height);
         }
 
+		private bool IsPlaceholderShouldFloat()
+		{
+			return !string.IsNullOrEmpty(Text);
+		}
+
+		private bool _isFloating = true;
+
 		private void HandleChange()
 		{
             Action updateLabel = () =>
             {
-                if (!string.IsNullOrEmpty(Text))
+                if (IsPlaceholderShouldFloat())
                 {
-                    _floatingLabel.Alpha = 1.0f;
+					_floatingLabel.Alpha = 1.0f;
 					_floatingLabel.TextColor = FloatingLabelTextColor;
 					_floatingLabel.Frame =
                         new CGRect(
-                            _floatingLabel.Frame.Location.X,
-                            2.0f,
-                            _floatingLabel.Frame.Size.Width,
-                            _floatingLabel.Frame.Size.Height);
-                }
+                            x:		_floatingLabel.Frame.Location.X,
+                            y:		2.0f,
+                            width:	_floatingLabel.Frame.Size.Width,
+                            height:	_floatingLabel.Frame.Size.Height);
+					_isFloating = true;
+				}
                 else
                 {
                     _floatingLabel.Alpha = 0.0f;
 					_floatingLabel.TextColor = FloatingLabelTextColor;
 					_floatingLabel.Frame =
                         new CGRect(
-                            _floatingLabel.Frame.Location.X,
-                            _floatingLabel.Font.LineHeight,
-                            _floatingLabel.Frame.Size.Width,
-                            _floatingLabel.Frame.Size.Height);
-                }
+                            x:		_floatingLabel.Frame.Location.X,
+                            y:		_floatingLabel.Font.LineHeight,
+                            width:	_floatingLabel.Frame.Size.Width,
+							height: _floatingLabel.Frame.Size.Height);
+					_isFloating = false;
+				}
             };
 
             if (IsFirstResponder)
             {
                 _floatingLabel.TextColor = FloatingLabelActiveTextColor;
-                var shouldFloat = !string.IsNullOrEmpty(Text);
-                var isFloating = _floatingLabel.Alpha == 1f;
-                if (shouldFloat == isFloating)
+				if (IsPlaceholderShouldFloat() == _isFloating)
                 {
                     updateLabel();
                 }
