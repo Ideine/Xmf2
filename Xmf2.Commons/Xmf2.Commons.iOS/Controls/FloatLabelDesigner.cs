@@ -57,78 +57,79 @@ namespace Xmf2.Commons.iOS.Controls
 
 		public static FloatLabeledTextField SetupFloatingLabel(this FloatLabeledTextField input, string placeholder, UIResponder next, UIColor placeholderColor, UIColor textColor, UIFont floatingLabelFont, UIFont textFont, string clearImage, bool isEditable, Action onEnterCallback = null)
 		{
-			if (input == null)
-			{
-				return input;
-			}
-
-			//placeholder
-			input.Placeholder = placeholder;
-			UIStringAttributes firstAttributes = new UIStringAttributes
-			{
-				ForegroundColor = placeholderColor,
-				Font = floatingLabelFont
-			};
-			NSMutableAttributedString ph = new NSMutableAttributedString(placeholder);
-			ph.SetAttributes(firstAttributes.Dictionary, new NSRange(0, placeholder.Length));
-			input.AttributedPlaceholder = ph;
-
-			input.FloatingLabelActiveTextColor = placeholderColor;
-			input.FloatingLabelFont = floatingLabelFont;
-			input.FloatingLabelTextColor = placeholderColor;
-			input.TextColor = textColor;
-			input.Font = textFont;
-			input.TintColor = textColor;
-			input.UserInteractionEnabled = isEditable;
-			input.ClearButtonMode = UITextFieldViewMode.Never;
-
-			if (next != null)
-			{
-				input.ReturnKeyType = UIReturnKeyType.Next;
-			}
-			else
-			{
-				input.ReturnKeyType = UIReturnKeyType.Done;
-			}
-
-			if (isEditable)
-			{
-				if (next != null)
-				{
-					input.ShouldReturn += (textField) =>
-					{
-						onEnterCallback?.Invoke();
-						return NextFirstResponder(next);
-					};
-				}
-				else
-				{
-					input.ShouldReturn += (textField) =>
-					{
-						input.EndEditing(true);
-						onEnterCallback?.Invoke();
-						return true;
-					};
-				}
-
-				const int clearSize = 30;
-				const int height = 40;
-
-				if (clearImage != null)
-				{
-					UIButton button = new UIButton(new CGRect(0, height / 2 - clearSize / 2, clearSize, clearSize));
-					button.SetImage(UIImage.FromFile(clearImage), UIControlState.Normal);
-					button.TouchUpInside += (sender, e) => input.ClearText();
-					input.RightView = button;
-				}
-				input.Enabled = true;
-				input.RightViewMode = UITextFieldViewMode.Always;
-			}
-			else
-			{
-				input.RightViewMode = UITextFieldViewMode.Never;
-			}
 			return input;
+			//if (input == null)
+			//{
+			//	return input;
+			//}
+
+			////placeholder
+			//input.Placeholder = placeholder;
+			//UIStringAttributes firstAttributes = new UIStringAttributes
+			//{
+			//	ForegroundColor = placeholderColor,
+			//	Font = floatingLabelFont
+			//};
+			//NSMutableAttributedString ph = new NSMutableAttributedString(placeholder);
+			//ph.SetAttributes(firstAttributes.Dictionary, new NSRange(0, placeholder.Length));
+			//input.AttributedPlaceholder = ph;
+
+			////input.FloatingLabelFocusedTextColor = placeholderColor;
+			////input.FloatingLabelFont = floatingLabelFont;
+			////input.FloatingLabelNormalTextColor = placeholderColor;
+			//input.TextColor = textColor;
+			//input.Font = textFont;
+			//input.TintColor = textColor;
+			//input.UserInteractionEnabled = isEditable;
+			//input.ClearButtonMode = UITextFieldViewMode.Never;
+
+			//if (next != null)
+			//{
+			//	input.ReturnKeyType = UIReturnKeyType.Next;
+			//}
+			//else
+			//{
+			//	input.ReturnKeyType = UIReturnKeyType.Done;
+			//}
+
+			//if (isEditable)
+			//{
+			//	if (next != null)
+			//	{
+			//		input.ShouldReturn += (textField) =>
+			//		{
+			//			onEnterCallback?.Invoke();
+			//			return NextFirstResponder(next);
+			//		};
+			//	}
+			//	else
+			//	{
+			//		input.ShouldReturn += (textField) =>
+			//		{
+			//			input.EndEditing(true);
+			//			onEnterCallback?.Invoke();
+			//			return true;
+			//		};
+			//	}
+
+			//	const int clearSize = 30;
+			//	const int height = 40;
+
+			//	if (clearImage != null)
+			//	{
+			//		UIButton button = new UIButton(new CGRect(0, height / 2 - clearSize / 2, clearSize, clearSize));
+			//		button.SetImage(UIImage.FromFile(clearImage), UIControlState.Normal);
+			//		button.TouchUpInside += (sender, e) => input.ClearText();
+			//		input.RightView = button;
+			//	}
+			//	input.Enabled = true;
+			//	input.RightViewMode = UITextFieldViewMode.Always;
+			//}
+			//else
+			//{
+			//	input.RightViewMode = UITextFieldViewMode.Never;
+			//}
+			//return input;
 		}
 
 		private static bool NextFirstResponder(UIResponder nextReponder)

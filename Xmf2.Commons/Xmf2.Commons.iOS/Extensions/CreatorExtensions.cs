@@ -426,10 +426,10 @@ public static class CreatorExtensions
 
 	#region static FloatLabeledTextField
 
-	public static FloatLabeledTextField CreateFloatLabeledTextField(this object _)
-	{
-		return new FloatLabeledTextField();
-	}
+	//public static FloatLabeledTextField CreateFloatLabeledTextField(this object _)
+	//{
+	//	return new FloatLabeledTextField();
+	//}
 
 	#endregion static FloatLabeledTextField
 
