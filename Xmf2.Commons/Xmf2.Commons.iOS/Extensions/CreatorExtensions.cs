@@ -401,7 +401,7 @@ public static class CreatorExtensions
         return input;
     }
 
-    public static UITextField OnReturnNextResponder(this UITextField input, UITextField nextReponder, UIReturnKeyType returnKeyType = UIReturnKeyType.Default, Action action = null)
+	public static UITextField OnReturnNextResponder(this UITextField input, UIResponder nextReponder, UIReturnKeyType returnKeyType = UIReturnKeyType.Default, Action action = null)
     {
         input.ReturnKeyType = returnKeyType;
         input.ShouldReturn += (textField) =>
@@ -422,16 +422,7 @@ public static class CreatorExtensions
 		return input;
 	}
 
-	#endregion UITextField
-
-	#region static FloatLabeledTextField
-
-	//public static FloatLabeledTextField CreateFloatLabeledTextField(this object _)
-	//{
-	//	return new FloatLabeledTextField();
-	//}
-
-	#endregion static FloatLabeledTextField
+	#endregion 
 
 	#region UISearchBar
 
