@@ -115,6 +115,8 @@ namespace Xmf2.Commons.iOS.Controls
 															  _floatingLabel.Font.LineHeight,
 															  _floatingLabel.Frame.Size.Width,
 															  _floatingLabel.Frame.Size.Height);
+							_floatingLabel.Font = PlaceholderFont;
+							_floatingLabel.TextColor = PlaceholderColor;
 						},
 						() => { });
 			};
@@ -126,6 +128,7 @@ namespace Xmf2.Commons.iOS.Controls
 						| UIViewAnimationOptions.CurveEaseOut,
 						() =>
 						{
+							HandleState(true);
 							_floatingLabel.Frame = new CGRect(_floatingLabel.Frame.Location.X,
 															  0.0f,
 															  _floatingLabel.Frame.Size.Width,
@@ -174,11 +177,11 @@ namespace Xmf2.Commons.iOS.Controls
 
 		}
 
-		protected void HandleState()
+		protected void HandleState(bool force = false)
 		{
 			if (IsFirstResponder)
 			{
-				if (_oldState != StateEnum.Focused)
+				if (force || _oldState != StateEnum.Focused)
 				{
 					_oldState = StateEnum.Focused;
 					_floatingLabel.TextColor = FloatingLabelFocusedTextColor;
@@ -189,7 +192,7 @@ namespace Xmf2.Commons.iOS.Controls
 			}
 			else if (Enabled)
 			{
-				if (_oldState != StateEnum.Normal)
+				if (force || _oldState != StateEnum.Normal)
 				{
 					_oldState = StateEnum.Normal;
 					_floatingLabel.TextColor = FloatingLabelNormalTextColor;
@@ -200,7 +203,7 @@ namespace Xmf2.Commons.iOS.Controls
 			}
 			else
 			{
-				if (_oldState != StateEnum.Disabled)
+				if (force || _oldState != StateEnum.Disabled)
 				{
 					_oldState = StateEnum.Disabled;
 					_floatingLabel.TextColor = FloatingLabelDisabledTextColor;
