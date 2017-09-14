@@ -9,7 +9,6 @@ namespace Xmf2.Commons.iOS.Controls
 	[Register("FloatLabeledTextField"), DesignTimeVisible(true)]
 	public class FloatLabeledTextField : UITextField
 	{
-
 		protected enum ActivationMode
 		{
 			OnFocus,
@@ -48,9 +47,9 @@ namespace Xmf2.Commons.iOS.Controls
 				_floatingLabel.Text = value;
 				_floatingLabel.SizeToFit();
 				_floatingLabel.Frame =
-					new CGRect(
-						0, _floatingLabel.Font.LineHeight,
-						_floatingLabel.Frame.Size.Width, _floatingLabel.Frame.Size.Height);
+					new CGRect(0, _floatingLabel.Font.LineHeight,
+							   _floatingLabel.Frame.Size.Width,
+							   _floatingLabel.Frame.Size.Height);
 
 			}
 		}
@@ -61,9 +60,6 @@ namespace Xmf2.Commons.iOS.Controls
 		public event EventHandler ResignFirstResponderEvent;
 
 		private UILabel _floatingLabel;
-
-		private Action _downFloatLabel;
-		private Action _upFloatLabel;
 
 		protected UIColor FloatingLabelNormalTextColor { get; set; }
 		protected UIColor FloatingLabelFocusedTextColor { get; set; }
@@ -103,10 +99,11 @@ namespace Xmf2.Commons.iOS.Controls
 			_floatingLabel = new UILabel();
 
 			AddSubview(_floatingLabel);
+		}
 
-			_downFloatLabel = () =>
-			{
-				Animate(0.3f, 0.0f,
+		protected void DownFloatLabel()
+		{
+			Animate(0.3f, 0.0f,
 						UIViewAnimationOptions.BeginFromCurrentState
 						| UIViewAnimationOptions.CurveEaseOut,
 						() =>
@@ -119,11 +116,11 @@ namespace Xmf2.Commons.iOS.Controls
 							_floatingLabel.TextColor = PlaceholderColor;
 						},
 						() => { });
-			};
+		}
 
-			_upFloatLabel = () =>
-			{
-				Animate(0.3f, 0.0f,
+		protected void UpFloatLabel()
+		{
+			Animate(0.3f, 0.0f,
 						UIViewAnimationOptions.BeginFromCurrentState
 						| UIViewAnimationOptions.CurveEaseOut,
 						() =>
@@ -135,7 +132,6 @@ namespace Xmf2.Commons.iOS.Controls
 															  _floatingLabel.Frame.Size.Height);
 						},
 						() => { });
-			};
 		}
 
 		public override void LayoutSubviews()
@@ -145,36 +141,35 @@ namespace Xmf2.Commons.iOS.Controls
 			HandleChange();
 		}
 
-		private void HandleChange()
+		protected void HandleChange()
 		{
 			switch (Mode)
 			{
 				case ActivationMode.OnFocus:
 					if (IsFirstResponder)
 					{
-						_upFloatLabel();
+						UpFloatLabel();
 					}
 					else if (!string.IsNullOrEmpty(Text))
 					{
-						_upFloatLabel();
+						UpFloatLabel();
 					}
 					else
 					{
-						_downFloatLabel();
+						DownFloatLabel();
 					}
 					return;
 				case ActivationMode.OnFirstCharacter:
 					if (!string.IsNullOrEmpty(Text))
 					{
-						_upFloatLabel();
+						UpFloatLabel();
 					}
 					else
 					{
-						_downFloatLabel();
+						DownFloatLabel();
 					}
 					return;
 			}
-
 		}
 
 		protected void HandleState(bool force = false)
