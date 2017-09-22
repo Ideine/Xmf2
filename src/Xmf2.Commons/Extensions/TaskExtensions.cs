@@ -7,15 +7,15 @@ namespace Xmf2.Commons.Extensions
 	public static class TaskExtensions
 	{
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public static ConfiguredTaskAwaitable Forget(this Task task)
+		public static void Forget(this Task task)
 		{
-			return task.ConfigureAwait(false);
+			task.ConfigureAwait(false);
 		}
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public static ConfiguredTaskAwaitable<T> Forget<T>(this Task<T> task)
+		public static void Forget<T>(this Task<T> task)
 		{
-			return task.ConfigureAwait(false);
+			task.ConfigureAwait(false);
 		}
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
