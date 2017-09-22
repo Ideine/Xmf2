@@ -219,6 +219,11 @@ public static class CustomAutoLayoutExtensions
 		containerView.ConstrainLayout(() => right.Left() == left.Right() + margin);
 		return containerView;
 	}
+	public static UIView MinHorizontalSpace(this UIView containerView, UIView left, UIView right, int margin = 0)
+	{
+		containerView.ConstrainLayout(() => right.Left() >= left.Right() + margin);
+		return containerView;
+	}
 
 	public static UIView ConstrainHeight(this UIView view, int height)
 	{

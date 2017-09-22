@@ -8,7 +8,6 @@ namespace Xmf2.Commons.iOS.Controls
 {
 	public class NavBarWithTwoActions : UIView
 	{
-
 		private static readonly UIColor _DEFAULT_TEXT_HIGHLIGHT_COLOR = UIColorExtension.ColorFromHex(0x757575);
 		private bool _layoutDone;
 
@@ -48,7 +47,6 @@ namespace Xmf2.Commons.iOS.Controls
 			get { return Title?.Font; }
 			set { Title.WithFont(value); }
 		}
-
 		public UIColor TitleColor
 		{
 			get { return Title?.TextColor; }
@@ -71,17 +69,20 @@ namespace Xmf2.Commons.iOS.Controls
 
 		#endregion
 
-		private static readonly CGAffineTransform _flipTransform = CGAffineTransform.MakeScale(-1.0f, 1.0f);
 		public NavBarWithTwoActions(string leftImage, string rightImage)
 		{
-			this.LeftButton = this.CreateButton().WithTitle(LeftActionTitle).OnClick(OnClickLeftButton).WithTextColorHighlight(_DEFAULT_TEXT_HIGHLIGHT_COLOR);
+			this.LeftButton  = this.CreateButton().WithTitle(LeftActionTitle) .OnClick(OnClickLeftButton) .WithTextColorHighlight(_DEFAULT_TEXT_HIGHLIGHT_COLOR);
 			this.RightButton = this.CreateButton().WithTitle(RightActionTitle).OnClick(OnClickRightButton).WithTextColorHighlight(_DEFAULT_TEXT_HIGHLIGHT_COLOR);
-			this.Title = this.CreateLabel().WithText(TextTitle).WithAlignment(UITextAlignment.Center);
+			this.Title		 = this.CreateLabel()
+								   .WithText(TextTitle)
+								   .WithAlignment(UITextAlignment.Center);
+			this.Title.AdjustsFontSizeToFitWidth = true;
+			this.Title.MinimumScaleFactor = 0.7f;
 
-			bool hasLeftImage = !string.IsNullOrEmpty(leftImage);
+			bool hasLeftImage  = !string.IsNullOrEmpty(leftImage);
 			bool hasRightImage = !string.IsNullOrEmpty(rightImage);
-			LeftButton.ContentEdgeInsets = new UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 0);
-			RightButton.ContentEdgeInsets = new UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 15);
+			LeftButton .ContentEdgeInsets = new UIEdgeInsets(top: 0, left: 15, bottom: 0, right:  0);
+			RightButton.ContentEdgeInsets = new UIEdgeInsets(top: 0, left:  0, bottom: 0, right: 15);
 			if (hasLeftImage)
 			{
 				LeftButton.WithImage(leftImage);
@@ -90,10 +91,8 @@ namespace Xmf2.Commons.iOS.Controls
 			{
 				RightButton.WithImage(rightImage);
 			}
-			_container = this.CreateView();
-			_container.AddSubviews(Title, LeftButton, RightButton);
-
-			this.Add(_container);
+			_container = this.CreateView().WithSubviews(Title, LeftButton, RightButton);
+			this.AddSubview(_container);
 		}
 
 		public void AutoLayout()
@@ -120,11 +119,15 @@ namespace Xmf2.Commons.iOS.Controls
 
 			//Horizontal Layout
 			this.CenterAndFillWidth(_container);
+
 			_container.AnchorLeft(LeftButton)
 					  .AnchorRight(RightButton)
-					  .CenterAndFillWidth(Title);
+					  .CenterHorizontally(Title)
+					  .MinHorizontalSpace(LeftButton, Title)
+					  .MinHorizontalSpace(Title, RightButton);
+			Title.SetContentCompressionResistancePriority((float)UILayoutPriority.DefaultLow, UILayoutConstraintAxis.Horizontal);
 		}
-
+	
 		public virtual void OnClickLeftButton()
 		{
 			LeftAction?.Invoke();
@@ -159,7 +162,7 @@ namespace Xmf2.Commons.iOS.Controls
 			}
 		}
 
-		#endregion
+		#endregion Dispose
 
 		#region Static methods helper
 
