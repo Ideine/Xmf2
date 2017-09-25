@@ -225,9 +225,9 @@ public static class CreatorExtensions
 
 	#region ScrollView
 
-	public static UIScrollView CreateVerticalScroll(this object parent)
+	public static UIScrollView CreateVerticalScroll(this object _)
     {
-        return new UIScrollView
+        return new UIScrollView()
         {
             AlwaysBounceHorizontal = false,
             AlwaysBounceVertical = false,
@@ -235,8 +235,17 @@ public static class CreatorExtensions
             BouncesZoom = false,
             ShowsVerticalScrollIndicator = true,
             ShowsHorizontalScrollIndicator = false
-        };
-    }
+        }.WithContentInsetAdjustementBehavior(UIScrollViewContentInsetAdjustmentBehavior.Never);
+	}
+
+	public static UIScrollView WithContentInsetAdjustementBehavior(this UIScrollView view, UIScrollViewContentInsetAdjustmentBehavior behavior)
+	{
+		if (UIDevice.CurrentDevice.CheckSystemVersion(11, 0))
+		{
+			view.ContentInsetAdjustmentBehavior = behavior;
+		}
+		return view;
+	}
 
     public static UIScrollView Disable(this UIScrollView view)
     {
@@ -558,6 +567,13 @@ public static class CreatorExtensions
 	public static TView WithBackgroundColor<TView>(this TView view, int color) where TView : UIView
 	{
 		view.BackgroundColor = color.ColorFromHex();
+		return view;
+	}
+
+	[Obsolete("Cette méthode ne doit être utilisée qu'en développement. Pour définir le fond d'une View utilisez WithBackgroundColor")]
+	public static TView WithDraftBackground<TView>(this TView view, UIColor color = null) where TView : UIView
+	{
+		view.BackgroundColor = color ?? UIColor.Orange;
 		return view;
 	}
 
