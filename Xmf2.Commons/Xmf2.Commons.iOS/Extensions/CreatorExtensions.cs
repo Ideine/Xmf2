@@ -225,9 +225,9 @@ public static class CreatorExtensions
 
 	#region ScrollView
 
-	public static UIScrollView CreateVerticalScroll(this object parent)
+	public static UIScrollView CreateVerticalScroll(this object _)
     {
-        return new UIScrollView
+        return new UIScrollView()
         {
             AlwaysBounceHorizontal = false,
             AlwaysBounceVertical = false,
@@ -235,8 +235,17 @@ public static class CreatorExtensions
             BouncesZoom = false,
             ShowsVerticalScrollIndicator = true,
             ShowsHorizontalScrollIndicator = false
-        };
-    }
+        }.WithContentInsetAdjustementBehavior(UIScrollViewContentInsetAdjustmentBehavior.Never);
+	}
+
+	public static UIScrollView WithContentInsetAdjustementBehavior(this UIScrollView view, UIScrollViewContentInsetAdjustmentBehavior behavior)
+	{
+		if (UIDevice.CurrentDevice.CheckSystemVersion(11, 0))
+		{
+			view.ContentInsetAdjustmentBehavior = behavior;
+		}
+		return view;
+	}
 
     public static UIScrollView Disable(this UIScrollView view)
     {
@@ -561,6 +570,13 @@ public static class CreatorExtensions
 		return view;
 	}
 
+	[Obsolete("Cette méthode ne doit être utilisée qu'en développement. Pour définir le fond d'une View utilisez WithBackgroundColor")]
+	public static TView WithDraftBackground<TView>(this TView view, UIColor color = null) where TView : UIView
+	{
+		view.BackgroundColor = color ?? UIColor.Orange;
+		return view;
+	}
+
 	public static TView WithBackgroundColor<TView>(this TView view, UIColor color) where TView : UIView
     {
         view.BackgroundColor = color;
@@ -647,5 +663,40 @@ public static class CreatorExtensions
 
 	#endregion UIDatePicker
 
+	#region UITableView
+
+	public static UITableView CreateTableView(this UIResponder _)
+	{
+		return _.CreateTableView(frame: null);
+	}
+
+	public static UITableView CreateTableView(this UIResponder _, CGRect? frame)
+	{
+		var tableView = frame.HasValue
+					  ? new UITableView(frame.Value)
+					  : new UITableView();
+		return (UIDevice.CurrentDevice.CheckSystemVersion(11, 0))
+			? tableView.WithoutAutomaticEstimatedHeights()//https://stackoverflow.com/a/46257601/1584823
+			: tableView;
+	}
+
+	public static UITableView WithoutAutomaticEstimatedHeights(this UITableView view)
+	{
+		if (view.EstimatedRowHeight == UITableView.AutomaticDimension)
+		{
+			view.EstimatedRowHeight = 0f;
+		}
+		if (view.EstimatedSectionHeaderHeight == UITableView.AutomaticDimension)
+		{
+			view.EstimatedSectionHeaderHeight = 0f;
+		}
+		if (view.EstimatedSectionFooterHeight == UITableView.AutomaticDimension)
+		{
+			view.EstimatedSectionFooterHeight = 0f;
+		}
+		return view;
+	}
+
+	#endregion UITableView
 
 }
