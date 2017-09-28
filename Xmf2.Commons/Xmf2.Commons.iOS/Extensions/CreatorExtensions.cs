@@ -663,5 +663,40 @@ public static class CreatorExtensions
 
 	#endregion UIDatePicker
 
+	#region UITableView
+
+	public static UITableView CreateTableView(this UIResponder _)
+	{
+		return _.CreateTableView(frame: null);
+	}
+
+	public static UITableView CreateTableView(this UIResponder _, CGRect? frame)
+	{
+		var tableView = frame.HasValue
+					  ? new UITableView(frame.Value)
+					  : new UITableView();
+		return (UIDevice.CurrentDevice.CheckSystemVersion(11, 0))
+			? tableView.WithoutAutomaticEstimatedHeights()//https://stackoverflow.com/a/46257601/1584823
+			: tableView;
+	}
+
+	public static UITableView WithoutAutomaticEstimatedHeights(this UITableView view)
+	{
+		if (view.EstimatedRowHeight == UITableView.AutomaticDimension)
+		{
+			view.EstimatedRowHeight = 0f;
+		}
+		if (view.EstimatedSectionHeaderHeight == UITableView.AutomaticDimension)
+		{
+			view.EstimatedSectionHeaderHeight = 0f;
+		}
+		if (view.EstimatedSectionFooterHeight == UITableView.AutomaticDimension)
+		{
+			view.EstimatedSectionFooterHeight = 0f;
+		}
+		return view;
+	}
+
+	#endregion UITableView
 
 }
