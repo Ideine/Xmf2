@@ -31,10 +31,10 @@ public static class Layout
 	internal static readonly IDictionary<string, string> constraintSubstitutions = new Dictionary<string, string>();
 #endif
 
-	public static TUIView WithLayoutConstraints<TUIView>(this TUIView view, Expression<Func<bool>> constraintsExpression, Action<NSLayoutConstraint[]> withAddedContraints) where TUIView : UIView
+	public static IEnumerable<NSLayoutConstraint> GetLayoutConstraints<TUIView>(this TUIView view, Expression<Func<bool>> constraintsExpression, float priority = RequiredPriority) where TUIView : UIView
 	{
 		var body = constraintsExpression.Body;
-		var constraints = FindBinaryExpressionsRecursive(body)
+		return FindBinaryExpressionsRecursive(body)
 			.Select(e =>
 			{
 #if DEBUG
@@ -45,30 +45,12 @@ public static class Layout
 #endif
 				return CompileConstraint(e, view, RequiredPriority);
 			})
-			.Where(x => x != null)
-			.ToArray();
-		view.AddConstraints(constraints);
-		return view;
+			.Where(x => x != null);
 	}
 
 	public static void ConstrainLayout(this UIView view, Expression<Func<bool>> constraintsExpression, float priority = RequiredPriority)
 	{
-		var body = constraintsExpression.Body;
-		var constraints = FindBinaryExpressionsRecursive(body)
-			.Select(e =>
-			{
-#if DEBUG
-
-				if (ExtractAndRegisterName(e, view))
-				{
-					return null;
-				}
-#endif
-				return CompileConstraint(e, view, priority);
-			})
-			.Where(x => x != null)
-			.ToArray();
-
+		var constraints = GetLayoutConstraints(view, constraintsExpression, priority).ToArray();
 		view.AddConstraints(constraints);
 	}
 
