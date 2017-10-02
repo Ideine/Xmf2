@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Text;
 
 using Android.App;
@@ -32,6 +33,18 @@ namespace Xmf2.Commons.MvxExtends.Droid.ErrorManagers
 			|| webEx.Status == System.Net.WebExceptionStatus.ReceiveFailure
 			|| webEx.Status == System.Net.WebExceptionStatus.SecureChannelFailure
 			|| webEx.Status == System.Net.WebExceptionStatus.TrustFailure)
+				.Or<HttpRequestException>(httpEx =>
+					 httpEx.InnerException is WebException webEx && (
+						  webEx.Status == System.Net.WebExceptionStatus.ConnectFailure
+					   || webEx.Status == System.Net.WebExceptionStatus.SendFailure
+					   || webEx.Status == System.Net.WebExceptionStatus.UnknownError
+					   || webEx.Status == System.Net.WebExceptionStatus.ConnectionClosed
+					   || webEx.Status == System.Net.WebExceptionStatus.KeepAliveFailure
+					   || webEx.Status == System.Net.WebExceptionStatus.PipelineFailure
+					   || webEx.Status == System.Net.WebExceptionStatus.ReceiveFailure
+					   || webEx.Status == System.Net.WebExceptionStatus.SecureChannelFailure
+					   || webEx.Status == System.Net.WebExceptionStatus.TrustFailure
+						 ))
                     .Or<Exception> (ex =>
                         ex.Message.IndexOf ("Bad file descriptor", StringComparison.OrdinalIgnoreCase) != -1
 			|| ex.Message.IndexOf ("Invalid argument", StringComparison.OrdinalIgnoreCase) != -1)
@@ -53,6 +66,11 @@ namespace Xmf2.Commons.MvxExtends.Droid.ErrorManagers
 				return new AccessDataException (AccessDataException.ErrorType.NoInternetConnexion, e);
 
 			var webEx = e as WebException;
+			if (webEx == null)
+			{
+				webEx = (e as HttpRequestException)?.InnerException as WebException;
+			}
+
 			if (webEx != null) {
 				switch (webEx.Status) {
 				case WebExceptionStatus.Timeout:
