@@ -113,7 +113,7 @@ namespace Xmf2.Commons.iOS.Controls
 															  _floatingLabel.Frame.Size.Width,
 															  _floatingLabel.Frame.Size.Height);
 							_floatingLabel.Font = PlaceholderFont;
-							_floatingLabel.TextColor = PlaceholderColor;
+							_floatingLabel.TextColor = (Enabled) ? PlaceholderColor : FloatingLabelDisabledTextColor;
 						},
 						() => { });
 		}
