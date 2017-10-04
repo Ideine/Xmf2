@@ -1,7 +1,6 @@
-﻿using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
-namespace Xmf2.Commons.Rx.ViewModels
+namespace Xmf2.Rx.ViewModels
 {
 	public interface IViewModelLifecycleManager
 	{

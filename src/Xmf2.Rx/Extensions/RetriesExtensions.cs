@@ -1,8 +1,11 @@
-﻿namespace System.Reactive.Linq
+﻿using System;
+using System.Reactive.Linq;
+
+namespace Xmf2.Rx.Extensions
 {
 	public static class RetriesExtensions
 	{
-		public interface IRetryObservableBuilder<TResult>
+		public interface IRetryObservableBuilder<out TResult>
 		{
 			IRetryObservableBuilder<TResult> Handle<TException>(Func<TException, bool> handler) where TException : Exception;
 
@@ -26,7 +29,7 @@
 
 				public Exception Exception { get; }
 
-				public RetryResult(bool isSuccess, TResult result, Exception exception)
+				private RetryResult(bool isSuccess, TResult result, Exception exception)
 				{
 					IsSuccess = isSuccess;
 					Result = result;
@@ -50,7 +53,7 @@
 
 			public RetryObservableBuilder(IObservable<TResult> observable, Action<Exception, int> loggerCall = null)
 			{
-				_observable = observable.Select(item => RetryResult.FromResult(item));
+				_observable = observable.Select(RetryResult.FromResult);
 				_loggerCall = loggerCall;
 				_attemptCount = 0;
 			}
@@ -76,18 +79,17 @@
 
 			public IObservable<TResult> Retry(int retryCount)
 			{
-				return _observable.Retry(retryCount).SelectMany(retryResult =>
-				{
-					return retryResult.IsSuccess ? Observable.Return(retryResult.Result) : Observable.Throw<TResult>(retryResult.Exception);
-				}).Select(x => 
-				{
-					_attemptCount = 0;
-					return x;
-				}).Catch<TResult, Exception>(ex => 
-				{
-					_attemptCount = 0;
-					return Observable.Throw<TResult>(ex);
-				});
+				return _observable.Retry(retryCount)
+					.SelectMany(retryResult => retryResult.IsSuccess ? Observable.Return(retryResult.Result) : Observable.Throw<TResult>(retryResult.Exception))
+					.Select(x => 
+					{
+						_attemptCount = 0;
+						return x;
+					}).Catch<TResult, Exception>(ex => 
+					{
+						_attemptCount = 0;
+						return Observable.Throw<TResult>(ex);
+					});
 			}
 		}
 	}

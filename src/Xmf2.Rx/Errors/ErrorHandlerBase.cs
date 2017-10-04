@@ -5,13 +5,13 @@ using Xmf2.Commons.Errors;
 using Xmf2.Commons.Exceptions;
 using Xmf2.Commons.Logs;
 
-namespace Xmf2.Commons.Rx.Errors
+namespace Xmf2.Rx.Errors
 {
 	public abstract class ErrorHandlerBase : IErrorHandler
 	{
 		private readonly ILogger _logger;
 
-		public ErrorHandlerBase(ILogger logger)
+		protected ErrorHandlerBase(ILogger logger)
 		{
 			_logger = logger;
 		}
@@ -46,16 +46,15 @@ namespace Xmf2.Commons.Rx.Errors
 		protected Task HandleError(Exception ex, CustomErrorHandler errorHandler)
 		{
 			TaskCompletionSource<bool> tcs = new TaskCompletionSource<bool>();
-			Action callbackAction = () => tcs.TrySetResult(true);
 
-			bool customErrorHandled = errorHandler?.Invoke(ex, callbackAction) ?? false;
+			bool customErrorHandled = errorHandler?.Invoke(ex, () => tcs.TrySetResult(true)) ?? false;
 
 			if (customErrorHandled)
 			{
 				return tcs.Task;
 			}
 
-			bool genericErrorHandled = HandleGenericError(ex, callbackAction);
+			bool genericErrorHandled = HandleGenericError(ex, () => tcs.TrySetResult(true));
 
 			if (genericErrorHandled)
 			{

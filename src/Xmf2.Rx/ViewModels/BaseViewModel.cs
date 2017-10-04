@@ -11,8 +11,9 @@ using Splat;
 using Xmf2.Commons.Errors;
 using Xmf2.Commons.Extensions;
 using Xmf2.Commons.Helpers;
+using Xmf2.Rx.Extensions;
 
-namespace Xmf2.Commons.Rx.ViewModels
+namespace Xmf2.Rx.ViewModels
 {
 	public abstract class BaseViewModel : ReactiveObject, ISupportsActivation
 	{
@@ -40,11 +41,11 @@ namespace Xmf2.Commons.Rx.ViewModels
 
 		protected BaseViewModel()
 		{
-			IsInitializing = _isInitializing.StartWith(false);
-			IsStarting = _isStarting.StartWith(false);
-			IsResuming = _isResuming.StartWith(false);
-			IsPausing = _isPausing.StartWith(false);
-			IsStopping = _isStopping.StartWith(false);
+			IsInitializing = _isInitializing.StartWith(false).ToObservableForBinding();
+			IsStarting = _isStarting.StartWith(false).ToObservableForBinding();
+			IsResuming = _isResuming.StartWith(false).ToObservableForBinding();
+			IsPausing = _isPausing.StartWith(false).ToObservableForBinding();
+			IsStopping = _isStopping.StartWith(false).ToObservableForBinding();
 
 			Activator = new ViewModelActivator();
 			LifecycleManager = new ViewModelLifecycleManager(this);
@@ -83,7 +84,7 @@ namespace Xmf2.Commons.Rx.ViewModels
 		/// <returns>Awaitable task</returns>
 		protected virtual Task Initialize()
 		{
-			Debug.WriteLine($"[Lifecycle] Initialize {this.GetType().Name}");
+			Debug.WriteLine($"[Lifecycle] Initialize {GetType().Name}");
 			return TaskHelper.CompletedTask;
 		}
 
@@ -92,7 +93,7 @@ namespace Xmf2.Commons.Rx.ViewModels
 		/// </summary>
 		protected virtual Task OnStart()
 		{
-			Debug.WriteLine($"[Lifecycle] OnStart {this.GetType().Name}");
+			Debug.WriteLine($"[Lifecycle] OnStart {GetType().Name}");
 			return TaskHelper.CompletedTask;
 		}
 
@@ -101,7 +102,7 @@ namespace Xmf2.Commons.Rx.ViewModels
 		/// </summary>
 		protected virtual Task OnResume()
 		{
-			Debug.WriteLine($"[Lifecycle] OnResume {this.GetType().Name}");
+			Debug.WriteLine($"[Lifecycle] OnResume {GetType().Name}");
 			return TaskHelper.CompletedTask;
 		}
 
@@ -110,7 +111,7 @@ namespace Xmf2.Commons.Rx.ViewModels
 		/// </summary>
 		protected virtual Task OnPause()
 		{
-			Debug.WriteLine($"[Lifecycle] OnPause {this.GetType().Name}");
+			Debug.WriteLine($"[Lifecycle] OnPause {GetType().Name}");
 			return TaskHelper.CompletedTask;
 		}
 
@@ -119,7 +120,7 @@ namespace Xmf2.Commons.Rx.ViewModels
 		/// </summary>
 		protected virtual Task OnStop()
 		{
-			Debug.WriteLine($"[Lifecycle] OnStop {this.GetType().Name}");
+			Debug.WriteLine($"[Lifecycle] OnStop {GetType().Name}");
 			return TaskHelper.CompletedTask;
 		}
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Reactive.Linq;
+using System.Reactive.Subjects;
 using System.Threading;
 using System.Threading.Tasks;
 using Xmf2.Commons.Errors;
@@ -9,8 +10,9 @@ using Xmf2.Commons.Services.Authentications;
 using Xmf2.Commons.Services.Authentications.Models;
 using Xmf2.Rest.Caches;
 using Xmf2.Rest.OAuth2;
+using Xmf2.Rx.Extensions;
 
-namespace Xmf2.Commons.Rx.Services.Authentications
+namespace Xmf2.Rx.Services.Authentications
 {
 	public class AuthenticationService : IAuthenticationService
 	{
@@ -18,8 +20,9 @@ namespace Xmf2.Commons.Rx.Services.Authentications
 		private readonly IUserStorageService _storageService;
 		private readonly ILogger _logger;
 		private readonly IHttpErrorHandler _errorManager;
+		private readonly Subject<bool> _isLogged = new Subject<bool>();
 
-		public bool IsLogged { get; private set; }
+		public IObservable<bool> IsLogged { get; }
 
 		public AuthenticationService(IOAuth2Client client, IUserStorageService storageService, ILogger logger, IHttpErrorHandler errorManager)
 		{
@@ -27,6 +30,7 @@ namespace Xmf2.Commons.Rx.Services.Authentications
 			_storageService = storageService;
 			_logger = logger;
 			_errorManager = errorManager;
+			IsLogged = _isLogged.StartWith(false).ToObservableForBinding();
 
 			_client.OnAuthSuccess += OnClientAuthenticationSuccess;
 			_client.OnAuthError += OnClientAuthenticationError;
@@ -34,7 +38,7 @@ namespace Xmf2.Commons.Rx.Services.Authentications
 
 		protected virtual void OnClientAuthenticationSuccess(object sender, OAuth2AuthResult result)
 		{
-			IsLogged = true;
+			_isLogged.OnNext(true);
 			_storageService.Store(new AuthenticationDetailStorageModel
 			{
 				AccessToken = result.AccessToken,
@@ -118,7 +122,7 @@ namespace Xmf2.Commons.Rx.Services.Authentications
 
 		public Task Logout(CancellationToken ct)
 		{
-			IsLogged = false;
+			_isLogged.OnNext(false);
 			_storageService.Delete(ct);
 			_client.Logout();
 			CacheEngine.InvalidateScope(CacheEngine.SCOPE_USER);

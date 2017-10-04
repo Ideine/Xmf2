@@ -171,3 +171,4 @@ Fichiers APK
 *.apk
 
 Resource.designer.cs
+.idea/

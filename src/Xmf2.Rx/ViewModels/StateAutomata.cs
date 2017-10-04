@@ -4,9 +4,9 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Xmf2.Commons.Rx.ViewModels
+namespace Xmf2.Rx.ViewModels
 {
-	public class StateAutomata
+	internal class StateAutomata
 	{
 		public class Node
 		{

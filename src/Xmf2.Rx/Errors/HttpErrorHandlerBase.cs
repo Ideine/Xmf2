@@ -1,13 +1,14 @@
 ﻿using System;
-using System.Net;
 using System.Linq;
+using System.Net;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
-using Xmf2.Commons.Logs;
-using Xmf2.Commons.Exceptions;
 using Xmf2.Commons.Errors;
+using Xmf2.Commons.Exceptions;
+using Xmf2.Commons.Logs;
+using Xmf2.Rx.Extensions;
 
-namespace Xmf2.Commons.Rx.Errors
+namespace Xmf2.Rx.Errors
 {
 	public abstract class HttpErrorHandlerBase : IHttpErrorHandler
 	{
@@ -17,7 +18,7 @@ namespace Xmf2.Commons.Rx.Errors
 		private readonly Lazy<WebExceptionStatus[]> _timeoutStatus;
 		private readonly Lazy<WebExceptionStatus[]> _noInternetStatus;
 
-		public HttpErrorHandlerBase(ILogger logger)
+		protected HttpErrorHandlerBase(ILogger logger)
 		{
 			_logger = logger;
 
@@ -60,7 +61,7 @@ namespace Xmf2.Commons.Rx.Errors
 				case WebException webException when _timeoutStatus.Value.Contains(webException.Status):
 					return new AccessDataException(AccessDataException.ErrorType.Timeout, ex);
 
-				case Rest.OAuth2.RestException restException when HttpStatusCode.NotFound == restException?.Response.StatusCode:
+				case Rest.OAuth2.RestException restException when HttpStatusCode.NotFound == restException.Response.StatusCode:
 					return new AccessDataException(AccessDataException.ErrorType.NotFound, ex);
 
 				default:
@@ -80,7 +81,7 @@ namespace Xmf2.Commons.Rx.Errors
 
 		protected virtual WebExceptionStatus[] RetryStatus()
 		{
-			return new WebExceptionStatus[]
+			return new[]
 			{
 				WebExceptionStatus.ConnectFailure,
 				WebExceptionStatus.SendFailure,
@@ -90,7 +91,7 @@ namespace Xmf2.Commons.Rx.Errors
 
 		protected virtual WebExceptionStatus[] NoInternetStatus()
 		{
-			return new WebExceptionStatus[]{
+			return new[]{
 				WebExceptionStatus.ConnectFailure
 			};
 		}

@@ -1,4 +1,7 @@
-﻿namespace System.Reactive.Disposables
+﻿using System;
+using System.Reactive.Disposables;
+
+namespace Xmf2.Rx.Extensions
 {
 	public static class CompositeDisposableExtensions
 	{

@@ -1,6 +1,7 @@
 ﻿using System;
+using Splat;
 
-namespace Splat
+namespace Xmf2.Rx.Extensions
 {
 	public static class LocatorExtensions
 	{
