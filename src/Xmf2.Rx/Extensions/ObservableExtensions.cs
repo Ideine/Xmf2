@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Splat;
 using Xmf2.Commons.Errors;
 
-namespace Xmf2.Rx.Extensions
+namespace System
 {
 	public static class ObservableExtensions
 	{

@@ -10,7 +10,6 @@ using Xmf2.Commons.Services.Authentications;
 using Xmf2.Commons.Services.Authentications.Models;
 using Xmf2.Rest.Caches;
 using Xmf2.Rest.OAuth2;
-using Xmf2.Rx.Extensions;
 
 namespace Xmf2.Rx.Services.Authentications
 {

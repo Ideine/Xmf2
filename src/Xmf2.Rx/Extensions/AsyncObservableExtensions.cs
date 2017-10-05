@@ -2,7 +2,7 @@
 using System.Reactive.Linq;
 using System.Threading.Tasks;
 
-namespace Xmf2.Rx.Extensions
+namespace System
 {
 	public static class AsyncObservableExtensions
 	{

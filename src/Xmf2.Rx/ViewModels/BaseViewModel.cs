@@ -11,7 +11,6 @@ using Splat;
 using Xmf2.Commons.Errors;
 using Xmf2.Commons.Extensions;
 using Xmf2.Commons.Helpers;
-using Xmf2.Rx.Extensions;
 
 namespace Xmf2.Rx.ViewModels
 {

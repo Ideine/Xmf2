@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using Xmf2.Commons.Errors;
 using Xmf2.Commons.Exceptions;
 using Xmf2.Commons.Logs;
-using Xmf2.Rx.Extensions;
 
 namespace Xmf2.Rx.Errors
 {

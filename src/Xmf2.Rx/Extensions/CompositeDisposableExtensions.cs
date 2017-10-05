@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Reactive.Disposables;
 
-namespace Xmf2.Rx.Extensions
+namespace System.Reactive.Disposables
 {
 	public static class CompositeDisposableExtensions
 	{

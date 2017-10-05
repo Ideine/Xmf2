@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Reactive.Linq;
 
-namespace Xmf2.Rx.Extensions
+namespace System
 {
 	public static class RetriesExtensions
 	{
