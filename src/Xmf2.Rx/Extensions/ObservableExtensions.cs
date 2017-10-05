@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Reactive;
+using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
 using Splat;
@@ -25,6 +26,17 @@ namespace System
 				await onNext();
 				return Unit.Default;
 			}).Subscribe();
+		}
+
+		public static void SubscribeAndDispose<T>(this IObservable<T> observable, Action<T> onNext)
+		{
+			CompositeDisposable disposable = new CompositeDisposable();
+
+			observable.Subscribe(x =>
+			{
+				onNext(x);
+				disposable.Dispose();
+			}).DisposeWith(disposable);
 		}
 
 		public static IObservable<T> WithErrorHandling<T>(this IObservable<T> observable, CustomErrorHandler customHandler = null)
