@@ -37,7 +37,6 @@ namespace Xmf2.Rx.Droid.BaseView
 
 		protected BaseActivity(IntPtr handle, JniHandleOwnership transer) : base(handle, transer) { }
 
-		protected virtual void OnContentViewSet() { }
 
 		protected virtual void OnViewModelSet() { }
 
@@ -60,7 +59,6 @@ namespace Xmf2.Rx.Droid.BaseView
 			//ColorizeStatusBar(ContextCompat.GetColor(this, Resource.Color.colorPrimaryDark));
 			_lifecycleMonitor.Value.OnCreate(this);
 			_loadingViewHelper = new LoadingViewHelper(this, LoadingViewLayout,LoadingViewProgressId);
-			OnContentViewSet();
 			ViewModel = GetViewModel();
 			OnViewModelSet();
 			SetViewModelBindings();
