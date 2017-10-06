@@ -42,6 +42,8 @@ namespace Xmf2.Rx.Droid.BaseView
 
 		protected virtual void SetViewModelBindings() { }
 
+		protected virtual void OnContentViewSet() { }
+
 		protected void ColorizeStatusBar(int color)
 		{
 			if (Build.VERSION.SdkInt >= BuildVersionCodes.Lollipop)
@@ -58,6 +60,7 @@ namespace Xmf2.Rx.Droid.BaseView
 			base.OnCreate(savedInstanceState);
 			_lifecycleMonitor.Value.OnCreate(this);
 			_loadingViewHelper = new LoadingViewHelper(this, LoadingViewLayout,LoadingViewProgressId);
+			OnContentViewSet();
 			ViewModel = GetViewModel();
 			OnViewModelSet();
 			SetViewModelBindings();
