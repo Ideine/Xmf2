@@ -56,7 +56,6 @@ namespace Xmf2.Rx.Droid.BaseView
 		protected override void OnCreate(Bundle savedInstanceState)
 		{
 			base.OnCreate(savedInstanceState);
-			//ColorizeStatusBar(ContextCompat.GetColor(this, Resource.Color.colorPrimaryDark));
 			_lifecycleMonitor.Value.OnCreate(this);
 			_loadingViewHelper = new LoadingViewHelper(this, LoadingViewLayout,LoadingViewProgressId);
 			ViewModel = GetViewModel();
