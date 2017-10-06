@@ -380,12 +380,19 @@ public static class CustomAutoLayoutExtensions
 
 	public static UIView EnsureRemove(this UIView view, IEnumerable<NSLayoutConstraint> constraintsToRemove)
 	{
+		return EnsureRemove(view, constraintsToRemove.ToArray());
+	}
+	public static UIView EnsureRemove(this UIView view, params NSLayoutConstraint[] constraintsToRemove)
+	{
 		var delta = view.Constraints.Intersect(constraintsToRemove).ToArray();
 		view.RemoveConstraints(delta);
 		return view;
 	}
-
 	public static UIView EnsureAdd(this UIView view, IEnumerable<NSLayoutConstraint> constraintsToAdd)
+	{
+		return EnsureAdd(view, constraintsToAdd.ToArray());
+	}
+	public static UIView EnsureAdd(this UIView view, params NSLayoutConstraint[] constraintsToAdd)
 	{
 		var delta = constraintsToAdd.Except(view.Constraints).ToArray();
 		view.AddConstraints(delta);
