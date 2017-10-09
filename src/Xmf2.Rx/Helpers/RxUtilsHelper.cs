@@ -39,6 +39,13 @@ namespace Xmf2.Rx.Helpers
 			return s.ThrownExceptions;
 		}
 
+		public static bool areChangeNotificationsEnabled<TSender>(this TSender This) where TSender : IReactiveObject
+		{
+			var s = state.GetValue(This, key => (IExtensionState<IReactiveObject>)new ExtensionState<TSender>(This));
+
+			return s.areChangeNotificationsEnabled();
+		}
+
 		// Filter a list of change notifications, returning the last change for each PropertyName in original order.
 		public static IEnumerable<IReactivePropertyChangedEventArgs<TSender>> dedup<TSender>(IList<IReactivePropertyChangedEventArgs<TSender>> batch)
 		{
