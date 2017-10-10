@@ -122,6 +122,15 @@
     <Compile Include="LinearListView\LinearListViewHolder.cs" />
     <Compile Include="LinearListView\BaseReactiveLinearListViewAdapter.cs" />
     <Compile Include="LinearListView\BaseReactiveLinearLayoutViewViewHolder.cs" />
+    <Compile Include="BaseView\ReactiveLinearLayout.cs" />
+    <Compile Include="ChipClouds\ChipCloud.cs" />
+    <Compile Include="ChipClouds\ChipCloudAdapter.cs" />
+    <Compile Include="ChipClouds\FlowLayout.cs" />
+    <Compile Include="ChipClouds\LayoutProcessor.cs" />
+    <Compile Include="ChipClouds\ChipCloudObserver.cs" />
+    <Compile Include="ChipClouds\ChipCloudViewHolder.cs" />
+    <Compile Include="ChipClouds\BaseReactiveChipCloudAdapter.cs" />
+    <Compile Include="ChipClouds\BaseReactiveChipCloudViewHolder.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Xmf2.Commons\Xmf2.Commons.csproj">
@@ -141,6 +150,7 @@
     <Folder Include="Helpers\" />
     <Folder Include="ListElement\" />
     <Folder Include="LinearListView\" />
+    <Folder Include="ChipClouds\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

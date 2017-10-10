@@ -59,7 +59,7 @@ namespace Xmf2.Rx.Droid.BaseView
 		{
 			base.OnCreate(savedInstanceState);
 			_lifecycleMonitor.Value.OnCreate(this);
-			_loadingViewHelper = new LoadingViewHelper(this, LoadingViewLayout,LoadingViewProgressId);
+			_loadingViewHelper = new LoadingViewHelper(this, LoadingViewLayout, LoadingViewProgressId);
 			OnContentViewSet();
 			ViewModel = GetViewModel();
 			OnViewModelSet();
