@@ -3,7 +3,7 @@ using System.Windows.Input;
 using Android.Content;
 using Android.Views;
 
-namespace Xmf2.Rx.Droid.LinearListView
+namespace Xmf2.Commons.Droid.LinearListView
 {
 	public class LinearListViewHolder : Java.Lang.Object, IDisposable
 	{

@@ -3,7 +3,7 @@ using Android.Content;
 using Android.Runtime;
 using Android.Util;
 
-namespace Xmf2.Rx.Droid.ChipClouds
+namespace Xmf2.Commons.Droid.ChipClouds
 {
 	public class ChipCloud : FlowLayout, ChipCloudObserver
 	{

@@ -6,6 +6,7 @@ using System.Windows.Input;
 using Android.Content;
 using Android.Views;
 using ReactiveUI;
+using Xmf2.Commons.Droid.ChipClouds;
 
 namespace Xmf2.Rx.Droid.ChipClouds
 {

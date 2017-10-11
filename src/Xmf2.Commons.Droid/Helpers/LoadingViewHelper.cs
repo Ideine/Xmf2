@@ -5,7 +5,7 @@ using Android.Graphics;
 using Android.Views;
 using Android.Widget;
 
-namespace Xmf2.Rx.Droid.Helpers
+namespace Xmf2.Commons.Droid.Helpers
 {
 	public class LoadingViewHelper
 	{

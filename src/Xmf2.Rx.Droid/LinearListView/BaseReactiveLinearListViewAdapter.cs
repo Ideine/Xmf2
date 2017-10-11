@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Android.Content;
 using Android.Runtime;
 using ReactiveUI;
+using Xmf2.Commons.Droid.LinearListView;
 
 namespace Xmf2.Rx.Droid.LinearListView
 {

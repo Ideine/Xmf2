@@ -8,7 +8,7 @@ using Android.Util;
 using Android.Views;
 using Android.Widget;
 
-namespace Xmf2.Rx.Droid.LinearListView
+namespace Xmf2.Commons.Droid.LinearListView
 {
 	public interface ILinearItemsLayoutAdapter
 	{

@@ -4,7 +4,7 @@ using Android.Runtime;
 using Android.Util;
 using Android.Views;
 
-namespace Xmf2.Rx.Droid.ChipClouds
+namespace Xmf2.Commons.Droid.ChipClouds
 {
 	public enum FlowGravity
 	{

@@ -3,7 +3,7 @@ using System.Diagnostics;
 using Android.App;
 using Android.Content;
 
-namespace Xmf2.Rx.Droid.Services
+namespace Xmf2.Commons.Droid.Services
 {
 	public interface ICurrentActivity
 	{

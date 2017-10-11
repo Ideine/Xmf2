@@ -4,6 +4,7 @@ using Android.App;
 using Android.Content;
 using Android.Support.V7.App;
 using Splat;
+using Xmf2.Commons.Droid.Services;
 
 namespace Xmf2.Rx.Droid.Services
 {

@@ -3,7 +3,7 @@ using Android.Content;
 using Android.Graphics;
 using Android.Widget;
 
-namespace Xmf2.Rx.Droid.Helpers
+namespace Xmf2.Commons.Droid.Helpers
 {
 	public static class UIHelper
 	{

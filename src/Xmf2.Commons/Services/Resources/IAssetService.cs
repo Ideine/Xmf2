@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using System.Threading.Tasks;
 
-namespace Xmf2.Rx.Services.Resources
+namespace Xmf2.Commons.Services.Resources
 {
 	public interface IAssetService
 	{

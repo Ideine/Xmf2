@@ -86,11 +86,11 @@
       <Name>Xmf2.Commons.iOS</Name>
     </ProjectReference>
     <ProjectReference Include="..\Xmf2.Commons\Xmf2.Commons.csproj">
-      <Project>{9d1bb55c-153d-4456-a691-9ab50f5c6f2a}</Project>
+      <Project>{636EDD70-3A6F-4CC8-B406-7BD3DB7CEF21}</Project>
       <Name>Xmf2.Commons</Name>
     </ProjectReference>
     <ProjectReference Include="..\Xmf2.Rx\Xmf2.Rx.csproj">
-      <Project>{b38c6c1c-a69b-4e5b-8754-cf439ba7e325}</Project>
+      <Project>{69C22C03-4170-408E-B6C2-9AF6383F9C85}</Project>
       <Name>Xmf2.Rx</Name>
     </ProjectReference>
   </ItemGroup>

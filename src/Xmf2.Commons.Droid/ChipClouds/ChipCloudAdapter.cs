@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Android.Content;
 using Android.Views;
 
-namespace Xmf2.Rx.Droid.ChipClouds
+namespace Xmf2.Commons.Droid.ChipClouds
 {
 	public abstract class ChipCloudAdapter : ChipCloudObsevable, IDisposable
 	{

@@ -4,6 +4,7 @@ using System.Reactive.Concurrency;
 using System.Reactive.Subjects;
 using Android.Views;
 using ReactiveUI;
+using Xmf2.Commons.Droid.LinearListView;
 
 namespace Xmf2.Rx.Droid.LinearListView
 {

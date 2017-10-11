@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Android.Views;
 
-namespace Xmf2.Rx.Droid.ChipClouds
+namespace Xmf2.Commons.Droid.ChipClouds
 {
 	public class LayoutProcessor
 	{

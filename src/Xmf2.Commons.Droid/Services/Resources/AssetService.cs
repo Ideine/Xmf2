@@ -2,9 +2,9 @@
 using System.Threading.Tasks;
 using Android.Content;
 using Android.Content.Res;
-using Xmf2.Rx.Services.Resources;
+using Xmf2.Commons.Services.Resources;
 
-namespace Xmf2.Rx.Droid.Services.Resource
+namespace Xmf2.Commons.Droid.Services.Resources
 {
 	public class AssetService : IAssetService
 	{
