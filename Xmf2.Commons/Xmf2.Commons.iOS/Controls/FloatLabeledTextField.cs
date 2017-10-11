@@ -61,24 +61,24 @@ namespace Xmf2.Commons.iOS.Controls
 
 		private UILabel _floatingLabel;
 
-		protected UIColor FloatingLabelNormalTextColor { get; set; }
-		protected UIColor FloatingLabelFocusedTextColor { get; set; }
-		protected UIColor FloatingLabelDisabledTextColor { get; set; }
+		public UIColor FloatingLabelNormalTextColor { get; set; }
+		public UIColor FloatingLabelFocusedTextColor { get; set; }
+		public UIColor FloatingLabelDisabledTextColor { get; set; }
 
-		protected UIFont FloatingLabelNormalFont { get; set; }
-		protected UIFont FloatingLabelFocusedFont { get; set; }
-		protected UIFont FloatingLabelDisabledFont { get; set; }
+		public UIFont FloatingLabelNormalFont { get; set; }
+		public UIFont FloatingLabelFocusedFont { get; set; }
+		public UIFont FloatingLabelDisabledFont { get; set; }
 
-		protected UIFont PlaceholderFont { get; set; }
-		protected UIColor PlaceholderColor { get; set; }
+		public UIFont PlaceholderFont { get; set; }
+		public UIColor PlaceholderColor { get; set; }
 
-		protected UIFont TextNormalFont { get; set; }
-		protected UIFont TextDisabledFont { get; set; }
-		protected UIFont TextFocusedFont { get; set; }
+		public UIFont TextNormalFont { get; set; }
+		public UIFont TextDisabledFont { get; set; }
+		public UIFont TextFocusedFont { get; set; }
 
-		protected UIColor TextNormalColor { get; set; }
-		protected UIColor TextDisabledColor { get; set; }
-		protected UIColor TextFocusedColor { get; set; }
+		public UIColor TextNormalColor { get; set; }
+		public UIColor TextDisabledColor { get; set; }
+		public UIColor TextFocusedColor { get; set; }
 
 		#region Constructor
 
@@ -219,7 +219,7 @@ namespace Xmf2.Commons.iOS.Controls
 			}
 			else
 			{
-				return InsetRect(base.TextRect(forBounds), new UIEdgeInsets(_floatingLabel.Font.LineHeight, 0, 0, 0));
+				return InsetRect(base.TextRect(forBounds), new UIEdgeInsets(_floatingLabel.Font.LineHeight + 2, 0, 0, 0));
 			}
 		}
 
@@ -231,7 +231,7 @@ namespace Xmf2.Commons.iOS.Controls
 			}
 			else
 			{
-				return InsetRect(base.EditingRect(forBounds), new UIEdgeInsets(_floatingLabel.Font.LineHeight, 0, 0, 0));
+				return InsetRect(base.EditingRect(forBounds), new UIEdgeInsets(_floatingLabel.Font.LineHeight + 2, 0, 0, 0));
 			}
 		}
 
