@@ -8,7 +8,7 @@ namespace Xmf2.Commons.Droid.ChipClouds
 {
 	public enum FlowGravity
 	{
-		LEFT, RIGHT, CENTER, STAGGERED
+		Left, Right, Center, Staggered
 	}
 
 	public class FlowLayout : ViewGroup
@@ -19,7 +19,7 @@ namespace Xmf2.Commons.Droid.ChipClouds
 
 		public virtual int VerticalSpacing { get; set; }
 
-		public virtual FlowGravity FlowGravity { get; set; } = FlowGravity.CENTER;
+		public virtual FlowGravity FlowGravity { get; set; } = FlowGravity.Center;
 
 		private int _lineHeight;
 

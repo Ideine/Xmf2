@@ -39,10 +39,6 @@ namespace Xmf2.Rx.Droid.ChipClouds
 
 		public ICommand ItemClick { get; set; }
 
-		IObservable<Unit> ICanActivate.Activated => throw new NotImplementedException();
-
-		IObservable<Unit> ICanActivate.Deactivated => throw new NotImplementedException();
-
 		public BaseReactiveChipCloudViewHolder(View view) : base(view)
         {
 			Context = view.Context;

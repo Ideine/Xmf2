@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Android.Content;
 using Android.Views;
 using ReactiveUI;
@@ -15,6 +17,12 @@ namespace Xmf2.Rx.Droid.ChipClouds
 			_layoutInflater = LayoutInflater.From(Context);
 		}
 
+		public new List<ItemData> ItemSource
+		{
+			get => base.ItemSource as List<ItemData>;
+			set => base.ItemSource = value.Select(x => x as object).ToList();
+		}
+
 		public override ChipCloudViewHolder OnCreateViewHolder(ViewGroup parent, int position)
 		{
 			var view = _layoutInflater.Inflate(ItemTemplate, parent, false);
@@ -24,8 +32,7 @@ namespace Xmf2.Rx.Droid.ChipClouds
 
 		public override void OnBindViewHolder(ChipCloudViewHolder holder, int position)
 		{
-			var viewFor = holder as IViewFor;
-			if (viewFor != null)
+			if (holder is IViewFor viewFor)
 			{
 				var item = ItemAt(position);
 				viewFor.ViewModel = item;

@@ -45,7 +45,7 @@ namespace Xmf2.Commons.Droid.ChipClouds
 			int minimumHorizontalSpacing = _flowLayout.MinimumHorizontalSpacing;
 			switch (gravity)
 			{
-				case FlowGravity.LEFT:
+				case FlowGravity.Left:
 					int xPos = _flowLayout.PaddingLeft;
 					for (int i = 0; i < _viewsInCurrentRow.Count; i++)
 					{
@@ -53,7 +53,7 @@ namespace Xmf2.Commons.Droid.ChipClouds
 						xPos += _viewWidths[i] + minimumHorizontalSpacing;
 					}
 					break;
-				case FlowGravity.RIGHT:
+				case FlowGravity.Right:
 					int xEnd = Width - _flowLayout.PaddingRight;
 					for (int i = _viewsInCurrentRow.Count - 1; i >= 0; i--)
 					{
@@ -62,7 +62,7 @@ namespace Xmf2.Commons.Droid.ChipClouds
 						xEnd = xStart - minimumHorizontalSpacing;
 					}
 					break;
-				case FlowGravity.STAGGERED:
+				case FlowGravity.Staggered:
 					int totalWidthOfChildren = 0;
 					for (int i = 0; i < _viewWidths.Count; i++)
 					{
@@ -77,7 +77,7 @@ namespace Xmf2.Commons.Droid.ChipClouds
 						xPos += _viewWidths[i] + horizontalSpacingForStaggered;
 					}
 					break;
-				case FlowGravity.CENTER:
+				case FlowGravity.Center:
 					totalWidthOfChildren = 0;
 					for (int i = 0; i < _viewWidths.Count; i++)
 					{

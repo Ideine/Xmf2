@@ -2,6 +2,7 @@
 using Android.Content;
 using Android.Runtime;
 using Android.Util;
+using Xmf2.Commons.Droid.Helpers;
 
 namespace Xmf2.Commons.Droid.ChipClouds
 {
@@ -47,8 +48,8 @@ namespace Xmf2.Commons.Droid.ChipClouds
 
 		void Initialize()
 		{
-			MinimumHorizontalSpacing = DpToPx(Context, 8);
-			VerticalSpacing = DpToPx(Context, 8);
+			MinimumHorizontalSpacing = UIHelper.DpToPx(Context, 8);
+			VerticalSpacing = UIHelper.DpToPx(Context, 8);
 		}
 
 		#endregion
@@ -72,21 +73,6 @@ namespace Xmf2.Commons.Droid.ChipClouds
 		public void Update(ChipCloudObserver observer, object data)
 		{
 			Refresh();
-		}
-
-		public static int PxToDp(Context context, float pixelValue)
-		{
-			return (int)((pixelValue) / context.Resources.DisplayMetrics.Density);
-		}
-
-		public static int DpToPx(Context context, float dpValue)
-		{
-			return (int)((dpValue) * context.Resources.DisplayMetrics.Density);
-		}
-
-		public static float SpToPx(Context context, float px)
-		{
-			return context.Resources.DisplayMetrics.ScaledDensity * px;
 		}
 	}
 }

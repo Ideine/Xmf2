@@ -16,20 +16,17 @@ namespace Xmf2.Commons.Droid.Helpers
 
 		public static int PxToDp(Context context, float pixelValue)
 		{
-			var dp = (int)((pixelValue) / context.Resources.DisplayMetrics.Density);
-			return dp;
+			return (int)((pixelValue) / context.Resources.DisplayMetrics.Density);
 		}
 
 		public static int DpToPx(Context context, float dpValue)
 		{
-			var px = (int)((dpValue) * context.Resources.DisplayMetrics.Density);
-			return px;
+			return (int)((dpValue) * context.Resources.DisplayMetrics.Density);
 		}
 
 		public static float SpToPx(Context context, float px)
 		{
-			float scaledDensity = context.Resources.DisplayMetrics.ScaledDensity;
-			return px * scaledDensity;
+			return px * context.Resources.DisplayMetrics.ScaledDensity;
 		}
 
 		public static void SetColorFilter(ProgressBar view, Color color)
