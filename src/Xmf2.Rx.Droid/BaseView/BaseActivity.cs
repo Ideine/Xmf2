@@ -1,14 +1,13 @@
 ﻿using System;
 using Splat;
 using Xmf2.Rx.ViewModels;
-using Xmf2.Rx.Droid.Services;
-using ReactiveUI;
 using Android.Runtime;
 using Android.Views;
 using Android.Views.InputMethods;
 using Android.OS;
 using Android.Graphics;
-using Xmf2.Rx.Droid.Helpers;
+using Xmf2.Commons.Droid.Helpers;
+using Xmf2.Commons.Droid.Services;
 
 namespace Xmf2.Rx.Droid.BaseView
 {
