@@ -420,7 +420,9 @@ public static class CreatorExtensions
             {
                 return false;
             }
-            return nextReponder.BecomeFirstResponder();
+
+            nextReponder.BecomeFirstResponder();
+			return false;
         };
         return input;
     }
