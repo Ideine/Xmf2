@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -65,7 +65,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Xmf2.Commons\Xmf2.Commons.csproj">
-      <Project>{9D1BB55C-153D-4456-A691-9AB50F5C6F2A}</Project>
+      <Project>{9d1bb55c-153d-4456-a691-9ab50f5c6f2a}</Project>
       <Name>Xmf2.Commons</Name>
     </ProjectReference>
   </ItemGroup>
