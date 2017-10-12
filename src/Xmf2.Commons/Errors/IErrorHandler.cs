@@ -5,6 +5,8 @@ namespace Xmf2.Commons.Errors
 {
 	public interface IErrorHandler
 	{
+		Task HandleError(Exception ex, CustomErrorHandler errorHandler = null);
+		
 		IObservable<TResult> Execute<TResult>(Func<TResult> action, CustomErrorHandler errorHandler = null);
 
 		IObservable<TResult> Execute<TResult>(IObservable<TResult> source, CustomErrorHandler errorHandler = null);

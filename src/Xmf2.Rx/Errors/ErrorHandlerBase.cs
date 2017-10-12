@@ -43,7 +43,7 @@ namespace Xmf2.Rx.Errors
 			});
 		}
 
-		protected Task HandleError(Exception ex, CustomErrorHandler errorHandler)
+		public Task HandleError(Exception ex, CustomErrorHandler errorHandler = null)
 		{
 			TaskCompletionSource<bool> tcs = new TaskCompletionSource<bool>();
 
