@@ -87,6 +87,7 @@ namespace Xmf2.Rx.Droid.BaseView
 
 		protected override void OnPause()
 		{
+			ViewModel?.LifecycleManager.Pause();
 			_lifecycleMonitor.Value.OnPause(this);
 			base.OnPause();
 		}
