@@ -32,7 +32,7 @@ namespace Xmf2.Rest.OAuth2
 
 		public bool CanHandleChallenge(IHttpClient client, IHttpRequestMessage request, ICredentials credentials, IHttpResponseMessage response)
 		{
-			return Access != null && response.StatusCode == HttpStatusCode.Unauthorized;
+			return Access != null && response.StatusCode == HttpStatusCode.Unauthorized && !request.Headers.Contains(NO_AUTH_HEADER);
 		}
 
 		public async Task PreAuthenticate(IRestClient client, IRestRequest request, ICredentials credentials)
@@ -44,7 +44,7 @@ namespace Xmf2.Rest.OAuth2
 			{
 				throw new InvalidOperationException("Missing Access data");
 			}
-			
+
 			if (DateTime.Now.Add(Configuration.TokenSafetyMargin) > expireDate.Value)
 			{
 				//get a new refresh token now
@@ -94,6 +94,10 @@ namespace Xmf2.Rest.OAuth2
 
 		public Task HandleChallenge(IHttpClient client, IHttpRequestMessage request, ICredentials credentials, IHttpResponseMessage response)
 		{
+			if (Access != null)
+			{
+				Access.ExpiresAt = DateTime.MinValue;
+			}
 			return TaskHelper.CompletedTask; // refresh token will be done on next request call
 		}
 	}

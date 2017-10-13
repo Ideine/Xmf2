@@ -33,26 +33,26 @@ public static class Layout
 
 #endif
 
-	public static void ConstrainLayout(this UIView view, Expression<Func<bool>> constraintsExpression, float priority = RequiredPriority)
+	public static IEnumerable<NSLayoutConstraint> GetLayoutConstraints<TUIView>(this TUIView view, Expression<Func<bool>> constraintsExpression, float priority = RequiredPriority) where TUIView : UIView
 	{
 		var body = constraintsExpression.Body;
-		var constraints = FindBinaryExpressionsRecursive(body)
+		return FindBinaryExpressionsRecursive(body)
 			.Select(e =>
 			{
 #if DEBUG
-
 				if (ExtractAndRegisterName(e, view))
 				{
 					return null;
 				}
-
 #endif
-
-				return CompileConstraint(e, view, priority);
+				return CompileConstraint(e, view, RequiredPriority);
 			})
-			.Where(x => x != null)
-			.ToArray();
+			.Where(x => x != null);
+	}
 
+	public static void ConstrainLayout(this UIView view, Expression<Func<bool>> constraintsExpression, float priority = RequiredPriority)
+	{
+		var constraints = GetLayoutConstraints(view, constraintsExpression, priority).ToArray();
 		view.AddConstraints(constraints);
 	}
 
@@ -248,6 +248,9 @@ public static class Layout
 			case nameof(LayoutExtensions.Baseline):
 				layoutAttribute = NSLayoutAttribute.Baseline;
 				break;
+			case nameof(LayoutExtensions.FirstBaseline):
+				layoutAttribute = NSLayoutAttribute.FirstBaseline;
+				break;
 			case nameof(LayoutExtensions.Leading):
 				layoutAttribute = NSLayoutAttribute.Leading;
 				break;
@@ -275,18 +278,23 @@ public static class Layout
 			}
 		}
 
-		var viewExpression = methodCallExpression.Arguments.FirstOrDefault() as MemberExpression;
+		Expression viewExpression = methodCallExpression.Arguments.FirstOrDefault() as MemberExpression;
 
 		if (viewExpression == null)
 		{
-			if (throwOnError)
+			viewExpression = methodCallExpression.Arguments.FirstOrDefault() as ConstantExpression; //add support for this
+
+			if (viewExpression == null)
 			{
-				throw new NotSupportedException("The argument to method call '" + methodCallExpression.Method.Name + "' must be a member expression that resolves to the view being constrained.");
-			}
-			else
-			{
-				view = null;
-				return;
+				if (throwOnError)
+				{
+					throw new NotSupportedException("The argument to method call '" + methodCallExpression.Method.Name + "' must be a member expression that resolves to the view being constrained.");
+				}
+				else
+				{
+					view = null;
+					return;
+				}
 			}
 		}
 
@@ -491,6 +499,8 @@ public static class LayoutExtensions
 	public static int Bottom(this UIView @this) => 0;
 
 	public static int Baseline(this UIView @this) => 0;
+
+	public static int FirstBaseline(this UIView @this) => 0;
 
 	public static int Leading(this UIView @this) => 0;
 

@@ -177,7 +177,10 @@ namespace Xmf2.Rest.OAuth2
 				authenticator.Access = result;
 				Authenticator = OAuth2Authenticator = authenticator;
 			}
-
+			else if(result.ErrorReason == AuthErrorReason.InvalidCredentials)
+			{
+				Logout();
+			}
 			RaiseOnAuthEvents(result);
 
 		    return result;

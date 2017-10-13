@@ -40,6 +40,23 @@ public static class CustomAutoLayoutExtensions
 
 		return containerView;
 	}
+	public static UIView CenterAndFillHeight(this UIView containerView, params UIView[] views)
+	{
+		if (views == null)
+		{
+			throw new ArgumentNullException(nameof(views));
+		}
+
+		foreach (UIView view in views)
+		{
+			containerView.ConstrainLayout(() =>
+										  view.CenterY() == containerView.CenterY()
+										  && view.Height() == containerView.Height()
+										 );
+		}
+
+		return containerView;
+	}
 
 	public static UIView VerticalFlow(this UIView containerView, params UIView[] views)
 	{
@@ -219,6 +236,11 @@ public static class CustomAutoLayoutExtensions
 		containerView.ConstrainLayout(() => right.Left() == left.Right() + margin);
 		return containerView;
 	}
+	public static UIView MinHorizontalSpace(this UIView containerView, UIView left, UIView right, int margin = 0)
+	{
+		containerView.ConstrainLayout(() => right.Left() >= left.Right() + margin);
+		return containerView;
+	}
 
 	public static UIView ConstrainHeight(this UIView view, int height)
 	{
@@ -358,12 +380,19 @@ public static class CustomAutoLayoutExtensions
 
 	public static UIView EnsureRemove(this UIView view, IEnumerable<NSLayoutConstraint> constraintsToRemove)
 	{
+		return EnsureRemove(view, constraintsToRemove.ToArray());
+	}
+	public static UIView EnsureRemove(this UIView view, params NSLayoutConstraint[] constraintsToRemove)
+	{
 		var delta = view.Constraints.Intersect(constraintsToRemove).ToArray();
 		view.RemoveConstraints(delta);
 		return view;
 	}
-
 	public static UIView EnsureAdd(this UIView view, IEnumerable<NSLayoutConstraint> constraintsToAdd)
+	{
+		return EnsureAdd(view, constraintsToAdd.ToArray());
+	}
+	public static UIView EnsureAdd(this UIView view, params NSLayoutConstraint[] constraintsToAdd)
 	{
 		var delta = constraintsToAdd.Except(view.Constraints).ToArray();
 		view.AddConstraints(delta);
