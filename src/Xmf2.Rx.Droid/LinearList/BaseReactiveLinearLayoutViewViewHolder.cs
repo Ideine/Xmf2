@@ -6,7 +6,7 @@ using Android.Views;
 using ReactiveUI;
 using Xmf2.Commons.Droid.LinearList;
 
-namespace Xmf2.Rx.Droid.LinearListView
+namespace Xmf2.Rx.Droid.LinearList
 {
 	public class BaseReactiveLinearLayoutViewViewHolder<TViewModel> : LinearListViewHolder, IViewFor<TViewModel>, IViewFor, ICanActivate where TViewModel : class, IReactiveObject
 	{

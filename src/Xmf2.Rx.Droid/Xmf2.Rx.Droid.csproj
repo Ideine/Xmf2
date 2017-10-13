@@ -112,8 +112,8 @@
     <Compile Include="ListElement\IRecyclerViewViewHolder.cs" />
     <Compile Include="ListElement\BaseReactiveRecyclerViewViewHolder.cs" />
     <Compile Include="ListElement\XMF2ReactiveRecyclerViewViewHolder.cs" />
-    <Compile Include="LinearListView\BaseReactiveLinearListViewAdapter.cs" />
-    <Compile Include="LinearListView\BaseReactiveLinearLayoutViewViewHolder.cs" />
+    <Compile Include="LinearList\BaseReactiveLinearListViewAdapter.cs" />
+    <Compile Include="LinearList\BaseReactiveLinearLayoutViewViewHolder.cs" />
     <Compile Include="BaseView\ReactiveLinearLayout.cs" />
     <Compile Include="ChipClouds\BaseReactiveChipCloudAdapter.cs" />
     <Compile Include="ChipClouds\BaseReactiveChipCloudViewHolder.cs" />
@@ -139,7 +139,7 @@
   <ItemGroup>
     <Folder Include="BaseView\" />
     <Folder Include="ListElement\" />
-    <Folder Include="LinearListView\" />
+    <Folder Include="LinearList\" />
     <Folder Include="ChipClouds\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />

@@ -5,7 +5,7 @@ using Android.Runtime;
 using ReactiveUI;
 using Xmf2.Commons.Droid.LinearList;
 
-namespace Xmf2.Rx.Droid.LinearListView
+namespace Xmf2.Rx.Droid.LinearList
 {
 	public class BaseReactiveLinearListViewAdapter<ItemData, ViewHolder> : LinearListViewAdapter where ItemData : class where ViewHolder : LinearListViewHolder
 	{
