@@ -53,6 +53,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Extensions\NSDateExtension.cs" />
+    <Compile Include="Extensions\ScrollViewExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Controls\FloatLabeledTextField.cs" />
     <Compile Include="Controls\UIHighlightButton.cs" />

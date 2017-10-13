@@ -28,6 +28,8 @@ namespace Xmf2.Rx.ViewModels
 
 		public IViewModelLifecycleManager LifecycleManager { get; }
 
+		public ReactiveCommand CloseCommand { get; }
+
 		public IObservable<bool> IsInitializing { get; }
 
 		public IObservable<bool> IsStarting { get; }
