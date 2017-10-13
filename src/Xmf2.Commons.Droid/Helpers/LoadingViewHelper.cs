@@ -11,7 +11,7 @@ namespace Xmf2.Commons.Droid.Helpers
 	{
 		private readonly Activity _activity;
 
-		private View _loadingView;
+		public View LoadingView { get; private set; }
 
 		private readonly int _loadingViewResource;
 		private readonly int _progress;
@@ -25,7 +25,7 @@ namespace Xmf2.Commons.Droid.Helpers
 				if (_isBusy != value)
 				{
 					_isBusy = value;
-					_loadingView.Visibility = _isBusy ? ViewStates.Visible : ViewStates.Gone;
+					LoadingView.Visibility = _isBusy ? ViewStates.Visible : ViewStates.Gone;
 				}
 			}
 		}
@@ -40,15 +40,15 @@ namespace Xmf2.Commons.Droid.Helpers
 
 		private void CreateLoadingView()
 		{
-			if (_loadingView == null)
+			if (LoadingView == null)
 			{
 				var decorView = _activity.Window.DecorView;
-				_loadingView = LayoutInflater.From(_activity).Inflate(_loadingViewResource, null);
-				UIHelper.SetColorFilter(_loadingView.FindViewById<ProgressBar>(_progress), Color.White);
+				LoadingView = LayoutInflater.From(_activity).Inflate(_loadingViewResource, null);
+				UIHelper.SetColorFilter(LoadingView.FindViewById<ProgressBar>(_progress), Color.White);
 				if (decorView is ViewGroup viewGroup)
 				{
-					viewGroup.AddView(_loadingView, GetLayoutParams());
-					_loadingView.Visibility = ViewStates.Gone;
+					viewGroup.AddView(LoadingView, GetLayoutParams());
+					LoadingView.Visibility = ViewStates.Gone;
 				}
 			}
 		}
