@@ -31,6 +31,11 @@ namespace Xmf2.Commons.Droid.Helpers
 
 		public static void SetColorFilter(ProgressBar view, Color color)
 		{
+			if (view == null)
+			{
+				return;
+			}
+
 			if (view.Indeterminate)
 			{
 				view.IndeterminateDrawable.SetColorFilter(color, PorterDuff.Mode.SrcIn);
