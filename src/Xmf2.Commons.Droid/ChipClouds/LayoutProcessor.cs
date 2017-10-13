@@ -64,9 +64,9 @@ namespace Xmf2.Commons.Droid.ChipClouds
 					break;
 				case FlowGravity.Staggered:
 					int totalWidthOfChildren = 0;
-					for (int i = 0; i < _viewWidths.Count; i++)
+					foreach (int childViewWidth in _viewWidths)
 					{
-						totalWidthOfChildren += _viewWidths[i];
+						totalWidthOfChildren += childViewWidth;
 					}
 					int horizontalSpacingForStaggered = (Width - totalWidthOfChildren - _flowLayout.PaddingLeft
 														 - _flowLayout.PaddingRight) / (_viewsInCurrentRow.Count + 1);
@@ -79,9 +79,9 @@ namespace Xmf2.Commons.Droid.ChipClouds
 					break;
 				case FlowGravity.Center:
 					totalWidthOfChildren = 0;
-					for (int i = 0; i < _viewWidths.Count; i++)
+					foreach (int childViewWidth in _viewWidths)
 					{
-						totalWidthOfChildren += _viewWidths[i];
+						totalWidthOfChildren += childViewWidth;
 					}
 					xPos = _flowLayout.PaddingLeft + (Width - _flowLayout.PaddingLeft - _flowLayout.PaddingRight -
 													  totalWidthOfChildren - (minimumHorizontalSpacing * (_viewsInCurrentRow.Count - 1))) / 2;

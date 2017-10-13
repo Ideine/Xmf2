@@ -3,7 +3,7 @@ using System.Windows.Input;
 using Android.Content;
 using Android.Views;
 
-namespace Xmf2.Commons.Droid.LinearListView
+namespace Xmf2.Commons.Droid.LinearList
 {
 	public class LinearListViewHolder : Java.Lang.Object, IDisposable
 	{
@@ -60,7 +60,7 @@ namespace Xmf2.Commons.Droid.LinearListView
 			ItemView.ViewDetachedFromWindow += ItemViewDetachedFromWindow;
 		}
 
-		public LinearListViewHolder(IntPtr javaRef, Android.Runtime.JniHandleOwnership transfer) : base(javaRef, transfer) { }
+		protected LinearListViewHolder(IntPtr javaRef, Android.Runtime.JniHandleOwnership transfer) : base(javaRef, transfer) { }
 
 		public virtual void OnClickOnItemView(object sender, EventArgs e)
 		{

@@ -5,9 +5,9 @@ using Android.Views;
 
 namespace Xmf2.Commons.Droid.ChipClouds
 {
-	public abstract class ChipCloudAdapter : ChipCloudObsevable, IDisposable
+	public abstract class ChipCloudAdapter : IChipCloudObsevable, IDisposable
 	{
-		private readonly List<ChipCloudObserver> _observers = new List<ChipCloudObserver>();
+		private readonly List<IChipCloudObserver> _observers = new List<IChipCloudObserver>();
 
 		#region Properties
 
@@ -33,7 +33,7 @@ namespace Xmf2.Commons.Droid.ChipClouds
 			}
 		}
 
-		public int Count => ItemSource == null ? 0 : ItemSource.Count;
+		public int Count => ItemSource?.Count ?? 0;
 
 		#endregion
 
@@ -64,7 +64,7 @@ namespace Xmf2.Commons.Droid.ChipClouds
 			_observers.Clear();
 		}
 
-		public void Subscribe(ChipCloudObserver observer)
+		public void Subscribe(IChipCloudObserver observer)
 		{
 			if (!_observers.Contains(observer))
 			{

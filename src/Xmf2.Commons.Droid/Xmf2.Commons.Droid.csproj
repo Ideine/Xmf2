@@ -49,7 +49,7 @@
     <Compile Include="LinearList\LinearListViewHolder.cs" />
     <Compile Include="ChipClouds\ChipCloud.cs" />
     <Compile Include="ChipClouds\ChipCloudAdapter.cs" />
-    <Compile Include="ChipClouds\ChipCloudObserver.cs" />
+    <Compile Include="ChipClouds\IChipCloudObserver.cs" />
     <Compile Include="ChipClouds\ChipCloudViewHolder.cs" />
     <Compile Include="ChipClouds\FlowLayout.cs" />
     <Compile Include="ChipClouds\LayoutProcessor.cs" />

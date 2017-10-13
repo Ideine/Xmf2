@@ -13,8 +13,8 @@ namespace Xmf2.Commons.Droid.Helpers
 
 		private View _loadingView;
 
-		private int LoadingView;
-		private int Progress;
+		private readonly int _loadingViewResource;
+		private readonly int _progress;
 
 		private bool _isBusy;
 		public virtual bool IsBusy
@@ -25,23 +25,16 @@ namespace Xmf2.Commons.Droid.Helpers
 				if (_isBusy != value)
 				{
 					_isBusy = value;
-					if (_isBusy)
-					{
-						_loadingView.Visibility = ViewStates.Visible;
-					}
-					else
-					{
-						_loadingView.Visibility = ViewStates.Gone;
-					}
+					_loadingView.Visibility = _isBusy ? ViewStates.Visible : ViewStates.Gone;
 				}
 			}
 		}
 
-		public LoadingViewHelper(Activity activity, int loadingView, int progress)
+		public LoadingViewHelper(Activity activity, int loadingViewResource, int progress)
 		{
 			_activity = activity;
-			LoadingView = loadingView;
-			Progress = progress;
+			_loadingViewResource = loadingViewResource;
+			_progress = progress;
 			CreateLoadingView();
 		}
 
@@ -50,18 +43,17 @@ namespace Xmf2.Commons.Droid.Helpers
 			if (_loadingView == null)
 			{
 				var decorView = _activity.Window.DecorView;
-				_loadingView = LayoutInflater.From(_activity).Inflate(LoadingView, null);
-				UIHelper.SetColorFilter(_loadingView.FindViewById<ProgressBar>(Progress), Color.White);
-				var viewGroup = decorView as ViewGroup;
-				if (viewGroup != null)
+				_loadingView = LayoutInflater.From(_activity).Inflate(_loadingViewResource, null);
+				UIHelper.SetColorFilter(_loadingView.FindViewById<ProgressBar>(_progress), Color.White);
+				if (decorView is ViewGroup viewGroup)
 				{
-					viewGroup.AddView(_loadingView, GeLayoutManager());
+					viewGroup.AddView(_loadingView, GetLayoutParams());
 					_loadingView.Visibility = ViewStates.Gone;
 				}
 			}
 		}
 
-		private ViewGroup.LayoutParams GeLayoutManager()
+		private ViewGroup.LayoutParams GetLayoutParams()
 		{
 			return new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MatchParent, ViewGroup.LayoutParams.MatchParent);
 		}

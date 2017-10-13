@@ -19,8 +19,8 @@ namespace Xmf2.Rx.Droid.BaseView
 
 		#region Busy Indicator
 
-		public abstract int LoadingViewLayout { get; }
-		public abstract int LoadingViewProgressId { get; }
+		protected abstract int LoadingViewLayout { get; }
+		protected abstract int LoadingViewProgressId { get; }
 
 		protected LoadingViewHelper _loadingViewHelper;
 
@@ -108,8 +108,7 @@ namespace Xmf2.Rx.Droid.BaseView
 		#endregion
 
 		#region Keyboard
-		//question pr vju : ça devrait pas être ailleurs ?
-
+	
 		public void HideKeyboard(View nextFocus)
 		{
 			HideKeyboard();

@@ -57,9 +57,7 @@ namespace Xmf2.Rx.Droid.Services
 
 		protected virtual void ShowView(Android.Support.V4.App.DialogFragment view, string tag)
 		{
-			var appCompatActivity = CurrentActivity as AppCompatActivity;
-
-			if (appCompatActivity != null)
+			if (CurrentActivity is AppCompatActivity appCompatActivity)
 			{
 				var fm = appCompatActivity.SupportFragmentManager;
 				if (fm.FindFragmentByTag(tag) == null)

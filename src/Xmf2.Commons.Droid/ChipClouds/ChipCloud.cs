@@ -6,11 +6,11 @@ using Xmf2.Commons.Droid.Helpers;
 
 namespace Xmf2.Commons.Droid.ChipClouds
 {
-	public class ChipCloud : FlowLayout, ChipCloudObserver
+	public class ChipCloud : FlowLayout, IChipCloudObserver
 	{
 		#region Properties
 
-		public int Count => Adapter == null ? 0 : Adapter.Count;
+		public int Count => Adapter?.Count ?? 0;
 
 		private ChipCloudAdapter _adapter;
 		public ChipCloudAdapter Adapter
@@ -70,7 +70,7 @@ namespace Xmf2.Commons.Droid.ChipClouds
 			Invalidate();
 		}
 
-		public void Update(ChipCloudObserver observer, object data)
+		public void Update(IChipCloudObserver observer, object data)
 		{
 			Refresh();
 		}
