@@ -19,15 +19,21 @@ namespace Xmf2.Rx.Droid.BaseView
 
 		#region Busy Indicator
 
-		protected abstract int LoadingViewLayout { get; }
-		protected abstract int LoadingViewProgressId { get; }
+		protected virtual int LoadingViewLayout => -1;
+		protected virtual int LoadingViewProgressId => -1;
 
-		protected LoadingViewHelper _loadingViewHelper;
+		protected LoadingViewHelper LoadingViewHelper { get; private set; }
 
 		public virtual bool IsBusy
 		{
-			get => _loadingViewHelper.IsBusy;
-			set => _loadingViewHelper.IsBusy = value;
+			get => LoadingViewHelper?.IsBusy ?? false;
+			set
+			{
+				if (LoadingViewHelper != null)
+				{
+					LoadingViewHelper.IsBusy = value;
+				}
+			}
 		}
 
 		#endregion
@@ -58,7 +64,10 @@ namespace Xmf2.Rx.Droid.BaseView
 		{
 			base.OnCreate(savedInstanceState);
 			_lifecycleMonitor.Value.OnCreate(this);
-			_loadingViewHelper = new LoadingViewHelper(this, LoadingViewLayout, LoadingViewProgressId);
+			if (LoadingViewLayout >= 0 && LoadingViewProgressId >= 0)
+			{
+				LoadingViewHelper = new LoadingViewHelper(this, LoadingViewLayout, LoadingViewProgressId);
+			}
 			OnContentViewSet();
 			ViewModel = GetViewModel();
 			OnViewModelSet();
@@ -108,7 +117,7 @@ namespace Xmf2.Rx.Droid.BaseView
 		#endregion
 
 		#region Keyboard
-	
+
 		public void HideKeyboard(View nextFocus)
 		{
 			HideKeyboard();
