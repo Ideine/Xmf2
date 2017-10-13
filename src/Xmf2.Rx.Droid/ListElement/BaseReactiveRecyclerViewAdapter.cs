@@ -50,8 +50,7 @@ namespace Xmf2.Rx.Droid.ListElement
 
 		public override void OnBindViewHolder(RecyclerView.ViewHolder holder, int position)
 		{
-			var viewFor = holder as IViewFor;
-			if (viewFor != null)
+			if (holder is IViewFor viewFor)
 			{
 				viewFor.ViewModel = ItemAt(position);
 			}

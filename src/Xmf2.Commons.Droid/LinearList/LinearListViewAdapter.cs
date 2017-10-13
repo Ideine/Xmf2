@@ -8,7 +8,7 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 
-namespace Xmf2.Commons.Droid.LinearListView
+namespace Xmf2.Commons.Droid.LinearList
 {
 	public interface IAdapterWithChangedEvent : IAdapter
 	{
@@ -65,8 +65,7 @@ namespace Xmf2.Commons.Droid.LinearListView
 				Console.WriteLine("You are currently binding to IEnumerable - this can be inefficient, especially for large collections. Binding to IList is more efficient.");
 			}
 
-			var newObservable = _itemsSource as INotifyCollectionChanged;
-			if (newObservable != null)
+			if (_itemsSource is INotifyCollectionChanged newObservable)
 			{
 				newObservable.CollectionChanged += OnItemsSourceCollectionChanged;
 			}

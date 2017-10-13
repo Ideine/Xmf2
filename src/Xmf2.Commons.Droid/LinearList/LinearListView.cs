@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Collections.Specialized;
 using Android.Content;
 using Android.Runtime;
@@ -8,7 +7,7 @@ using Android.Util;
 using Android.Views;
 using Android.Widget;
 
-namespace Xmf2.Commons.Droid.LinearListView
+namespace Xmf2.Commons.Droid.LinearList
 {
 	public interface ILinearItemsLayoutAdapter
 	{
@@ -26,7 +25,7 @@ namespace Xmf2.Commons.Droid.LinearListView
 		private IAdapterWithChangedEvent _adapter;
 		public IAdapterWithChangedEvent Adapter
 		{
-			get { return _adapter; }
+			get => _adapter;
 			set
 			{
 				var existing = _adapter;
