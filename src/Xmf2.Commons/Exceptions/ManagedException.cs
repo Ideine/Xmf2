@@ -2,6 +2,7 @@
 
 namespace Xmf2.Commons.Exceptions
 {
+    //TODO: voir pour supprimer si non utilisée
 	public class ManagedException : Exception
     {
         public ManagedException()

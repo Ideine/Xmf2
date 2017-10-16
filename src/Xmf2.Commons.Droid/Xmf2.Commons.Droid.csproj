@@ -53,8 +53,8 @@
     <Compile Include="ChipClouds\ChipCloudViewHolder.cs" />
     <Compile Include="ChipClouds\FlowLayout.cs" />
     <Compile Include="ChipClouds\LayoutProcessor.cs" />
+    <Compile Include="Services\AssetService.cs" />
     <Compile Include="Services\LifecycleMonitor.cs" />
-    <Compile Include="Services\Resources\AssetService.cs" />
     <Compile Include="Services\DroidUIDispatcher.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -62,7 +62,6 @@
     <Folder Include="LinearList\" />
     <Folder Include="ChipClouds\" />
     <Folder Include="Services\" />
-    <Folder Include="Services\Resources\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Xmf2.Commons\Xmf2.Commons.csproj">

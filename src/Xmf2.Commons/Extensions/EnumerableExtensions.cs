@@ -45,6 +45,7 @@ namespace Xmf2.Commons.Extensions
 		/// </summary>
 		/// <typeparam name="T">Type des éléments de source.</typeparam>
 		/// <param name="source">IEnumerable à vérifier pour savoir si des éléments y sont présents.</param>
+		/// <param name="predicate"></param>
 		/// <returns>false si la séquence source contient est vide; sinon, true.</returns>
 		/// <exception cref="ArgumentNullException"><paramref name="source"/> a la valeur null</exception>
 		public static bool None<T>(this IEnumerable<T> source, Func<T,bool> predicate)

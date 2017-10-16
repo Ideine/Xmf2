@@ -10,6 +10,8 @@ namespace System
 {
 	public static class ObservableExtensions
 	{
+		public static Task<TResult> WaitForOneAsync<TResult>(this IObservable<TResult> source) => Task.Run(() => source.FirstOrDefaultAsync().Wait());
+		
 		public static IDisposable SubscribeAsync<T>(this IObservable<T> observable, Func<T, Task> onNext)
 		{
 			return observable.SelectMany(async item =>
@@ -66,6 +68,12 @@ namespace System
 			return connectable;
 		}
 
+		public static IObservable<TSource> StartWithDefault<TSource>(this IObservable<TSource> source)
+		{
+			return source.StartWith(default(TSource));
+		}
+		
+		#region Tuple select
 		public static IObservable<TResult> Select<T1, T2, TResult>(this IObservable<Tuple<T1, T2>> source, Func<T1, T2, TResult> selector)
 		{
 			return source.Select(tuple => selector(tuple.Item1, tuple.Item2));
@@ -82,11 +90,8 @@ namespace System
 		{
 			return source.Select(tuple => selector(tuple.Item1, tuple.Item2, tuple.Item3, tuple.Item4, tuple.Item5));
 		}
-
-		public static IObservable<TSource> StartWithDefault<TSource>(this IObservable<TSource> source)
-		{
-			return source.StartWith(default(TSource));
-		}
+		//TODO: add 6, 7, 8...
+		#endregion
 
 		#region Tuple Subscribe
 		public static IDisposable Subscribe<T1, T2>(this IObservable<Tuple<T1, T2>> source, Action<T1, T2> onNext)

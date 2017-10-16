@@ -12,6 +12,7 @@ using Splat;
 
 namespace Xmf2.Rx.Helpers
 {
+	//TODO: bouger dans android
 	public static class IReactiveObjectExtensions
 	{
 		static ConditionalWeakTable<IReactiveObject, IExtensionState<IReactiveObject>> state = new ConditionalWeakTable<IReactiveObject, IExtensionState<IReactiveObject>>();

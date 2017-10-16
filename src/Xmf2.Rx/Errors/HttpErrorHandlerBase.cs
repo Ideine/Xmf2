@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Xmf2.Commons.Errors;
 using Xmf2.Commons.Exceptions;
 using Xmf2.Commons.Logs;
+using Xmf2.Commons.OAuth2;
 
 namespace Xmf2.Rx.Errors
 {
@@ -60,7 +61,7 @@ namespace Xmf2.Rx.Errors
 				case WebException webException when _timeoutStatus.Value.Contains(webException.Status):
 					return new AccessDataException(AccessDataException.ErrorType.Timeout, ex);
 
-				case Rest.OAuth2.RestException restException when HttpStatusCode.NotFound == restException.Response.StatusCode:
+				case RestException restException when HttpStatusCode.NotFound == restException.Response.StatusCode:
 					return new AccessDataException(AccessDataException.ErrorType.NotFound, ex);
 
 				default:

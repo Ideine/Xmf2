@@ -1,7 +1,7 @@
 ﻿using System;
-using Xmf2.Rest.OAuth2;
 using RestSharp.Portable;
 using Xmf2.Commons.Logs;
+using Xmf2.Commons.OAuth2;
 using Xmf2.Rest.HttpClient.Impl;
 
 namespace Xmf2.Commons.Services.OAuth2

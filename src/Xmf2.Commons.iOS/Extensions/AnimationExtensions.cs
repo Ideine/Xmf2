@@ -2,6 +2,7 @@ using System;
 using UIKit;
 using CoreGraphics;
 
+//TODO: mettre dans UIKit
 public static class AnimationExtensions
 {
 	public static TView TranslateY<TView>(this TView view, nfloat offset) where TView : UIView

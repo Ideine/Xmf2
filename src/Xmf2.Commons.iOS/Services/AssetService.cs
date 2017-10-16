@@ -9,6 +9,7 @@ namespace Xmf2.Commons.iOS.Services
 	{
 		public async Task<Stream> ReadAsset(string path)
 		{
+			//TODO: voir pour ajouter le support d'un niveau de dossier
 			string resourcePath = NSBundle.MainBundle.PathForResource(Path.GetFileNameWithoutExtension(path), Path.GetExtension(path)?.TrimStart('.'));
 			
 			using (Stream inputStream = File.OpenRead(resourcePath))

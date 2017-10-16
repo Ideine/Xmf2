@@ -3,7 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using RestSharp.Portable;
 
-namespace Xmf2.Rest.OAuth2
+namespace Xmf2.Commons.OAuth2
 {
 	public interface IOAuth2Client : IRestClient
 	{

@@ -1,11 +1,11 @@
-﻿using CoreGraphics;
+﻿using System;
+using CoreGraphics;
 using Foundation;
 using ReactiveUI;
-using System;
 using UIKit;
 using Xmf2.Rx.ViewModels;
 
-namespace Xmf2.Rx.iOS
+namespace Xmf2.Rx.iOS.Views
 {
 	public abstract class BaseViewController<TViewModel> : ReactiveViewController<TViewModel> where TViewModel : BaseViewModel
 	{
@@ -24,11 +24,11 @@ namespace Xmf2.Rx.iOS
 			base.ViewDidLoad();
 			ViewModel = GetViewModel();
 			ViewModel.LifecycleManager.Start();
-			BindControls();
+			SetViewModelBindings();
 			SetNeedsStatusBarAppearanceUpdate();
 		}
 
-		protected virtual void BindControls() { }
+		protected virtual void SetViewModelBindings() { }
 
 		public override void ViewWillAppear(bool animated)
 		{

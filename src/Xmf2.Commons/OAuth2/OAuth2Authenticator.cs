@@ -4,8 +4,9 @@ using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using RestSharp.Portable;
+using Xmf2.Commons.Helpers;
 
-namespace Xmf2.Rest.OAuth2
+namespace Xmf2.Commons.OAuth2
 {
 	public class OAuth2Authenticator : IAuthenticator
 	{

@@ -16,7 +16,8 @@ namespace Xmf2.Rx.ViewModels
 {
 	public abstract class BaseViewModel : ReactiveObject, ISupportsActivation
 	{
-		protected Lazy<IErrorHandler> ErrorHandler { get; } = new Lazy<IErrorHandler>(Locator.Current.GetService<IErrorHandler>);
+		private readonly Lazy<IErrorHandler> _errorHandler = new Lazy<IErrorHandler>(Locator.Current.GetService<IErrorHandler>);
+		protected IErrorHandler ErrorHandler => _errorHandler.Value;
 
 		private readonly Subject<bool> _isInitializing = new Subject<bool>();
 		private readonly Subject<bool> _isStarting = new Subject<bool>();
@@ -56,16 +57,14 @@ namespace Xmf2.Rx.ViewModels
 
 		protected Task WrapForError(IObservable<Unit> source, CustomErrorHandler errorHandler = null)
 		{
-			return ErrorHandler.Value
-							  .Execute(source.Timeout(TimeSpan.FromSeconds(30)), errorHandler)
+			return ErrorHandler.Execute(source.Timeout(TimeSpan.FromSeconds(30)), errorHandler)
 							  .Catch<Unit, Exception>(ex => Observable.Return(default(Unit)))
 							  .WaitForOneAsync();
 		}
 
 		protected Task<TResult> WrapForError<TResult>(IObservable<TResult> source, CustomErrorHandler errorHandler = null)
 		{
-			return ErrorHandler.Value
-							  .Execute(source.Timeout(TimeSpan.FromSeconds(30)), errorHandler)
+			return ErrorHandler.Execute(source.Timeout(TimeSpan.FromSeconds(30)), errorHandler)
 							  .Catch<TResult, Exception>(ex => Observable.Return(default(TResult)))
 							  .WaitForOneAsync();
 		}

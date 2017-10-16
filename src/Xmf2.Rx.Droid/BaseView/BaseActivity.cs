@@ -116,7 +116,8 @@ namespace Xmf2.Rx.Droid.BaseView
 
 		#endregion
 
-		#region Keyboard
+		//TODO: voir pour le sortir de la classe dans un helper par exemple
+		#region Keyboard 
 
 		public void HideKeyboard(View nextFocus)
 		{

@@ -1,6 +1,7 @@
 using System.Threading;
 using System.Threading.Tasks;
-using Xmf2.Rest.OAuth2;
+using Xmf2.Commons.Helpers;
+using Xmf2.Commons.OAuth2;
 using Xmf2.Commons.Services.Authentications.Models;
 
 namespace Xmf2.Commons.Services.Authentications

@@ -3,7 +3,7 @@ using System.Net;
 using Newtonsoft.Json;
 using RestSharp.Portable;
 
-namespace Xmf2.Rest.OAuth2
+namespace Xmf2.Commons.OAuth2
 {
 	public abstract class OAuth2ConfigurationBase
 	{

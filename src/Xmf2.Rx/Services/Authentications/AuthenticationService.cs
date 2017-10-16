@@ -5,11 +5,12 @@ using System.Threading;
 using System.Threading.Tasks;
 using Xmf2.Commons.Errors;
 using Xmf2.Commons.Exceptions;
+using Xmf2.Commons.Helpers;
 using Xmf2.Commons.Logs;
+using Xmf2.Commons.OAuth2;
 using Xmf2.Commons.Services.Authentications;
 using Xmf2.Commons.Services.Authentications.Models;
 using Xmf2.Rest.Caches;
-using Xmf2.Rest.OAuth2;
 
 namespace Xmf2.Rx.Services.Authentications
 {

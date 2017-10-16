@@ -1,17 +1,22 @@
 ﻿using System;
+using System.Runtime.CompilerServices;
 using CoreGraphics;
 using UIKit;
 using Xmf2.Commons.iOS.Controls;
 
+//TODO: UIKit
 public static class CreatorExtensions
 {
     #region UIButton
-
+	//TODO: tout passer en this UIResponder au lieu de object
+	//TODO: vérifier le support iOS 7
+	//TODO: inlining
     public static UIButton CreateButton(this object parent)
     {
         return new UIButton(UIButtonType.Custom);
     }
 
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static UIButton CreateButton(this object parent, UIButtonType type)
     {
         return new UIButton(type);
@@ -409,7 +414,6 @@ public static class CreatorExtensions
         input.AutocapitalizationType = autocapitalizationType;
         return input;
     }
-
 	public static UITextField OnReturnNextResponder(this UITextField input, UIResponder nextReponder, UIReturnKeyType returnKeyType = UIReturnKeyType.Default, Action action = null)
     {
         input.ReturnKeyType = returnKeyType;

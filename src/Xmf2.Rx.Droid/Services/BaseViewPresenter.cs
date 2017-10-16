@@ -8,6 +8,7 @@ using Xmf2.Commons.Droid.Services;
 
 namespace Xmf2.Rx.Droid.Services
 {
+	//TODO: récupérer depuis RP
 	public class BaseViewPresenter
 	{
 		private readonly Lazy<ICurrentActivity> _currentActivity;

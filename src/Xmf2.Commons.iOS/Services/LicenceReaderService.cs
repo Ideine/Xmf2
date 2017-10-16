@@ -11,6 +11,7 @@ namespace Xmf2.Commons.iOS.Services
 
         }
 
+        //TODO: revoir pour faire du async
         public string GetContent(string licencePathFile)
         {
             var content = System.IO.File.ReadAllText(licencePathFile);
