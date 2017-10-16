@@ -52,6 +52,7 @@
     <Reference Include="System.Net.Http" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controls\BaseDialogViewController.cs" />
     <Compile Include="Extensions\NSDateExtension.cs" />
     <Compile Include="Extensions\ScrollViewExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
