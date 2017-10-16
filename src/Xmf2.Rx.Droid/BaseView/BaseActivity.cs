@@ -74,8 +74,6 @@ namespace Xmf2.Rx.Droid.BaseView
 			SetViewModelBindings();
 		}
 
-		protected virtual void InflateView() { }
-
 		protected override void OnStart()
 		{
 			base.OnStart();
