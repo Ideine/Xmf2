@@ -124,6 +124,25 @@ namespace System
 		{
 			return source.Subscribe(tuple => onNext(tuple.Item1, tuple.Item2, tuple.Item3, tuple.Item4, tuple.Item5));
 		}
-		#endregion  ValueTuple Subscribe
+		#endregion
+
+		#region ValueTuple Select
+		public static IObservable<TResult> Select<T1, T2, TResult>(this IObservable<(T1, T2)> source, Func<T1, T2, TResult> selector)
+		{
+			return source.Select(tuple => selector(tuple.Item1, tuple.Item2));
+		}
+		public static IObservable<TResult> Select<T1, T2, T3, TResult>(this IObservable<(T1, T2, T3)> source, Func<T1, T2, T3, TResult> selector)
+		{
+			return source.Select(tuple => selector(tuple.Item1, tuple.Item2, tuple.Item3));
+		}
+		public static IObservable<TResult> Select<T1, T2, T3, T4, TResult>(this IObservable<(T1, T2, T3, T4)> source, Func<T1, T2, T3, T4, TResult> selector)
+		{
+			return source.Select(tuple => selector(tuple.Item1, tuple.Item2, tuple.Item3, tuple.Item4));
+		}
+		public static IObservable<TResult> Select<T1, T2, T3, T4, T5, TResult>(this IObservable<(T1, T2, T3, T4, T5)> source, Func<T1, T2, T3, T4, T5, TResult> selector)
+		{
+			return source.Select(tuple => selector(tuple.Item1, tuple.Item2, tuple.Item3, tuple.Item4, tuple.Item5));
+		}
+		#endregion
 	}
 }
