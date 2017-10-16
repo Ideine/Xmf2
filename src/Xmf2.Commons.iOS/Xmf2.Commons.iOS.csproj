@@ -63,6 +63,7 @@
     <Compile Include="Extensions\UIExtractFontWeight.cs" />
     <Compile Include="Extensions\UINavigationControllerExtension.cs" />
     <Compile Include="Layout\LayoutConsts.cs" />
+    <Compile Include="Services\AssetService.cs" />
     <Compile Include="Services\BaseViewPresenterService.cs" />
     <Compile Include="Services\LicenceReaderService.cs" />
     <Compile Include="Services\NotificationService.cs" />
