@@ -54,6 +54,11 @@ namespace Xmf2.Commons.iOS.Controls
 		
 		public void AddItems(UIView[] items)
 		{
+			if (items.Length == 0)
+			{
+				return;
+			}
+			
 			AddSubviews(items);
 
 			NSLayoutConstraint[] constraints = new NSLayoutConstraint[items.Length * 2];
