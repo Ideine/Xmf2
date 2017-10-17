@@ -8,7 +8,7 @@ using Xmf2.Commons.Errors;
 
 namespace System
 {
-	public static class ObservableExtensions
+	public static class IObservableExtensions
 	{
 		public static IDisposable SubscribeAsync<T>(this IObservable<T> observable, Func<T, Task> onNext)
 		{
