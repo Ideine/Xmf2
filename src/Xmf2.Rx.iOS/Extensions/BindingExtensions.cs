@@ -10,9 +10,14 @@ namespace UIKit
 	{
 		public static IDisposable OnClickCommand(this UIControl button, Func<ICommand> getCommand)
 		{
+			return button.SubscribeOnClickCommand(() => getCommand()?.TryExecute());
+		}
+		
+		public static IDisposable SubscribeOnClickCommand(this UIControl button, Action action)
+		{
 			return button.Events().TouchUpInside
 				.OnTaskThread()
-				.Subscribe(_ => getCommand()?.TryExecute());
+				.Subscribe(_ => action());
 		}
 
 		public static IObservable<object> ShouldReturnObservable(this UITextField input)
