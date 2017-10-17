@@ -7,17 +7,17 @@ public static class CreatorExtensions
 {
     #region UIButton
 
-    public static UIButton CreateButton(this object parent)
+    public static UIButton CreateButton(this UIResponder parent)
     {
         return new UIButton(UIButtonType.Custom);
     }
 
-    public static UIButton CreateButton(this object parent, UIButtonType type)
+    public static UIButton CreateButton(this UIResponder parent, UIButtonType type)
     {
         return new UIButton(type);
     }
 
-    public static UIHighlightButton CreateHighlightButton(this object parent)
+    public static UIHighlightButton CreateHighlightButton(this UIResponder parent)
     {
         return new UIHighlightButton();
     }
@@ -169,17 +169,17 @@ public static class CreatorExtensions
 
 	#region UIView
 
-	public static UIView CreateSeparator(this object parent)
+	public static UIView CreateSeparator(this UIResponder parent)
 	{
 		return new UIView();
 	}
 
-	public static UIView CreateSeparator(this object parent, UIColor backgroundColor)
+	public static UIView CreateSeparator(this UIResponder parent, UIColor backgroundColor)
 	{
 		return new UIView().WithBackgroundColor(backgroundColor);
 	}
 
-    public static UIView CreateView(this object parent)
+    public static UIView CreateView(this UIResponder parent)
     {
         return new UIView();
     }
@@ -225,7 +225,7 @@ public static class CreatorExtensions
 
 	#region ScrollView
 
-	public static UIScrollView CreateVerticalScroll(this object _)
+	public static UIScrollView CreateVerticalScroll(this UIResponder _)
     {
         return new UIScrollView()
         {
@@ -263,7 +263,7 @@ public static class CreatorExtensions
 
     #region UILabel
 
-    public static UILabel CreateLabel(this object parent)
+    public static UILabel CreateLabel(this UIResponder parent)
     {
         return new UILabel();
     }
@@ -319,7 +319,7 @@ public static class CreatorExtensions
 
     #region UITextField
 
-    public static UITextField CreateTextField(this object parent)
+    public static UITextField CreateTextField(this UIResponder parent)
     {
         return new UITextField();
     }
@@ -436,7 +436,7 @@ public static class CreatorExtensions
 
 	#region UISearchBar
 
-	public static UISearchBar CreateSearchBar(this object parent)
+	public static UISearchBar CreateSearchBar(this UIResponder parent)
     {
         return new UISearchBar();
     }
@@ -494,7 +494,7 @@ public static class CreatorExtensions
 
     #region UITextView
 
-    public static UITextView CreateTextView(this object parent)
+    public static UITextView CreateTextView(this UIResponder parent)
     {
         return new UITextView();
     }
@@ -509,7 +509,7 @@ public static class CreatorExtensions
 
     #region UIImageView
 
-    public static UIImageView CreateImageView(this object parent)
+    public static UIImageView CreateImageView(this UIResponder parent)
     {
         return new UIImageView();
     }
@@ -653,7 +653,7 @@ public static class CreatorExtensions
 
 	#region UIDatePicker
 
-	public static UIDatePicker CreateDatePicker(this object _)
+	public static UIDatePicker CreateDatePicker(this UIResponder _)
 	{
 		return new UIDatePicker();
 	}
