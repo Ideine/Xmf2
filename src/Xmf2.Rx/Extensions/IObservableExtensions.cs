@@ -47,13 +47,13 @@ namespace System
 				.Catch<T, Exception>(ex => Observable.Return(default(T)));
 		}
 
-		public static IDisposable SubscribeWithErrorHandling<T>(this IObservable<T> observable, CustomErrorHandler customHandler = null)
+		public static IDisposable SubscribeWithErrorHandling<T>(this IObservable<T> observable, Action<T> onNext, CustomErrorHandler customHandler = null)
 		{
 			IErrorHandler errorHandler = Locator.Current.GetService<IErrorHandler>();
 
 			return errorHandler.Execute(observable, customHandler)
 				.Catch<T, Exception>(ex => Observable.Return(default(T)))
-				.Subscribe();
+				.Subscribe(onNext);
 
 		}
 
