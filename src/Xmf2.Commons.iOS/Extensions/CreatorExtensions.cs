@@ -324,6 +324,13 @@ public static class CreatorExtensions
         return new UITextField();
     }
 
+	public static UITextField WithLeftPadding(this UITextField input, int leftPadding)
+	{
+		input.LeftView = new UIView(new CGRect(0, 0, leftPadding, 5));
+		input.LeftViewMode = UITextFieldViewMode.Always;
+		return input;
+	}
+
     public static UITextField AsPasswordField(this UITextField input, UIReturnKeyType returnKeyType)
     {
         input.KeyboardType = UIKeyboardType.Default;
@@ -334,6 +341,16 @@ public static class CreatorExtensions
         input.SecureTextEntry = true;
         return input;
     }
+	
+	public static UITextField AsSearchField(this UITextField input, UIReturnKeyType returnKeyType = UIReturnKeyType.Search)
+	{
+		input.KeyboardType = UIKeyboardType.Default;
+		input.SpellCheckingType = UITextSpellCheckingType.No;
+		input.ReturnKeyType = returnKeyType;
+		input.AutocorrectionType = UITextAutocorrectionType.No;
+		input.AutocapitalizationType = UITextAutocapitalizationType.None;
+		return input;
+	}
 
     public static UITextField AsEmailField(this UITextField input, UIReturnKeyType returnKeyType)
     {
@@ -416,11 +433,7 @@ public static class CreatorExtensions
         input.ShouldReturn += (textField) =>
         {
             action?.Invoke();
-            if (nextReponder == null)
-            {
-                return false;
-            }
-            nextReponder.BecomeFirstResponder();
+	        nextReponder?.BecomeFirstResponder();
 			return false;
         };
         return input;

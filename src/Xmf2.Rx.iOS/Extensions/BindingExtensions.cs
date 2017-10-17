@@ -14,5 +14,14 @@ namespace UIKit
 				.OnTaskThread()
 				.Subscribe(_ => getCommand()?.TryExecute());
 		}
+
+		public static IObservable<object> ShouldReturnObservable(this UITextField input)
+		{
+			return Observable.FromEventPattern<UITextFieldCondition, EventArgs>(x => field =>
+			{
+				x.Invoke(field, EventArgs.Empty);
+				return true;
+			}, x => input.ShouldReturn = x, x => input.ShouldReturn = null);
+		}
 	}
 }
