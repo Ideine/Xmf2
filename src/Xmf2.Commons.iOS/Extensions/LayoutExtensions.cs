@@ -43,7 +43,7 @@ public static class CustomAutoLayoutExtensions
 		{
 			containerView.ConstrainLayout(() =>
 										  view.CenterY() == containerView.CenterY()
-										  && view.Height() == containerView.Height()
+										  && view.Height() == containerView.Height() - margin
 										 );
 		}
 		return containerView;
