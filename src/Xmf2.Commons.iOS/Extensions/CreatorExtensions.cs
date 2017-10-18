@@ -535,8 +535,20 @@ public static class CreatorExtensions
 
     public static UIImageView WithImage(this UIImageView view, string imageName)
     {
-        view.Image = new UIImage(imageName);
-        return view;
+	#if DEBUG
+	    try
+	    {
+		    view.Image = new UIImage(imageName);
+	    }
+	    catch (Exception ex)
+	    {
+		    System.Diagnostics.Debug.WriteLine($"Missing image: {imageName} {ex}");
+		    throw;
+	    }
+	#else
+		view.Image = new UIImage(imageName);
+	#endif
+	    return view;
     }
 
     public static UIImageView UniformToFit(this UIImageView view)
