@@ -1,26 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using UIKit;
+using static UIKit.NSLayoutAttribute;
+using static UIKit.NSLayoutRelation;
 
 public static class CustomAutoLayoutExtensions
 {
 	public static UIView CenterAndFillWidth(this UIView containerView, params UIView[] views)
 	{
-		if (views == null)
-		{
-			throw new ArgumentNullException(nameof(views));
-		}
-
-		foreach (UIView view in views)
-		{
-			containerView.ConstrainLayout(() =>
-										  view.CenterX() == containerView.CenterX()
-										  && view.Width() == containerView.Width()
-										 );
-		}
-
-		return containerView;
+		return CenterAndFillWidth(containerView, 0, views);
 	}
 
 	public static UIView CenterAndFillWidth(this UIView containerView, int margin, params UIView[] views)
@@ -29,32 +19,33 @@ public static class CustomAutoLayoutExtensions
 		{
 			throw new ArgumentNullException(nameof(views));
 		}
-
 		foreach (UIView view in views)
 		{
-			containerView.ConstrainLayout(() =>
-										  view.CenterX() == containerView.CenterX()
-										  && view.Width() == containerView.Width() - margin
+			containerView.ConstrainLayout(() => view.CenterX() == containerView.CenterX()
+											 && view.Width()   == containerView.Width() - margin
 										 );
 		}
-
 		return containerView;
 	}
+
 	public static UIView CenterAndFillHeight(this UIView containerView, params UIView[] views)
+	{
+		return CenterAndFillHeight(containerView, 0, views);
+	}
+
+	public static UIView CenterAndFillHeight(this UIView containerView, int margin, params UIView[] views)
 	{
 		if (views == null)
 		{
 			throw new ArgumentNullException(nameof(views));
 		}
-
 		foreach (UIView view in views)
 		{
 			containerView.ConstrainLayout(() =>
 										  view.CenterY() == containerView.CenterY()
-										  && view.Height() == containerView.Height()
+										  && view.Height() == containerView.Height() - margin
 										 );
 		}
-
 		return containerView;
 	}
 
@@ -242,15 +233,17 @@ public static class CustomAutoLayoutExtensions
 		return containerView;
 	}
 
-	public static UIView ConstrainHeight(this UIView view, int height)
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static UIView ConstrainHeight(this UIView view, float height)
 	{
-		view.ConstrainLayout(() => view.Height() == height);
+		view.AddConstraint(NSLayoutConstraint.Create(view, Height, Equal, 1, height));
 		return view;
 	}
 
-	public static UIView ConstrainWidth(this UIView view, int width)
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static UIView ConstrainWidth(this UIView view, float width)
 	{
-		view.ConstrainLayout(() => view.Width() == width);
+		view.AddConstraint(NSLayoutConstraint.Create(view, Width, Equal, 1, width));
 		return view;
 	}
 
