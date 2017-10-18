@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Windows.Input;
 using Android.Content;
+using Android.OS;
 using Android.Runtime;
 using Android.Views;
 using Android.Widget;
@@ -79,12 +80,12 @@ namespace Xmf2.Commons.Droid.LinearList
 
 		public virtual void NotifyDataSetChanged(NotifyCollectionChangedEventArgs e)
 		{
-			DataSetChanged?.Invoke(this, e);
+			new Handler(Looper.MainLooper).Post(() => DataSetChanged?.Invoke(this, e));
 		}
 
 		public override void NotifyDataSetChanged()
 		{
-			DataSetChanged?.Invoke(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
+			new Handler(Looper.MainLooper).Post(() => DataSetChanged?.Invoke(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset)));
 		}
 
 		public virtual object GetRawItem(int position) => ItemsSource[position];
