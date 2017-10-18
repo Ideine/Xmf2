@@ -20,6 +20,11 @@ namespace UIKit
 				.Subscribe(_ => action());
 		}
 
+		public static IObservable<EventArgs> ClickObservable(this UIControl button)
+		{
+			return button.Events().TouchUpInside;
+		}
+
 		public static IObservable<object> ShouldReturnObservable(this UITextField input)
 		{
 			return Observable.FromEventPattern<UITextFieldCondition, EventArgs>(x => field =>
