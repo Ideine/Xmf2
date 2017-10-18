@@ -77,6 +77,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controls\ItemsControl\BaseReactiveItemCell.cs" />
+    <Compile Include="Controls\ItemsControl\IUIComponent.cs" />
     <Compile Include="Extensions\BindingExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\Reportings\HockeyAppService.cs" />
