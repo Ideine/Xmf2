@@ -56,6 +56,7 @@
     <Compile Include="Services\LifecycleMonitor.cs" />
     <Compile Include="Services\Resources\AssetService.cs" />
     <Compile Include="Services\DroidUIDispatcher.cs" />
+    <Compile Include="Helpers\KeyboardHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Helpers\" />
