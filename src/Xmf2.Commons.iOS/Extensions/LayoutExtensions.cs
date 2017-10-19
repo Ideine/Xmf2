@@ -156,9 +156,10 @@ public static class CustomAutoLayoutExtensions
 		return containerView;
 	}
 
-	public static UIView AnchorLeft(this UIView containerView, UIView view, int margin = 0)
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static UIView AnchorLeft(this UIView containerView, UIView view, float margin = 0)
 	{
-		containerView.ConstrainLayout(() => view.Left() == containerView.Left() + margin);
+		containerView.AddConstraint(NSLayoutConstraint.Create(containerView, Left, Equal, view, Left, 1, -margin));
 		return containerView;
 	}
 
@@ -389,6 +390,24 @@ public static class CustomAutoLayoutExtensions
 	{
 		var delta = constraintsToAdd.Except(view.Constraints).ToArray();
 		view.AddConstraints(delta);
+		return view;
+	}
+	public static UIView EnsureAdd(this UIView view, params UIGestureRecognizer[] gestureRecognizersToAdd)
+	{
+		var delta = gestureRecognizersToAdd.Except(view.GestureRecognizers).ToArray();
+		foreach (var recognizer in delta)
+		{
+			view.AddGestureRecognizer(recognizer);
+		}
+		return view;
+	}
+	public static UIView EnsureRemove(this UIView view, params UIGestureRecognizer[] gestureRecognizersToRemove)
+	{
+		var delta = view.GestureRecognizers.Intersect(gestureRecognizersToRemove).ToArray();
+		foreach (var recognizer in delta)
+		{
+			view.RemoveGestureRecognizer(recognizer);
+		}
 		return view;
 	}
 	public static UIView EnsureRemove(this UIView view, params UIView[] subviewsToRemove)

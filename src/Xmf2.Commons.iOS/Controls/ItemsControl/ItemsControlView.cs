@@ -205,7 +205,7 @@ namespace Xmf2.iOS.Controls.ItemControls
 			return sep;
 		}
 
-		private TCell GetOrCreateCell(TItemData item)
+		protected virtual TCell GetOrCreateCell(TItemData item)
 		{
 			if (_usableCells.Any())
 			{
@@ -267,8 +267,7 @@ namespace Xmf2.iOS.Controls.ItemControls
 						ItemSelected?.Invoke(this, itemSelectEventArg);
 						Animate(0.1, () =>
 						{
-							var selectedColor = cell.SelectedColor;
-							cell.BackgroundColor = selectedColor == null ? _oldBackground : selectedColor;
+							cell.BackgroundColor = cell.SelectedColor ?? _oldBackground;
 						}, ActionHelper.NoOp);
 					}
 				);
