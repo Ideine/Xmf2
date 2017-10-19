@@ -30,14 +30,14 @@ namespace Xmf2.Rx.Droid.BaseView
 		TViewModel _ViewModel;
 		public TViewModel ViewModel
 		{
-			get { return _ViewModel; }
-			set { this.RaiseAndSetIfChanged(ref _ViewModel, value); }
+			get => _ViewModel;
+			set => this.RaiseAndSetIfChanged(ref _ViewModel, value);
 		}
 
 		object IViewFor.ViewModel
 		{
-			get { return _ViewModel; }
-			set { _ViewModel = (TViewModel)value; }
+			get => _ViewModel;
+			set => _ViewModel = (TViewModel)value;
 		}
 	}
 
@@ -53,8 +53,8 @@ namespace Xmf2.Rx.Droid.BaseView
 
 		public event ReactiveUI.PropertyChangingEventHandler PropertyChanging
 		{
-			add { WeakEventManager<ReactiveUI.INotifyPropertyChanging, ReactiveUI.PropertyChangingEventHandler, ReactiveUI.PropertyChangingEventArgs>.AddHandler(this, value); }
-			remove { WeakEventManager<ReactiveUI.INotifyPropertyChanging, ReactiveUI.PropertyChangingEventHandler, ReactiveUI.PropertyChangingEventArgs>.RemoveHandler(this, value); }
+			add => WeakEventManager<ReactiveUI.INotifyPropertyChanging, ReactiveUI.PropertyChangingEventHandler, ReactiveUI.PropertyChangingEventArgs>.AddHandler(this, value);
+			remove => WeakEventManager<ReactiveUI.INotifyPropertyChanging, ReactiveUI.PropertyChangingEventHandler, ReactiveUI.PropertyChangingEventArgs>.RemoveHandler(this, value);
 		}
 
 		void IReactiveObject.RaisePropertyChanging(ReactiveUI.PropertyChangingEventArgs args)
@@ -64,8 +64,8 @@ namespace Xmf2.Rx.Droid.BaseView
 
 		public event PropertyChangedEventHandler PropertyChanged
 		{
-			add { WeakEventManager<INotifyPropertyChanged, PropertyChangedEventHandler, PropertyChangedEventArgs>.AddHandler(this, value); }
-			remove { WeakEventManager<INotifyPropertyChanged, PropertyChangedEventHandler, PropertyChangedEventArgs>.RemoveHandler(this, value); }
+			add => WeakEventManager<INotifyPropertyChanged, PropertyChangedEventHandler, PropertyChangedEventArgs>.AddHandler(this, value);
+			remove => WeakEventManager<INotifyPropertyChanged, PropertyChangedEventHandler, PropertyChangedEventArgs>.RemoveHandler(this, value);
 		}
 
 		void IReactiveObject.RaisePropertyChanged(PropertyChangedEventArgs args)
@@ -77,18 +77,12 @@ namespace Xmf2.Rx.Droid.BaseView
 		/// Represents an Observable that fires *before* a property is about to
 		/// be changed.         
 		/// </summary>
-		public IObservable<IReactivePropertyChangedEventArgs<ReactiveAppCompatActivity>> Changing
-		{
-			get { return this.getChangingObservable(); }
-		}
+		public IObservable<IReactivePropertyChangedEventArgs<ReactiveAppCompatActivity>> Changing => this.getChangingObservable();
 
 		/// <summary>
 		/// Represents an Observable that fires *after* a property has changed.
 		/// </summary>
-		public IObservable<IReactivePropertyChangedEventArgs<ReactiveAppCompatActivity>> Changed
-		{
-			get { return this.getChangedObservable(); }
-		}
+		public IObservable<IReactivePropertyChangedEventArgs<ReactiveAppCompatActivity>> Changed => this.getChangedObservable();
 
 		/// <summary>
 		/// When this method is called, an object will not fire change
@@ -102,13 +96,13 @@ namespace Xmf2.Rx.Droid.BaseView
 			return this.suppressChangeNotifications();
 		}
 
-		public IObservable<Exception> ThrownExceptions { get { return this.getThrownExceptionsObservable(); } }
+		public IObservable<Exception> ThrownExceptions => this.getThrownExceptionsObservable();
 
 		readonly Subject<Unit> activated = new Subject<Unit>();
-		public IObservable<Unit> Activated { get { return activated.AsObservable(); } }
+		public IObservable<Unit> Activated => activated.AsObservable();
 
 		readonly Subject<Unit> deactivated = new Subject<Unit>();
-		public IObservable<Unit> Deactivated { get { return deactivated.AsObservable(); } }
+		public IObservable<Unit> Deactivated => deactivated.AsObservable();
 
 		protected override void OnPause()
 		{
@@ -123,10 +117,7 @@ namespace Xmf2.Rx.Droid.BaseView
 		}
 
 		readonly Subject<Tuple<int, Result, Intent>> activityResult = new Subject<Tuple<int, Result, Intent>>();
-		public IObservable<Tuple<int, Result, Intent>> ActivityResult
-		{
-			get { return activityResult.AsObservable(); }
-		}
+		public IObservable<Tuple<int, Result, Intent>> ActivityResult => activityResult.AsObservable();
 
 		protected override void OnActivityResult(int requestCode, Result resultCode, Intent data)
 		{
