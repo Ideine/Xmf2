@@ -1,6 +1,7 @@
 ﻿using System;
 using Android;
 using Android.Graphics;
+using Android.Runtime;
 using Android.Support.V4.App;
 using Android.Support.V7.Transition;
 using Android.Views;
@@ -31,7 +32,13 @@ namespace Xmf2.Rx.Droid.BaseView
 			OnViewModelSet();
 			SetViewModelBindings();
 		}
+		protected BaseReactiveDialogFragment()
+		{
+		}
 
+		protected BaseReactiveDialogFragment(IntPtr handle, JniHandleOwnership ownership) : base(handle, ownership)
+		{
+		}
 		protected virtual void OnContentViewSet()
 		{
 		}
