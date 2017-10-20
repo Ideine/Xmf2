@@ -57,13 +57,18 @@ namespace Xmf2.Rx.Droid.Services
 
 		protected virtual void ShowView(Android.Support.V4.App.DialogFragment view, string tag)
 		{
-			if (CurrentActivity is AppCompatActivity appCompatActivity)
+			if (CurrentActivity is AppCompatActivity appCompatActivity && !appCompatActivity.IsFinishing)
 			{
 				var fm = appCompatActivity.SupportFragmentManager;
-				if (fm.FindFragmentByTag(tag) == null)
+
+				var dialogView = fm.FindFragmentByTag(tag);
+
+				if (dialogView != null)
 				{
-					view.Show(fm, tag);
+					fm.BeginTransaction().Remove(dialogView).CommitAllowingStateLoss();
+					fm.ExecutePendingTransactions();
 				}
+				view.Show(fm, tag);
 			}
 		}
 

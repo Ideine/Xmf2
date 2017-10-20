@@ -72,6 +72,8 @@ namespace Xmf2.Rx.ViewModels
 
 		protected Task WrapForError(Func<Task> action, CustomErrorHandler errorHandler = null) => WrapForError(Observable.FromAsync(action), errorHandler);
 
+		protected Task WrapForError(Action action, CustomErrorHandler errorHandler = null) => WrapForError(Observable.Start(action), errorHandler);
+
 		protected Task<TResult> WrapForError<TResult>(Func<Task<TResult>> action, CustomErrorHandler errorHandler = null) => WrapForError(Observable.FromAsync(action), errorHandler);
 
 		#endregion
