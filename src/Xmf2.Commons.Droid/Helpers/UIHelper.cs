@@ -1,6 +1,7 @@
 ﻿using System;
 using Android.Content;
 using Android.Graphics;
+using Android.Support.V4.Content;
 using Android.Widget;
 
 namespace Xmf2.Commons.Droid.Helpers
@@ -49,6 +50,11 @@ namespace Xmf2.Commons.Droid.Helpers
 		public static Color GetColor(int color, int alpha = 255)
 		{
 			return Color.Argb(alpha, Color.GetRedComponent(color), Color.GetGreenComponent(color), Color.GetBlueComponent(color));
+		}
+
+		public static Color GetColor(Context context, int resId)
+		{
+			return new Color(ContextCompat.GetColor(context, resId));
 		}
 	}
 }
