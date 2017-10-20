@@ -2,12 +2,14 @@
 using CoreGraphics;
 using UIKit;
 using Xmf2.Commons.iOS.Controls;
+using System.Runtime.CompilerServices;
 
 public static class CreatorExtensions
 {
-    #region UIButton
+	#region UIButton
 
-    public static UIButton CreateButton(this UIResponder parent)
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static UIButton CreateButton(this UIResponder _)
     {
         return new UIButton(UIButtonType.Custom);
     }
@@ -611,7 +613,11 @@ public static class CreatorExtensions
         return view;
     }
 
-    public static TView WithBorder<TView>(this TView view, UIColor borderColor, int size) where TView : UIView
+	public static TView WithBorder<TView>(this TView view, int borderColor, int size) where TView : UIView
+	{
+		return view.WithBorder(borderColor.ColorFromHex(), size);
+	}
+	public static TView WithBorder<TView>(this TView view, UIColor borderColor, int size) where TView : UIView
     {
         view.Layer.BorderColor = borderColor.CGColor;
         view.Layer.BorderWidth = size;
