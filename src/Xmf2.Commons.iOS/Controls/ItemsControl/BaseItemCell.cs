@@ -8,13 +8,6 @@ namespace Xmf2.iOS.Controls.ItemControls
 	{
 		protected BaseItemCell() { }
 
-		private object _dataContext;
-		public virtual object DataContext
-		{
-			get => _dataContext;
-			set => _dataContext = value;
-		}
-
 		public TModel Model
 		{
 			get => (TModel)DataContext;
@@ -29,7 +22,7 @@ namespace Xmf2.iOS.Controls.ItemControls
 		{
 			if (disposing)
 			{
-				_dataContext = null;
+				DataContext = null;
 			}
 			base.Dispose(disposing);
 		}
@@ -39,6 +32,13 @@ namespace Xmf2.iOS.Controls.ItemControls
 	{
 		[Export("requiresConstraintBasedLayout")]
 		public static new bool RequiresConstraintBasedLayout() => true;
+
+		private object _dataContext;
+		public virtual object DataContext
+		{
+			get => _dataContext;
+			set => _dataContext = value;
+		}
 
 		public virtual void AutoLayout() { }
 

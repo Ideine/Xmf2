@@ -6,6 +6,8 @@
 		void Bind();
 		void ViewDidLoad();
 		void ViewDidAppear();
+		void ViewWillDisappear();
+		void ViewDidDisappear();
 	}
 
 	public interface IUIModelComponent<TModel> : IUIComponent where TModel : class
