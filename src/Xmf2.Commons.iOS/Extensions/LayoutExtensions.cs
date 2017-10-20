@@ -212,9 +212,10 @@ public static class CustomAutoLayoutExtensions
 		return containerView;
 	}
 
-	public static UIView VerticalSpace(this UIView containerView, UIView top, UIView bottom, int margin = 0)
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static UIView VerticalSpace(this UIView containerView, UIView topView, UIView bottomView, float margin = 0)
 	{
-		containerView.ConstrainLayout(() => bottom.Top() == top.Bottom() + margin);
+		containerView.AddConstraint(NSLayoutConstraint.Create(topView, Bottom, Equal, bottomView, Top, 1f, -margin));
 		return containerView;
 	}
 	public static UIView MinVerticalSpace(this UIView containerView, UIView top, UIView bottom, int margin = 0)
@@ -318,10 +319,10 @@ public static class CustomAutoLayoutExtensions
 	public static UIView Same(this UIView view, UIView childView)
 	{
 		view.AddConstraints(new[] {
-			NSLayoutConstraint.Create(view, CenterY, Equal, childView, CenterY, 1, 0f),
-			NSLayoutConstraint.Create(view, CenterX, Equal, childView, CenterX, 1, 0f),
-			NSLayoutConstraint.Create(view, Height , Equal, childView, Height , 1, 0f),
-			NSLayoutConstraint.Create(view, Width  , Equal, childView, Width  , 1, 0f)
+			NSLayoutConstraint.Create(view, CenterY, Equal, childView, CenterY, 1f, 0f),
+			NSLayoutConstraint.Create(view, CenterX, Equal, childView, CenterX, 1f, 0f),
+			NSLayoutConstraint.Create(view, Height , Equal, childView, Height , 1f, 0f),
+			NSLayoutConstraint.Create(view, Width  , Equal, childView, Width  , 1f, 0f)
 		});
 		return view;
 	}
@@ -330,10 +331,10 @@ public static class CustomAutoLayoutExtensions
 	public static UIView Same(this UIView view, UIView reference, UIView dest)
 	{
 		view.AddConstraints(new[] {
-			NSLayoutConstraint.Create(view, CenterY, Equal, dest, CenterY, 1, 0f),
-			NSLayoutConstraint.Create(view, CenterX, Equal, dest, CenterX, 1, 0f),
-			NSLayoutConstraint.Create(view, Height , Equal, dest, Height , 1, 0f),
-			NSLayoutConstraint.Create(view, Width  , Equal, dest, Width  , 1, 0f)
+			NSLayoutConstraint.Create(reference, CenterY, Equal, dest, CenterY, 1, 0f),
+			NSLayoutConstraint.Create(reference, CenterX, Equal, dest, CenterX, 1, 0f),
+			NSLayoutConstraint.Create(reference, Height , Equal, dest, Height , 1, 0f),
+			NSLayoutConstraint.Create(reference, Width  , Equal, dest, Width  , 1, 0f)
 		});
 		return view;
 	}
