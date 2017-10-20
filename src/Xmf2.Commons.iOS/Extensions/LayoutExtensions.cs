@@ -314,24 +314,41 @@ public static class CustomAutoLayoutExtensions
 		return view;
 	}
 
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static UIView Same(this UIView view, UIView childView)
+	{
+		view.AddConstraints(new[] {
+			NSLayoutConstraint.Create(view, CenterY, Equal, childView, CenterY, 1, 0f),
+			NSLayoutConstraint.Create(view, CenterX, Equal, childView, CenterX, 1, 0f),
+			NSLayoutConstraint.Create(view, Height , Equal, childView, Height , 1, 0f),
+			NSLayoutConstraint.Create(view, Width  , Equal, childView, Width  , 1, 0f)
+		});
+		return view;
+	}
+
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static UIView Same(this UIView view, UIView reference, UIView dest)
 	{
-		view.ConstrainLayout(() => reference.CenterY() == dest.CenterY()
-							 && reference.CenterX() == dest.CenterX()
-							 && reference.Height() == dest.Height()
-							 && reference.Width() == dest.Width());
+		view.AddConstraints(new[] {
+			NSLayoutConstraint.Create(view, CenterY, Equal, dest, CenterY, 1, 0f),
+			NSLayoutConstraint.Create(view, CenterX, Equal, dest, CenterX, 1, 0f),
+			NSLayoutConstraint.Create(view, Height , Equal, dest, Height , 1, 0f),
+			NSLayoutConstraint.Create(view, Width  , Equal, dest, Width  , 1, 0f)
+		});
 		return view;
 	}
 
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static UIView SameWidth(this UIView view, UIView v1, UIView v2)
 	{
-		view.ConstrainLayout(() => v1.Width() == v2.Width());
+		view.AddConstraint(NSLayoutConstraint.Create(v1, Width, Equal, v2, Width, 1f, 0f));
 		return view;
 	}
 
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static UIView SameHeight(this UIView view, UIView v1, UIView v2)
 	{
-		view.ConstrainLayout(() => v1.Height() == v2.Height());
+		view.AddConstraint(NSLayoutConstraint.Create(v1, Height, Equal, v2, Height, 1f, 0f));
 		return view;
 	}
 
