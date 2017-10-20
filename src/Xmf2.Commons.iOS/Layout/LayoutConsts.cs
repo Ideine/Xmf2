@@ -11,6 +11,11 @@ namespace Xmf2.Commons.iOS.Layout
 		/// </summary>
 		public const int UITabBar_DefaultHeight = 49;
 		/// <summary>
+		/// <see cref="UIKit.UINavigationBar"/>.Frame.Height in most situations. Height of standard NavigationBar may differ.
+		/// See https://ivomynttinen.com/blog/ios-design-guidelines#nav-bar for more details.
+		/// </summary>
+		public const int UINavBar_DefaultHeight = 44;
+		/// <summary>
 		/// Epaisseur utilisée pour un séparateur visuel entre champs.
 		/// </summary>
 		public const int UISeparator_Height = 1;
