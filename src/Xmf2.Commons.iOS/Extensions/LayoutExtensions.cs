@@ -12,11 +12,11 @@ public static class CustomAutoLayoutExtensions
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static UIView CenterAndFillWidth(this UIView containerView, params UIView[] views)
 	{
-		return CenterAndFillWidth(containerView, 0f, views);
+		return CenterAndFillWidth(containerView, 0, views);
 	}
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public static UIView CenterAndFillWidth(this UIView containerView, float margin, params UIView[] views)
+	public static UIView CenterAndFillWidth(this UIView containerView, int margin, params UIView[] views)
 	{
 		if (views == null)
 		{
@@ -29,10 +29,11 @@ public static class CustomAutoLayoutExtensions
 		return containerView;
 	}
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public static UIView CenterAndFillWidth(this UIView containerView, UIView view, float margin = 0f)
+	public static UIView CenterAndFillWidth(this UIView containerView, UIView view, int margin = 0)
 	{
-		containerView.AddConstraint(NSLayoutConstraint.Create(containerView, CenterX, Equal, view, CenterX, 1f, 0f));
-		containerView.AddConstraint(NSLayoutConstraint.Create(containerView, Width, Equal, view, Width, 1f, margin));
+		containerView.ConstrainLayout(() => view.CenterX() == containerView.CenterX()
+										 && view.Width()   == containerView.Width() - margin
+									);
 		return containerView;
 	}
 
