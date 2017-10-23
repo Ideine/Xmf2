@@ -8,11 +8,14 @@ using static UIKit.NSLayoutRelation;
 
 public static class CustomAutoLayoutExtensions
 {
+
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static UIView CenterAndFillWidth(this UIView containerView, params UIView[] views)
 	{
 		return CenterAndFillWidth(containerView, 0, views);
 	}
 
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static UIView CenterAndFillWidth(this UIView containerView, int margin, params UIView[] views)
 	{
 		if (views == null)
@@ -21,18 +24,26 @@ public static class CustomAutoLayoutExtensions
 		}
 		foreach (UIView view in views)
 		{
-			containerView.ConstrainLayout(() => view.CenterX() == containerView.CenterX()
-											 && view.Width()   == containerView.Width() - margin
-										 );
+			containerView.CenterAndFillWidth(view, margin);
 		}
 		return containerView;
 	}
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static UIView CenterAndFillWidth(this UIView containerView, UIView view, int margin = 0)
+	{
+		containerView.ConstrainLayout(() => view.CenterX() == containerView.CenterX()
+										 && view.Width()   == containerView.Width() - margin
+									);
+		return containerView;
+	}
 
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static UIView CenterAndFillHeight(this UIView containerView, params UIView[] views)
 	{
 		return CenterAndFillHeight(containerView, 0, views);
 	}
 
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static UIView CenterAndFillHeight(this UIView containerView, int margin, params UIView[] views)
 	{
 		if (views == null)
@@ -41,11 +52,16 @@ public static class CustomAutoLayoutExtensions
 		}
 		foreach (UIView view in views)
 		{
-			containerView.ConstrainLayout(() =>
-										  view.CenterY() == containerView.CenterY()
-										  && view.Height() == containerView.Height() - margin
-										 );
+			containerView.CenterAndFillHeight(view, margin);
 		}
+		return containerView;
+	}
+
+	public static UIView CenterAndFillHeight(this UIView containerView, UIView view, int margin = 0)
+	{
+		containerView.ConstrainLayout(() => view.CenterY() == containerView.CenterY()
+										 && view.Height()  == containerView.Height() - margin
+										 );
 		return containerView;
 	}
 
@@ -160,6 +176,8 @@ public static class CustomAutoLayoutExtensions
 	public static UIView AnchorLeft(this UIView containerView, UIView view, float margin = 0)
 	{
 		containerView.AddConstraint(NSLayoutConstraint.Create(containerView, Left, Equal, view, Left, 1, -margin));
+		containerView.TranslatesAutoresizingMaskIntoConstraints = false;
+		view.TranslatesAutoresizingMaskIntoConstraints = false;
 		return containerView;
 	}
 
@@ -216,6 +234,8 @@ public static class CustomAutoLayoutExtensions
 	public static UIView VerticalSpace(this UIView containerView, UIView topView, UIView bottomView, float margin = 0)
 	{
 		containerView.AddConstraint(NSLayoutConstraint.Create(topView, Bottom, Equal, bottomView, Top, 1f, -margin));
+		topView.TranslatesAutoresizingMaskIntoConstraints = false;
+		bottomView.TranslatesAutoresizingMaskIntoConstraints = false;
 		return containerView;
 	}
 	public static UIView MinVerticalSpace(this UIView containerView, UIView top, UIView bottom, int margin = 0)
@@ -239,6 +259,7 @@ public static class CustomAutoLayoutExtensions
 	public static UIView ConstrainHeight(this UIView view, float height)
 	{
 		view.AddConstraint(NSLayoutConstraint.Create(view, Height, Equal, 1, height));
+		view.TranslatesAutoresizingMaskIntoConstraints = false;
 		return view;
 	}
 
@@ -246,6 +267,7 @@ public static class CustomAutoLayoutExtensions
 	public static UIView ConstrainWidth(this UIView view, float width)
 	{
 		view.AddConstraint(NSLayoutConstraint.Create(view, Width, Equal, 1, width));
+		view.TranslatesAutoresizingMaskIntoConstraints = false;
 		return view;
 	}
 
@@ -318,24 +340,15 @@ public static class CustomAutoLayoutExtensions
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static UIView Same(this UIView view, UIView childView)
 	{
-		view.AddConstraints(new[] {
-			NSLayoutConstraint.Create(view, CenterY, Equal, childView, CenterY, 1f, 0f),
-			NSLayoutConstraint.Create(view, CenterX, Equal, childView, CenterX, 1f, 0f),
-			NSLayoutConstraint.Create(view, Height , Equal, childView, Height , 1f, 0f),
-			NSLayoutConstraint.Create(view, Width  , Equal, childView, Width  , 1f, 0f)
-		});
-		return view;
+		return view.Same(view, childView);
 	}
 
-	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static UIView Same(this UIView view, UIView reference, UIView dest)
 	{
-		view.AddConstraints(new[] {
-			NSLayoutConstraint.Create(reference, CenterY, Equal, dest, CenterY, 1, 0f),
-			NSLayoutConstraint.Create(reference, CenterX, Equal, dest, CenterX, 1, 0f),
-			NSLayoutConstraint.Create(reference, Height , Equal, dest, Height , 1, 0f),
-			NSLayoutConstraint.Create(reference, Width  , Equal, dest, Width  , 1, 0f)
-		});
+		view.ConstrainLayout(() => reference.CenterY() == dest.CenterY()
+							 && reference.CenterX() == dest.CenterX()
+							 && reference.Height() == dest.Height()
+							 && reference.Width() == dest.Width());
 		return view;
 	}
 
@@ -343,6 +356,7 @@ public static class CustomAutoLayoutExtensions
 	public static UIView SameWidth(this UIView view, UIView v1, UIView v2)
 	{
 		view.AddConstraint(NSLayoutConstraint.Create(v1, Width, Equal, v2, Width, 1f, 0f));
+		view.TranslatesAutoresizingMaskIntoConstraints = false;
 		return view;
 	}
 
@@ -350,6 +364,7 @@ public static class CustomAutoLayoutExtensions
 	public static UIView SameHeight(this UIView view, UIView v1, UIView v2)
 	{
 		view.AddConstraint(NSLayoutConstraint.Create(v1, Height, Equal, v2, Height, 1f, 0f));
+		view.TranslatesAutoresizingMaskIntoConstraints = false;
 		return view;
 	}
 
