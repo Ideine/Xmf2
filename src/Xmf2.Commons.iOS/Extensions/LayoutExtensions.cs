@@ -176,6 +176,8 @@ public static class CustomAutoLayoutExtensions
 	public static UIView AnchorLeft(this UIView containerView, UIView view, float margin = 0)
 	{
 		containerView.AddConstraint(NSLayoutConstraint.Create(containerView, Left, Equal, view, Left, 1, -margin));
+		containerView.TranslatesAutoresizingMaskIntoConstraints = false;
+		view.TranslatesAutoresizingMaskIntoConstraints = false;
 		return containerView;
 	}
 
@@ -232,6 +234,8 @@ public static class CustomAutoLayoutExtensions
 	public static UIView VerticalSpace(this UIView containerView, UIView topView, UIView bottomView, float margin = 0)
 	{
 		containerView.AddConstraint(NSLayoutConstraint.Create(topView, Bottom, Equal, bottomView, Top, 1f, -margin));
+		topView.TranslatesAutoresizingMaskIntoConstraints = false;
+		bottomView.TranslatesAutoresizingMaskIntoConstraints = false;
 		return containerView;
 	}
 	public static UIView MinVerticalSpace(this UIView containerView, UIView top, UIView bottom, int margin = 0)
@@ -255,6 +259,7 @@ public static class CustomAutoLayoutExtensions
 	public static UIView ConstrainHeight(this UIView view, float height)
 	{
 		view.AddConstraint(NSLayoutConstraint.Create(view, Height, Equal, 1, height));
+		view.TranslatesAutoresizingMaskIntoConstraints = false;
 		return view;
 	}
 
@@ -262,6 +267,7 @@ public static class CustomAutoLayoutExtensions
 	public static UIView ConstrainWidth(this UIView view, float width)
 	{
 		view.AddConstraint(NSLayoutConstraint.Create(view, Width, Equal, 1, width));
+		view.TranslatesAutoresizingMaskIntoConstraints = false;
 		return view;
 	}
 
@@ -350,6 +356,7 @@ public static class CustomAutoLayoutExtensions
 	public static UIView SameWidth(this UIView view, UIView v1, UIView v2)
 	{
 		view.AddConstraint(NSLayoutConstraint.Create(v1, Width, Equal, v2, Width, 1f, 0f));
+		view.TranslatesAutoresizingMaskIntoConstraints = false;
 		return view;
 	}
 
@@ -357,6 +364,7 @@ public static class CustomAutoLayoutExtensions
 	public static UIView SameHeight(this UIView view, UIView v1, UIView v2)
 	{
 		view.AddConstraint(NSLayoutConstraint.Create(v1, Height, Equal, v2, Height, 1f, 0f));
+		view.TranslatesAutoresizingMaskIntoConstraints = false;
 		return view;
 	}
 
