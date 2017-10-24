@@ -18,6 +18,8 @@ namespace Xmf2.Rx.ViewModels
 	{
 		protected Lazy<IErrorHandler> ErrorHandler { get; } = new Lazy<IErrorHandler>(Locator.Current.GetService<IErrorHandler>);
 
+		public int ObservableTimeout { get; set; } = 30;
+
 		private readonly Subject<bool> _isInitializing = new Subject<bool>();
 		private readonly Subject<bool> _isStarting = new Subject<bool>();
 		private readonly Subject<bool> _isResuming = new Subject<bool>();
@@ -57,7 +59,7 @@ namespace Xmf2.Rx.ViewModels
 		protected Task WrapForError(IObservable<Unit> source, CustomErrorHandler errorHandler = null)
 		{
 			return ErrorHandler.Value
-							  .Execute(source.Timeout(TimeSpan.FromSeconds(30)), errorHandler)
+							   .Execute(source.Timeout(TimeSpan.FromSeconds(ObservableTimeout)), errorHandler)
 							  .Catch<Unit, Exception>(ex => Observable.Return(default(Unit)))
 							  .WaitForOneAsync();
 		}
@@ -65,7 +67,7 @@ namespace Xmf2.Rx.ViewModels
 		protected Task<TResult> WrapForError<TResult>(IObservable<TResult> source, CustomErrorHandler errorHandler = null)
 		{
 			return ErrorHandler.Value
-							  .Execute(source.Timeout(TimeSpan.FromSeconds(30)), errorHandler)
+							  .Execute(source.Timeout(TimeSpan.FromSeconds(ObservableTimeout)), errorHandler)
 							  .Catch<TResult, Exception>(ex => Observable.Return(default(TResult)))
 							  .WaitForOneAsync();
 		}
