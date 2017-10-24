@@ -89,6 +89,8 @@
     <Compile Include="Helpers\KeyboardHelper.cs" />
     <Compile Include="Extensions\FragmentExtensions.cs" />
     <Compile Include="Decorators\GridSpacingDecoration.cs" />
+    <Compile Include="Helpers\ProgressWebChromeClient.cs" />
+    <Compile Include="Services\Licences\LicenceReaderService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Helpers\" />
@@ -98,6 +100,7 @@
     <Folder Include="Services\Resources\" />
     <Folder Include="Extensions\" />
     <Folder Include="Decorators\" />
+    <Folder Include="Services\Licences\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Xmf2.Commons\Xmf2.Commons.csproj">
