@@ -10,20 +10,20 @@ namespace Xmf2.Rx.Droid.LinearList
 {
 	public class BaseReactiveLinearLayoutViewViewHolder<TViewModel> : LinearListViewHolder, IViewFor<TViewModel>, IViewFor, ICanActivate where TViewModel : class, IReactiveObject
 	{
-		private readonly Subject<Unit> activated = new Subject<Unit>();
-		public IObservable<Unit> Activated => activated;
+		private readonly Subject<Unit> _activated = new Subject<Unit>();
+		public IObservable<Unit> Activated => _activated;
 
-		private readonly Subject<Unit> deactivated = new Subject<Unit>();
-		public IObservable<Unit> Deactivated => deactivated;
+		private readonly Subject<Unit> _deactivated = new Subject<Unit>();
+		public IObservable<Unit> Deactivated => _deactivated;
 
 		public void Activate()
 		{
-			RxApp.MainThreadScheduler.Schedule(() => (activated).OnNext(Unit.Default));
+			RxApp.MainThreadScheduler.Schedule(() => (_activated).OnNext(Unit.Default));
 		}
 
 		public void Deactivate()
 		{
-			RxApp.MainThreadScheduler.Schedule(() => (deactivated).OnNext(Unit.Default));
+			RxApp.MainThreadScheduler.Schedule(() => (_deactivated).OnNext(Unit.Default));
 		}
 
 		public TViewModel ViewModel
@@ -42,7 +42,7 @@ namespace Xmf2.Rx.Droid.LinearList
 
 		object IViewFor.ViewModel
 		{
-			get => ViewModel as TViewModel;
+			get => ViewModel;
 			set => ViewModel = value as TViewModel;
 		}
 

@@ -2,7 +2,7 @@
 using System.Net.Http;
 using RestSharp.Portable;
 
-namespace Xmf2.Rest.HttpClient.Impl.Http
+namespace Xmf2.Commons.HttpClient.Impl.Http
 {
     /// <summary>
     /// Wraps a <see cref="HttpResponseMessage"/> as <see cref="IHttpResponseMessage"/>.
@@ -79,7 +79,9 @@ namespace Xmf2.Rest.HttpClient.Impl.Http
 		public void EnsureSuccessStatusCode()
         {
             if (ResponseMessage == null)
+            {
                 throw new HttpRequestException(ReasonPhrase);
+            }
 
             ResponseMessage?.EnsureSuccessStatusCode();
         }

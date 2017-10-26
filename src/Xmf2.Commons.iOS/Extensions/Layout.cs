@@ -58,9 +58,7 @@ public static class Layout
 
 	private static IEnumerable<BinaryExpression> FindBinaryExpressionsRecursive(Expression expression)
 	{
-		var binaryExpression = expression as BinaryExpression;
-
-		if (binaryExpression == null)
+		if (!(expression is BinaryExpression binaryExpression))
 		{
 			yield break;
 		}

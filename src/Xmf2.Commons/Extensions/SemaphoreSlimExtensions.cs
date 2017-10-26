@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Xmf2.Commons.Extensions;
 
-namespace Xmf2.Commons.Extensions
+namespace System.Threading
 {
 	public static class SemaphoreSlimExtensions
 	{

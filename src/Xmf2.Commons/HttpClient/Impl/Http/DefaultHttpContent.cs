@@ -3,7 +3,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using RestSharp.Portable;
 
-namespace Xmf2.Rest.HttpClient.Impl.Http
+namespace Xmf2.Commons.HttpClient.Impl.Http
 {
     /// <summary>
     /// A shallow wrapper around a <see cref="HttpContent"/> instance.

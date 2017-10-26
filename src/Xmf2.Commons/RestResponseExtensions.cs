@@ -2,7 +2,7 @@
 using RestSharp.Portable;
 using Xmf2.Commons.OAuth2;
 
-namespace Xmf2.Rest
+namespace Xmf2.Commons
 {
     public static class RestResponseExtensions
     {

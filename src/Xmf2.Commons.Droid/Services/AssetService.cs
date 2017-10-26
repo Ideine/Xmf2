@@ -6,7 +6,6 @@ using Xmf2.Commons.Services.Resources;
 
 namespace Xmf2.Commons.Droid.Services
 {
-	//TODO: revoir si le dossier est bien nommée pour ça
 	public class AssetService : IAssetService
 	{
 		private readonly AssetManager _assetManager;

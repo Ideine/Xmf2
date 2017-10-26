@@ -2,38 +2,40 @@ using System;
 using UIKit;
 using CoreGraphics;
 
-//TODO: mettre dans UIKit
-public static class AnimationExtensions
+namespace UIKit
 {
-	public static TView TranslateY<TView>(this TView view, nfloat offset) where TView : UIView
+	public static class AnimationExtensions
 	{
-		CGRect frame = view.Frame;
-		frame.Y += offset;
-		view.Frame = frame;
+		public static TView TranslateY<TView>(this TView view, nfloat offset) where TView : UIView
+		{
+			CGRect frame = view.Frame;
+			frame.Y += offset;
+			view.Frame = frame;
 
-		return view;
-	}
+			return view;
+		}
 
-	public static TView TranslateX<TView>(this TView view, nfloat offset) where TView : UIView
-	{
-		CGRect frame = view.Frame;
-		frame.X += offset;
-		view.Frame = frame;
+		public static TView TranslateX<TView>(this TView view, nfloat offset) where TView : UIView
+		{
+			CGRect frame = view.Frame;
+			frame.X += offset;
+			view.Frame = frame;
 
-		return view;
-	}
+			return view;
+		}
 
-	public static TView FadeIn<TView>(this TView view) where TView : UIView
-	{
-		view.Alpha = 1f;
+		public static TView FadeIn<TView>(this TView view) where TView : UIView
+		{
+			view.Alpha = 1f;
 
-		return view;
-	}
+			return view;
+		}
 
-	public static TView FadeOut<TView>(this TView view) where TView : UIView
-	{
-		view.Alpha = 0f;
+		public static TView FadeOut<TView>(this TView view) where TView : UIView
+		{
+			view.Alpha = 0f;
 
-		return view;
+			return view;
+		}
 	}
 }

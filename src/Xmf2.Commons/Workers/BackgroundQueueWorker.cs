@@ -31,8 +31,7 @@ namespace Xmf2.Commons.Workers
 			{
 				await _mutex.WaitAsync();
 
-				TWorkerData workerData;
-				if (!_workerQueue.TryDequeue(out workerData)) //should not happen
+				if (!_workerQueue.TryDequeue(out var workerData)) //should not happen
 				{
 					_mutex.Release();
 					continue;
@@ -75,8 +74,7 @@ namespace Xmf2.Commons.Workers
 		{
 			TKey key = _keyGetter(worker);
 
-			TResult result;
-			if (_previousResult.TryGetValue(key, out result))
+			if (_previousResult.TryGetValue(key, out var result))
 			{
 				completionCallback(result);
 				return;
@@ -105,15 +103,13 @@ namespace Xmf2.Commons.Workers
 			{
 				await _mutex.WaitAsync();
 
-				WorkItem wit;
-				if (!_workerQueue.TryDequeue(out wit)) //should not happen
+				if (!_workerQueue.TryDequeue(out var wit)) //should not happen
 				{
 					_mutex.Release();
 					continue;
 				}
 
-				TResult result;
-				if (!_previousResult.TryGetValue(wit.Key, out result))
+				if (!_previousResult.TryGetValue(wit.Key, out var result))
 				{
 					result = await _workerCallback(wit.WorkerData);
 					if (_canCacheResult(wit.WorkerData, result))

@@ -1,9 +1,9 @@
 ﻿using System.Net.Http;
 using System.Net.Http.Headers;
 using RestSharp.Portable;
-using Xmf2.Rest.HttpClient.Impl.Http;
+using Xmf2.Commons.HttpClient.Impl.Http;
 
-namespace Xmf2.Rest.HttpClient
+namespace Xmf2.Commons.HttpClient
 {
     /// <summary>
     /// Extension methods useful for supporting conversion between the objects used by <see cref="System.Net.Http.HttpClient"/> and <see cref="HttpClient.RestClient"/>.
@@ -48,8 +48,7 @@ namespace Xmf2.Rest.HttpClient
                 return null;
             }
 
-            var wrapper = content as HttpContentWrapper;
-            if (wrapper == null)
+            if (!(content is HttpContentWrapper wrapper))
             {
                 return new DefaultHttpContent(content);
             }
@@ -69,8 +68,7 @@ namespace Xmf2.Rest.HttpClient
                 return null;
             }
 
-            var defaultHttpContent = content as DefaultHttpContent;
-            if (defaultHttpContent != null)
+            if (content is DefaultHttpContent defaultHttpContent)
             {
                 return defaultHttpContent.Content;
             }
@@ -98,8 +96,7 @@ namespace Xmf2.Rest.HttpClient
         /// <returns>The <see cref="HttpRequestMessage"/> created from <paramref name="message"/></returns>
         public static HttpRequestMessage AsHttpRequestMessage(this IHttpRequestMessage message)
         {
-            var req = message as DefaultHttpRequestMessage;
-            if (req != null)
+            if (message is DefaultHttpRequestMessage req)
             {
                 return req.RequestMessage;
             }

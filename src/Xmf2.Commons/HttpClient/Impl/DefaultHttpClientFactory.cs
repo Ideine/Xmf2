@@ -4,9 +4,9 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using RestSharp.Portable;
-using Xmf2.Rest.HttpClient.Impl.Http;
+using Xmf2.Commons.HttpClient.Impl.Http;
 
-namespace Xmf2.Rest.HttpClient.Impl
+namespace Xmf2.Commons.HttpClient.Impl
 {
     /// <summary>
     /// The default HTTP client factory

@@ -49,8 +49,7 @@ namespace Xmf2.Commons.OAuth2
 			if (DateTime.Now.Add(Configuration.TokenSafetyMargin) > expireDate.Value)
 			{
 				//get a new refresh token now
-				IOAuth2Client oauth2Client = client as IOAuth2Client;
-				if (oauth2Client == null)
+				if (!(client is IOAuth2Client oauth2Client))
 				{
 					throw new NotSupportedException("This authenticator can only be used with an IOAuth2Client");
 				}

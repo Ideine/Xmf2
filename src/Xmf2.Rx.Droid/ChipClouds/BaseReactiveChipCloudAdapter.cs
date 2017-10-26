@@ -8,7 +8,7 @@ using Xmf2.Commons.Droid.ChipClouds;
 
 namespace Xmf2.Rx.Droid.ChipClouds
 {
-	public class BaseReactiveChipCloudAdapter<ItemData, ViewHolder> : ChipCloudAdapter where ViewHolder : ChipCloudViewHolder
+	public class BaseReactiveChipCloudAdapter<TItemData, TViewHolder> : ChipCloudAdapter where TViewHolder : ChipCloudViewHolder
 	{
 		private readonly LayoutInflater _layoutInflater;
 
@@ -17,16 +17,16 @@ namespace Xmf2.Rx.Droid.ChipClouds
 			_layoutInflater = LayoutInflater.From(Context);
 		}
 
-		public new List<ItemData> ItemSource
+		public new List<TItemData> ItemSource
 		{
-			get => base.ItemSource as List<ItemData>;
+			get => base.ItemSource as List<TItemData>;
 			set => base.ItemSource = value.Select(x => x as object).ToList();
 		}
 
 		public override ChipCloudViewHolder OnCreateViewHolder(ViewGroup parent, int position)
 		{
 			var view = _layoutInflater.Inflate(ItemTemplate, parent, false);
-			var viewHolder = Activator.CreateInstance(typeof(ViewHolder), view) as ViewHolder;
+			var viewHolder = Activator.CreateInstance(typeof(TViewHolder), view) as TViewHolder;
 			return viewHolder;
 		}
 

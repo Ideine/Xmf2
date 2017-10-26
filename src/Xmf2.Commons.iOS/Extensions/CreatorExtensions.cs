@@ -420,11 +420,7 @@ public static class CreatorExtensions
         input.ShouldReturn += (textField) =>
         {
             action?.Invoke();
-            if (nextReponder == null)
-            {
-                return false;
-            }
-            nextReponder.BecomeFirstResponder();
+	        nextReponder?.BecomeFirstResponder();
 			return false;
         };
         return input;

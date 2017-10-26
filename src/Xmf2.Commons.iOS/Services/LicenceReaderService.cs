@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Xmf2.Commons.Services.Licences;
 
 namespace Xmf2.Commons.iOS.Services

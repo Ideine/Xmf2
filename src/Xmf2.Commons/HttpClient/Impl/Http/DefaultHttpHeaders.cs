@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Net.Http.Headers;
 using RestSharp.Portable;
 
-namespace Xmf2.Rest.HttpClient.Impl.Http
+namespace Xmf2.Commons.HttpClient.Impl.Http
 {
     /// <summary>
     /// <see cref="IHttpHeaders"/> implementation using an underlying <see cref="HttpHeaders"/>.

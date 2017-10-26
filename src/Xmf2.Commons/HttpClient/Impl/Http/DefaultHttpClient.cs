@@ -5,7 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using RestSharp.Portable;
 
-namespace Xmf2.Rest.HttpClient.Impl.Http
+namespace Xmf2.Commons.HttpClient.Impl.Http
 {
     /// <summary>
     /// Wraps a <see cref="HttpClient"/> instance as <see cref="IHttpClient"/>.
@@ -38,8 +38,8 @@ namespace Xmf2.Rest.HttpClient.Impl.Http
         /// </summary>
         public Uri BaseAddress
         {
-            get { return Client.BaseAddress; }
-            set { Client.BaseAddress = value; }
+            get => Client.BaseAddress;
+	        set => Client.BaseAddress = value;
         }
 
         /// <summary>
@@ -52,8 +52,8 @@ namespace Xmf2.Rest.HttpClient.Impl.Http
         /// </summary>
         public TimeSpan Timeout
         {
-            get { return Client.Timeout; }
-            set { Client.Timeout = value; }
+            get => Client.Timeout;
+	        set => Client.Timeout = value;
         }
 
         /// <summary>

@@ -3,7 +3,7 @@ using System.Net.Http.Headers;
 using System.Text;
 using RestSharp.Portable;
 
-namespace Xmf2.Rest.HttpClient
+namespace Xmf2.Commons.HttpClient
 {
     /// <summary>
     /// Extension functions for REST requests
@@ -30,15 +30,13 @@ namespace Xmf2.Rest.HttpClient
             }
 
             MediaTypeHeaderValue contentType;
-            var buffer = body.Value as byte[];
-            if (buffer != null)
+            if (body.Value is byte[] buffer)
             {
                 contentType = MediaTypeHeaderValue.Parse(body.ContentType ?? "application/octet-stream");
             }
             else
             {
-                var s = body.Value as string;
-                if (s != null && (body.Encoding != null || request.Serializer == null))
+                if (body.Value is string s && (body.Encoding != null || request.Serializer == null))
                 {
                     var encoding = body.Encoding ?? Encoding.UTF8;
                     contentType = MediaTypeHeaderValue.Parse(body.ContentType ?? "text/plain");

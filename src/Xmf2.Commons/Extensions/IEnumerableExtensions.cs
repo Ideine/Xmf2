@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Xmf2.Commons.Extensions
+namespace System.Collections.Generic
 {
-    public static class EnumerableExtensions
+    public static class IEnumerableExtensions
     {
         public static IEnumerable<T> EmptyIfNull<T>(this IEnumerable<T> source)
         {

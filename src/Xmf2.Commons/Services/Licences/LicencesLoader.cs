@@ -5,7 +5,7 @@ namespace Xmf2.Commons.Services.Licences
 {
     public static class LicencesLoader
     {
-        public static String GetLicensesText(Notices notices, bool showFullLicenseText = true)
+        public static string GetLicensesText(Notices notices, bool showFullLicenseText = true)
         {
             return NoticesHtmlBuilder
                     .Create()

@@ -7,7 +7,7 @@ using ReactiveUI;
 
 namespace Xmf2.Rx.Droid.ListElement
 {
-	public class BaseReactiveRecyclerViewAdapter<ItemData, ViewHolder> : RecyclerView.Adapter where ViewHolder : RecyclerView.ViewHolder, IRecyclerViewViewHolder
+	public class BaseReactiveRecyclerViewAdapter<TItemData, TViewHolder> : RecyclerView.Adapter where TViewHolder : RecyclerView.ViewHolder, IRecyclerViewViewHolder
 	{
 		public int ItemTemplate { get; set; }
 
@@ -17,8 +17,8 @@ namespace Xmf2.Rx.Droid.ListElement
 
 		protected readonly Context Context;
 
-		private IReadOnlyReactiveList<ItemData> _itemsSource;
-		public IReadOnlyReactiveList<ItemData> ItemsSource
+		private IReadOnlyReactiveList<TItemData> _itemsSource;
+		public IReadOnlyReactiveList<TItemData> ItemsSource
 		{
 			get => _itemsSource;
 			set
@@ -41,9 +41,9 @@ namespace Xmf2.Rx.Droid.ListElement
 		{
 		}
 
-		public override int ItemCount => ItemsSource == null ? 0 : ItemsSource.Count;
+		public override int ItemCount => ItemsSource?.Count ?? 0;
 
-		object ItemAt(int position)
+		TItemData ItemAt(int position)
 		{
 			return ItemsSource[position];
 		}
@@ -59,7 +59,7 @@ namespace Xmf2.Rx.Droid.ListElement
 		public override RecyclerView.ViewHolder OnCreateViewHolder(ViewGroup parent, int viewType)
 		{
 			var view = LayoutInflater.From(Context).Inflate(ItemTemplate, parent, false);
-			var viewHolder = Activator.CreateInstance(typeof(ViewHolder), view) as ViewHolder;
+			var viewHolder = Activator.CreateInstance(typeof(TViewHolder), view) as TViewHolder;
 			viewHolder.ItemClick = ItemClick;
 			viewHolder.ItemLongClick = ItemLongClick;
 			return viewHolder;

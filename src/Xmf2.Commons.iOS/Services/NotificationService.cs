@@ -4,7 +4,7 @@ using UIKit;
 using UserNotifications;
 using Xmf2.Commons.Services;
 
-namespace Xmf2.Commons.MvxExtends.Touch.Services
+namespace Xmf2.Commons.iOS.Services
 {
 	public class NotificationService : BaseNotificationService
 	{

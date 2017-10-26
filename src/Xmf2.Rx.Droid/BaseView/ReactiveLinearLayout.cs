@@ -52,20 +52,20 @@ namespace Xmf2.Rx.Droid.BaseView
 			set => ViewModel = value as TViewModel;
 		}
 
-		private readonly Subject<Unit> activated = new Subject<Unit>();
-		public new IObservable<Unit> Activated => activated;
+		private readonly Subject<Unit> _activated = new Subject<Unit>();
+		public new IObservable<Unit> Activated => _activated;
 
-		private readonly Subject<Unit> deactivated = new Subject<Unit>();
-		public IObservable<Unit> Deactivated => deactivated;
+		private readonly Subject<Unit> _deactivated = new Subject<Unit>();
+		public IObservable<Unit> Deactivated => _deactivated;
 
 		public void Activate()
 		{
-			RxApp.MainThreadScheduler.Schedule(() => (activated).OnNext(Unit.Default));
+			RxApp.MainThreadScheduler.Schedule(() => (_activated).OnNext(Unit.Default));
 		}
 
 		public void Deactivate()
 		{
-			RxApp.MainThreadScheduler.Schedule(() => (deactivated).OnNext(Unit.Default));
+			RxApp.MainThreadScheduler.Schedule(() => (_deactivated).OnNext(Unit.Default));
 		}
 
 		#endregion

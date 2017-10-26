@@ -14,11 +14,11 @@ namespace Xmf2.Rx.Droid.ListElement
 	{
 		protected Context Context { get; }
 
-		private readonly Subject<Unit> activated = new Subject<Unit>();
-		public IObservable<Unit> Activated => activated;
+		private readonly Subject<Unit> _activated = new Subject<Unit>();
+		public IObservable<Unit> Activated => _activated;
 
-		private readonly Subject<Unit> deactivated = new Subject<Unit>();
-		public IObservable<Unit> Deactivated => deactivated;
+		private readonly Subject<Unit> _deactivated = new Subject<Unit>();
+		public IObservable<Unit> Deactivated => _deactivated;
 
 		public ICommand ItemClick { get; set; }
 
@@ -71,12 +71,12 @@ namespace Xmf2.Rx.Droid.ListElement
 
 		public void OnViewAttachedToWindow()
 		{
-			RxApp.MainThreadScheduler.Schedule(() => (activated).OnNext(Unit.Default));
+			RxApp.MainThreadScheduler.Schedule(() => (_activated).OnNext(Unit.Default));
 		}
 
 		public void OnViewDetachedFromWindow()
 		{
-			RxApp.MainThreadScheduler.Schedule(() => (deactivated).OnNext(Unit.Default));
+			RxApp.MainThreadScheduler.Schedule(() => (_deactivated).OnNext(Unit.Default));
 		}
 
 		public virtual void OnViewRecycled() { }

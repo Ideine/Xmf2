@@ -7,10 +7,10 @@ namespace Xmf2.Commons.Services.Licences
 {
     public class NoticesHtmlBuilder
     {
-        private Dictionary<Licence, String> mLicenseTextCache = new Dictionary<Licence, String>();
+        private readonly Dictionary<Licence, string> _mLicenseTextCache = new Dictionary<Licence, string>();
         private Notices _notices;
         private Notice _notice;
-        private String _style;
+        private string _style;
         private bool _showFullLicenseText;
 
         private bool _isUrlClickable;
@@ -51,7 +51,7 @@ namespace Xmf2.Commons.Services.Licences
             return this;
         }
 
-        public NoticesHtmlBuilder SetStyle(String style)
+        public NoticesHtmlBuilder SetStyle(string style)
         {
             _style = style;
             return this;
@@ -69,7 +69,7 @@ namespace Xmf2.Commons.Services.Licences
             return this;
         }
 
-        public String Build()
+        public string Build()
         {
             StringBuilder noticesHtmlBuilder = new StringBuilder(500);
             AppendNoticesContainerStart(noticesHtmlBuilder);
@@ -93,8 +93,6 @@ namespace Xmf2.Commons.Services.Licences
             return noticesHtmlBuilder.ToString();
         }
 
-        //
-
         private void AppendNoticesContainerStart(StringBuilder noticesHtmlBuilder)
         {
             noticesHtmlBuilder.Append("<!DOCTYPE html><html><head>")
@@ -105,8 +103,8 @@ namespace Xmf2.Commons.Services.Licences
         private void AppendNoticeBlock(StringBuilder noticesHtmlBuilder, Notice notice)
         {
             noticesHtmlBuilder.Append("<ul><li>").Append(notice.Name);
-            String currentNoticeUrl = notice.Url;
-            if (currentNoticeUrl != null && currentNoticeUrl.Length > 0)
+            string currentNoticeUrl = notice.Url;
+            if (!string.IsNullOrEmpty(currentNoticeUrl))
             {
                 if (_isUrlClickable)
                 {
@@ -123,12 +121,12 @@ namespace Xmf2.Commons.Services.Licences
             }
             noticesHtmlBuilder.Append("</li></ul>");
             noticesHtmlBuilder.Append("<pre>");
-            String copyright = notice.Copyright;
+            string copyright = notice.Copyright;
             if (!string.IsNullOrEmpty(copyright))
             {
                 noticesHtmlBuilder.Append(copyright).Append("<br/><br/>");
             }
-            noticesHtmlBuilder.Append(GetLicenseText(notice.License)).Append("</pre>");
+            noticesHtmlBuilder.Append(GetLicenseText(notice.Licence)).Append("</pre>");
         }
 
         private void AppendNoticesContainerEnd(StringBuilder noticesHtmlBuilder)
@@ -136,15 +134,15 @@ namespace Xmf2.Commons.Services.Licences
             noticesHtmlBuilder.Append("</body></html>");
         }
 
-        private String GetLicenseText(Licence license)
+        private string GetLicenseText(Licence license)
         {
             if (license != null)
             {
-                if (!mLicenseTextCache.ContainsKey(license))
+                if (!_mLicenseTextCache.ContainsKey(license))
                 {
-                    mLicenseTextCache[license] = _showFullLicenseText ? license.GetFullText(license.LicencePathFile) : license.GetSummaryText(license.LicencePathFile);
+                    _mLicenseTextCache[license] = _showFullLicenseText ? license.GetFullText(license.LicencePathFile) : license.GetSummaryText(license.LicencePathFile);
                 }
-                return mLicenseTextCache[license];
+                return _mLicenseTextCache[license];
             }
             return "";
         }

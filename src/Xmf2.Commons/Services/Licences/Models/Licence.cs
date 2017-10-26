@@ -8,39 +8,29 @@ namespace Xmf2.Commons.Services.Licences.Models
 
         public virtual string LicencePathFile { get; set; } = "";
 
-        public virtual String Name { get; set; } = "";
+        public virtual string Name { get; set; } = "";
 
-        public virtual String Version { get; set; } = "";
+        public virtual string Version { get; set; } = "";
 
-        public virtual String Url { get; set; } = "";
+        public virtual string Url { get; set; } = "";
 
-        private String CachedSummaryText = null;
+        private string CachedSummaryText = null;
 
-        private String CachedFullText = null;
+        private string CachedFullText = null;
 
         public Licence(ILicenceReaderService readerService)
         {
             _licenceReaderService = readerService;
         }
 
-        public String GetSummaryText(string licencePathFile)
+        public string GetSummaryText(string licencePathFile)
         {
-            if (CachedSummaryText == null)
-            {
-                CachedSummaryText = ReadSummaryTextFromPath(licencePathFile);
-            }
-
-            return CachedSummaryText;
+            return CachedSummaryText ?? (CachedSummaryText = ReadSummaryTextFromPath(licencePathFile));
         }
 
-        public String GetFullText(string licencePathFile)
+        public string GetFullText(string licencePathFile)
         {
-            if (CachedFullText == null)
-            {
-                CachedFullText = ReadFullTextFromPath(licencePathFile);
-            }
-
-            return CachedFullText;
+            return CachedFullText ?? (CachedFullText = ReadFullTextFromPath(licencePathFile));
         }
 
         protected string GetContent(string licencePathFile)

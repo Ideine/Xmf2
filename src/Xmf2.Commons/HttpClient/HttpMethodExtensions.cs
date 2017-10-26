@@ -4,7 +4,7 @@ using System.Linq;
 using System.Net.Http;
 using RestSharp.Portable;
 
-namespace Xmf2.Rest.HttpClient
+namespace Xmf2.Commons.HttpClient
 {
     /// <summary>
     /// Helper functions to convert to/from <see cref="HttpMethod"/>
@@ -33,8 +33,7 @@ namespace Xmf2.Rest.HttpClient
         /// <returns>The converted <paramref name="method"/></returns>
         public static HttpMethod ToHttpMethod(this Method method)
         {
-            HttpMethod result;
-            if (_methodsToHttpMethods.TryGetValue(method, out result))
+            if (_methodsToHttpMethods.TryGetValue(method, out var result))
             {
                 return result;
             }
@@ -49,8 +48,7 @@ namespace Xmf2.Rest.HttpClient
         /// <returns>The converted <paramref name="method"/></returns>
         public static Method ToMethod(this HttpMethod method)
         {
-            Method result;
-            if (_httpMethodsToMethods.TryGetValue(method.Method, out result))
+            if (_httpMethodsToMethods.TryGetValue(method.Method, out var result))
             {
                 return result;
             }

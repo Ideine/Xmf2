@@ -3,9 +3,9 @@ using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using RestSharp.Portable;
-using Xmf2.Rest.HttpClient.Impl.Http;
+using Xmf2.Commons.HttpClient.Impl.Http;
 
-namespace Xmf2.Rest.HttpClient
+namespace Xmf2.Commons.HttpClient
 {
     /// <summary>
     /// Extension functions for REST clients
@@ -117,8 +117,7 @@ namespace Xmf2.Rest.HttpClient
             var multipartContent = new MultipartFormDataContent();
             foreach (var parameter in parameters.OtherParameters)
             {
-                var fileParameter = parameter as FileParameter;
-                if (fileParameter != null)
+                if (parameter is FileParameter fileParameter)
                 {
                     var file = fileParameter;
                     var data = new ByteArrayContent((byte[])file.Value);
@@ -129,8 +128,7 @@ namespace Xmf2.Rest.HttpClient
                 else if (isPostMethod && parameter.Type == ParameterType.GetOrPost)
                 {
                     HttpContent data;
-                    var bytes = parameter.Value as byte[];
-                    if (bytes != null)
+                    if (parameter.Value is byte[] bytes)
                     {
                         var rawData = bytes;
                         data = new ByteArrayContent(rawData);
@@ -157,7 +155,9 @@ namespace Xmf2.Rest.HttpClient
                     var data = request.GetBodyContent(parameter);
                     var parameterName = parameter.Name ?? data.Headers.ContentType.MediaType;
                     if (string.IsNullOrEmpty(parameterName))
+                    {
                         throw new InvalidOperationException("You must specify a name for a body parameter.");
+                    }
                     multipartContent.Add(data, parameterName);
                 }
             }
