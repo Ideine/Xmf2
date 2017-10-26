@@ -65,6 +65,7 @@ namespace Xmf2.Commons.iOS.Controls
 		}
 		public UIButton LeftButton { get; }
 		public UIButton RightButton { get; }
+
 		public UILabel Title { get; }
 
 		#endregion
@@ -102,6 +103,19 @@ namespace Xmf2.Commons.iOS.Controls
 				_layoutDone = true;
 				ApplyAutoLayout();
 			}
+		}
+
+		public NavBarWithTwoActions ConstrainHeightToDefault(bool withStatusBarHeight = true)
+		{
+			if (withStatusBarHeight)
+			{
+				this.ConstrainHeight(LayoutConsts.UINavBar_DefaultHeight + LayoutConsts.UIStatusBar_DefaultHeight);
+			}
+			else
+			{
+				this.ConstrainHeight(LayoutConsts.UINavBar_DefaultHeight);
+			}
+			return this;
 		}
 
 		protected virtual void ApplyAutoLayout()

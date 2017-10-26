@@ -11,6 +11,8 @@ namespace Xmf2.Commons.Droid.LinearList
 
 		public View ItemView { get; }
 
+		public virtual bool HasBottomSeparator { get; set; }
+
 		private bool _isAttachedToWindow;
 		private bool _clickOverloaded;
 		private ICommand _itemClick;

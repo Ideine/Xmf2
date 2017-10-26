@@ -50,6 +50,9 @@
     <Reference Include="HockeySDK.iOSBindings, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>..\..\..\..\packages\HockeySDK.Xamarin.5.0.0\lib\Xamarin.iOS10\HockeySDK.iOSBindings.dll</HintPath>
     </Reference>
+    <Reference Include="ReactiveUI.Events, Version=7.3.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\..\..\..\packages\reactiveui-events.7.3.0\lib\Xamarin.iOS10\ReactiveUI.Events.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
@@ -74,6 +77,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controls\ItemsControl\BaseReactiveItemCell.cs" />
+    <Compile Include="Controls\ItemsControl\IUIComponent.cs" />
+    <Compile Include="Extensions\BindingExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\Reportings\HockeyAppService.cs" />
     <Compile Include="Views\BaseViewController.cs" />
@@ -87,11 +93,11 @@
       <Name>Xmf2.Commons.iOS</Name>
     </ProjectReference>
     <ProjectReference Include="..\Xmf2.Commons\Xmf2.Commons.csproj">
-      <Project>{4254C358-47E0-4C12-92F2-A28F82E96FA3}</Project>
+      <Project>{9D1BB55C-153D-4456-A691-9AB50F5C6F2A}</Project>
       <Name>Xmf2.Commons</Name>
     </ProjectReference>
     <ProjectReference Include="..\Xmf2.Rx\Xmf2.Rx.csproj">
-      <Project>{7BAEF5D5-E896-4F90-87DD-1A908A232444}</Project>
+      <Project>{B38C6C1C-A69B-4E5B-8754-CF439BA7E325}</Project>
       <Name>Xmf2.Rx</Name>
     </ProjectReference>
   </ItemGroup>

@@ -1,14 +1,13 @@
-﻿using System.Collections.Generic;
 using System.Linq;
 
 namespace System.Collections.Generic
 {
-    public static class IEnumerableExtensions
-    {
-        public static IEnumerable<T> EmptyIfNull<T>(this IEnumerable<T> source)
-        {
+	public static class IEnumerableExtensions
+	{
+		public static IEnumerable<T> EmptyIfNull<T>(this IEnumerable<T> source)
+		{
 			return source ?? Enumerable.Empty<T>();
-        }
+		}
 
 		/// <summary>
 		/// Détermine si la séquence passée est <c>null</c> ou vide.
@@ -45,7 +44,7 @@ namespace System.Collections.Generic
 		/// <param name="predicate"></param>
 		/// <returns>false si la séquence source contient est vide; sinon, true.</returns>
 		/// <exception cref="ArgumentNullException"><paramref name="source"/> a la valeur null</exception>
-		public static bool None<T>(this IEnumerable<T> source, Func<T,bool> predicate)
+		public static bool None<T>(this IEnumerable<T> source, Func<T, bool> predicate)
 		{
 			if (source == null)
 			{

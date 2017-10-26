@@ -3,36 +3,40 @@ using System.Runtime.CompilerServices;
 using CoreGraphics;
 using UIKit;
 using Xmf2.Commons.iOS.Controls;
+using System.Runtime.CompilerServices;
 
 //TODO: UIKit
 public static class CreatorExtensions
 {
-    #region UIButton
-	//TODO: tout passer en this UIResponder au lieu de object
-	//TODO: vérifier le support iOS 7
-	//TODO: inlining
-    public static UIButton CreateButton(this object parent)
+//TODO: tout passer en this UIResponder au lieu de object
+//TODO: vérifier le support iOS 7
+//TODO: inlining
+	
+	#region UIButton
+	
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static UIButton CreateButton(this UIResponder _)
     {
         return new UIButton(UIButtonType.Custom);
     }
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static UIButton CreateButton(this object parent, UIButtonType type)
+    public static UIButton CreateButton(this UIResponder parent, UIButtonType type)
     {
         return new UIButton(type);
     }
 
-    public static UIHighlightButton CreateHighlightButton(this object parent)
+    public static UIHighlightButton CreateHighlightButton(this UIResponder parent)
     {
         return new UIHighlightButton();
     }
-
 
 	public static TUIButton WithHighlightBackgroundColor<TUIButton>(this TUIButton button, int color) where TUIButton : UIHighlightButton
 	{
 		button.HighlightColor = color.ColorFromHex();
 		return button;
 	}
+	
 	public static TUIButton WithHighlightBackgroundColor<TUIButton>(this TUIButton button, UIColor color) where TUIButton : UIHighlightButton
     {
         button.HighlightColor = color;
@@ -82,14 +86,7 @@ public static class CreatorExtensions
 	}
 	public static TUIButton WithImage<TUIButton>(this TUIButton button, string image, UIControlState state) where TUIButton : UIButton
 	{
-		if (String.IsNullOrEmpty(image))
-		{
-			button.SetImage(null, state);
-		}
-		else
-		{
-			button.SetImage(new UIImage(image), state);
-		}
+		button.SetImage(string.IsNullOrEmpty(image) ? null : new UIImage(image), state);
 		return button;
 	}
 
@@ -174,17 +171,17 @@ public static class CreatorExtensions
 
 	#region UIView
 
-	public static UIView CreateSeparator(this object parent)
+	public static UIView CreateSeparator(this UIResponder parent)
 	{
 		return new UIView();
 	}
 
-	public static UIView CreateSeparator(this object parent, UIColor backgroundColor)
+	public static UIView CreateSeparator(this UIResponder parent, UIColor backgroundColor)
 	{
 		return new UIView().WithBackgroundColor(backgroundColor);
 	}
 
-    public static UIView CreateView(this object parent)
+    public static UIView CreateView(this UIResponder parent)
     {
         return new UIView();
     }
@@ -230,7 +227,7 @@ public static class CreatorExtensions
 
 	#region ScrollView
 
-	public static UIScrollView CreateVerticalScroll(this object _)
+	public static UIScrollView CreateVerticalScroll(this UIResponder _)
     {
         return new UIScrollView()
         {
@@ -268,7 +265,7 @@ public static class CreatorExtensions
 
     #region UILabel
 
-    public static UILabel CreateLabel(this object parent)
+    public static UILabel CreateLabel(this UIResponder parent)
     {
         return new UILabel();
     }
@@ -324,10 +321,17 @@ public static class CreatorExtensions
 
     #region UITextField
 
-    public static UITextField CreateTextField(this object parent)
+    public static UITextField CreateTextField(this UIResponder parent)
     {
         return new UITextField();
     }
+
+	public static UITextField WithLeftPadding(this UITextField input, int leftPadding)
+	{
+		input.LeftView = new UIView(new CGRect(0, 0, leftPadding, 5));
+		input.LeftViewMode = UITextFieldViewMode.Always;
+		return input;
+	}
 
     public static UITextField AsPasswordField(this UITextField input, UIReturnKeyType returnKeyType)
     {
@@ -339,6 +343,16 @@ public static class CreatorExtensions
         input.SecureTextEntry = true;
         return input;
     }
+	
+	public static UITextField AsSearchField(this UITextField input, UIReturnKeyType returnKeyType = UIReturnKeyType.Search)
+	{
+		input.KeyboardType = UIKeyboardType.Default;
+		input.SpellCheckingType = UITextSpellCheckingType.No;
+		input.ReturnKeyType = returnKeyType;
+		input.AutocorrectionType = UITextAutocorrectionType.No;
+		input.AutocapitalizationType = UITextAutocapitalizationType.None;
+		return input;
+	}
 
     public static UITextField AsEmailField(this UITextField input, UIReturnKeyType returnKeyType)
     {
@@ -436,7 +450,7 @@ public static class CreatorExtensions
 
 	#region UISearchBar
 
-	public static UISearchBar CreateSearchBar(this object parent)
+	public static UISearchBar CreateSearchBar(this UIResponder parent)
     {
         return new UISearchBar();
     }
@@ -494,7 +508,7 @@ public static class CreatorExtensions
 
     #region UITextView
 
-    public static UITextView CreateTextView(this object parent)
+    public static UITextView CreateTextView(this UIResponder parent)
     {
         return new UITextView();
     }
@@ -509,7 +523,7 @@ public static class CreatorExtensions
 
     #region UIImageView
 
-    public static UIImageView CreateImageView(this object parent)
+    public static UIImageView CreateImageView(this UIResponder parent)
     {
         return new UIImageView();
     }
@@ -522,8 +536,20 @@ public static class CreatorExtensions
 
     public static UIImageView WithImage(this UIImageView view, string imageName)
     {
-        view.Image = new UIImage(imageName);
-        return view;
+	#if DEBUG
+	    try
+	    {
+		    view.Image = new UIImage(imageName);
+	    }
+	    catch (Exception ex)
+	    {
+		    System.Diagnostics.Debug.WriteLine($"Missing image: {imageName} {ex}");
+		    throw;
+	    }
+	#else
+		view.Image = new UIImage(imageName);
+	#endif
+	    return view;
     }
 
     public static UIImageView UniformToFit(this UIImageView view)
@@ -586,7 +612,11 @@ public static class CreatorExtensions
         return view;
     }
 
-    public static TView WithBorder<TView>(this TView view, UIColor borderColor, int size) where TView : UIView
+	public static TView WithBorder<TView>(this TView view, int borderColor, int size) where TView : UIView
+	{
+		return view.WithBorder(borderColor.ColorFromHex(), size);
+	}
+	public static TView WithBorder<TView>(this TView view, UIColor borderColor, int size) where TView : UIView
     {
         view.Layer.BorderColor = borderColor.CGColor;
         view.Layer.BorderWidth = size;
@@ -653,7 +683,7 @@ public static class CreatorExtensions
 
 	#region UIDatePicker
 
-	public static UIDatePicker CreateDatePicker(this object _)
+	public static UIDatePicker CreateDatePicker(this UIResponder _)
 	{
 		return new UIDatePicker();
 	}
@@ -665,6 +695,4 @@ public static class CreatorExtensions
 	}
 
 	#endregion UIDatePicker
-
-
 }

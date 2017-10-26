@@ -8,7 +8,7 @@ using Xmf2.Commons.Errors;
 
 namespace System
 {
-	public static class ObservableExtensions
+	public static class IObservableExtensions
 	{
 		public static Task<TResult> WaitForOneAsync<TResult>(this IObservable<TResult> source) => Task.Run(() => source.FirstOrDefaultAsync().Wait());
 		
@@ -49,13 +49,13 @@ namespace System
 				.Catch<T, Exception>(ex => Observable.Return(default(T)));
 		}
 
-		public static IDisposable SubscribeWithErrorHandling<T>(this IObservable<T> observable, CustomErrorHandler customHandler = null)
+		public static IDisposable SubscribeWithErrorHandling<T>(this IObservable<T> observable, Action<T> onNext, CustomErrorHandler customHandler = null)
 		{
 			IErrorHandler errorHandler = Locator.Current.GetService<IErrorHandler>();
 
 			return errorHandler.Execute(observable, customHandler)
 				.Catch<T, Exception>(ex => Observable.Return(default(T)))
-				.Subscribe();
+				.Subscribe(onNext);
 
 		}
 
@@ -149,5 +149,25 @@ namespace System
 			return source.Select(tuple => selector(tuple.Item1, tuple.Item2, tuple.Item3, tuple.Item4, tuple.Item5));
 		}
 		#endregion
+
+		public static IObservable<T> TriggeredAlsoOn<T, T1>(this IObservable<T> mainObservable, IObservable<T1> observable1)
+		{
+			return Observable.CombineLatest(mainObservable, observable1, (mainObserved, _) => mainObserved);
+		}
+		public static IObservable<T> TriggeredAlsoOn<T, T1, T2>(
+			this IObservable<T> mainObservable,
+			IObservable<T1> observable1,
+			IObservable<T2> observable2)
+		{
+			return Observable.CombineLatest(mainObservable, observable1, observable2, (mainObserved, _1, _2) => mainObserved);
+		}
+		public static IObservable<T> TriggeredAlsoOn<T, T2, T3, T4>(
+			this IObservable<T> mainObservable,
+			IObservable<T2> observable1,
+			IObservable<T3> observable2,
+			IObservable<T4> observable3)
+		{
+			return Observable.CombineLatest(mainObservable, observable1, observable2, observable3, (mainObserved, _1, _2, _3) => mainObserved);
+		}
 	}
 }

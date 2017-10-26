@@ -1,60 +1,67 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using UIKit;
+using static UIKit.NSLayoutAttribute;
+using static UIKit.NSLayoutRelation;
 
 public static class CustomAutoLayoutExtensions
 {
+
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static UIView CenterAndFillWidth(this UIView containerView, params UIView[] views)
 	{
-		if (views == null)
-		{
-			throw new ArgumentNullException(nameof(views));
-		}
-
-		foreach (UIView view in views)
-		{
-			containerView.ConstrainLayout(() =>
-										  view.CenterX() == containerView.CenterX()
-										  && view.Width() == containerView.Width()
-										 );
-		}
-
-		return containerView;
+		return CenterAndFillWidth(containerView, 0, views);
 	}
 
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static UIView CenterAndFillWidth(this UIView containerView, int margin, params UIView[] views)
 	{
 		if (views == null)
 		{
 			throw new ArgumentNullException(nameof(views));
 		}
-
 		foreach (UIView view in views)
 		{
-			containerView.ConstrainLayout(() =>
-										  view.CenterX() == containerView.CenterX()
-										  && view.Width() == containerView.Width() - margin
-										 );
+			containerView.CenterAndFillWidth(view, margin);
 		}
-
 		return containerView;
 	}
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static UIView CenterAndFillWidth(this UIView containerView, UIView view, int margin = 0)
+	{
+		containerView.ConstrainLayout(() => view.CenterX() == containerView.CenterX()
+										 && view.Width()   == containerView.Width() - margin
+									);
+		return containerView;
+	}
+
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static UIView CenterAndFillHeight(this UIView containerView, params UIView[] views)
+	{
+		return CenterAndFillHeight(containerView, 0, views);
+	}
+
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static UIView CenterAndFillHeight(this UIView containerView, int margin, params UIView[] views)
 	{
 		if (views == null)
 		{
 			throw new ArgumentNullException(nameof(views));
 		}
-
 		foreach (UIView view in views)
 		{
-			containerView.ConstrainLayout(() =>
-										  view.CenterY() == containerView.CenterY()
-										  && view.Height() == containerView.Height()
-										 );
+			containerView.CenterAndFillHeight(view, margin);
 		}
+		return containerView;
+	}
 
+	public static UIView CenterAndFillHeight(this UIView containerView, UIView view, int margin = 0)
+	{
+		containerView.ConstrainLayout(() => view.CenterY() == containerView.CenterY()
+										 && view.Height()  == containerView.Height() - margin
+										 );
 		return containerView;
 	}
 
@@ -165,9 +172,12 @@ public static class CustomAutoLayoutExtensions
 		return containerView;
 	}
 
-	public static UIView AnchorLeft(this UIView containerView, UIView view, int margin = 0)
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static UIView AnchorLeft(this UIView containerView, UIView view, float margin = 0)
 	{
-		containerView.ConstrainLayout(() => view.Left() == containerView.Left() + margin);
+		containerView.AddConstraint(NSLayoutConstraint.Create(containerView, Left, Equal, view, Left, 1, -margin));
+		containerView.TranslatesAutoresizingMaskIntoConstraints = false;
+		view.TranslatesAutoresizingMaskIntoConstraints = false;
 		return containerView;
 	}
 
@@ -220,9 +230,12 @@ public static class CustomAutoLayoutExtensions
 		return containerView;
 	}
 
-	public static UIView VerticalSpace(this UIView containerView, UIView top, UIView bottom, int margin = 0)
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static UIView VerticalSpace(this UIView containerView, UIView topView, UIView bottomView, float margin = 0)
 	{
-		containerView.ConstrainLayout(() => bottom.Top() == top.Bottom() + margin);
+		containerView.AddConstraint(NSLayoutConstraint.Create(topView, Bottom, Equal, bottomView, Top, 1f, -margin));
+		topView.TranslatesAutoresizingMaskIntoConstraints = false;
+		bottomView.TranslatesAutoresizingMaskIntoConstraints = false;
 		return containerView;
 	}
 	public static UIView MinVerticalSpace(this UIView containerView, UIView top, UIView bottom, int margin = 0)
@@ -242,15 +255,19 @@ public static class CustomAutoLayoutExtensions
 		return containerView;
 	}
 
-	public static UIView ConstrainHeight(this UIView view, int height)
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static UIView ConstrainHeight(this UIView view, float height)
 	{
-		view.ConstrainLayout(() => view.Height() == height);
+		view.AddConstraint(NSLayoutConstraint.Create(view, Height, Equal, 1, height));
+		view.TranslatesAutoresizingMaskIntoConstraints = false;
 		return view;
 	}
 
-	public static UIView ConstrainWidth(this UIView view, int width)
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static UIView ConstrainWidth(this UIView view, float width)
 	{
-		view.ConstrainLayout(() => view.Width() == width);
+		view.AddConstraint(NSLayoutConstraint.Create(view, Width, Equal, 1, width));
+		view.TranslatesAutoresizingMaskIntoConstraints = false;
 		return view;
 	}
 
@@ -320,6 +337,12 @@ public static class CustomAutoLayoutExtensions
 		return view;
 	}
 
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static UIView Same(this UIView view, UIView childView)
+	{
+		return view.Same(view, childView);
+	}
+
 	public static UIView Same(this UIView view, UIView reference, UIView dest)
 	{
 		view.ConstrainLayout(() => reference.CenterY() == dest.CenterY()
@@ -329,15 +352,19 @@ public static class CustomAutoLayoutExtensions
 		return view;
 	}
 
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static UIView SameWidth(this UIView view, UIView v1, UIView v2)
 	{
-		view.ConstrainLayout(() => v1.Width() == v2.Width());
+		view.AddConstraint(NSLayoutConstraint.Create(v1, Width, Equal, v2, Width, 1f, 0f));
+		view.TranslatesAutoresizingMaskIntoConstraints = false;
 		return view;
 	}
 
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static UIView SameHeight(this UIView view, UIView v1, UIView v2)
 	{
-		view.ConstrainLayout(() => v1.Height() == v2.Height());
+		view.AddConstraint(NSLayoutConstraint.Create(v1, Height, Equal, v2, Height, 1f, 0f));
+		view.TranslatesAutoresizingMaskIntoConstraints = false;
 		return view;
 	}
 
@@ -396,6 +423,24 @@ public static class CustomAutoLayoutExtensions
 	{
 		var delta = constraintsToAdd.Except(view.Constraints).ToArray();
 		view.AddConstraints(delta);
+		return view;
+	}
+	public static UIView EnsureAdd(this UIView view, params UIGestureRecognizer[] gestureRecognizersToAdd)
+	{
+		var delta = gestureRecognizersToAdd.Except(view.GestureRecognizers).ToArray();
+		foreach (var recognizer in delta)
+		{
+			view.AddGestureRecognizer(recognizer);
+		}
+		return view;
+	}
+	public static UIView EnsureRemove(this UIView view, params UIGestureRecognizer[] gestureRecognizersToRemove)
+	{
+		var delta = view.GestureRecognizers.Intersect(gestureRecognizersToRemove).ToArray();
+		foreach (var recognizer in delta)
+		{
+			view.RemoveGestureRecognizer(recognizer);
+		}
 		return view;
 	}
 	public static UIView EnsureRemove(this UIView view, params UIView[] subviewsToRemove)
