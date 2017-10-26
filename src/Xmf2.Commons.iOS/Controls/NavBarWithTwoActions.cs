@@ -17,36 +17,43 @@ namespace Xmf2.Commons.iOS.Controls
 
 		public Action LeftAction { get; set; }
 		public Action RightAction { get; set; }
+
 		public ICommand LeftCommand
 		{
 			get => null;
-			set { LeftAction = () => value?.TryExecute(); }
+			set => LeftAction = () => value?.TryExecute();
 		}
+
 		public ICommand RightCommand
 		{
 			get => null;
-			set { RightAction = () => value?.TryExecute(); }
+			set => RightAction = () => value?.TryExecute();
 		}
+
 		public string LeftActionTitle
 		{
 			get => LeftButton?.Title(UIControlState.Normal);
 			set => LeftButton.WithTitle(value);
 		}
+
 		public string RightActionTitle
 		{
 			get => RightButton?.Title(UIControlState.Normal);
 			set => RightButton.WithTitle(value);
 		}
+
 		public string TextTitle
 		{
 			get => Title?.Text;
 			set => Title.WithText(value);
 		}
+
 		public UIFont TextTitleFont
 		{
 			get => Title?.Font;
 			set => Title.WithFont(value);
 		}
+
 		public UIColor TitleColor
 		{
 			get => Title?.TextColor;
@@ -58,11 +65,13 @@ namespace Xmf2.Commons.iOS.Controls
 			get => LeftButton?.Hidden ?? false;
 			set => LeftButton.Hidden = !value;
 		}
+
 		public bool HasRightAction
 		{
 			get => RightButton?.Hidden ?? false;
 			set => RightButton.Hidden = !value;
 		}
+
 		public UIButton LeftButton { get; }
 		public UIButton RightButton { get; }
 
@@ -74,16 +83,16 @@ namespace Xmf2.Commons.iOS.Controls
 		{
 			this.LeftButton  = this.CreateButton().WithTitle(LeftActionTitle) .OnClick(OnClickLeftButton) .WithTextColorHighlight(_DEFAULT_TEXT_HIGHLIGHT_COLOR);
 			this.RightButton = this.CreateButton().WithTitle(RightActionTitle).OnClick(OnClickRightButton).WithTextColorHighlight(_DEFAULT_TEXT_HIGHLIGHT_COLOR);
-			this.Title		 = this.CreateLabel()
-								   .WithText(TextTitle)
-								   .WithAlignment(UITextAlignment.Center);
+			this.Title = this.CreateLabel()
+				.WithText(TextTitle)
+				.WithAlignment(UITextAlignment.Center);
 			this.Title.AdjustsFontSizeToFitWidth = true;
 			this.Title.MinimumScaleFactor = 0.7f;
 
-			bool hasLeftImage  = !string.IsNullOrEmpty(leftImage);
+			bool hasLeftImage = !string.IsNullOrEmpty(leftImage);
 			bool hasRightImage = !string.IsNullOrEmpty(rightImage);
-			LeftButton .ContentEdgeInsets = new UIEdgeInsets(top: 0, left: 15, bottom: 0, right:  0);
-			RightButton.ContentEdgeInsets = new UIEdgeInsets(top: 0, left:  0, bottom: 0, right: 15);
+			LeftButton.ContentEdgeInsets = new UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 0);
+			RightButton.ContentEdgeInsets = new UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 15);
 			if (hasLeftImage)
 			{
 				LeftButton.WithImage(leftImage);
@@ -125,23 +134,23 @@ namespace Xmf2.Commons.iOS.Controls
 				.AnchorBottom(_container);
 
 			_container.CenterVertically(LeftButton)
-					  .CenterVertically(Title)
-					  .CenterVertically(RightButton)
-					  .FillHeight(LeftButton)
-					  .FillHeight(RightButton)
-					  ;
+				.CenterVertically(Title)
+				.CenterVertically(RightButton)
+				.FillHeight(LeftButton)
+				.FillHeight(RightButton)
+				;
 
 			//Horizontal Layout
 			this.CenterAndFillWidth(_container);
 
 			_container.AnchorLeft(LeftButton)
-					  .AnchorRight(RightButton)
-					  .CenterHorizontally(Title)
-					  .MinHorizontalSpace(LeftButton, Title)
-					  .MinHorizontalSpace(Title, RightButton);
+				.AnchorRight(RightButton)
+				.CenterHorizontally(Title)
+				.MinHorizontalSpace(LeftButton, Title)
+				.MinHorizontalSpace(Title, RightButton);
 			Title.SetContentCompressionResistancePriority((float)UILayoutPriority.DefaultLow, UILayoutConstraintAxis.Horizontal);
 		}
-	
+
 		public virtual void OnClickLeftButton()
 		{
 			LeftAction?.Invoke();
@@ -155,13 +164,14 @@ namespace Xmf2.Commons.iOS.Controls
 		#region Dispose
 
 		private bool _disposed;
+
 		protected override void Dispose(bool disposing)
 		{
 			if (!_disposed)
 			{
 				try
 				{
-					if (disposing)// Release managed resources.
+					if (disposing) // Release managed resources.
 					{
 						LeftAction = null;
 						RightAction = null;
@@ -246,4 +256,3 @@ namespace Xmf2.Commons.iOS.Controls
 		#endregion
 	}
 }
-

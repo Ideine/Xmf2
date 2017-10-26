@@ -11,7 +11,7 @@ using RestClientExtensions = Xmf2.Commons.HttpClient.RestClientExtensions;
 namespace Xmf2.Commons.OAuth2
 {
 	public class OAuth2RestClient : RestClientBase, IOAuth2Client
-    {
+	{
 		private readonly SemaphoreSlim _locker = new SemaphoreSlim(1, 1);
 
 		protected OAuth2Authenticator OAuth2Authenticator { get; set; }
@@ -29,24 +29,24 @@ namespace Xmf2.Commons.OAuth2
 
 		public event EventHandler<OAuth2AuthResult> OnAuthSuccess;
 
-	    public event EventHandler<OAuth2AuthResult> OnAuthError;
+		public event EventHandler<OAuth2AuthResult> OnAuthError;
 
 		public OAuth2RestClient(IHttpClientFactory factory) : base(factory)
 		{
 			IgnoreResponseStatusCode = true;
-		    Timeout = TimeSpan.FromSeconds(30);
+			Timeout = TimeSpan.FromSeconds(30);
 		}
 
 		public OAuth2RestClient(IHttpClientFactory factory, string baseUrl) : this(factory, new Uri(baseUrl))
 		{
 			IgnoreResponseStatusCode = true;
-		    Timeout = TimeSpan.FromSeconds(30);
+			Timeout = TimeSpan.FromSeconds(30);
 		}
 
 		public OAuth2RestClient(IHttpClientFactory factory, Uri baseUrl) : base(factory, baseUrl)
 		{
 			IgnoreResponseStatusCode = true;
-		    Timeout = TimeSpan.FromSeconds(30);
+			Timeout = TimeSpan.FromSeconds(30);
 		}
 
 		protected override IHttpContent GetContent(IRestRequest request, RequestParameters parameters)
@@ -92,10 +92,10 @@ namespace Xmf2.Commons.OAuth2
 			return RestClientExtensions.GetContent(this, request, parameters);
 		}
 
-	    public Task<OAuth2AuthResult> Login(string login, string password)
-	    {
-		    return Login(login, password, CancellationToken.None);
-	    }
+		public Task<OAuth2AuthResult> Login(string login, string password)
+		{
+			return Login(login, password, CancellationToken.None);
+		}
 
 		public async Task<OAuth2AuthResult> Login(string login, string password, CancellationToken ct)
 		{
@@ -118,9 +118,9 @@ namespace Xmf2.Commons.OAuth2
 		}
 
 		public Task<OAuth2AuthResult> Refresh()
-	    {
-		    return Refresh(CancellationToken.None);
-	    }
+		{
+			return Refresh(CancellationToken.None);
+		}
 
 		public async Task<OAuth2AuthResult> Refresh(CancellationToken ct)
 		{
@@ -146,27 +146,26 @@ namespace Xmf2.Commons.OAuth2
 			{
 				_locker.Release();
 			}
-
 		}
 
-		public Task<OAuth2AuthResult> Refresh(string refreshToken) 
+		public Task<OAuth2AuthResult> Refresh(string refreshToken)
 		{
 			RefreshToken = refreshToken;
 			return Refresh(CancellationToken.None);
 		}
 
-	    public Task<OAuth2AuthResult> Refresh(string refreshToken, CancellationToken ct)
-	    {
-		    RefreshToken = refreshToken;
-		    return Refresh(ct);
-	    }
+		public Task<OAuth2AuthResult> Refresh(string refreshToken, CancellationToken ct)
+		{
+			RefreshToken = refreshToken;
+			return Refresh(ct);
+		}
 
 		protected async Task<OAuth2AuthResult> ExecuteAuthRequest(IRestRequest request, CancellationToken ct)
-	    {
+		{
 			request.AddHeader(OAuth2Authenticator.NO_AUTH_HEADER, true);
 			IRestResponse response = await Execute(request, ct);
 			OAuth2AuthResult result = Configuration.HandleAuthResult(response);
-			
+
 			if (result.IsSuccess)
 			{
 				AccessToken = result.AccessToken;
@@ -176,21 +175,21 @@ namespace Xmf2.Commons.OAuth2
 				authenticator.Access = result;
 				Authenticator = OAuth2Authenticator = authenticator;
 			}
-			else if(result.ErrorReason == AuthErrorReason.InvalidCredentials)
+			else if (result.ErrorReason == AuthErrorReason.InvalidCredentials)
 			{
 				Logout();
 			}
 			RaiseOnAuthEvents(result);
 
-		    return result;
-	    }
+			return result;
+		}
 
-	    public void Logout()
-	    {
-		    Authenticator = null;
-		    OAuth2Authenticator = null;
-	    }
-		
+		public void Logout()
+		{
+			Authenticator = null;
+			OAuth2Authenticator = null;
+		}
+
 		public override async Task<IRestResponse<T>> Execute<T>(IRestRequest request, CancellationToken ct)
 		{
 			using (IHttpResponseMessage response = await ExecuteRequest(request, ct).ConfigureAwait(false))
@@ -205,30 +204,30 @@ namespace Xmf2.Commons.OAuth2
 		}
 
 		protected virtual OAuth2Authenticator CreateAuthenticator() => new OAuth2Authenticator
-	    {
-		    Configuration = Configuration
-	    };
-		
-	    protected void RaiseOnAuthEvents(OAuth2AuthResult authResult)
-	    {
-		    if(authResult.IsSuccess)
-		    {
-			    RaiseOnAuthSuccess(authResult);
-		    }
-		    else
-		    {
+		{
+			Configuration = Configuration
+		};
+
+		protected void RaiseOnAuthEvents(OAuth2AuthResult authResult)
+		{
+			if (authResult.IsSuccess)
+			{
+				RaiseOnAuthSuccess(authResult);
+			}
+			else
+			{
 				RaiseOnAuthError(authResult);
 			}
-	    }
+		}
 
-	    protected void RaiseOnAuthSuccess(OAuth2AuthResult authResult)
-	    {
-		    OnAuthSuccess?.Invoke(this, authResult);
-	    }
+		protected void RaiseOnAuthSuccess(OAuth2AuthResult authResult)
+		{
+			OnAuthSuccess?.Invoke(this, authResult);
+		}
 
-	    protected void RaiseOnAuthError(OAuth2AuthResult authResult)
-	    {
-		    OnAuthError?.Invoke(this, authResult);
-	    }
-    }
+		protected void RaiseOnAuthError(OAuth2AuthResult authResult)
+		{
+			OnAuthError?.Invoke(this, authResult);
+		}
+	}
 }

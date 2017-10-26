@@ -34,6 +34,7 @@ namespace Xmf2.Commons.iOS.Controls
 				this.DrawPlaceholder();
 			}
 		}
+
 		public override string Text
 		{
 			set
@@ -42,10 +43,16 @@ namespace Xmf2.Commons.iOS.Controls
 				this.UpdatePlaceHolderVisibility();
 			}
 		}
-		public UIColor PlaceholderColor { get => _placeholderLabel.TextColor;
+
+		public UIColor PlaceholderColor
+		{
+			get => _placeholderLabel.TextColor;
 			set => _placeholderLabel.TextColor = value;
 		}
-		public UIFont PlaceholderFont { get => _placeholderLabel.Font;
+
+		public UIFont PlaceholderFont
+		{
+			get => _placeholderLabel.Font;
 			set => _placeholderLabel.Font = value;
 		}
 
@@ -61,7 +68,7 @@ namespace Xmf2.Commons.iOS.Controls
 			var leftInset = this.TextContainer.LineFragmentPadding + inset.Left;
 			var rightInset = this.TextContainer.LineFragmentPadding + inset.Right;
 			var placeHolderMaxSize = new CGSize(width: this.Frame.Width - (leftInset + rightInset)
-											 , height: this.Frame.Height - (inset.Top + inset.Bottom));
+				, height: this.Frame.Height - (inset.Top + inset.Bottom));
 			this._placeholderLabel.Frame = new CGRect(new CGPoint(leftInset, inset.Top), placeHolderMaxSize);
 			this._placeholderLabel.SizeToFit();
 		}
@@ -81,12 +88,13 @@ namespace Xmf2.Commons.iOS.Controls
 			this._placeholderLabel.Hidden = !string.IsNullOrWhiteSpace(this.Text);
 		}
 
-        public void AutoHeight(){
-            nfloat fixedWidth = Frame.Size.Width;
-            var newSize=SizeThatFits(new CGSize(width: fixedWidth, height: nfloat.MaxValue));
-            var newFrame = Frame;
-            newFrame.Size = new CGSize(width: Math.Max(newSize.Width, fixedWidth), height: newSize.Height);
-            Frame = newFrame;
-        }
+		public void AutoHeight()
+		{
+			nfloat fixedWidth = Frame.Size.Width;
+			var newSize = SizeThatFits(new CGSize(width: fixedWidth, height: nfloat.MaxValue));
+			var newFrame = Frame;
+			newFrame.Size = new CGSize(width: Math.Max(newSize.Width, fixedWidth), height: newSize.Height);
+			Frame = newFrame;
+		}
 	}
 }

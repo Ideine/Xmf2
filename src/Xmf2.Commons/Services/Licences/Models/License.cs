@@ -2,7 +2,7 @@
 
 namespace Xmf2.Commons.Services.Licences.Models
 {
-    public class Licence
+    public class License
     {
         private readonly ILicenceReaderService _licenceReaderService;
 
@@ -18,7 +18,7 @@ namespace Xmf2.Commons.Services.Licences.Models
 
         private string CachedFullText = null;
 
-        public Licence(ILicenceReaderService readerService)
+        public License(ILicenceReaderService readerService)
         {
             _licenceReaderService = readerService;
         }

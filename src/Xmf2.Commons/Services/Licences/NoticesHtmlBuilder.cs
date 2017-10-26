@@ -7,7 +7,7 @@ namespace Xmf2.Commons.Services.Licences
 {
     public class NoticesHtmlBuilder
     {
-        private readonly Dictionary<Licence, string> _mLicenseTextCache = new Dictionary<Licence, string>();
+        private readonly Dictionary<License, string> _licenseTextCache = new Dictionary<License, string>();
         private Notices _notices;
         private Notice _notice;
         private string _style;
@@ -71,7 +71,7 @@ namespace Xmf2.Commons.Services.Licences
 
         public string Build()
         {
-            StringBuilder noticesHtmlBuilder = new StringBuilder(500);
+            StringBuilder noticesHtmlBuilder = new StringBuilder(1400);
             AppendNoticesContainerStart(noticesHtmlBuilder);
             if (_notice != null)
             {
@@ -126,7 +126,7 @@ namespace Xmf2.Commons.Services.Licences
             {
                 noticesHtmlBuilder.Append(copyright).Append("<br/><br/>");
             }
-            noticesHtmlBuilder.Append(GetLicenseText(notice.Licence)).Append("</pre>");
+            noticesHtmlBuilder.Append(GetLicenseText(notice.License)).Append("</pre>");
         }
 
         private void AppendNoticesContainerEnd(StringBuilder noticesHtmlBuilder)
@@ -134,15 +134,15 @@ namespace Xmf2.Commons.Services.Licences
             noticesHtmlBuilder.Append("</body></html>");
         }
 
-        private string GetLicenseText(Licence license)
+        private string GetLicenseText(License license)
         {
             if (license != null)
             {
-                if (!_mLicenseTextCache.ContainsKey(license))
+                if (!_licenseTextCache.ContainsKey(license))
                 {
-                    _mLicenseTextCache[license] = _showFullLicenseText ? license.GetFullText(license.LicencePathFile) : license.GetSummaryText(license.LicencePathFile);
+                    _licenseTextCache[license] = _showFullLicenseText ? license.GetFullText(license.LicencePathFile) : license.GetSummaryText(license.LicencePathFile);
                 }
-                return _mLicenseTextCache[license];
+                return _licenseTextCache[license];
             }
             return "";
         }
