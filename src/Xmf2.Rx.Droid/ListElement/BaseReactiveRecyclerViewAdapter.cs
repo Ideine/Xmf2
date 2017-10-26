@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Input;
 using Android.Content;
+using Android.OS;
 using Android.Support.V7.Widget;
 using Android.Views;
 using ReactiveUI;
@@ -67,7 +68,8 @@ namespace Xmf2.Rx.Droid.ListElement
 
 		private void OnCollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
 		{
-			NotifyDataSetChanged();
+			new Handler(Looper.MainLooper).Post(() => NotifyDataSetChanged());
+
 		}
 
 		protected override void Dispose(bool disposing)
