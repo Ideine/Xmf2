@@ -9,6 +9,11 @@ namespace System.Collections.Generic
 			return source ?? Enumerable.Empty<T>();
         }
 
+		public static bool NotNullOrEmpty<T>(this IEnumerable<T> source)
+		{
+			return source != null && source.Any();
+		}
+
 		/// <summary>
 		/// Détermine si la séquence passée est <c>null</c> ou vide.
 		/// </summary>
