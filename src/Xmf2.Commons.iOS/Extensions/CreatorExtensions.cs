@@ -24,6 +24,10 @@ public static class CreatorExtensions
         return new UIHighlightButton();
     }
 
+	public static UISwappedImageButton CreateSwappedImageButton(this UIResponder _)
+	{
+		return new UISwappedImageButton();
+	}
 
 	public static TUIButton WithHighlightBackgroundColor<TUIButton>(this TUIButton button, int color) where TUIButton : UIHighlightButton
 	{
