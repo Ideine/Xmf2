@@ -18,12 +18,14 @@ namespace Xmf2.Rx.Droid.LinearList
 
 		public void Activate()
 		{
-			RxApp.TaskpoolScheduler.Schedule(() => (activated).OnNext(Unit.Default));
+			//RxApp.TaskpoolScheduler.Schedule(() => (activated).OnNext(Unit.Default));
+			RxApp.MainThreadScheduler.Schedule(() => (activated).OnNext(Unit.Default));
 		}
 
 		public void Deactivate()
 		{
-			RxApp.TaskpoolScheduler.Schedule(() => (deactivated).OnNext(Unit.Default));
+			//RxApp.TaskpoolScheduler.Schedule(() => (deactivated).OnNext(Unit.Default));
+			RxApp.MainThreadScheduler.Schedule(() => (deactivated).OnNext(Unit.Default));
 		}
 
 		public TViewModel ViewModel
