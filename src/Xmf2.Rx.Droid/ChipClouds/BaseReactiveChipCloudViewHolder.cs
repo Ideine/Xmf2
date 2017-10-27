@@ -22,6 +22,10 @@ namespace Xmf2.Rx.Droid.ChipClouds
 			set
 			{
 				_viewModel = value;
+				if (value != null)
+				{
+					OnViewModelSet();
+				}
 				Activate();
 			}
 		}
@@ -47,6 +51,8 @@ namespace Xmf2.Rx.Droid.ChipClouds
 			SetViewModelBindings();
 			ItemView.Click += OnClickItem;
 		}
+
+		protected virtual void OnViewModelSet() { }
 
 		protected virtual void OnContentViewSet() { }
 
