@@ -6,16 +6,16 @@ namespace Xmf2.Commons.iOS.Controls
 	{
 		public override CGRect TitleRectForContentRect(CGRect rect)
 		{
-			var titleRect = base.TitleRectForContentRect(rect);
-			titleRect.X = base.ImageRectForContentRect(rect).X;
-			return titleRect;
+			var contentRect = base.TitleRectForContentRect(rect);
+			contentRect.X = TitleEdgeInsets.Left;
+			return contentRect;
 		}
 
 		public override CGRect ImageRectForContentRect(CGRect rect)
 		{
-			var originalImageRect = base.ImageRectForContentRect(rect);
-			originalImageRect.X = (originalImageRect.X + base.TitleRectForContentRect(rect).Width);
-			return originalImageRect;
+			var contentRect = base.ImageRectForContentRect(rect);
+			contentRect.X = rect.Width - ImageEdgeInsets.Right - CurrentImage.Size.Width;
+			return contentRect;
 		}
 	}
 }

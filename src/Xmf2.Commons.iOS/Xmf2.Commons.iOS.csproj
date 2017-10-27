@@ -57,6 +57,7 @@
     <Compile Include="Controls\ItemsControl\ItemsControlView.cs" />
     <Compile Include="Controls\ItemsControl\IUIComponent.cs" />
     <Compile Include="Controls\UIRightImageButton.cs" />
+    <Compile Include="Controls\UISwappedImageButton.cs" />
     <Compile Include="Controls\VerticalLinearLayout.cs" />
     <Compile Include="Extensions\NSDateExtension.cs" />
     <Compile Include="Extensions\ScrollViewExtensions.cs" />
