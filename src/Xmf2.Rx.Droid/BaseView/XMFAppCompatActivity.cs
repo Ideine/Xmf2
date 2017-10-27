@@ -108,13 +108,13 @@ namespace Xmf2.Rx.Droid.BaseView
 		protected override void OnPause()
 		{
 			base.OnPause();
-			RxApp.TaskpoolScheduler.Schedule(() => _deactivated.OnNext(Unit.Default));
+			_deactivated.OnNext(Unit.Default);
 		}
 
 		protected override void OnResume()
 		{
 			base.OnResume();
-			RxApp.TaskpoolScheduler.Schedule(() => _activated.OnNext(Unit.Default));
+			_activated.OnNext(Unit.Default);
 		}
 
 		readonly Subject<Tuple<int, Result, Intent>> activityResult = new Subject<Tuple<int, Result, Intent>>();

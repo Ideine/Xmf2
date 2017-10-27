@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Reactive;
 using System.Reactive.Concurrency;
+using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using System.Windows.Input;
 using Android.Content;
@@ -31,11 +32,11 @@ namespace Xmf2.Rx.Droid.ChipClouds
 			set => ViewModel = value as TViewModel;
 		}
 
-		private readonly Subject<Unit> activated = new Subject<Unit>();
-		public IObservable<Unit> Activated => activated;
+		readonly Subject<Unit> _activated = new Subject<Unit>();
+		public IObservable<Unit> Activated => _activated.AsObservable();
 
-		private readonly Subject<Unit> deactivated = new Subject<Unit>();
-		public IObservable<Unit> Deactivated => deactivated;
+		readonly Subject<Unit> _deactivated = new Subject<Unit>();
+		public IObservable<Unit> Deactivated => _deactivated.AsObservable();
 
 		public ICommand ItemClick { get; set; }
 
@@ -70,14 +71,14 @@ namespace Xmf2.Rx.Droid.ChipClouds
 
 		public void Activate()
 		{
-			RxApp.MainThreadScheduler.Schedule(() => (activated).OnNext(Unit.Default));
+			_activated.OnNext(Unit.Default);
 		}
 
 		public void Deactivate()
 		{
-			RxApp.MainThreadScheduler.Schedule(() => (deactivated).OnNext(Unit.Default));
+			_deactivated.OnNext(Unit.Default);
 		}
-
+		
 		#endregion
 
 		public override void Dispose()

@@ -114,24 +114,22 @@ namespace Xmf2.Rx.Droid.BaseView
 
 		public IObservable<Exception> ThrownExceptions => this.getThrownExceptionsObservable();
 
-		readonly Subject<Unit> activated = new Subject<Unit>();
+		readonly Subject<Unit> _activated = new Subject<Unit>();
+		public IObservable<Unit> Activated => _activated.AsObservable();
 
-		public IObservable<Unit> Activated => activated.AsObservable();
-
-		readonly Subject<Unit> deactivated = new Subject<Unit>();
-
-		public IObservable<Unit> Deactivated => deactivated.AsObservable();
+		readonly Subject<Unit> _deactivated = new Subject<Unit>();
+		public IObservable<Unit> Deactivated => _deactivated.AsObservable();
 
 		public override void OnPause()
 		{
 			base.OnPause();
-			deactivated.OnNext(Unit.Default);
+			_deactivated.OnNext(Unit.Default);
 		}
 
 		public override void OnResume()
 		{
 			base.OnResume();
-			activated.OnNext(Unit.Default);
+			_activated.OnNext(Unit.Default);
 		}
 	}
 }
