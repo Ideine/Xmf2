@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Reactive;
+using System.Reactive.Concurrency;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using System.Reactive.Threading.Tasks;
@@ -98,22 +99,22 @@ namespace Xmf2.Rx.Droid.BaseView
 
 		public IObservable<Exception> ThrownExceptions => this.getThrownExceptionsObservable();
 
-		readonly Subject<Unit> activated = new Subject<Unit>();
-		public IObservable<Unit> Activated => activated.AsObservable();
+		readonly Subject<Unit> _activated = new Subject<Unit>();
+		public IObservable<Unit> Activated => _activated.AsObservable();
 
-		readonly Subject<Unit> deactivated = new Subject<Unit>();
-		public IObservable<Unit> Deactivated => deactivated.AsObservable();
+		readonly Subject<Unit> _deactivated = new Subject<Unit>();
+		public IObservable<Unit> Deactivated => _deactivated.AsObservable();
 
 		protected override void OnPause()
 		{
 			base.OnPause();
-			deactivated.OnNext(Unit.Default);
+			RxApp.TaskpoolScheduler.Schedule(() => _deactivated.OnNext(Unit.Default));
 		}
 
 		protected override void OnResume()
 		{
 			base.OnResume();
-			activated.OnNext(Unit.Default);
+			RxApp.TaskpoolScheduler.Schedule(() => _activated.OnNext(Unit.Default));
 		}
 
 		readonly Subject<Tuple<int, Result, Intent>> activityResult = new Subject<Tuple<int, Result, Intent>>();

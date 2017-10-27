@@ -71,12 +71,12 @@ namespace Xmf2.Rx.Droid.ListElement
 
 		public void OnViewAttachedToWindow()
 		{
-			RxApp.MainThreadScheduler.Schedule(() => (activated).OnNext(Unit.Default));
+			RxApp.TaskpoolScheduler.Schedule(() => (activated).OnNext(Unit.Default));
 		}
 
 		public void OnViewDetachedFromWindow()
 		{
-			RxApp.MainThreadScheduler.Schedule(() => (deactivated).OnNext(Unit.Default));
+			RxApp.TaskpoolScheduler.Schedule(() => (deactivated).OnNext(Unit.Default));
 		}
 
 		public virtual void OnViewRecycled() { }
