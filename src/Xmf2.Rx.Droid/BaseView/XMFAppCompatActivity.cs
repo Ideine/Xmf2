@@ -21,7 +21,7 @@ namespace Xmf2.Rx.Droid.BaseView
 	/// This is an Activity that is both an Activity and has ReactiveObject powers 
 	/// (i.e. you can call RaiseAndSetIfChanged)
 	/// </summary>
-	public class XMFAppCompatActivity<TViewModel> : ReactiveAppCompatActivity, IViewFor<TViewModel>, ICanActivate
+	public class XMFAppCompatActivity<TViewModel> : ReactiveAppCompatActivity, IViewFor<TViewModel>
 		where TViewModel : class
 	{
 		protected XMFAppCompatActivity() { }
@@ -46,7 +46,7 @@ namespace Xmf2.Rx.Droid.BaseView
 	/// This is an Activity that is both an Activity and has ReactiveObject powers 
 	/// (i.e. you can call RaiseAndSetIfChanged)
 	/// </summary>
-	public class ReactiveAppCompatActivity : AppCompatActivity, IReactiveObject, IReactiveNotifyPropertyChanged<ReactiveAppCompatActivity>, IHandleObservableErrors
+	public class ReactiveAppCompatActivity : AppCompatActivity, IReactiveObject, IReactiveNotifyPropertyChanged<ReactiveAppCompatActivity>, IHandleObservableErrors, ICanActivate
 	{
 		protected ReactiveAppCompatActivity() { }
 
@@ -99,22 +99,22 @@ namespace Xmf2.Rx.Droid.BaseView
 
 		public IObservable<Exception> ThrownExceptions => this.getThrownExceptionsObservable();
 
-		readonly Subject<Unit> _activated = new Subject<Unit>();
-		public IObservable<Unit> Activated => _activated.AsObservable();
+		private readonly CanActivateImplementation _activationImplementation = new CanActivateImplementation();
 
-		readonly Subject<Unit> _deactivated = new Subject<Unit>();
-		public IObservable<Unit> Deactivated => _deactivated.AsObservable();
+		public IObservable<Unit> Activated => _activationImplementation.Activated;
+
+		public IObservable<Unit> Deactivated => _activationImplementation.Deactivated;
 
 		protected override void OnPause()
 		{
 			base.OnPause();
-			_deactivated.OnNext(Unit.Default);
+			_activationImplementation.Deactivate();
 		}
 
 		protected override void OnResume()
 		{
 			base.OnResume();
-			_activated.OnNext(Unit.Default);
+			_activationImplementation.Activate();
 		}
 
 		readonly Subject<Tuple<int, Result, Intent>> activityResult = new Subject<Tuple<int, Result, Intent>>();

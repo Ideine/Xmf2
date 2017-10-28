@@ -8,10 +8,12 @@ using Android.Content;
 using Android.Views;
 using ReactiveUI;
 using Xmf2.Commons.Droid.ChipClouds;
+using Xmf2.Rx.Helpers;
 
 namespace Xmf2.Rx.Droid.ChipClouds
 {
-	public class BaseReactiveChipCloudViewHolder<TViewModel> : ChipCloudViewHolder, IViewFor<TViewModel>, IViewFor, ICanActivate where TViewModel : class, IReactiveObject 
+	public class BaseReactiveChipCloudViewHolder<TViewModel> : ChipCloudViewHolder, IViewFor<TViewModel>, IViewFor, ICanActivate 
+		where TViewModel : class, IReactiveObject 
 	{
 		public readonly Context Context;
 
@@ -26,7 +28,6 @@ namespace Xmf2.Rx.Droid.ChipClouds
 				{
 					OnViewModelSet();
 				}
-				Activate();
 			}
 		}
 
@@ -36,11 +37,11 @@ namespace Xmf2.Rx.Droid.ChipClouds
 			set => ViewModel = value as TViewModel;
 		}
 
-		readonly Subject<Unit> _activated = new Subject<Unit>();
-		public IObservable<Unit> Activated => _activated.AsObservable();
+		private readonly CanActivateImplementation _activationImplementation = new CanActivateImplementation();
 
-		readonly Subject<Unit> _deactivated = new Subject<Unit>();
-		public IObservable<Unit> Deactivated => _deactivated.AsObservable();
+		public IObservable<Unit> Activated => _activationImplementation.Activated;
+
+		public IObservable<Unit> Deactivated => _activationImplementation.Deactivated;
 
 		public ICommand ItemClick { get; set; }
 
@@ -67,22 +68,12 @@ namespace Xmf2.Rx.Droid.ChipClouds
 
 		public override void OnViewAttachedToWindow()
 		{
-			Activate();
+			_activationImplementation.Activate();
 		}
 
 		public override void OnViewDetachedFromWindow()
 		{
-			Deactivate();
-		}
-
-		public void Activate()
-		{
-			_activated.OnNext(Unit.Default);
-		}
-
-		public void Deactivate()
-		{
-			_deactivated.OnNext(Unit.Default);
+			_activationImplementation.Deactivate();
 		}
 		
 		#endregion

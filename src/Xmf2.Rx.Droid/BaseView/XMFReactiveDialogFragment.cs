@@ -15,7 +15,7 @@ namespace Xmf2.Rx.Droid.BaseView
 	/// This is a DialogFragment that is both a DialogFragment and has ReactiveObject powers 
 	/// (i.e. you can call RaiseAndSetIfChanged)
 	/// </summary>
-	public class XMFReactiveDialogFragment<TViewModel> : XMFReactiveDialogFragment, IViewFor<TViewModel>, ICanActivate
+	public class XMFReactiveDialogFragment<TViewModel> : XMFReactiveDialogFragment, IViewFor<TViewModel>
 		where TViewModel : class
 	{
 		protected XMFReactiveDialogFragment()
@@ -46,7 +46,7 @@ namespace Xmf2.Rx.Droid.BaseView
 	/// (i.e. you can call RaiseAndSetIfChanged)
 	/// </summary>
 	public class XMFReactiveDialogFragment : Android.Support.V4.App.DialogFragment,
-		IReactiveNotifyPropertyChanged<XMFReactiveDialogFragment>, IReactiveObject, IHandleObservableErrors
+		IReactiveNotifyPropertyChanged<XMFReactiveDialogFragment>, IReactiveObject, IHandleObservableErrors, ICanActivate
 	{
 		protected XMFReactiveDialogFragment()
 		{
@@ -114,22 +114,22 @@ namespace Xmf2.Rx.Droid.BaseView
 
 		public IObservable<Exception> ThrownExceptions => this.getThrownExceptionsObservable();
 
-		readonly Subject<Unit> _activated = new Subject<Unit>();
-		public IObservable<Unit> Activated => _activated.AsObservable();
+		private readonly CanActivateImplementation _activationImplementation = new CanActivateImplementation();
 
-		readonly Subject<Unit> _deactivated = new Subject<Unit>();
-		public IObservable<Unit> Deactivated => _deactivated.AsObservable();
+		public IObservable<Unit> Activated => _activationImplementation.Activated;
+
+		public IObservable<Unit> Deactivated => _activationImplementation.Deactivated;
 
 		public override void OnPause()
 		{
 			base.OnPause();
-			_deactivated.OnNext(Unit.Default);
+			_activationImplementation.Deactivate();
 		}
 
 		public override void OnResume()
 		{
 			base.OnResume();
-			_activated.OnNext(Unit.Default);
+			_activationImplementation.Activate();
 		}
 	}
 }

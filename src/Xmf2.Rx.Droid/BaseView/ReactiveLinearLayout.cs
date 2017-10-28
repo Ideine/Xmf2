@@ -8,6 +8,7 @@ using Android.Runtime;
 using Android.Util;
 using Android.Widget;
 using ReactiveUI;
+using Xmf2.Rx.Helpers;
 
 namespace Xmf2.Rx.Droid.BaseView
 {
@@ -53,21 +54,15 @@ namespace Xmf2.Rx.Droid.BaseView
 			set => ViewModel = value as TViewModel;
 		}
 
-		readonly Subject<Unit> _activated = new Subject<Unit>();
-		public new IObservable<Unit> Activated => _activated.AsObservable();
+		private readonly CanActivateImplementation _activationImpl = new CanActivateImplementation();
 
-		readonly Subject<Unit> _deactivated = new Subject<Unit>();
-		public IObservable<Unit> Deactivated => _deactivated.AsObservable();
+		public new IObservable<Unit> Activated => _activationImpl.Activated;
 
-		public void Activate()
-		{
-			_activated.OnNext(Unit.Default);
-		}
+		public IObservable<Unit> Deactivated => _activationImpl.Deactivated;
 
-		public void Deactivate()
-		{
-			_deactivated.OnNext(Unit.Default);
-		}
+		public void Activate() => _activationImpl.Activate();
+
+		public void Deactivate() => _activationImpl.Deactivate();
 
 		#endregion
 
