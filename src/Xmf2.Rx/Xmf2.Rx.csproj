@@ -14,7 +14,4 @@
   <ItemGroup>
     <ProjectReference Include="..\Xmf2.Commons\Xmf2.Commons.csproj" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Helpers\" />
-  </ItemGroup>
 </Project>
