@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>netstandard1.6</TargetFramework>
+    <PackageTargetFallback>
+        $(PackageTargetFallback);portable-net45+win8+wpa81+wp8
+    </PackageTargetFallback>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="HockeySDK.Xamarin" Version="5.0.0" />
+    <PackageReference Include="reactiveui" Version="7.4.0" />
+    <PackageReference Include="System.Net.Requests" Version="4.3.0" />
+    <PackageReference Include="System.ValueTuple" Version="4.4.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Xmf2.Commons\Xmf2.Commons.csproj" />
+  </ItemGroup>
+</Project>
