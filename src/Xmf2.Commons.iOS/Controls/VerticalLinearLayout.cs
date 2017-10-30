@@ -51,6 +51,12 @@ namespace Xmf2.Commons.iOS.Controls
 			_endConstraint = EndConstraint(_lastView);
 			AddConstraint(_endConstraint);
 		}
+
+		public void SetItems(UIView[] items)
+		{
+			this.Clear();
+			this.AddItems(items);
+		}
 		
 		public void AddItems(UIView[] items)
 		{
