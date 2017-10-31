@@ -119,6 +119,8 @@
     <Compile Include="ChipClouds\BaseReactiveChipCloudViewHolder.cs" />
     <Compile Include="Services\BaseViewPresenter.cs" />
     <Compile Include="BaseView\BaseReactiveDialogFragment.cs" />
+    <Compile Include="BaseView\XMFReactiveFragment.cs" />
+    <Compile Include="BaseView\BaseReactiveFragment.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Xmf2.Commons\Xmf2.Commons.csproj">
