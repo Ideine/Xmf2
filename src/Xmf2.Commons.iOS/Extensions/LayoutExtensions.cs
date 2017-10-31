@@ -378,6 +378,16 @@ public static class CustomAutoLayoutExtensions
 		return scroll;
 	}
 
+	public static UIScrollView HorizontalScrollContentConstraint(this UIScrollView scroll, UIView content)
+	{
+		scroll.ConstrainLayout(() => scroll.Left()	 == content.Left()
+							      && scroll.Right()	 == content.Right()
+							      && scroll.Top()	 == content.Top()
+							      && scroll.Bottom() == content.Bottom()
+							      && scroll.CenterY()== content.CenterY());
+		return scroll;
+	}
+
 	public static UILabel ConstrainHeightForOneLiner(this UILabel label)
 	{
 		var textSize = new Foundation.NSString("lq").GetSizeUsingAttributes(new UIStringAttributes

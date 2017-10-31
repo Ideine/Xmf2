@@ -244,6 +244,19 @@ public static class CreatorExtensions
         }.WithContentInsetAdjustementBehavior(UIScrollViewContentInsetAdjustmentBehavior.Never);
 	}
 
+	public static UIScrollView CreateHorizontalScroll(this UIResponder _)
+	{
+		return new UIScrollView()
+		{
+			AlwaysBounceHorizontal = false,
+			AlwaysBounceVertical = false,
+			Bounces = false,
+			BouncesZoom = false,
+			ShowsVerticalScrollIndicator = false,
+			ShowsHorizontalScrollIndicator = true
+		}.WithContentInsetAdjustementBehavior(UIScrollViewContentInsetAdjustmentBehavior.Never);
+	}
+
 	public static UIScrollView WithContentInsetAdjustementBehavior(this UIScrollView view, UIScrollViewContentInsetAdjustmentBehavior behavior)
 	{
 		if (UIDevice.CurrentDevice.CheckSystemVersion(11, 0))
@@ -599,6 +612,15 @@ public static class CreatorExtensions
 	public static TView WithBackgroundColor<TView>(this TView view, int color) where TView : UIView
 	{
 		view.BackgroundColor = color.ColorFromHex();
+		return view;
+	}
+
+	[Obsolete("Cette méthode ne doit être utilisée qu'en développement. Pour définir le fond d'une View utilisez WithBackgroundColor")]
+	public static TView WithDraftBackground<TView>(this TView view, int color) where TView : UIView
+	{
+#if DEBUG
+		view.BackgroundColor = color.ColorFromHex();
+#endif
 		return view;
 	}
 
