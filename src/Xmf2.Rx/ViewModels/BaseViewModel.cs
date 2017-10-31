@@ -142,12 +142,16 @@ namespace Xmf2.Rx.ViewModels
 			}
 
 			private readonly BaseViewModel _viewModel;
-			private readonly ConcurrentQueue<ViewModelState> _transitionsQueue = new ConcurrentQueue<ViewModelState>();
-			private readonly object _isRunningMutex = new object();
 			private readonly TaskCompletionSource<object> _initializationTask;
 			private readonly StateAutomata _stateAutomata;
+			private Subject<ViewModelState> _stateObservable = new Subject<ViewModelState>();
+
+			/*
+			private readonly ConcurrentQueue<ViewModelState> _transitionsQueue = new ConcurrentQueue<ViewModelState>();
+			private readonly object _isRunningMutex = new object();
 
 			private bool _isRunning;
+			*/
 
 			public ViewModelLifecycleManager(BaseViewModel viewModel)
 			{
@@ -155,6 +159,9 @@ namespace Xmf2.Rx.ViewModels
 				_initializationTask = new TaskCompletionSource<object>();
 
 				_stateAutomata = CreateStateGraph();
+
+				_stateObservable.OnTaskThread()
+				                .SubscribeAsync(state => GoToState(state));
 			}
 
 			public Task WaitForInitialization()
@@ -187,6 +194,12 @@ namespace Xmf2.Rx.ViewModels
 				EnqueueState(ViewModelState.Stopped);
 			}
 
+			private void EnqueueState(ViewModelState state)
+			{
+				_stateObservable.OnNext(state);
+			}
+
+			/*
 			private void EnqueueState(ViewModelState state)
 			{
 				_transitionsQueue.Enqueue(state);
@@ -254,6 +267,31 @@ namespace Xmf2.Rx.ViewModels
 				}
 
 				await GoToNextState();
+			}
+			*/
+
+			private async Task GoToState(ViewModelState nextState)
+			{
+				switch (nextState)
+				{
+					case ViewModelState.Created:
+						break; //nothing to do, you shouldn't even go in this case
+					case ViewModelState.Initialized:
+						await _stateAutomata.ToState(nameof(ViewModelState.Initialized));
+						break;
+					case ViewModelState.Started:
+						await _stateAutomata.ToState(nameof(ViewModelState.Started));
+						break;
+					case ViewModelState.Resumed:
+						await _stateAutomata.ToState(nameof(ViewModelState.Resumed));
+						break;
+					case ViewModelState.Paused:
+						await _stateAutomata.ToState(nameof(ViewModelState.Paused));
+						break;
+					case ViewModelState.Stopped:
+						await _stateAutomata.ToState(nameof(ViewModelState.Stopped));
+						break;
+				}
 			}
 
 			private StateAutomata CreateStateGraph()

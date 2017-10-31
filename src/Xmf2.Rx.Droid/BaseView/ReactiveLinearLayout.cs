@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Reactive;
 using System.Reactive.Concurrency;
+using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using Android.Content;
 using Android.Runtime;
 using Android.Util;
 using Android.Widget;
 using ReactiveUI;
+using Xmf2.Rx.Helpers;
 
 namespace Xmf2.Rx.Droid.BaseView
 {
@@ -52,21 +54,15 @@ namespace Xmf2.Rx.Droid.BaseView
 			set => ViewModel = value as TViewModel;
 		}
 
-		private readonly Subject<Unit> activated = new Subject<Unit>();
-		public new IObservable<Unit> Activated => activated;
+		private readonly CanActivateImplementation _activationImpl = new CanActivateImplementation();
 
-		private readonly Subject<Unit> deactivated = new Subject<Unit>();
-		public IObservable<Unit> Deactivated => deactivated;
+		public new IObservable<Unit> Activated => _activationImpl.Activated;
 
-		public void Activate()
-		{
-			RxApp.MainThreadScheduler.Schedule(() => (activated).OnNext(Unit.Default));
-		}
+		public IObservable<Unit> Deactivated => _activationImpl.Deactivated;
 
-		public void Deactivate()
-		{
-			RxApp.MainThreadScheduler.Schedule(() => (deactivated).OnNext(Unit.Default));
-		}
+		public void Activate() => _activationImpl.Activate();
+
+		public void Deactivate() => _activationImpl.Deactivate();
 
 		#endregion
 
