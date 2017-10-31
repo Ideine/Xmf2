@@ -1,29 +1,32 @@
 ﻿using System;
 using System.Reactive;
 using System.Reactive.Concurrency;
+using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using Android.Views;
 using ReactiveUI;
 using Xmf2.Commons.Droid.LinearList;
+using Xmf2.Rx.Helpers;
 
 namespace Xmf2.Rx.Droid.LinearList
 {
-	public class BaseReactiveLinearLayoutViewViewHolder<TViewModel> : LinearListViewHolder, IViewFor<TViewModel>, IViewFor, ICanActivate where TViewModel : class, IReactiveObject
+	public class BaseReactiveLinearLayoutViewViewHolder<TViewModel> : LinearListViewHolder, IViewFor<TViewModel>, IViewFor, ICanActivate 
+		where TViewModel : class, IReactiveObject
 	{
-		private readonly Subject<Unit> activated = new Subject<Unit>();
-		public IObservable<Unit> Activated => activated;
+		private readonly CanActivateImplementation _activationImplementation = new CanActivateImplementation();
 
-		private readonly Subject<Unit> deactivated = new Subject<Unit>();
-		public IObservable<Unit> Deactivated => deactivated;
+		public IObservable<Unit> Activated => _activationImplementation.Activated;
+
+		public IObservable<Unit> Deactivated => _activationImplementation.Deactivated;
 
 		public void Activate()
 		{
-			RxApp.MainThreadScheduler.Schedule(() => (activated).OnNext(Unit.Default));
+			_activationImplementation.Activate();
 		}
 
 		public void Deactivate()
 		{
-			RxApp.MainThreadScheduler.Schedule(() => (deactivated).OnNext(Unit.Default));
+			_activationImplementation.Deactivate();
 		}
 
 		public TViewModel ViewModel
