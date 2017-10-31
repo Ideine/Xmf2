@@ -1,24 +1,27 @@
 ﻿using System;
 using System.Reactive;
 using System.Reactive.Concurrency;
+using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using System.Windows.Input;
 using Android.Content;
 using Android.Views;
 using ReactiveUI;
 using ReactiveUI.Android.Support;
+using Xmf2.Rx.Helpers;
 
 namespace Xmf2.Rx.Droid.ListElement
 {
-	public class BaseReactiveRecyclerViewViewHolder<TViewModel> : XMF2ReactiveRecyclerViewViewHolder<TViewModel>, ICanActivate, IRecyclerViewViewHolder where TViewModel : class, IReactiveObject
+	public class BaseReactiveRecyclerViewViewHolder<TViewModel> : XMF2ReactiveRecyclerViewViewHolder<TViewModel>, ICanActivate, IRecyclerViewViewHolder 
+		where TViewModel : class, IReactiveObject
 	{
 		protected Context Context { get; }
 
-		private readonly Subject<Unit> activated = new Subject<Unit>();
-		public IObservable<Unit> Activated => activated;
+		private readonly CanActivateImplementation _activationImplementation = new CanActivateImplementation();
 
-		private readonly Subject<Unit> deactivated = new Subject<Unit>();
-		public IObservable<Unit> Deactivated => deactivated;
+		public IObservable<Unit> Activated => _activationImplementation.Activated;
+
+		public IObservable<Unit> Deactivated => _activationImplementation.Deactivated;
 
 		public ICommand ItemClick { get; set; }
 
@@ -71,12 +74,12 @@ namespace Xmf2.Rx.Droid.ListElement
 
 		public void OnViewAttachedToWindow()
 		{
-			RxApp.MainThreadScheduler.Schedule(() => (activated).OnNext(Unit.Default));
+			_activationImplementation.Activate();
 		}
 
 		public void OnViewDetachedFromWindow()
 		{
-			RxApp.MainThreadScheduler.Schedule(() => (deactivated).OnNext(Unit.Default));
+			_activationImplementation.Deactivate();
 		}
 
 		public virtual void OnViewRecycled() { }
