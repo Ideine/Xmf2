@@ -52,13 +52,13 @@ namespace Xmf2.Commons.iOS.Controls
 			AddConstraint(_endConstraint);
 		}
 
-		public void SetItems(UIView[] items)
+		public void SetItems(params UIView[] items)
 		{
 			this.Clear();
 			this.AddItems(items);
 		}
 		
-		public void AddItems(UIView[] items)
+		public void AddItems(params UIView[] items)
 		{
 			if (items.Length == 0)
 			{
