@@ -2,6 +2,7 @@
 using Foundation;
 using ReactiveUI;
 using System;
+using System.Reactive.Disposables;
 using UIKit;
 using Xmf2.Rx.ViewModels;
 
@@ -9,6 +10,8 @@ namespace Xmf2.Rx.iOS
 {
 	public abstract class BaseViewController<TViewModel> : ReactiveViewController<TViewModel> where TViewModel : BaseViewModel
 	{
+		protected readonly CompositeDisposable _uiDisposables = new CompositeDisposable();
+
 		protected abstract TViewModel GetViewModel();
 
 		private bool _layoutDone;
@@ -225,5 +228,15 @@ namespace Xmf2.Rx.iOS
 			View.EndEditing(true);
 		}
 		#endregion
+
+
+		protected override void Dispose(bool disposing)
+		{
+			if (disposing)
+			{
+				_uiDisposables?.Dispose();
+			}
+			base.Dispose(disposing);
+		}
 	}
 }

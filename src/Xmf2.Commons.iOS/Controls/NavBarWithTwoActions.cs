@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Windows.Input;
-using CoreGraphics;
 using UIKit;
 using Xmf2.Commons.iOS.Layout;
 
