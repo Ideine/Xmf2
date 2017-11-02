@@ -152,6 +152,18 @@ namespace Xmf2.Commons.iOS.Controls
 			RightAction?.Invoke();
 		}
 
+		public NavBarWithTwoActions WithTitle(string title)
+		{
+			TextTitle = title;
+			return this;
+		}
+
+		public NavBarWithTwoActions WithTitleFont(UIFont font)
+		{
+			TextTitleFont = font;
+			return this;
+		}
+
 		#region Dispose
 
 		private bool _disposed;
