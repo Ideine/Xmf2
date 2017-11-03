@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-
-using Foundation;
 using UIKit;
 
 namespace Xmf2.Commons.iOS.Services
@@ -57,11 +53,11 @@ namespace Xmf2.Commons.iOS.Services
 				}
 			});
 		}
-		protected virtual void Show<TViewController>() where TViewController : UIViewController, new()
+		protected virtual TViewController Show<TViewController>() where TViewController : UIViewController, new()
 		{
-			Show(() => new TViewController());
+			return Show(() => new TViewController());
 		}
-		protected abstract void Show<TViewController>(Func<TViewController> viewCreator) where TViewController : UIViewController;
+		protected abstract TViewController Show<TViewController>(Func<TViewController> viewCreator) where TViewController : UIViewController;
 		protected abstract UIViewController GetModalViewController();
 		protected void ReplaceView(Func<UIViewController> viewCreator)
 		{
@@ -101,10 +97,9 @@ namespace Xmf2.Commons.iOS.Services
 				return false;
 			}
 		}
-		protected bool TryToFindViewControllerInStackOfType<TViewController>(out UIViewController viewController) where TViewController : UIViewController
+		protected bool TryToFindViewControllerInStackOfType<TViewController>(out TViewController viewController) where TViewController : UIViewController
 		{
-			viewController = this.NavigationController?.ViewControllers?.FirstOrDefault(vc => vc is TViewController);
-			return viewController != null;
+			return this.NavigationController.TryToFindViewControllerInStackOfType(out viewController);
 		}
 	}
 }
