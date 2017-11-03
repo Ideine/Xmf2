@@ -353,11 +353,24 @@ public static class CustomAutoLayoutExtensions
 	}
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static UIView SameWidth(this UIView view, UIView v1)
+	{
+		return view.SameWidth(view, v1);
+	}
+
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static UIView SameWidth(this UIView view, UIView v1, UIView v2)
 	{
 		view.AddConstraint(NSLayoutConstraint.Create(v1, Width, Equal, v2, Width, 1f, 0f));
 		view.TranslatesAutoresizingMaskIntoConstraints = false;
 		return view;
+	}
+
+
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static UIView SameHeight(this UIView view, UIView v1)
+	{
+		return view.SameHeight(view, v1);
 	}
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]

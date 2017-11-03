@@ -97,7 +97,7 @@ namespace Xmf2.Commons.iOS.Services
 				return false;
 			}
 		}
-		protected bool TryToFindViewControllerInStackOfType<TViewController>(out TViewController viewController) where TViewController : UIViewController
+		protected bool TryToFindViewControllerInStackOfType<TViewController>(out TViewController viewController) where TViewController : class
 		{
 			return this.NavigationController.TryToFindViewControllerInStackOfType(out viewController);
 		}

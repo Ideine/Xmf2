@@ -9,7 +9,7 @@ namespace UIKit
 			uiNavigationController.SetViewControllers(new UIViewController[] { controller }, animated);
 		}
 
-		public static bool TryToFindViewControllerInStackOfType<TViewController>(this UINavigationController uiNavigationController, out TViewController viewController) where TViewController : UIViewController
+		public static bool TryToFindViewControllerInStackOfType<TViewController>(this UINavigationController uiNavigationController, out TViewController viewController) where TViewController : class
 		{
 			viewController = uiNavigationController?.ViewControllers?.OfType<TViewController>().FirstOrDefault();
 			return viewController != null;
