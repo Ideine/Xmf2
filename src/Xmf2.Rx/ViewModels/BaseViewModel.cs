@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Reactive;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
+using System.Threading;
 using System.Threading.Tasks;
 using ReactiveUI;
 using Splat;
@@ -161,7 +162,7 @@ namespace Xmf2.Rx.ViewModels
 				_stateAutomata = CreateStateGraph();
 
 				_stateObservable.OnTaskThread()
-				                .SubscribeAsync(state => GoToState(state));
+								.SubscribeAsync(state => GoToState(state));
 			}
 
 			public Task WaitForInitialization()
@@ -270,8 +271,11 @@ namespace Xmf2.Rx.ViewModels
 			}
 			*/
 
+			private readonly SemaphoreSlim semaphore = new SemaphoreSlim(1, 1);
+
 			private async Task GoToState(ViewModelState nextState)
 			{
+				await semaphore.WaitAsync();
 				switch (nextState)
 				{
 					case ViewModelState.Created:
@@ -292,6 +296,7 @@ namespace Xmf2.Rx.ViewModels
 						await _stateAutomata.ToState(nameof(ViewModelState.Stopped));
 						break;
 				}
+				semaphore.Release();
 			}
 
 			private StateAutomata CreateStateGraph()
