@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Reactive;
 using System.Reactive.Concurrency;
+using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using Android.Content;
@@ -28,6 +29,7 @@ namespace Xmf2.Rx.Droid.BaseView
 
 		#region Reactive UI
 
+		private SerialDisposable _uiElementsBindingDisposable = new SerialDisposable();
 		private TViewModel _viewModel;
 		public TViewModel ViewModel
 		{
@@ -67,5 +69,27 @@ namespace Xmf2.Rx.Droid.BaseView
 		#endregion
 
 		protected virtual void OnViewModelSet() { }
+
+		protected void RequestBindUIElements()
+		{
+			_uiElementsBindingDisposable.Disposable = null;
+
+			CompositeDisposable disposables = new CompositeDisposable();
+			BindUIElements(disposables);
+
+			_uiElementsBindingDisposable.Disposable = disposables;
+		}
+
+		protected virtual void BindUIElements(CompositeDisposable disposables) { }
+
+		protected override void Dispose(bool disposing)
+		{
+			base.Dispose(disposing);
+			if (disposing)
+			{
+				_uiElementsBindingDisposable?.Dispose();
+				_uiElementsBindingDisposable = null;
+			}
+		}
 	}
 }

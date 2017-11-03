@@ -8,6 +8,7 @@ using Android.OS;
 using Android.Graphics;
 using Xmf2.Commons.Droid.Helpers;
 using Xmf2.Commons.Droid.Services;
+using System.Reactive.Disposables;
 
 namespace Xmf2.Rx.Droid.BaseView
 {
@@ -18,6 +19,8 @@ namespace Xmf2.Rx.Droid.BaseView
 		private readonly Lazy<ILifecycleMonitor> _lifecycleMonitor = new Lazy<ILifecycleMonitor>(() => Locator.Current.GetService<ILifecycleMonitor>());
 
 		#region Busy Indicator
+
+		private SerialDisposable _uiElementsBindingDisposable = new SerialDisposable();
 
 		protected virtual int LoadingViewLayout => -1;
 		protected virtual int LoadingViewProgressId => -1;
@@ -47,7 +50,17 @@ namespace Xmf2.Rx.Droid.BaseView
 
 		protected virtual void SetViewModelBindings() { }
 
-		protected virtual void OnContentViewSet() { }
+		protected virtual void OnContentViewSet()
+		{
+			_uiElementsBindingDisposable.Disposable = null;
+
+			CompositeDisposable disposables = new CompositeDisposable();
+			BindUIElements(disposables);
+
+			_uiElementsBindingDisposable.Disposable = disposables;
+		}
+
+		protected virtual void BindUIElements(CompositeDisposable disposables) { }
 
 		protected void ColorizeStatusBar(int color)
 		{
@@ -112,6 +125,16 @@ namespace Xmf2.Rx.Droid.BaseView
 		{
 			_lifecycleMonitor.Value.OnDestroy(this);
 			base.OnDestroy();
+		}
+
+		protected override void Dispose(bool disposing)
+		{
+			base.Dispose(disposing);
+			if(disposing)
+			{
+				_uiElementsBindingDisposable?.Dispose();
+				_uiElementsBindingDisposable = null;
+			}
 		}
 
 		#endregion
