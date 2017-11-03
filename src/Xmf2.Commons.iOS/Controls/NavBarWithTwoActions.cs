@@ -163,6 +163,18 @@ namespace Xmf2.Commons.iOS.Controls
 			return this;
 		}
 
+		public NavBarWithTwoActions WithleftAction(Action action)
+		{
+			LeftAction = action;
+			return this;
+		}
+
+		public NavBarWithTwoActions WithRightAction(Action action)
+		{
+			RightAction = action;
+			return this;
+		}
+
 		#region Dispose
 
 		private bool _disposed;
