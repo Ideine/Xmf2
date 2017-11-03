@@ -29,7 +29,7 @@ namespace Xmf2.Rx.Droid.BaseView
 		#region Reactive UI
 
 		private TViewModel _viewModel;
-		public TViewModel ViewModel
+		public virtual TViewModel ViewModel
 		{
 			get => _viewModel;
 			set
