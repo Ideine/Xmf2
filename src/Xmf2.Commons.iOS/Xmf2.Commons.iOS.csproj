@@ -56,11 +56,13 @@
     <Compile Include="Controls\ItemsControl\BaseItemCell.cs" />
     <Compile Include="Controls\ItemsControl\ItemsControlView.cs" />
     <Compile Include="Controls\ItemsControl\IUIComponent.cs" />
+    <Compile Include="Controls\UILoadingView.cs" />
     <Compile Include="Controls\UIRightImageButton.cs" />
     <Compile Include="Controls\UISwappedImageButton.cs" />
     <Compile Include="Controls\VerticalLinearLayout.cs" />
     <Compile Include="Extensions\NSDateExtension.cs" />
     <Compile Include="Extensions\ScrollViewExtensions.cs" />
+    <Compile Include="Helpers\LoadingViewHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Controls\FloatLabeledTextField.cs" />
     <Compile Include="Controls\UIHighlightButton.cs" />

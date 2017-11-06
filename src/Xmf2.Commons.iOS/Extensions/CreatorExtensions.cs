@@ -49,6 +49,12 @@ public static class CreatorExtensions
 		return button;
 	}
 
+	public static TUIButton WithTextColor<TUIButton>(this TUIButton button, uint color, UIControlState forState) where TUIButton : UIButton
+	{
+		button.SetTitleColor(color.ColorFromHex(), forState);
+		return button;
+	}
+
 	public static TUIButton WithTextColor<TUIButton>(this TUIButton button, int color, UIControlState forState) where TUIButton : UIButton
 	{
 		button.SetTitleColor(color.ColorFromHex(), forState);
@@ -56,6 +62,11 @@ public static class CreatorExtensions
 	}
 
 	public static TUIButton WithTextColor<TUIButton>(this TUIButton button, int color) where TUIButton : UIButton
+	{
+		button.SetTitleColor(color.ColorFromHex(), UIControlState.Normal);
+		return button;
+	}
+	public static TUIButton WithTextColor<TUIButton>(this TUIButton button, uint color) where TUIButton : UIButton
 	{
 		button.SetTitleColor(color.ColorFromHex(), UIControlState.Normal);
 		return button;
@@ -70,6 +81,12 @@ public static class CreatorExtensions
 	public static TUIButton WithTextColorHighlight<TUIButton>(this TUIButton button, UIColor color) where TUIButton : UIButton
 	{
 		button.SetTitleColor(color, UIControlState.Highlighted);
+		return button;
+	}
+	
+	public static TUIButton WithTextColorSelected<TUIButton>(this TUIButton button, uint color) where TUIButton : UIButton
+	{
+		button.SetTitleColor(color.ColorFromHex(), UIControlState.Selected);
 		return button;
 	}
 
@@ -669,6 +686,17 @@ public static class CreatorExtensions
 		return view;
 	}
 
+	public static TView WithShadow<TView>(this TView view, uint shadowColor, int width, int heigth, float radius = 8f) where TView : UIView
+	{
+		var color = shadowColor.ColorFromHex();
+		view.Layer.ShadowColor = color.CGColor; ;
+		view.Layer.ShadowOpacity = (float)color.CGColor.Alpha;
+		view.Layer.ShadowRadius = radius;
+		view.Layer.ShadowOffset = new CGSize(width, heigth);
+
+		return view;
+	}
+
 	public static TView WithShadow<TView>(this TView view, UIColor shadowColor, int left, int top, float radius = 8f, float opacity = 1f) where TView : UIView
 	{
 		view.Layer.ShadowColor = shadowColor.CGColor;
@@ -696,7 +724,8 @@ public static class CreatorExtensions
 		return view;
 	}
 
-	public static TView WithCornerRadius<TView>(this TView view, int size) where TView : UIView
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static TView WithCornerRadius<TView>(this TView view, float size) where TView : UIView
 	{
 		view.Layer.CornerRadius = size;
 		return view;
