@@ -72,6 +72,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Helpers\CustomAnimations\CircleRevealValues.cs" />
+    <Compile Include="Helpers\CustomAnimations\ClockRevealValues.cs" />
+    <Compile Include="Helpers\CustomAnimations\IRevealValues.cs" />
+    <Compile Include="Helpers\CustomAnimations\IRevealViewGroup.cs" />
+    <Compile Include="Helpers\CustomAnimations\RevealFrameLayout.cs" />
+    <Compile Include="Helpers\CustomAnimations\RevealValueProperty.cs" />
+    <Compile Include="Helpers\CustomAnimations\TranslationRevealValues.cs" />
+    <Compile Include="Helpers\CustomAnimations\ViewRevealManager.cs" />
     <Compile Include="Helpers\LoadingViewHelper.cs" />
     <Compile Include="Helpers\UIHelper.cs" />
     <Compile Include="LinearList\LinearListView.cs" />
@@ -91,6 +99,7 @@
     <Compile Include="Decorators\GridSpacingDecoration.cs" />
     <Compile Include="Helpers\ProgressWebChromeClient.cs" />
     <Compile Include="Services\Licences\LicenceReaderService.cs" />
+    <Compile Include="Helpers\CustomAnimations\ViewRevealAnimationHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Helpers\" />
@@ -101,6 +110,7 @@
     <Folder Include="Extensions\" />
     <Folder Include="Decorators\" />
     <Folder Include="Services\Licences\" />
+    <Folder Include="Helpers\CustomAnimations\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Xmf2.Commons\Xmf2.Commons.csproj">
