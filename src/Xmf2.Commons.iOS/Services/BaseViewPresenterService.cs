@@ -16,7 +16,7 @@ namespace Xmf2.Commons.iOS.Services
 		{
 			Window = window;
 		}
-		public void Close()
+		public virtual void Close()
 		{
 			if (NavigationController == null)
 			{
