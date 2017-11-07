@@ -8,7 +8,7 @@
     <OutputType>Library</OutputType>
     <RootNamespace>Xmf2.Commons.Droid</RootNamespace>
     <AssemblyName>Xmf2.Commons.Droid</AssemblyName>
-    <TargetFrameworkVersion>v7.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v8.0</TargetFrameworkVersion>
     <AndroidResgenFile>Resources\Resource.designer.cs</AndroidResgenFile>
     <AndroidResgenClass>Resource</AndroidResgenClass>
     <MonoAndroidResourcePrefix>Resources</MonoAndroidResourcePrefix>
@@ -100,6 +100,7 @@
     <Compile Include="Helpers\ProgressWebChromeClient.cs" />
     <Compile Include="Services\Licences\LicenceReaderService.cs" />
     <Compile Include="Helpers\CustomAnimations\ViewRevealAnimationHelper.cs" />
+    <Compile Include="Extensions\TextViewExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Helpers\" />
