@@ -20,6 +20,9 @@ namespace Xmf2.Commons.iOS.Controls
 		[Obsolete("Use SwappedImageEdgeInsets instead")]
 		public override UIEdgeInsets ImageEdgeInsets { get => base.ImageEdgeInsets; set => base.ImageEdgeInsets = value; }
 
+		[Obsolete("Use SwappedHorizontalAlignment instead")]
+		public override UIControlContentHorizontalAlignment HorizontalAlignment { get => base.HorizontalAlignment; set => base.HorizontalAlignment = value; }
+
 		public virtual UIEdgeInsets SwappedTitleEdgeInsets
 		{
 			get => SwapHorizontally(base.TitleEdgeInsets);
@@ -31,9 +34,32 @@ namespace Xmf2.Commons.iOS.Controls
 			set => base.ImageEdgeInsets = SwapHorizontally(value);
 		}
 
+		public virtual UIControlContentHorizontalAlignment SwappedHorizontalAlignment
+		{
+			get => SwapHorizontally(base.HorizontalAlignment);
+			set => base.HorizontalAlignment = SwapHorizontally(value);
+		}
+
 		private static UIEdgeInsets SwapHorizontally(UIEdgeInsets inset)
 		{
 			return new UIEdgeInsets(inset.Top, inset.Right, inset.Bottom, inset.Left);
+		}
+		private static UIControlContentHorizontalAlignment SwapHorizontally(UIControlContentHorizontalAlignment hAlignement)
+		{
+			switch (hAlignement)
+			{
+				case UIControlContentHorizontalAlignment.Left:	return UIControlContentHorizontalAlignment.Right;
+				case UIControlContentHorizontalAlignment.Right:	return UIControlContentHorizontalAlignment.Left;
+
+				case UIControlContentHorizontalAlignment.Leading:
+				case UIControlContentHorizontalAlignment.Trailing:
+					throw new NotImplementedException();//TODO: Implémenter ces cas.
+
+				default:
+				case UIControlContentHorizontalAlignment.Center:
+				case UIControlContentHorizontalAlignment.Fill:
+					return hAlignement;
+			}
 		}
 	}
 }

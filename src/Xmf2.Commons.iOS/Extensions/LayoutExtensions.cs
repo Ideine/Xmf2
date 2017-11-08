@@ -154,9 +154,13 @@ public static class CustomAutoLayoutExtensions
 		return containerView;
 	}
 
-	public static UIView AnchorTop(this UIView containerView, UIView view, int margin = 0)
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static UIView AnchorTop(this UIView containerView, UIView view, float margin = 0f)
 	{
-		containerView.ConstrainLayout(() => view.Top() == containerView.Top() + margin);
+		//containerView.TranslatesAutoresizingMaskIntoConstraints = false;
+		view.TranslatesAutoresizingMaskIntoConstraints = false;
+		containerView.AddConstraint(NSLayoutConstraint.Create(view, Top, Equal, containerView, Top, 1f, margin));
+		//containerView.ConstrainLayout(() => view.Top() == containerView.Top() + margin);
 		return containerView;
 	}
 
@@ -277,15 +281,19 @@ public static class CustomAutoLayoutExtensions
 		return view;
 	}
 
-	public static UIView ConstrainMinHeight(this UIView view, int height)
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static UIView ConstrainMinHeight(this UIView view, float height)
 	{
-		view.ConstrainLayout(() => view.Height() >= height);
+		view.AddConstraint(NSLayoutConstraint.Create(view, Height, GreaterThanOrEqual, 1f, height));
+		view.TranslatesAutoresizingMaskIntoConstraints = false;
 		return view;
 	}
 
-	public static UIView ConstrainMinWidth(this UIView view, int width)
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static UIView ConstrainMinWidth(this UIView view, float width)
 	{
-		view.ConstrainLayout(() => view.Width() >= width);
+		view.AddConstraint(NSLayoutConstraint.Create(view, Width, GreaterThanOrEqual, 1f, width));
+		view.TranslatesAutoresizingMaskIntoConstraints = false;
 		return view;
 	}
 
@@ -319,6 +327,14 @@ public static class CustomAutoLayoutExtensions
 		return view;
 	}
 
+	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	//public static UIView AlignOnBottom(this UIView view, UIView v1, UIView v2, float offset = 0)
+	//{
+	//	v1.TranslatesAutoresizingMaskIntoConstraints = false;
+	//	v2.TranslatesAutoresizingMaskIntoConstraints = false;
+	//	view.AddConstraint(NSLayoutConstraint.Create(v1, Bottom, Equal, v2, Bottom, 1f, offset));
+	//	return view;
+	//}
 	public static UIView AlignOnBottom(this UIView view, UIView v1, UIView v2, int offset = 0)
 	{
 		view.ConstrainLayout(() => v1.Bottom() == v2.Bottom() + offset);

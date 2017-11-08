@@ -32,6 +32,12 @@ public static class CreatorExtensions
 		return new UISwappedImageButton();
 	}
 
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static UIRightImageButton CreateRightImageButton(this UIResponder _)
+	{
+		return new UIRightImageButton();
+	}
+
 	public static TUIButton WithHighlightBackgroundColor<TUIButton>(this TUIButton button, int color) where TUIButton : UIHighlightButton
 	{
 		button.HighlightColor = color.ColorFromHex();
@@ -188,6 +194,25 @@ public static class CreatorExtensions
 		{
 			button.TouchUpInside -= onTouchUpInside;
 		};
+		return button;
+	}
+
+	public static TUIButton WithBackgroundColor<TUIButton>(this TUIButton button, UIColor backgroundColor, UIControlState forState) where TUIButton : UIButton
+	{
+		UIImage backgroundImage;
+		UIGraphics.BeginImageContext(new CGSize(1f, 1f));
+		try
+		{
+			var context = UIGraphics.GetCurrentContext();
+			context.SetFillColor(backgroundColor.CGColor);
+			context.FillRect(new CGRect(0, 0, 1, 1));
+			backgroundImage = UIGraphics.GetImageFromCurrentImageContext();
+		}
+		finally
+		{
+			UIGraphics.EndImageContext();
+		}
+		button.SetBackgroundImage(backgroundImage, forState);
 		return button;
 	}
 
