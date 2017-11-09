@@ -157,22 +157,25 @@ public static class CustomAutoLayoutExtensions
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static UIView AnchorTop(this UIView containerView, UIView view, float margin = 0f)
 	{
-		//containerView.TranslatesAutoresizingMaskIntoConstraints = false;
 		view.TranslatesAutoresizingMaskIntoConstraints = false;
 		containerView.AddConstraint(NSLayoutConstraint.Create(view, Top, Equal, containerView, Top, 1f, margin));
-		//containerView.ConstrainLayout(() => view.Top() == containerView.Top() + margin);
 		return containerView;
 	}
 
-	public static UIView AnchorBottom(this UIView containerView, UIView view, int margin = 0)
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static UIView AnchorBottom(this UIView containerView, UIView view, float margin = 0f)
 	{
-		containerView.ConstrainLayout(() => containerView.Bottom() == view.Bottom() + margin);
+		view.TranslatesAutoresizingMaskIntoConstraints = false;
+		containerView.AddConstraint(NSLayoutConstraint.Create(containerView, Bottom, Equal, view, Bottom, 1f, margin));
 		return containerView;
 	}
 
-	public static UIView AnchorRight(this UIView containerView, UIView view, int margin = 0)
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static UIView AnchorRight(this UIView containerView, UIView view, float margin = 0)
 	{
-		containerView.ConstrainLayout(() => containerView.Right() == view.Right() + margin);
+		containerView.AddConstraint(NSLayoutConstraint.Create(containerView, Right, Equal, view, Right, 1f, margin));
+		containerView.TranslatesAutoresizingMaskIntoConstraints = false;
+		view.TranslatesAutoresizingMaskIntoConstraints = false;
 		return containerView;
 	}
 
