@@ -31,4 +31,33 @@ namespace Xmf2.Rx.Droid.BaseView
 
 		}
 	}
+
+	public abstract class BaseReactiveFragmentWithLifeCycleManagement<TViewModel> : BaseReactiveFragment<TViewModel> where TViewModel : BaseViewModel
+	{
+		public BaseReactiveFragmentWithLifeCycleManagement() { }
+
+		protected BaseReactiveFragmentWithLifeCycleManagement(IntPtr handle, JniHandleOwnership ownership) : base(handle, ownership) { }
+
+		public override void OnStart()
+		{
+			base.OnStart();
+			ViewModel?.LifecycleManager.Start();
+		}
+
+		public override void OnPause()
+		{
+			base.OnPause();
+			ViewModel?.LifecycleManager.Pause();
+		}
+		public override void OnResume()
+		{
+			base.OnResume();
+			ViewModel?.LifecycleManager.Resume();
+		}
+		public override void OnStop()
+		{
+			base.OnStop();
+			ViewModel?.LifecycleManager.Stop();
+		}
+	}
 }
