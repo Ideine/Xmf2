@@ -7,11 +7,11 @@ using Xmf2.Commons.Droid.LinearList;
 
 namespace Xmf2.Rx.Droid.LinearList
 {
-	public class BaseReactiveLinearListViewAdapter<ItemData, ViewHolder> : LinearListViewAdapter where ItemData : class where ViewHolder : LinearListViewHolder
+	public class BaseReactiveLinearListViewAdapter<TItemData, TViewHolder> : LinearListViewAdapter where TItemData : class where TViewHolder : LinearListViewHolder
 	{
-		public new IReadOnlyList<ItemData> ItemsSource
+		public new IReadOnlyList<TItemData> ItemsSource
 		{
-			get => base.ItemsSource as IReadOnlyList<ItemData>;
+			get => base.ItemsSource as IReadOnlyList<TItemData>;
 			set => base.ItemsSource = value;
 		}
 
@@ -21,7 +21,7 @@ namespace Xmf2.Rx.Droid.LinearList
 
 		protected override LinearListViewHolder CreateViewHolder(int position, Android.Views.View view)
 		{
-			var viewHolder = Activator.CreateInstance(typeof(ViewHolder), view) as ViewHolder;
+			var viewHolder = Activator.CreateInstance(typeof(TViewHolder), view) as TViewHolder;
 			return viewHolder;
 		}
 
