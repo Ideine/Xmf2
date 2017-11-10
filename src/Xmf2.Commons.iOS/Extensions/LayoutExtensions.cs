@@ -278,9 +278,12 @@ public static class CustomAutoLayoutExtensions
 		return view;
 	}
 
-	public static UIView ConstrainSize(this UIView view, int width, int height)
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static UIView ConstrainSize(this UIView view, float width, float height)
 	{
-		view.ConstrainLayout(() => view.Width() == width && view.Height() == height);
+		view.TranslatesAutoresizingMaskIntoConstraints = false;
+		view.AddConstraint(NSLayoutConstraint.Create(view, Width,  Equal, 1, width));
+		view.AddConstraint(NSLayoutConstraint.Create(view, Height, Equal, 1, height));
 		return view;
 	}
 
