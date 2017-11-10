@@ -188,9 +188,12 @@ public static class CustomAutoLayoutExtensions
 		return containerView;
 	}
 
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static UIView CenterHorizontally(this UIView containerView, UIView view)
 	{
-		containerView.ConstrainLayout(() => view.CenterX() == containerView.CenterX());
+		containerView.AddConstraint(NSLayoutConstraint.Create(containerView, CenterX, Equal, view, CenterX, 1f, 0f));
+		containerView.TranslatesAutoresizingMaskIntoConstraints = false;
+		view.TranslatesAutoresizingMaskIntoConstraints = false;
 		return containerView;
 	}
 	public static UIView CenterHorizontally(this UIView containerView, params UIView[] views)
@@ -419,13 +422,25 @@ public static class CustomAutoLayoutExtensions
 		return view;
 	}
 
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static UIScrollView VerticalScrollContentConstraint(this UIScrollView scroll, UIView content)
 	{
-		scroll.ConstrainLayout(() => scroll.Left() == content.Left()
-							   && scroll.Right() == content.Right()
-							   && scroll.Top() == content.Top()
-							   && scroll.Bottom() == content.Bottom()
-							   && scroll.CenterX() == content.CenterX());
+		return scroll.VerticalScrollContentConstraint(content, 0f);
+	}
+
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static UIScrollView VerticalScrollContentConstraint(this UIScrollView scroll, UIView content, float horizontalMargin)
+	{
+		scroll.TranslatesAutoresizingMaskIntoConstraints = false;
+		content.TranslatesAutoresizingMaskIntoConstraints = false;
+		scroll.AddConstraints(new[]
+		{
+			NSLayoutConstraint.Create(scroll, Left, Equal, content, Left, 1, -horizontalMargin/2),
+			NSLayoutConstraint.Create(scroll, Right, Equal, content, Right, 1f, horizontalMargin/2),
+			NSLayoutConstraint.Create(content, Top, Equal, scroll, Top, 1f, 0f),
+			NSLayoutConstraint.Create(scroll, Bottom, Equal, content, Bottom, 1f, 0f),
+			NSLayoutConstraint.Create(scroll, CenterX, Equal, content, CenterX, 1f, 0f)
+		});
 		return scroll;
 	}
 
