@@ -303,6 +303,16 @@ public static class CustomAutoLayoutExtensions
 		return view;
 	}
 
+
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static UIView ConstrainMinWidth(this UIView view, UIView v1)
+	{
+		view.AddConstraint(NSLayoutConstraint.Create(view, Width, LessThanOrEqual, v1, Width, 1f, 0f));
+		view.TranslatesAutoresizingMaskIntoConstraints = false;
+		v1.TranslatesAutoresizingMaskIntoConstraints = false;
+		return view;
+	}
+
 	public static UIView ConstrainMaxHeight(this UIView view, int height)
 	{
 		view.ConstrainLayout(() => view.Height() <= height);
@@ -344,6 +354,12 @@ public static class CustomAutoLayoutExtensions
 	public static UIView AlignOnBottom(this UIView view, UIView v1, UIView v2, int offset = 0)
 	{
 		view.ConstrainLayout(() => v1.Bottom() == v2.Bottom() + offset);
+		return view;
+	}
+
+	public static UIView AlignOnCenterX(this UIView view, UIView v1, int offset = 0)
+	{
+		view.AlignOnCenterX(view, v1, offset);
 		return view;
 	}
 
