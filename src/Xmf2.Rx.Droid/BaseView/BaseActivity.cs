@@ -15,8 +15,6 @@ namespace Xmf2.Rx.Droid.BaseView
 	{
 		public abstract TViewModel GetViewModel();
 
-		private readonly Lazy<ILifecycleMonitor> _lifecycleMonitor = new Lazy<ILifecycleMonitor>(() => Locator.Current.GetService<ILifecycleMonitor>());
-
 		#region Busy Indicator
 
 		protected virtual int LoadingViewLayout => -1;
@@ -63,7 +61,6 @@ namespace Xmf2.Rx.Droid.BaseView
 		protected override void OnCreate(Bundle savedInstanceState)
 		{
 			base.OnCreate(savedInstanceState);
-			_lifecycleMonitor.Value.OnCreate(this);
 			if (LoadingViewLayout >= 0 && LoadingViewProgressId >= 0)
 			{
 				LoadingViewHelper = new LoadingViewHelper(this, LoadingViewLayout, LoadingViewProgressId);
@@ -77,41 +74,25 @@ namespace Xmf2.Rx.Droid.BaseView
 		protected override void OnStart()
 		{
 			base.OnStart();
-			_lifecycleMonitor.Value.OnStart(this);
 			ViewModel?.LifecycleManager.Start();
-		}
-
-		protected override void OnRestart()
-		{
-			base.OnRestart();
-			_lifecycleMonitor.Value.OnRestart(this);
 		}
 
 		protected override void OnResume()
 		{
 			base.OnResume();
-			_lifecycleMonitor.Value.OnResume(this);
 			ViewModel?.LifecycleManager.Resume();
 		}
 
 		protected override void OnPause()
 		{
 			ViewModel?.LifecycleManager.Pause();
-			_lifecycleMonitor.Value.OnPause(this);
 			base.OnPause();
 		}
 
 		protected override void OnStop()
 		{
 			ViewModel?.LifecycleManager.Stop();
-			_lifecycleMonitor.Value.OnStop(this);
 			base.OnStop();
-		}
-
-		protected override void OnDestroy()
-		{
-			_lifecycleMonitor.Value.OnDestroy(this);
-			base.OnDestroy();
 		}
 
 		#endregion

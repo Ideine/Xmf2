@@ -31,11 +31,6 @@ namespace Xmf2.Commons.Droid.Services
 	{
 		public Activity Activity { get; private set; }
 
-		public LifecycleMonitor(Context context)
-		{
-			Activity = context as Activity;
-		}
-
 		public void OnCreate(Activity activity)
 		{
 			Debug.WriteLine($"[AcivityLifeCycle] OnCreate {activity.GetType().Name}");
@@ -74,7 +69,7 @@ namespace Xmf2.Commons.Droid.Services
 		{
 			Debug.WriteLine($"[AcivityLifeCycle] OnDestroy {activity.GetType().Name}");
 
-			if (this.Activity == activity)
+			if (Activity == activity)
 			{
 				Activity = null;
 			}
