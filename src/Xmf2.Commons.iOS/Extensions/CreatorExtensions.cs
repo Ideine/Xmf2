@@ -73,10 +73,20 @@ public static class CreatorExtensions
 		return button;
 	}
 
+	public static TUIButton WithTextColorHighlight<TUIButton>(this TUIButton button, int color) where TUIButton : UIButton
+	{
+		return button.WithTextColorHighlight(color.ColorFromHex());
+	}
+
 	public static TUIButton WithTextColorSelected<TUIButton>(this TUIButton button, UIColor color) where TUIButton : UIButton
 	{
 		button.SetTitleColor(color, UIControlState.Selected);
 		return button;
+	}
+
+	public static TUIButton WithTextColorSelected<TUIButton>(this TUIButton button, int color) where TUIButton : UIButton
+	{
+		return button.WithTextColorSelected(color.ColorFromHex());
 	}
 
 	public static TUIButton WithImage<TUIButton>(this TUIButton button, string image) where TUIButton : UIButton
