@@ -437,7 +437,7 @@ public static class CustomAutoLayoutExtensions
 	}
 	public static UIView EnsureAdd(this UIView view, params UIGestureRecognizer[] gestureRecognizersToAdd)
 	{
-		var delta = gestureRecognizersToAdd.Except(view.GestureRecognizers).ToArray();
+		var delta = gestureRecognizersToAdd.Except(view.GestureRecognizers ?? new UIGestureRecognizer[]{}).ToArray();
 		foreach (var recognizer in delta)
 		{
 			view.AddGestureRecognizer(recognizer);
@@ -446,7 +446,7 @@ public static class CustomAutoLayoutExtensions
 	}
 	public static UIView EnsureRemove(this UIView view, params UIGestureRecognizer[] gestureRecognizersToRemove)
 	{
-		var delta = view.GestureRecognizers.Intersect(gestureRecognizersToRemove).ToArray();
+		var delta = view.GestureRecognizers?.Intersect(gestureRecognizersToRemove).ToArray() ?? new UIGestureRecognizer[]{};
 		foreach (var recognizer in delta)
 		{
 			view.RemoveGestureRecognizer(recognizer);
