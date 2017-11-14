@@ -89,7 +89,7 @@ public static class CreatorExtensions
 		button.SetTitleColor(color, UIControlState.Highlighted);
 		return button;
 	}
-	
+
 	public static TUIButton WithTextColorSelected<TUIButton>(this TUIButton button, uint color) where TUIButton : UIButton
 	{
 		button.SetTitleColor(color.ColorFromHex(), UIControlState.Selected);
@@ -711,23 +711,23 @@ public static class CreatorExtensions
 		return view;
 	}
 
-	public static TView WithShadow<TView>(this TView view, uint shadowColor, int width, int heigth, float radius = 8f) where TView : UIView
+	public static TView WithShadow<TView>(this TView view, uint shadowColor, float xOffset, float yOffset, float radius = 8f) where TView : UIView
 	{
 		var color = shadowColor.ColorFromHex();
 		view.Layer.ShadowColor = color.CGColor; ;
 		view.Layer.ShadowOpacity = (float)color.CGColor.Alpha;
 		view.Layer.ShadowRadius = radius;
-		view.Layer.ShadowOffset = new CGSize(width, heigth);
+		view.Layer.ShadowOffset = new CGSize(xOffset, yOffset);
 
 		return view;
 	}
 
-	public static TView WithShadow<TView>(this TView view, UIColor shadowColor, int left, int top, float radius = 8f, float opacity = 1f) where TView : UIView
+	public static TView WithShadow<TView>(this TView view, UIColor shadowColor, float xOffset, float yOffset, float radius = 8f, float opacity = 1f) where TView : UIView
 	{
 		view.Layer.ShadowColor = shadowColor.CGColor;
 		view.Layer.ShadowOpacity = opacity;
 		view.Layer.ShadowRadius = radius;
-		view.Layer.ShadowOffset = new CGSize(left, top);
+		view.Layer.ShadowOffset = new CGSize(xOffset, yOffset);
 
 		return view;
 	}

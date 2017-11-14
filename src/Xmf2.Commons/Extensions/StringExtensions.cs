@@ -26,6 +26,11 @@ namespace Xmf2.Commons.Extensions
 				&& !string.IsNullOrWhiteSpace(str);
 		}
 
+		public static string Join(this IEnumerable<string> values, string separator)
+		{
+			return values.Join(separator, removeEmptyEntries: false);
+		}
+
 		public static string Join(this IEnumerable<string> values, string separator, bool removeEmptyEntries)
 		{
 			return string.Join(	separator: separator,
