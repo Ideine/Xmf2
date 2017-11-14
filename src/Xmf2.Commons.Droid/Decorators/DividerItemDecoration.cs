@@ -1,4 +1,13 @@
 ﻿using System;
+using Android.Content;
+using Android.Content.Res;
+using Android.Graphics;
+using Android.Graphics.Drawables;
+using Android.Support.V4.Content;
+using Android.Support.V4.View;
+using Android.Support.V7.Widget;
+using Android.Views;
+
 namespace Xmf2.Commons.Droid.Decorators
 {
 	public class DividerItemDecoration : RecyclerView.ItemDecoration
@@ -10,13 +19,13 @@ namespace Xmf2.Commons.Droid.Decorators
 		}
 		private int[] ATTRS => new int[] { Android.Resource.Attribute.ListDivider };
 
-		private Drawable _divider;
+		private readonly Drawable _divider;
 
-		private Orientation _orientation;
+		private readonly Orientation _orientation;
 
 		public DividerItemDecoration(Context context, Orientation orientation)
 		{
-			TypedArray a = context.ObtainStyledAttributes(ATTRS);
+			var a = context.ObtainStyledAttributes(ATTRS);
 			_divider = a.GetDrawable(0);
 			a.Recycle();
 			_orientation = orientation;
@@ -43,34 +52,34 @@ namespace Xmf2.Commons.Droid.Decorators
 			}
 		}
 
-		public void DrawVertical(Canvas c, RecyclerView parent)
+		private void DrawVertical(Canvas c, RecyclerView parent)
 		{
-			int left = parent.PaddingLeft;
-			int right = parent.Width - parent.PaddingRight;
-			int childCount = parent.ChildCount;
+			var left = parent.PaddingLeft;
+			var right = parent.Width - parent.PaddingRight;
+			var childCount = parent.ChildCount;
 
-			for (int i = 0; i < childCount; i++)
+			for (var i = 0; i < childCount; i++)
 			{
-				View child = parent.GetChildAt(i);
-				RecyclerView.LayoutParams param = (RecyclerView.LayoutParams)child.LayoutParameters;
-				int top = (int)(child.Bottom + param.BottomMargin + Math.Round(ViewCompat.GetTranslationX(child)));
-				int bottom = top + _divider.IntrinsicHeight;
+				var child = parent.GetChildAt(i);
+				var param = (RecyclerView.LayoutParams)child.LayoutParameters;
+				var top = (int)(child.Bottom + param.BottomMargin + Math.Round(ViewCompat.GetTranslationX(child)));
+				var bottom = top + _divider.IntrinsicHeight;
 				_divider.SetBounds(left, top, right, bottom);
 				_divider.Draw(c);
 			}
 		}
 
-		public void DrawHorizontal(Canvas c, RecyclerView parent)
+		private void DrawHorizontal(Canvas c, RecyclerView parent)
 		{
-			int top = parent.PaddingTop;
-			int bottom = parent.Height - parent.PaddingBottom;
-			int childCount = parent.ChildCount;
-			for (int i = 0; i < childCount; i++)
+			var top = parent.PaddingTop;
+			var bottom = parent.Height - parent.PaddingBottom;
+			var childCount = parent.ChildCount;
+			for (var i = 0; i < childCount; i++)
 			{
-				View child = parent.GetChildAt(i);
-				RecyclerView.LayoutParams param = (RecyclerView.LayoutParams)child.LayoutParameters;
-				int left = (int)(child.Right + param.RightMargin + Math.Round(ViewCompat.GetTranslationX(child)));
-				int right = left + _divider.IntrinsicHeight;
+				var child = parent.GetChildAt(i);
+				var param = (RecyclerView.LayoutParams)child.LayoutParameters;
+				var left = (int)(child.Right + param.RightMargin + Math.Round(ViewCompat.GetTranslationX(child)));
+				var right = left + _divider.IntrinsicHeight;
 				_divider.SetBounds(left, top, right, bottom);
 				_divider.Draw(c);
 			}
