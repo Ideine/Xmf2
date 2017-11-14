@@ -15,31 +15,21 @@ namespace Xmf2.Rx.Droid.BaseView
 	{
 		protected abstract TViewModel GetViewModel();
 
-		protected abstract int LayoutResId { get; }
-
 		protected virtual bool IsDialogCancelable { get; set; } = false;
-
-		public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Android.OS.Bundle savedInstanceState)
-		{
-			return inflater.Inflate(LayoutResId, container, false);
-		}
 
 		public override void OnActivityCreated(Android.OS.Bundle savedInstanceState)
 		{
 			base.OnActivityCreated(savedInstanceState);
-			OnContentViewSet();
 			ViewModel = GetViewModel();
 			OnViewModelSet();
 			SetViewModelBindings();
 		}
+		
 		protected BaseReactiveDialogFragment()
 		{
 		}
 
 		protected BaseReactiveDialogFragment(IntPtr handle, JniHandleOwnership ownership) : base(handle, ownership)
-		{
-		}
-		protected virtual void OnContentViewSet()
 		{
 		}
 
