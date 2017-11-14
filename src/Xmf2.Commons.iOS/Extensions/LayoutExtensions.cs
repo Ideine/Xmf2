@@ -157,44 +157,31 @@ public static class CustomAutoLayoutExtensions
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static UIView AnchorTop(this UIView containerView, UIView view, float margin = 0f)
 	{
-		view.TranslatesAutoresizingMaskIntoConstraints = false;
-		containerView.AddConstraint(NSLayoutConstraint.Create(view, Top, Equal, containerView, Top, 1f, margin));
-		return containerView;
+		return containerView.WithConstraint(view, Top, Equal, containerView, Top, 1f, margin);
 	}
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static UIView AnchorBottom(this UIView containerView, UIView view, float margin = 0f)
 	{
-		view.TranslatesAutoresizingMaskIntoConstraints = false;
-		containerView.AddConstraint(NSLayoutConstraint.Create(containerView, Bottom, Equal, view, Bottom, 1f, margin));
-		return containerView;
+		return containerView.WithConstraint(containerView, Bottom, Equal, view, Bottom, 1f, margin);
 	}
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static UIView AnchorRight(this UIView containerView, UIView view, float margin = 0)
 	{
-		containerView.AddConstraint(NSLayoutConstraint.Create(containerView, Right, Equal, view, Right, 1f, margin));
-		containerView.TranslatesAutoresizingMaskIntoConstraints = false;
-		view.TranslatesAutoresizingMaskIntoConstraints = false;
-		return containerView;
+		return containerView.WithConstraint(containerView, Right, Equal, view, Right, 1f, margin);
 	}
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static UIView AnchorLeft(this UIView containerView, UIView view, float margin = 0)
 	{
-		containerView.AddConstraint(NSLayoutConstraint.Create(containerView, Left, Equal, view, Left, 1, -margin));
-		containerView.TranslatesAutoresizingMaskIntoConstraints = false;
-		view.TranslatesAutoresizingMaskIntoConstraints = false;
-		return containerView;
+		return containerView.WithConstraint(containerView, Left, Equal, view, Left, 1, -margin);
 	}
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static UIView CenterHorizontally(this UIView containerView, UIView view)
 	{
-		containerView.AddConstraint(NSLayoutConstraint.Create(containerView, CenterX, Equal, view, CenterX, 1f, 0f));
-		containerView.TranslatesAutoresizingMaskIntoConstraints = false;
-		view.TranslatesAutoresizingMaskIntoConstraints = false;
-		return containerView;
+		return containerView.WithConstraint(containerView, CenterX, Equal, view, CenterX, 1f, 0f);
 	}
 	public static UIView CenterHorizontally(this UIView containerView, params UIView[] views)
 	{
@@ -243,10 +230,7 @@ public static class CustomAutoLayoutExtensions
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static UIView VerticalSpace(this UIView containerView, UIView topView, UIView bottomView, float margin = 0)
 	{
-		containerView.AddConstraint(NSLayoutConstraint.Create(topView, Bottom, Equal, bottomView, Top, 1f, -margin));
-		topView.TranslatesAutoresizingMaskIntoConstraints = false;
-		bottomView.TranslatesAutoresizingMaskIntoConstraints = false;
-		return containerView;
+		return containerView.WithConstraint(topView, Bottom, Equal, bottomView, Top, 1f, -margin);
 	}
 	public static UIView MinVerticalSpace(this UIView containerView, UIView top, UIView bottom, int margin = 0)
 	{
@@ -345,15 +329,7 @@ public static class CustomAutoLayoutExtensions
 		view.ConstrainLayout(() => v1.Top() == v2.Top() + offset);
 		return view;
 	}
-
-	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	//public static UIView AlignOnBottom(this UIView view, UIView v1, UIView v2, float offset = 0)
-	//{
-	//	v1.TranslatesAutoresizingMaskIntoConstraints = false;
-	//	v2.TranslatesAutoresizingMaskIntoConstraints = false;
-	//	view.AddConstraint(NSLayoutConstraint.Create(v1, Bottom, Equal, v2, Bottom, 1f, offset));
-	//	return view;
-	//}
+	
 	public static UIView AlignOnBottom(this UIView view, UIView v1, UIView v2, int offset = 0)
 	{
 		view.ConstrainLayout(() => v1.Bottom() == v2.Bottom() + offset);
@@ -417,9 +393,7 @@ public static class CustomAutoLayoutExtensions
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static UIView SameHeight(this UIView view, UIView v1, UIView v2)
 	{
-		view.AddConstraint(NSLayoutConstraint.Create(v1, Height, Equal, v2, Height, 1f, 0f));
-		view.TranslatesAutoresizingMaskIntoConstraints = false;
-		return view;
+		return view.WithConstraint(v1, Height, Equal, v2, Height, 1f, 0f);
 	}
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -431,16 +405,12 @@ public static class CustomAutoLayoutExtensions
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static UIScrollView VerticalScrollContentConstraint(this UIScrollView scroll, UIView content, float horizontalMargin)
 	{
-		scroll.TranslatesAutoresizingMaskIntoConstraints = false;
-		content.TranslatesAutoresizingMaskIntoConstraints = false;
-		scroll.AddConstraints(new[]
-		{
-			NSLayoutConstraint.Create(scroll, Left, Equal, content, Left, 1, -horizontalMargin/2),
-			NSLayoutConstraint.Create(scroll, Right, Equal, content, Right, 1f, horizontalMargin/2),
-			NSLayoutConstraint.Create(content, Top, Equal, scroll, Top, 1f, 0f),
-			NSLayoutConstraint.Create(scroll, Bottom, Equal, content, Bottom, 1f, 0f),
-			NSLayoutConstraint.Create(scroll, CenterX, Equal, content, CenterX, 1f, 0f)
-		});
+		scroll
+			.WithConstraint(scroll, Left, Equal, content, Left, 1, -horizontalMargin / 2)
+			.WithConstraint(scroll, Right, Equal, content, Right, 1f, horizontalMargin / 2)
+			.WithConstraint(content, Top, Equal, scroll, Top, 1f, 0f)
+			.WithConstraint(scroll, Bottom, Equal, content, Bottom, 1f, 0f)
+			.WithConstraint(scroll, CenterX, Equal, content, CenterX, 1f, 0f);
 		return scroll;
 	}
 
@@ -534,5 +504,20 @@ public static class CustomAutoLayoutExtensions
 		var delta = subviewsToAdd.Except(view.Subviews).ToArray();
 		view.AddSubviews(delta);
 		return view;
+	}
+
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static UIView WithConstraint(this UIView constrainedView, UIView view1, NSLayoutAttribute attribute1, NSLayoutRelation relation, UIView view2, NSLayoutAttribute attribute2, nfloat multiplier, nfloat constant)
+	{
+		if (view1 != null && view1 != constrainedView)
+		{
+			view1.TranslatesAutoresizingMaskIntoConstraints = false;
+		}
+		if (view2 != null && view2 != constrainedView)
+		{
+			view2.TranslatesAutoresizingMaskIntoConstraints = false;
+		}
+		constrainedView.AddConstraint(NSLayoutConstraint.Create(view1, attribute1, relation, view2, attribute2, multiplier, constant));
+		return constrainedView;
 	}
 }
