@@ -25,9 +25,9 @@ namespace Xmf2.Commons.Droid.Helpers
 			return (int)((dpValue) * context.Resources.DisplayMetrics.Density);
 		}
 
-		public static float SpToPx(Context context, float px)
+		public static float SpToPx(Context context, float spValue)
 		{
-			return px * context.Resources.DisplayMetrics.ScaledDensity;
+			return spValue * context.Resources.DisplayMetrics.ScaledDensity;
 		}
 
 		public static void SetColorFilter(ProgressBar view, Color color)
