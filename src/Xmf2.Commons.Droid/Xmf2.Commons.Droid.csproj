@@ -101,6 +101,7 @@
     <Compile Include="Services\Licences\LicenceReaderService.cs" />
     <Compile Include="Helpers\CustomAnimations\ViewRevealAnimationHelper.cs" />
     <Compile Include="Extensions\TextViewExtensions.cs" />
+    <Compile Include="Decorators\DividerItemDecoration.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Helpers\" />

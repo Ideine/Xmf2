@@ -1,20 +1,20 @@
 ﻿using System;
+using Android.Support.V7.App;
 
 public static class FragmentExtensions
 {
 	public static Android.Support.V4.App.FragmentManager GetSupportFragmentManager(this Android.App.Activity activity)
 	{
-		var appCompatActivity = activity as Android.Support.V7.App.AppCompatActivity;
-		return appCompatActivity == null ? null : appCompatActivity.SupportFragmentManager;
+		return activity is AppCompatActivity appCompatActivity ? appCompatActivity.SupportFragmentManager : null;
 	}
 
-	public static FragmentType FindFragmentByTag<FragmentType>(this Android.Support.V4.App.FragmentManager fm, string tag)
-		where FragmentType : Android.Support.V4.App.Fragment
+	public static TFragmentType FindFragmentByTag<TFragmentType>(this Android.Support.V4.App.FragmentManager fm, string tag)
+		where TFragmentType : Android.Support.V4.App.Fragment
 	{
-		return fm.FindFragmentByTag(tag) as FragmentType;
+		return fm.FindFragmentByTag(tag) as TFragmentType;
 	}
 
-	public static void ShowFragment(this Android.Support.V7.App.AppCompatActivity activity, Android.Support.V4.App.Fragment fragment, int container, bool addToBackStack = false)
+	public static void ShowFragment(this AppCompatActivity activity, Android.Support.V4.App.Fragment fragment, int container, bool addToBackStack = false)
 	{
 		var transaction = activity.SupportFragmentManager.BeginTransaction();
 
