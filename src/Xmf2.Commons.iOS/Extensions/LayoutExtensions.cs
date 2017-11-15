@@ -294,10 +294,7 @@ public static class CustomAutoLayoutExtensions
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static UIView ConstrainMinWidth(this UIView view, UIView v1)
 	{
-		view.AddConstraint(NSLayoutConstraint.Create(view, Width, LessThanOrEqual, v1, Width, 1f, 0f));
-		view.TranslatesAutoresizingMaskIntoConstraints = false;
-		v1.TranslatesAutoresizingMaskIntoConstraints = false;
-		return view;
+		return view.WithConstraint(view, Width, LessThanOrEqual, v1, Width, 1f, 0f);
 	}
 
 	public static UIView ConstrainMaxHeight(this UIView view, int height)
@@ -378,11 +375,8 @@ public static class CustomAutoLayoutExtensions
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static UIView SameWidth(this UIView view, UIView v1, UIView v2)
 	{
-		view.AddConstraint(NSLayoutConstraint.Create(v1, Width, Equal, v2, Width, 1f, 0f));
-		view.TranslatesAutoresizingMaskIntoConstraints = false;
-		return view;
+		return view.WithConstraint(v1, Width, Equal, v2, Width, 1f, 0f);
 	}
-
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static UIView SameHeight(this UIView view, UIView v1)
