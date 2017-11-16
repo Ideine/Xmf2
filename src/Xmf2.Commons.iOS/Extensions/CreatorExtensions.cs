@@ -649,6 +649,16 @@ public static class CreatorExtensions
 
 	#endregion
 
+	#region UIControl
+
+	public static TUIControl WithAlignment<TUIControl>(this TUIControl control, UIControlContentHorizontalAlignment horizontalAlignment) where TUIControl : UIControl
+	{
+		control.HorizontalAlignment = horizontalAlignment;
+		return control;
+	}
+
+	#endregion UIControl
+
 	#region Generic
 
 	public static TView Hide<TView>(this TView view) where TView : UIView
@@ -710,11 +720,11 @@ public static class CreatorExtensions
 		return view;
 	}
 
-	public static TView WithBorder<TView>(this TView view, int borderColor, int size) where TView : UIView
+	public static TView WithBorder<TView>(this TView view, int borderColor, float size) where TView : UIView
 	{
 		return view.WithBorder(borderColor.ColorFromHex(), size);
 	}
-	public static TView WithBorder<TView>(this TView view, UIColor borderColor, int size) where TView : UIView
+	public static TView WithBorder<TView>(this TView view, UIColor borderColor, float size) where TView : UIView
 	{
 		view.Layer.BorderColor = borderColor.CGColor;
 		view.Layer.BorderWidth = size;
