@@ -458,7 +458,23 @@ public static class CreatorExtensions
 		return input;
 	}
 
+	public static UITextField WithTextColor(this UITextField input, int color)
+	{
+		return input.WithTextColor(color.ColorFromHex());
+	}
+
 	public static UITextField WithTextColor(this UITextField input, UIColor color)
+	{
+		input.TextColor = color;
+		return input;
+	}
+
+	public static UITextView WithTextColor(this UITextView input, int color)
+	{
+		return input.WithTextColor(color.ColorFromHex());
+	}
+
+	public static UITextView WithTextColor(this UITextView input, UIColor color)
 	{
 		input.TextColor = color;
 		return input;
