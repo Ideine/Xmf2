@@ -56,5 +56,10 @@ namespace System.Collections.Generic
 			}
 			return !source.Any(predicate);
 		}
+
+		public static IEnumerable<T> Except<T>(this IEnumerable<T> source, T exclude)
+		{
+			return source.Except(new T[] { exclude });
+		}
 	}
 }
