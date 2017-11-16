@@ -238,10 +238,9 @@ public static class CustomAutoLayoutExtensions
 		return containerView;
 	}
 
-	public static UIView HorizontalSpace(this UIView containerView, UIView left, UIView right, int margin = 0)
+	public static UIView HorizontalSpace(this UIView containerView, UIView leftView, UIView rightView, int margin = 0)
 	{
-		containerView.ConstrainLayout(() => right.Left() == left.Right() + margin);
-		return containerView;
+		return containerView.WithConstraint(rightView, Left, Equal, leftView, Right, 1f, margin);
 	}
 	public static UIView MinHorizontalSpace(this UIView containerView, UIView left, UIView right, int margin = 0)
 	{
