@@ -12,8 +12,7 @@ using Xmf2.Rx.Helpers;
 
 namespace Xmf2.Rx.Droid.ListElement
 {
-	public class BaseReactiveRecyclerViewViewHolder<TViewModel> : XMF2ReactiveRecyclerViewViewHolder<TViewModel>, ICanActivate, IRecyclerViewViewHolder 
-		where TViewModel : class, IReactiveObject
+	public class BaseReactiveRecyclerViewViewHolder<TViewModel> : XMF2ReactiveRecyclerViewViewHolder<TViewModel>, ICanActivate, IRecyclerViewViewHolder where TViewModel : class, IReactiveObject
 	{
 		protected Context Context { get; }
 
@@ -37,10 +36,7 @@ namespace Xmf2.Rx.Droid.ListElement
 			ItemView.LongClick += OnLongClickItem;
 		}
 
-		protected BaseReactiveRecyclerViewViewHolder(IntPtr javaRef, Android.Runtime.JniHandleOwnership transfer) : base(javaRef, transfer)
-		{
-
-		}
+		protected BaseReactiveRecyclerViewViewHolder(IntPtr javaRef, Android.Runtime.JniHandleOwnership transfer) : base(javaRef, transfer) { }
 
 		protected virtual void OnContentViewSet() { }
 
