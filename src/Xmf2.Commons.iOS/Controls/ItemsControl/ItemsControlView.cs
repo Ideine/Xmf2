@@ -38,7 +38,7 @@ namespace Xmf2.iOS.Controls.ItemControls
 		public event EventHandler<ItemSelectedEventArgs> ItemSelected;
 
 		private IReadOnlyList<TItemData> _items;
-		public IReadOnlyList<TItemData> Items
+		public virtual IReadOnlyList<TItemData> Items
 		{
 			get => _items;
 			set
@@ -72,7 +72,7 @@ namespace Xmf2.iOS.Controls.ItemControls
 			_canLayout = true;
 		}
 
-		private void UpdateListView(IReadOnlyList<TItemData> items)
+		protected void UpdateListView(IReadOnlyList<TItemData> items)
 		{
 			if (items == null)
 			{
