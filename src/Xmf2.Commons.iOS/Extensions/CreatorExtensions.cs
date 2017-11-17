@@ -38,6 +38,19 @@ public static class CreatorExtensions
 		return new UIRightImageButton();
 	}
 
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static TUIButton WithContentEdgeInset<TUIButton>(this TUIButton button, nfloat top, nfloat left, nfloat bottom, nfloat right) where TUIButton : UIButton
+	{
+		return button.WithContentEdgeInset(new UIEdgeInsets(top, left, bottom, right));
+	}
+
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static TUIButton WithContentEdgeInset<TUIButton>(this TUIButton button, UIEdgeInsets insets) where TUIButton : UIButton
+	{
+		button.ContentEdgeInsets = insets;
+		return button;
+	}
+
 	public static TUIButton WithHighlightBackgroundColor<TUIButton>(this TUIButton button, int color) where TUIButton : UIHighlightButton
 	{
 		button.HighlightColor = color.ColorFromHex();

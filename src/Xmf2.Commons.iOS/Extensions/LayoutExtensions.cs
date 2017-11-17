@@ -132,15 +132,16 @@ public static class CustomAutoLayoutExtensions
 		return containerView;
 	}
 
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static UIView IncloseFromRight(this UIView containerView, UIView view)
 	{
-		return IncloseFromRight(containerView, view, 0);
+		return IncloseFromRight(containerView, view, 0f);
 	}
 
-	public static UIView IncloseFromRight(this UIView containerView, UIView view, int margin)
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static UIView IncloseFromRight(this UIView containerView, UIView view, float margin)
 	{
-		containerView.ConstrainLayout(() => containerView.Right() >= view.Right() + margin);
-		return containerView;
+		return containerView.WithConstraint(containerView, Right, GreaterThanOrEqual, view, Right, 1f, margin);
 	}
 
 	public static UIView IncloseFromLeft(this UIView containerView, UIView view)
