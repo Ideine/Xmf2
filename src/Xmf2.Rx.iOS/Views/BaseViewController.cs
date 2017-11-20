@@ -235,6 +235,7 @@ namespace Xmf2.Rx.iOS
 			if (disposing)
 			{
 				_uiDisposables?.Dispose();
+				UnregisterForKeyboardNotifications();
 			}
 			base.Dispose(disposing);
 		}
