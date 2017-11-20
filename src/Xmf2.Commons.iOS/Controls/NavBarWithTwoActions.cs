@@ -175,6 +175,18 @@ namespace Xmf2.Commons.iOS.Controls
 			return this;
 		}
 
+		public NavBarWithTwoActions WithLeftTitle(string title)
+		{
+			LeftButton.WithTitle(title);
+			return this;
+		}
+
+		public NavBarWithTwoActions WithRightTitle(string title)
+		{
+			RightButton.WithTitle(title);
+			return this;
+		}
+
 		#region Dispose
 
 		private bool _disposed;
