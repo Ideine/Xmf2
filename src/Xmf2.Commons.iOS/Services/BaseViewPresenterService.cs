@@ -55,9 +55,17 @@ namespace Xmf2.Commons.iOS.Services
 		}
 		protected virtual TViewController Show<TViewController>() where TViewController : UIViewController, new()
 		{
-			return Show(() => new TViewController());
+			return Show<TViewController>(animated: true);
 		}
-		protected abstract TViewController Show<TViewController>(Func<TViewController> viewCreator) where TViewController : UIViewController;
+		protected virtual TViewController Show<TViewController>(bool animated) where TViewController : UIViewController, new()
+		{
+			return Show(() => new TViewController(), animated);
+		}
+		protected virtual TViewController Show<TViewController>(Func<TViewController> viewCreator) where TViewController : UIViewController
+		{
+			return Show(viewCreator, animated: true);
+		}
+		protected abstract TViewController Show<TViewController>(Func<TViewController> viewCreator, bool animated) where TViewController : UIViewController;
 		protected abstract UIViewController GetModalViewController();
 		protected void ReplaceView(Func<UIViewController> viewCreator)
 		{
