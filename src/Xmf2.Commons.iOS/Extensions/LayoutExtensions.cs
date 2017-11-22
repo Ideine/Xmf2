@@ -367,15 +367,15 @@ public static class CustomAutoLayoutExtensions
 	}
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public static UIView SameWidth(this UIView view, UIView v1)
+	public static UIView SameWidth(this UIView view, UIView v1, float margin = 0f)
 	{
-		return view.SameWidth(view, v1);
+		return view.SameWidth(view, v1, margin);
 	}
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public static UIView SameWidth(this UIView view, UIView v1, UIView v2)
+	public static UIView SameWidth(this UIView view, UIView v1, UIView v2, float margin = 0f)
 	{
-		return view.WithConstraint(v1, Width, Equal, v2, Width, 1f, 0f);
+		return view.WithConstraint(v1, Width, Equal, v2, Width, 1f, margin);
 	}
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
