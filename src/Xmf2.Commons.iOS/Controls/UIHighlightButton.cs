@@ -9,8 +9,8 @@ namespace Xmf2.Commons.iOS.Controls
 
 		public UIColor HighlightColor { get; set; } = 0xa1aeb3.ColorFromHex();
 
-		public Action ToHighlightedAnimation { get; set; }
-		public Action FromHighlightedAnimation { get; set; }
+		public Action<UIHighlightButton> ToHighlightedAnimation { get; set; }
+		public Action<UIHighlightButton> FromHighlightedAnimation { get; set; }
 
 		public override bool Highlighted
 		{
@@ -25,11 +25,31 @@ namespace Xmf2.Commons.iOS.Controls
 					if (value)
 					{
 						_oldBackgroundColor = BackgroundColor;
-						Animate(0.2, ToHighlightedAnimation ?? ToHighlightedDefaultAnimation, ActionHelper.NoOp);
+						Animate(0.2, () =>
+						{
+							if (ToHighlightedAnimation == null)
+							{
+								ToHighlightedDefaultAnimation();
+							}
+							else
+							{
+								ToHighlightedAnimation(this);
+							}
+						}, ActionHelper.NoOp);
 					}
 					else
 					{
-						Animate(0.2, FromHighlightedAnimation ?? FromHighlightedDefaultAnimation, ActionHelper.NoOp);
+						Animate(0.2, () =>
+						{
+							if (FromHighlightedAnimation == null)
+							{
+								FromHighlightedDefaultAnimation();
+							}
+							else
+							{
+								FromHighlightedAnimation(this);
+							}
+						}, ActionHelper.NoOp);
 					}
 					base.Highlighted = value;
 				}

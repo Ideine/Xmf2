@@ -6,6 +6,7 @@ using System.Runtime.CompilerServices;
 
 public static class CreatorExtensions
 {
+
 	#region UIButton
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -220,6 +221,10 @@ public static class CreatorExtensions
 		return button;
 	}
 
+	public static TUIButton WithBackgroundColor<TUIButton>(this TUIButton button, int backgroundColor, UIControlState forState) where TUIButton : UIButton
+	{
+		return button.WithBackgroundColor(backgroundColor.ColorFromHex(), forState);
+	}
 	public static TUIButton WithBackgroundColor<TUIButton>(this TUIButton button, UIColor backgroundColor, UIControlState forState) where TUIButton : UIButton
 	{
 		UIImage backgroundImage;
@@ -240,6 +245,23 @@ public static class CreatorExtensions
 	}
 
 	#endregion
+
+	#region UITableViewCell
+
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static TCell WithSelectedBackground<TCell>(this TCell cell, int color) where TCell : UITableViewCell
+	{
+		return cell.WithBackgroundColor(color.ColorFromHex());
+	}
+
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static TCell WithSelectedBackground<TCell>(this TCell cell, UIColor color) where TCell : UITableViewCell
+	{
+		cell.SelectedBackgroundView = new UIView().WithBackgroundColor(color);
+		return cell;
+	}
+
+	#endregion UITableViewCell
 
 	#region UIView
 
