@@ -68,7 +68,25 @@ namespace Xmf2.Rx.Droid.ListElement
 
 		private void OnCollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
 		{
-			new Handler(Looper.MainLooper).Post(() => NotifyDataSetChanged());
+			new Handler(Looper.MainLooper).Post(() =>
+			{
+				switch (e.Action)
+				{
+					case System.Collections.Specialized.NotifyCollectionChangedAction.Add:
+						NotifyItemInserted(e.NewStartingIndex);
+						break;
+					case System.Collections.Specialized.NotifyCollectionChangedAction.Move:
+						NotifyItemMoved(e.OldStartingIndex, e.NewStartingIndex);
+						break;
+					case System.Collections.Specialized.NotifyCollectionChangedAction.Remove:
+						NotifyItemRemoved(e.OldStartingIndex);
+						break;
+					default:
+						NotifyDataSetChanged();
+						break;
+
+				}
+			});
 
 		}
 
