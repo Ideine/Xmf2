@@ -760,7 +760,7 @@ public static class CreatorExtensions
 	public static TView WithDraftBackground<TView>(this TView view, UIColor color = null) where TView : UIView
 	{
 #if DEBUG
-		view.BackgroundColor = color ?? UIColor.Orange;
+		view.BackgroundColor = color ?? UIColor.Orange.ColorWithAlpha(0.65f);
 #endif
 		return view;
 	}
