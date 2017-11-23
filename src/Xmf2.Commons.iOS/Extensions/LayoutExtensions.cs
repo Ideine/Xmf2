@@ -207,10 +207,10 @@ public static class CustomAutoLayoutExtensions
 		return containerView;
 	}
 
-	public static UIView FillWidth(this UIView containerView, UIView view, int margin = 0)
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static UIView FillWidth(this UIView containerView, UIView view, float margin = 0f)
 	{
-		containerView.ConstrainLayout(() => containerView.Width() == view.Width() + margin);
-		return containerView;
+		return containerView.WithConstraint(containerView, Width, Equal, view, Width, 1, margin);
 	}
 
 	public static UIView FillHeight(this UIView containerView, UIView view, int margin = 0)
