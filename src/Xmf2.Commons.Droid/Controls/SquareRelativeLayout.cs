@@ -26,7 +26,7 @@ namespace Xmf2.Commons.Droid.Controls
 
 		public SquareRelativeLayout(Context context, IAttributeSet attrs, int defStyleAttr) : base(context, attrs, defStyleAttr) { }
 
-		protected override void OnMeasure(int widthMeasureSpec, int heightMeasureSpec)
+		private void UpdateSize(int widthMeasureSpec, int heightMeasureSpec)
 		{
 			var width = MeasureSpec.GetSize(widthMeasureSpec);
 			var height = MeasureSpec.GetSize(heightMeasureSpec);
@@ -59,6 +59,12 @@ namespace Xmf2.Commons.Droid.Controls
 					}
 					break;
 			}
+		}
+
+		protected override void OnMeasure(int widthMeasureSpec, int heightMeasureSpec)
+		{
+			base.OnMeasure(widthMeasureSpec, heightMeasureSpec);
+			UpdateSize(widthMeasureSpec, heightMeasureSpec);
 		}
 	}
 }
