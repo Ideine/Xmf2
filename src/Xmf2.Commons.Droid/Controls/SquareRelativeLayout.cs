@@ -8,6 +8,16 @@ namespace Xmf2.Commons.Droid.Controls
 {
 	public class SquareRelativeLayout : RelativeLayout
 	{
+		public enum Type
+		{
+			Width,
+			Height,
+			Greatest,
+			Smallest
+		}
+
+		public Type SquareType { get; set; }
+
 		protected SquareRelativeLayout(IntPtr javaReference, JniHandleOwnership transfer) : base(javaReference, transfer) { }
 
 		public SquareRelativeLayout(Context context) : base(context) { }
@@ -18,13 +28,36 @@ namespace Xmf2.Commons.Droid.Controls
 
 		protected override void OnMeasure(int widthMeasureSpec, int heightMeasureSpec)
 		{
-			if (widthMeasureSpec < heightMeasureSpec)
+			var width = MeasureSpec.GetSize(widthMeasureSpec);
+			var height = MeasureSpec.GetSize(heightMeasureSpec);
+			switch (SquareType)
 			{
-				base.OnMeasure(widthMeasureSpec, widthMeasureSpec);
-			}
-			else
-			{
-				base.OnMeasure(heightMeasureSpec, heightMeasureSpec);
+				case Type.Width:
+					SetMeasuredDimension(width, width);
+					break;
+				case Type.Height:
+					SetMeasuredDimension(height, height);
+					break;
+				case Type.Greatest:
+					if (width > height)
+					{
+						SetMeasuredDimension(width, width);
+					}
+					else
+					{
+						SetMeasuredDimension(height, height);
+					}
+					break;
+				case Type.Smallest:
+					if (width > height)
+					{
+						SetMeasuredDimension(height, height);
+					}
+					else
+					{
+						SetMeasuredDimension(width, width);
+					}
+					break;
 			}
 		}
 	}
