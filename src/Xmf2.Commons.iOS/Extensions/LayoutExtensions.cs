@@ -138,7 +138,13 @@ public static class CustomAutoLayoutExtensions
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static UIView IncloseFromRight(this UIView containerView, UIView view, float margin)
 	{
-		return containerView.WithConstraint(containerView, Right, GreaterThanOrEqual, view, Right, 1f, margin);
+		return IncloseFromRight(containerView, containerView, view, margin);
+	}
+
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static UIView IncloseFromRight(this UIView constrainedView, UIView inclosingView, UIView view, float margin)
+	{
+		return constrainedView.WithConstraint(inclosingView, Right, GreaterThanOrEqual, view, Right, 1f, margin);
 	}
 
 	public static UIView IncloseFromLeft(this UIView containerView, UIView view)
@@ -307,10 +313,10 @@ public static class CustomAutoLayoutExtensions
 		return view;
 	}
 
-	public static UIView AlignOnLeft(this UIView view, UIView v1, UIView v2, int offset = 0)
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static UIView AlignOnLeft(this UIView view, UIView v1, UIView v2, float offset = 0)
 	{
-		view.ConstrainLayout(() => v1.Left() == v2.Left() + offset);
-		return view;
+		return view.WithConstraint(v1, Left, Equal, v2, Left, 1f,  offset);
 	}
 
 	public static UIView AlignOnRight(this UIView view, UIView v1, UIView v2, int offset = 0)
@@ -319,10 +325,9 @@ public static class CustomAutoLayoutExtensions
 		return view;
 	}
 
-	public static UIView AlignOnTop(this UIView view, UIView v1, UIView v2, int offset = 0)
+	public static UIView AlignOnTop(this UIView view, UIView v1, UIView v2, float offset = 0f)
 	{
-		view.ConstrainLayout(() => v1.Top() == v2.Top() + offset);
-		return view;
+		return view.WithConstraint(v1, Top, Equal, v2, Top, 1f, offset);
 	}
 	
 	public static UIView AlignOnBottom(this UIView view, UIView v1, UIView v2, int offset = 0)
