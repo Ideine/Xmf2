@@ -111,24 +111,22 @@ public static class CustomAutoLayoutExtensions
 
 	public static UIView IncloseFromBottom(this UIView containerView, UIView view)
 	{
-		return IncloseFromBottom(containerView, view, 0);
+		return IncloseFromBottom(containerView, view, 0f);
 	}
 
-	public static UIView IncloseFromBottom(this UIView containerView, UIView view, int margin)
+	public static UIView IncloseFromBottom(this UIView containerView, UIView view, float margin)
 	{
-		containerView.ConstrainLayout(() => containerView.Bottom() >= view.Bottom() + margin);
-		return containerView;
+		return containerView.WithConstraint(containerView, Bottom, GreaterThanOrEqual, view, Bottom, 1f, margin);
 	}
 
 	public static UIView IncloseFromTop(this UIView containerView, UIView view)
 	{
-		return IncloseFromTop(containerView, view, 0);
+		return IncloseFromTop(containerView, view, 0f);
 	}
 
-	public static UIView IncloseFromTop(this UIView containerView, UIView view, int margin)
+	public static UIView IncloseFromTop(this UIView containerView, UIView view, float margin)
 	{
-		containerView.ConstrainLayout(() => containerView.Top() <= view.Top() - margin);
-		return containerView;
+		return containerView.WithConstraint(containerView, Top, LessThanOrEqual, view, Top, 1f, -margin);
 	}
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -238,7 +236,8 @@ public static class CustomAutoLayoutExtensions
 		return containerView;
 	}
 
-	public static UIView HorizontalSpace(this UIView containerView, UIView leftView, UIView rightView, int margin = 0)
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static UIView HorizontalSpace(this UIView containerView, UIView leftView, UIView rightView, float margin = 0)
 	{
 		return containerView.WithConstraint(rightView, Left, Equal, leftView, Right, 1f, margin);
 	}
