@@ -102,6 +102,7 @@
     <Compile Include="Helpers\CustomAnimations\ViewRevealAnimationHelper.cs" />
     <Compile Include="Extensions\TextViewExtensions.cs" />
     <Compile Include="Decorators\DividerItemDecoration.cs" />
+    <Compile Include="Controls\SquareRelativeLayout.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Helpers\" />
@@ -113,6 +114,7 @@
     <Folder Include="Decorators\" />
     <Folder Include="Services\Licences\" />
     <Folder Include="Helpers\CustomAnimations\" />
+    <Folder Include="Controls\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Xmf2.Commons\Xmf2.Commons.csproj">
