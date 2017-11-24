@@ -26,45 +26,39 @@ namespace Xmf2.Commons.Droid.Controls
 
 		public SquareRelativeLayout(Context context, IAttributeSet attrs, int defStyleAttr) : base(context, attrs, defStyleAttr) { }
 
-		private void UpdateSize(int widthMeasureSpec, int heightMeasureSpec)
+		protected override void OnMeasure(int widthMeasureSpec, int heightMeasureSpec)
 		{
 			var width = MeasureSpec.GetSize(widthMeasureSpec);
 			var height = MeasureSpec.GetSize(heightMeasureSpec);
 			switch (SquareType)
 			{
 				case Type.Width:
-					SetMeasuredDimension(width, width);
+					base.OnMeasure(widthMeasureSpec, widthMeasureSpec);
 					break;
 				case Type.Height:
-					SetMeasuredDimension(height, height);
+					base.OnMeasure(heightMeasureSpec, heightMeasureSpec);
 					break;
 				case Type.Greatest:
 					if (width > height)
 					{
-						SetMeasuredDimension(width, width);
+						base.OnMeasure(widthMeasureSpec, widthMeasureSpec);
 					}
 					else
 					{
-						SetMeasuredDimension(height, height);
+						base.OnMeasure(heightMeasureSpec, heightMeasureSpec);
 					}
 					break;
 				case Type.Smallest:
 					if (width > height)
 					{
-						SetMeasuredDimension(height, height);
+						base.OnMeasure(heightMeasureSpec, heightMeasureSpec);
 					}
 					else
 					{
-						SetMeasuredDimension(width, width);
+						base.OnMeasure(widthMeasureSpec, widthMeasureSpec);
 					}
 					break;
 			}
-		}
-
-		protected override void OnMeasure(int widthMeasureSpec, int heightMeasureSpec)
-		{
-			base.OnMeasure(widthMeasureSpec, heightMeasureSpec);
-			UpdateSize(widthMeasureSpec, heightMeasureSpec);
 		}
 	}
 }
