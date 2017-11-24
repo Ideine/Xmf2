@@ -9,6 +9,11 @@ namespace System.Collections.Generic
 			return source ?? Enumerable.Empty<T>();
         }
 
+		public static bool AnyIsTrue(this IEnumerable<bool> source)
+		{
+			return source.Any(item => item);
+		}
+
 		public static bool NotNullOrEmpty<T>(this IEnumerable<T> source)
 		{
 			return source != null && source.Any();
