@@ -247,9 +247,10 @@ public static class CustomAutoLayoutExtensions
 	{
 		return containerView.WithConstraint(rightView, Left, Equal, leftView, Right, 1f, margin);
 	}
-	public static UIView MinHorizontalSpace(this UIView containerView, UIView left, UIView right, int margin = 0)
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static UIView MinHorizontalSpace(this UIView containerView, UIView left, UIView right, float margin = 0f)
 	{
-		containerView.ConstrainLayout(() => right.Left() >= left.Right() + margin);
+		containerView.WithConstraint(right, Left, GreaterThanOrEqual, left, Right, 1f, margin);
 		return containerView;
 	}
 
