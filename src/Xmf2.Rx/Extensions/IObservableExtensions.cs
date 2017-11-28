@@ -31,10 +31,45 @@ namespace System
 		public static void SubscribeAndDispose<T>(this IObservable<T> observable, Action<T> onNext)
 		{
 			CompositeDisposable disposable = new CompositeDisposable();
-
 			observable.Subscribe(x =>
 			{
 				onNext(x);
+				disposable.Dispose();
+			}).DisposeWith(disposable);
+		}
+		public static void SubscribeAndDispose<T1, T2>(this IObservable<Tuple<T1, T2>> observable, Action<T1, T2> onNext)
+		{
+			CompositeDisposable disposable = new CompositeDisposable();
+			observable.Subscribe(tuple => 
+			{
+				onNext(tuple.Item1, tuple.Item2);
+				disposable.Dispose();
+			}).DisposeWith(disposable);
+		}
+		public static void SubscribeAndDispose<T1, T2, T3>(this IObservable<Tuple<T1, T2, T3>> observable, Action<T1, T2, T3> onNext)
+		{
+			CompositeDisposable disposable = new CompositeDisposable();
+			observable.Subscribe(tuple =>
+			{
+				onNext(tuple.Item1, tuple.Item2, tuple.Item3);
+				disposable.Dispose();
+			}).DisposeWith(disposable);
+		}
+		public static void SubscribeAndDispose<T1, T2, T3, T4>(this IObservable<Tuple<T1, T2, T3, T4>> observable, Action<T1, T2, T3, T4> onNext)
+		{
+			CompositeDisposable disposable = new CompositeDisposable();
+			observable.Subscribe(tuple =>
+			{
+				onNext(tuple.Item1, tuple.Item2, tuple.Item3, tuple.Item4);
+				disposable.Dispose();
+			}).DisposeWith(disposable);
+		}
+		public static void SubscribeAndDispose<T1, T2, T3, T4, T5>(this IObservable<Tuple<T1, T2, T3, T4, T5>> observable, Action<T1, T2, T3, T4, T5> onNext)
+		{
+			CompositeDisposable disposable = new CompositeDisposable();
+			observable.Subscribe(tuple =>
+			{
+				onNext(tuple.Item1, tuple.Item2, tuple.Item3, tuple.Item4, tuple.Item5);
 				disposable.Dispose();
 			}).DisposeWith(disposable);
 		}
@@ -105,6 +140,7 @@ namespace System
 		{
 			return source.Subscribe(tuple => onNext(tuple.Item1, tuple.Item2, tuple.Item3, tuple.Item4, tuple.Item5));
 		}
+
 		#endregion
 
 		#region ValueTuple Subscribe
