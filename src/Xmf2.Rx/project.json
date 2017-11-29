@@ -1,0 +1,10 @@
+{
+  "supports": {},
+  "dependencies": {
+    "reactiveui": "7.4.0",
+    "System.ValueTuple": "4.4.0"
+  },
+  "frameworks": {
+    ".NETPortable,Version=v4.6,Profile=Profile44": {}
+  }
+}

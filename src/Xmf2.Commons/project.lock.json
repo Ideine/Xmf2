@@ -1,0 +1,125 @@
+{
+  "version": 3,
+  "targets": {
+    ".NETPortable,Version=v4.6,Profile=Profile44": {
+      "FubarCoder.RestSharp.Portable.Core/4.0.8": {
+        "type": "package",
+        "dependencies": {
+          "Newtonsoft.Json": "9.0.1"
+        },
+        "compile": {
+          "lib/portable45-net45+win8+wp8+wpa81/FubarCoder.RestSharp.Portable.Core.dll": {}
+        },
+        "runtime": {
+          "lib/portable45-net45+win8+wp8+wpa81/FubarCoder.RestSharp.Portable.Core.dll": {}
+        }
+      },
+      "Newtonsoft.Json/9.0.1": {
+        "type": "package",
+        "compile": {
+          "lib/portable-net45+wp80+win8+wpa81/Newtonsoft.Json.dll": {}
+        },
+        "runtime": {
+          "lib/portable-net45+wp80+win8+wpa81/Newtonsoft.Json.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "FubarCoder.RestSharp.Portable.Core/4.0.8": {
+      "sha512": "OELVey64TaGRfBmDamG8GCS9sB3tpDOpNBRW2Aoy+Bk1OyDMT3PKSt6s7VuB7Jz4MA2Ut2Pe4v6vYJUArMk1Gw==",
+      "type": "package",
+      "path": "fubarcoder.restsharp.portable.core/4.0.8",
+      "files": [
+        "Changes.md",
+        "LICENSE.md",
+        "README.md",
+        "fubarcoder.restsharp.portable.core.4.0.8.nupkg.sha512",
+        "fubarcoder.restsharp.portable.core.nuspec",
+        "lib/monoandroid10/FubarCoder.RestSharp.Portable.Core.dll",
+        "lib/monoandroid10/FubarCoder.RestSharp.Portable.Core.xml",
+        "lib/monotouch10/FubarCoder.RestSharp.Portable.Core.dll",
+        "lib/monotouch10/FubarCoder.RestSharp.Portable.Core.xml",
+        "lib/native/_._",
+        "lib/net40/FubarCoder.RestSharp.Portable.Core.dll",
+        "lib/net40/FubarCoder.RestSharp.Portable.Core.xml",
+        "lib/net45/FubarCoder.RestSharp.Portable.Core.dll",
+        "lib/net45/FubarCoder.RestSharp.Portable.Core.xml",
+        "lib/netstandard1.0/FubarCoder.RestSharp.Portable.Core.dll",
+        "lib/netstandard1.0/FubarCoder.RestSharp.Portable.Core.xml",
+        "lib/netstandard1.1/FubarCoder.RestSharp.Portable.Core.dll",
+        "lib/netstandard1.1/FubarCoder.RestSharp.Portable.Core.xml",
+        "lib/netstandard1.3/FubarCoder.RestSharp.Portable.Core.dll",
+        "lib/netstandard1.3/FubarCoder.RestSharp.Portable.Core.xml",
+        "lib/portable40-net40+sl5+win8+wp8+wpa81/FubarCoder.RestSharp.Portable.Core.dll",
+        "lib/portable40-net40+sl5+win8+wp8+wpa81/FubarCoder.RestSharp.Portable.Core.xml",
+        "lib/portable45-net45+win8+wp8+wpa81/FubarCoder.RestSharp.Portable.Core.dll",
+        "lib/portable45-net45+win8+wp8+wpa81/FubarCoder.RestSharp.Portable.Core.xml",
+        "lib/sl50/FubarCoder.RestSharp.Portable.Core.dll",
+        "lib/sl50/FubarCoder.RestSharp.Portable.Core.xml",
+        "lib/xamarinios10/FubarCoder.RestSharp.Portable.Core.dll",
+        "lib/xamarinios10/FubarCoder.RestSharp.Portable.Core.xml",
+        "tools/native/install.ps1",
+        "tools/native/uninstall.ps1"
+      ]
+    },
+    "Newtonsoft.Json/9.0.1": {
+      "sha512": "U82mHQSKaIk+lpSVCbWYKNavmNH1i5xrExDEquU1i6I5pV6UMOqRnJRSlKO3cMPfcpp0RgDY+8jUXHdQ4IfXvw==",
+      "type": "package",
+      "path": "newtonsoft.json/9.0.1",
+      "files": [
+        "lib/net20/Newtonsoft.Json.dll",
+        "lib/net20/Newtonsoft.Json.xml",
+        "lib/net35/Newtonsoft.Json.dll",
+        "lib/net35/Newtonsoft.Json.xml",
+        "lib/net40/Newtonsoft.Json.dll",
+        "lib/net40/Newtonsoft.Json.xml",
+        "lib/net45/Newtonsoft.Json.dll",
+        "lib/net45/Newtonsoft.Json.xml",
+        "lib/netstandard1.0/Newtonsoft.Json.dll",
+        "lib/netstandard1.0/Newtonsoft.Json.xml",
+        "lib/portable-net40+sl5+wp80+win8+wpa81/Newtonsoft.Json.dll",
+        "lib/portable-net40+sl5+wp80+win8+wpa81/Newtonsoft.Json.xml",
+        "lib/portable-net45+wp80+win8+wpa81/Newtonsoft.Json.dll",
+        "lib/portable-net45+wp80+win8+wpa81/Newtonsoft.Json.xml",
+        "newtonsoft.json.9.0.1.nupkg.sha512",
+        "newtonsoft.json.nuspec",
+        "tools/install.ps1"
+      ]
+    }
+  },
+  "projectFileDependencyGroups": {
+    "": [
+      "FubarCoder.RestSharp.Portable.Core >= 4.0.8"
+    ],
+    ".NETPortable,Version=v4.6,Profile=Profile44": []
+  },
+  "packageFolders": {
+    "C:\\Users\\mcolo\\.nuget\\packages\\": {}
+  },
+  "project": {
+    "restore": {
+      "projectUniqueName": "C:\\Users\\mcolo\\Projects\\Ideo\\libs\\Xmf2\\src\\Xmf2.Commons\\Xmf2.CommonsPCL.csproj",
+      "projectName": "Xmf2.CommonsPCL",
+      "projectPath": "C:\\Users\\mcolo\\Projects\\Ideo\\libs\\Xmf2\\src\\Xmf2.Commons\\Xmf2.CommonsPCL.csproj",
+      "projectJsonPath": "C:\\Users\\mcolo\\Projects\\Ideo\\libs\\Xmf2\\src\\Xmf2.Commons\\project.json",
+      "packagesPath": "C:\\Users\\mcolo\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\mcolo\\Projects\\Ideo\\libs\\Xmf2\\src\\Xmf2.Commons\\obj\\",
+      "projectStyle": "ProjectJson",
+      "configFilePaths": [
+        "C:\\Users\\mcolo\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+      ],
+      "sources": {
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "https://api.nuget.org/v3/index.json": {}
+      }
+    },
+    "dependencies": {
+      "FubarCoder.RestSharp.Portable.Core": "4.0.8"
+    },
+    "frameworks": {
+      "portable46-net451+win81": {}
+    }
+  }
+}
