@@ -1,9 +1,0 @@
-﻿{
-  "supports": {},
-  "dependencies": {
-    "FubarCoder.RestSharp.Portable.Core": "4.0.8"
-  },
-  "frameworks": {
-    ".NETPortable,Version=v4.6,Profile=Profile44": {}
-  }
-}
