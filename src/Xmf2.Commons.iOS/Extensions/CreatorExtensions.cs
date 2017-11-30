@@ -751,6 +751,11 @@ public static class CreatorExtensions
 		view.BackgroundColor = color.ColorFromHex();
 		return view;
 	}
+	public static TView WithBackgroundColor<TView>(this TView view, uint color) where TView : UIView
+	{
+		view.BackgroundColor = color.ColorFromHex();
+		return view;
+	}
 
 	[Obsolete("Cette méthode ne doit être utilisée qu'en développement. Pour définir le fond d'une View utilisez WithBackgroundColor")]
 	public static TView WithDraftBackground<TView>(this TView view, int color) where TView : UIView
