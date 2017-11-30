@@ -289,6 +289,11 @@ public static class CreatorExtensions
 		return new UIView();
 	}
 
+	public static TUIView WithContentMode<TUIView>(this TUIView view, UIViewContentMode mode) where TUIView : UIView
+	{
+		view.ContentMode = mode;
+		return view;
+	}
 	public static TParentView WithSubviews<TParentView>(this TParentView parentView, UIView view) where TParentView : UIView
 	{
 		parentView.AddSubview(view);

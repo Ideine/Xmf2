@@ -337,22 +337,22 @@ public static class CustomAutoLayoutExtensions
 		return view;
 	}
 
-	public static UIView AlignOnCenterX(this UIView view, UIView v1, int offset = 0)
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static UIView AlignOnCenterX(this UIView view, UIView v1, float offset = 0)
 	{
-		view.AlignOnCenterX(view, v1, offset);
-		return view;
+		return view.AlignOnCenterX(view, v1, offset);
 	}
 
-	public static UIView AlignOnCenterX(this UIView view, UIView v1, UIView v2, int offset = 0)
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static UIView AlignOnCenterX(this UIView view, UIView v1, UIView v2, float offset = 0)
 	{
-		view.ConstrainLayout(() => v1.CenterX() == v2.CenterX() + offset);
-		return view;
+		return view.WithConstraint(v1, CenterX, Equal, v2, CenterX, 1f, offset);
 	}
 
-	public static UIView AlignOnCenterY(this UIView view, UIView v1, UIView v2, int offset = 0)
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static UIView AlignOnCenterY(this UIView view, UIView v1, UIView v2, float offset = 0)
 	{
-		view.ConstrainLayout(() => v1.CenterY() == v2.CenterY() + offset);
-		return view;
+		return view.WithConstraint(v1, CenterY, Equal, v2, CenterY, 1f, offset);
 	}
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
