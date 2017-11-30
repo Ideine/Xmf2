@@ -22,15 +22,14 @@ namespace ReactiveUI
 
 		public static void WithDataList<TSource, TCell>(
 			this ReactiveCollectionViewSource<TSource> collectionViewSource,
-			ReactiveList<TSource> dataSource,
+			IReactiveNotifyCollectionChanged<TSource> dataSource,
 			NSString cellKey,
 			Action<TCell> initalizeCellAction)
-			where TSource : class
 			where TCell : UICollectionViewCell
 		{
 			collectionViewSource.Data = new[]
 			{
-				new CollectionViewSectionInformation<TSource, TCell>(dataSource, cellKey, initalizeCellAction),
+				new CollectionViewSectionInformation<TSource, TCell>(dataSource, cellKey, initalizeCellAction)
 			};
 		}
 	}
