@@ -363,7 +363,7 @@ public static class CreatorExtensions
 		}.WithContentInsetAdjustementBehavior(UIScrollViewContentInsetAdjustmentBehavior.Never);
 	}
 
-	public static UIScrollView WithContentInsetAdjustementBehavior(this UIScrollView view, UIScrollViewContentInsetAdjustmentBehavior behavior)
+	public static TUIScrollView WithContentInsetAdjustementBehavior<TUIScrollView>(this TUIScrollView view, UIScrollViewContentInsetAdjustmentBehavior behavior) where TUIScrollView : UIScrollView
 	{
 		if (UIDevice.CurrentDevice.CheckSystemVersion(11, 0))
 		{
@@ -877,6 +877,44 @@ public static class CreatorExtensions
 	}
 
 	#endregion UIDatePicker
+
+	#region UITableView
+
+	public static UITableView CreateTableView(this UIResponder _)
+	{
+		return _.CreateTableView(frame: null);
+	}
+
+	public static UITableView CreateTableView(this UIResponder _, CGRect? frame)
+	{
+		var tableView = frame.HasValue
+					  ? new UITableView(frame.Value)
+					  : new UITableView();
+		return tableView.WithoutAutomaticEstimatedHeights();
+	}
+
+	/// <see cref="https://stackoverflow.com/a/46257601/1584823"/>
+	public static TUITableView WithoutAutomaticEstimatedHeights<TUITableView>(this TUITableView view) where TUITableView : UITableView
+	{
+		if (UIDevice.CurrentDevice.CheckSystemVersion(11, 0))
+		{
+			if (view.EstimatedRowHeight == UITableView.AutomaticDimension)
+			{
+				view.EstimatedRowHeight = 0f;
+			}
+			if (view.EstimatedSectionHeaderHeight == UITableView.AutomaticDimension)
+			{
+				view.EstimatedSectionHeaderHeight = 0f;
+			}
+			if (view.EstimatedSectionFooterHeight == UITableView.AutomaticDimension)
+			{
+				view.EstimatedSectionFooterHeight = 0f;
+			}
+		}
+		return view;
+	}
+
+	#endregion UITableView
 
 
 }
