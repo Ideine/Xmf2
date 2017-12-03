@@ -108,6 +108,7 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\AssetService.cs" />
+    <Compile Include="Services\LicenceReaderService.cs" />
     <Compile Include="WindowUIDispatcher.cs" />
     <EmbeddedResource Include="Properties\Xmf2.Commons.UWP.rd.xml" />
   </ItemGroup>
