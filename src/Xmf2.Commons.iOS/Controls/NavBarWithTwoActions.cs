@@ -163,7 +163,7 @@ namespace Xmf2.Commons.iOS.Controls
 			return this;
 		}
 
-		public NavBarWithTwoActions WithleftAction(Action action)
+		public NavBarWithTwoActions WithLeftAction(Action action)
 		{
 			LeftAction = action;
 			return this;
