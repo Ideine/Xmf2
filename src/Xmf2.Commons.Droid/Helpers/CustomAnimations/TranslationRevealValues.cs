@@ -1,6 +1,6 @@
 ﻿using Android.Graphics;
 using Android.Views;
-using Xmf2.Commons.Extensions;
+using System;
 
 namespace Xmf2.Commons.Droid.Helpers.CustomAnimations
 {
