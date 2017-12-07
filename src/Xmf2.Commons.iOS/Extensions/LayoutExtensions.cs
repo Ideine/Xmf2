@@ -351,6 +351,12 @@ public static class CustomAutoLayoutExtensions
 	}
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static UIView AlignOnCenterY(this UIView view, UIView v1, float offset = 0)
+	{
+		return view.AlignOnCenterY(view, v1, offset);
+	}
+
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static UIView AlignOnCenterY(this UIView view, UIView v1, UIView v2, float offset = 0)
 	{
 		return view.WithConstraint(v1, CenterY, Equal, v2, CenterY, 1f, offset);
