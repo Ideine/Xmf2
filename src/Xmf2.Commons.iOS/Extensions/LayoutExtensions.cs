@@ -43,7 +43,7 @@ public static class CustomAutoLayoutExtensions
 	}
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public static UIView CenterAndFillHeight(this UIView containerView, int margin, params UIView[] views)
+	public static UIView CenterAndFillHeight(this UIView containerView, float margin, params UIView[] views)
 	{
 		if (views == null)
 		{
@@ -56,11 +56,11 @@ public static class CustomAutoLayoutExtensions
 		return containerView;
 	}
 
-	public static UIView CenterAndFillHeight(this UIView containerView, UIView view, int margin = 0)
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static UIView CenterAndFillHeight(this UIView containerView, UIView view, float margin = 0f)
 	{
-		containerView.ConstrainLayout(() => view.CenterY() == containerView.CenterY()
-										 && view.Height()  == containerView.Height() - margin
-										 );
+		containerView.WithConstraint(view, CenterY, Equal, containerView, CenterY, 1f, 0f)
+					 .WithConstraint(containerView, Height, Equal, view, Height, 1f, margin);
 		return containerView;
 	}
 
