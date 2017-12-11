@@ -30,6 +30,33 @@ public static class CustomAutoLayoutExtensions
 	}
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static UIView CenterAndLimitWidth(this UIView containerView, UIView view, float margin = 0)
+	{
+		return containerView.WithConstraint(view, CenterX, Equal, containerView, CenterX, 1f, 0f)
+							.WithConstraint(view, Width, LessThanOrEqual, containerView, Width, 1f, -margin);
+	}
+
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static UIView CenterAndLimitWidth(this UIView containerView, params UIView[] views)
+	{
+		return CenterAndFillWidth(containerView, 0f, views);
+	}
+
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static UIView CenterAndLimitWidth(this UIView containerView, float margin, params UIView[] views)
+	{
+		if (views == null)
+		{
+			throw new ArgumentNullException(nameof(views));
+		}
+		foreach (UIView view in views)
+		{
+			containerView.CenterAndLimitWidth(view, margin);
+		}
+		return containerView;
+	}
+
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static UIView CenterAndFillWidth(this UIView containerView, UIView view, float margin = 0)
 	{
 		return containerView.WithConstraint(view, CenterX, Equal, containerView, CenterX, 1f, 0f)
@@ -237,9 +264,10 @@ public static class CustomAutoLayoutExtensions
 	{
 		return containerView.WithConstraint(topView, Bottom, Equal, bottomView, Top, 1f, -margin);
 	}
-	public static UIView MinVerticalSpace(this UIView containerView, UIView top, UIView bottom, int margin = 0)
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static UIView MinVerticalSpace(this UIView containerView, UIView top, UIView bottom, float margin = 0)
 	{
-		containerView.ConstrainLayout(() => bottom.Top() >= top.Bottom() + margin);
+		containerView.WithConstraint(bottom, Top, GreaterThanOrEqual, top, Bottom, 1f, margin);
 		return containerView;
 	}
 
