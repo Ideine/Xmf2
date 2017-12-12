@@ -10,7 +10,7 @@ namespace Xmf2.Commons.iOS.Controls
 		private static readonly UIColor _DEFAULT_TEXT_HIGHLIGHT_COLOR = UIColorExtension.ColorFromHex(0x757575);
 		private bool _layoutDone;
 
-		private readonly UIView _container;
+		protected readonly UIView _container;
 
 		#region Public Properties
 

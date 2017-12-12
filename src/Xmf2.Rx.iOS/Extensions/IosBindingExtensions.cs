@@ -6,7 +6,7 @@ using ReactiveUI;
 // ReSharper disable once CheckNamespace => Extension class
 namespace UIKit
 {
-	public static class BindingExtensions
+	public static class IosBindingExtensions
 	{
 		public static IDisposable OnClickCommand(this UIControl button, Func<ICommand> getCommand)
 		{
