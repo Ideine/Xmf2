@@ -464,6 +464,12 @@ public static class CustomAutoLayoutExtensions
 	}
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static UIView WithRatio(this UIView view, float referenceWidth, float referenceHeight)
+	{
+		return view.WithRatio(view, referenceWidth, referenceHeight);
+	}
+
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static UIView WithRatio(this UIView constrainedView, UIView view, float referenceWidth, float referenceHeight)
 	{
 		return constrainedView.WithConstraint(view, Width, Equal, view, Height, referenceWidth / referenceHeight, 0f);
