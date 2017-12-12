@@ -79,7 +79,7 @@
   <ItemGroup>
     <Compile Include="Controls\ItemsControl\BaseReactiveItemCell.cs" />
     <Compile Include="Controls\ItemsControl\IUIComponent.cs" />
-    <Compile Include="Extensions\BindingExtensions.cs" />
+    <Compile Include="Extensions\IosBindingExtensions.cs" />
     <Compile Include="Extensions\UITableViewExtensions.cs" />
     <Compile Include="Extensions\Xmf2ReactiveTableViewSourceExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -3,6 +3,7 @@ using CoreGraphics;
 using UIKit;
 using Xmf2.Commons.iOS.Controls;
 using System.Runtime.CompilerServices;
+using Foundation;
 
 public static class CreatorExtensions
 {
@@ -517,6 +518,17 @@ public static class CreatorExtensions
 	public static UITextView WithTextColor(this UITextView input, UIColor color)
 	{
 		input.TextColor = color;
+		return input;
+	}
+
+	public static UITextField WithPlaceholderTextColor(this UITextField input, int color)
+	{
+		return input.WithPlaceholderTextColor(color.ColorFromHex());
+	}
+
+	public static UITextField WithPlaceholderTextColor(this UITextField input, UIColor color)
+	{
+		input.AttributedPlaceholder = new NSAttributedString(input.Placeholder, input.Font, color);
 		return input;
 	}
 
