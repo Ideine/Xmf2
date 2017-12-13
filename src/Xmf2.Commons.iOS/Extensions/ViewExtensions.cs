@@ -6,9 +6,11 @@ namespace UIKit
 {
 	public static class ViewExtensions
 	{
+		private static readonly NSString _searchField = new NSString("_searchField");
+
 		public static UITextField TextField(this UISearchBar searchBar)
 		{
-			var textField = searchBar.ValueForKey(new NSString("_searchField")) as UITextField;
+			var textField = searchBar.ValueForKey(_searchField) as UITextField;
 			return textField;
 		}
 		/// <summary>
