@@ -61,6 +61,7 @@
     <Compile Include="Controls\UISwappedImageButton.cs" />
     <Compile Include="Controls\VerticalLinearLayout.cs" />
     <Compile Include="Extensions\NSDateExtension.cs" />
+    <Compile Include="Extensions\NSObjectExtensions.cs" />
     <Compile Include="Extensions\ScrollViewExtensions.cs" />
     <Compile Include="Helpers\LoadingViewHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
