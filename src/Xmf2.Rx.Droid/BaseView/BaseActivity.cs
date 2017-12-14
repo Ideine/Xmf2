@@ -11,7 +11,12 @@ using Xmf2.Commons.Droid.Services;
 
 namespace Xmf2.Rx.Droid.BaseView
 {
-	public abstract class BaseActivity<TViewModel> : XMFAppCompatActivity<TViewModel> where TViewModel : BaseViewModel
+	public interface IActivityWithBusyManagement
+	{
+		bool IsBusy { get; set; }
+	}
+
+	public abstract class BaseActivity<TViewModel> : XMFAppCompatActivity<TViewModel>, IActivityWithBusyManagement where TViewModel : BaseViewModel
 	{
 		public abstract TViewModel GetViewModel();
 
@@ -19,6 +24,7 @@ namespace Xmf2.Rx.Droid.BaseView
 
 		protected virtual int LoadingViewLayout => -1;
 		protected virtual int LoadingViewProgressId => -1;
+		protected abstract ViewGroup BusyViewGroup { get; }
 
 		protected LoadingViewHelper LoadingViewHelper { get; private set; }
 
@@ -40,7 +46,6 @@ namespace Xmf2.Rx.Droid.BaseView
 
 		protected BaseActivity(IntPtr handle, JniHandleOwnership transer) : base(handle, transer) { }
 
-
 		protected virtual void OnViewModelSet() { }
 
 		protected virtual void SetViewModelBindings() { }
@@ -61,11 +66,11 @@ namespace Xmf2.Rx.Droid.BaseView
 		protected override void OnCreate(Bundle savedInstanceState)
 		{
 			base.OnCreate(savedInstanceState);
+			OnContentViewSet();
 			if (LoadingViewLayout >= 0 && LoadingViewProgressId >= 0)
 			{
-				LoadingViewHelper = new LoadingViewHelper(this, LoadingViewLayout, LoadingViewProgressId);
+				LoadingViewHelper = new LoadingViewHelper(BusyViewGroup, LoadingViewLayout, LoadingViewProgressId);
 			}
-			OnContentViewSet();
 			ViewModel = GetViewModel();
 			OnViewModelSet();
 			SetViewModelBindings();

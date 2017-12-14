@@ -1,6 +1,4 @@
-﻿using System;
-using Android;
-using Android.App;
+﻿using Android.Content;
 using Android.Graphics;
 using Android.Views;
 using Android.Widget;
@@ -9,14 +7,16 @@ namespace Xmf2.Commons.Droid.Helpers
 {
 	public class LoadingViewHelper
 	{
-		private readonly Activity _activity;
+		private readonly Context _context;
+		private readonly ViewGroup _viewGroup;
 
-		public View LoadingView { get; private set; }
+		private View _loadingView;
 
 		private readonly int _loadingViewResource;
 		private readonly int _progress;
 
 		private bool _isBusy;
+
 		public virtual bool IsBusy
 		{
 			get => _isBusy;
@@ -25,14 +25,15 @@ namespace Xmf2.Commons.Droid.Helpers
 				if (_isBusy != value)
 				{
 					_isBusy = value;
-					LoadingView.Visibility = _isBusy ? ViewStates.Visible : ViewStates.Gone;
+					_loadingView.Visibility = _isBusy ? ViewStates.Visible : ViewStates.Gone;
 				}
 			}
 		}
 
-		public LoadingViewHelper(Activity activity, int loadingViewResource, int progress)
+		public LoadingViewHelper(ViewGroup view, int loadingViewResource, int progress)
 		{
-			_activity = activity;
+			_context = view.Context;
+			_viewGroup = view;
 			_loadingViewResource = loadingViewResource;
 			_progress = progress;
 			CreateLoadingView();
@@ -40,20 +41,20 @@ namespace Xmf2.Commons.Droid.Helpers
 
 		private void CreateLoadingView()
 		{
-			if (LoadingView == null)
+			if (_loadingView == null)
 			{
-				var decorView = _activity.Window.DecorView;
-				LoadingView = LayoutInflater.From(_activity).Inflate(_loadingViewResource, null);
-				UIHelper.SetColorFilter(LoadingView.FindViewById<ProgressBar>(_progress), Color.White);
-				if (decorView is ViewGroup viewGroup)
+				var loadingView = LayoutInflater.From(_context).Inflate(_loadingViewResource, null);
+				UIHelper.SetColorFilter(loadingView.FindViewById<ProgressBar>(_progress), Color.White);
+				if (_viewGroup != null)
 				{
-					viewGroup.AddView(LoadingView, GetLayoutParams());
-					LoadingView.Visibility = ViewStates.Gone;
+					_loadingView = loadingView;
+					_viewGroup.AddView(_loadingView, GetLayoutManager());
+					_loadingView.Visibility = ViewStates.Gone;
 				}
 			}
 		}
 
-		private ViewGroup.LayoutParams GetLayoutParams()
+		private ViewGroup.LayoutParams GetLayoutManager()
 		{
 			return new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MatchParent, ViewGroup.LayoutParams.MatchParent);
 		}
