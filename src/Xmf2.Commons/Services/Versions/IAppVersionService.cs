@@ -3,5 +3,7 @@
 	public interface IAppVersionService
 	{
 		string GetVersion();
+
+		string GetFullVersion();
 	}
 }
