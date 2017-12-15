@@ -16,7 +16,14 @@ namespace Xmf2.Rx.Droid.BaseView
 		bool IsBusy { get; set; }
 	}
 
-	public abstract class BaseActivity<TViewModel> : XMFAppCompatActivity<TViewModel>, IActivityWithBusyManagement where TViewModel : BaseViewModel
+	public interface IActivityWithKeyboardManagement
+	{
+		void HideKeyboard(View nextFocus);
+
+		void HideKeyboard();
+	}
+
+	public abstract class BaseActivity<TViewModel> : XMFAppCompatActivity<TViewModel>, IActivityWithBusyManagement, IActivityWithKeyboardManagement where TViewModel : BaseViewModel
 	{
 		public abstract TViewModel GetViewModel();
 
