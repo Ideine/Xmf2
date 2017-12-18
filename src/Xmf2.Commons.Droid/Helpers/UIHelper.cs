@@ -15,13 +15,13 @@ namespace Xmf2.Commons.Droid.Helpers
 			return widthInDp;
 		}
 
-		public static Color ColorFromHex(this uint color)
+		public static Color ColorFromHex(this uint color, int? alpha = null)
 		{
 			byte a = (byte)(color >> 24);
 			byte r = (byte)(color >> 16);
 			byte g = (byte)(color >> 8);
 			byte b = (byte)(color >> 0);
-			return Color.Argb(a, r, g, b);
+			return Color.Argb(alpha ?? a, r, g, b);
 		}
 
 		public static int PxToDp(Context context, float pixelValue)

@@ -59,14 +59,23 @@ namespace Xmf2.Rx.Droid.BaseView
 
 		protected virtual void OnContentViewSet() { }
 
+		#region Status bar color
+
 		protected void ColorizeStatusBar(int color)
+		{
+			ColorizeStatusBar(new Color(color));
+		}
+
+		protected void ColorizeStatusBar(Color color)
 		{
 			if (Build.VERSION.SdkInt >= BuildVersionCodes.Lollipop)
 			{
 				Window?.AddFlags(WindowManagerFlags.DrawsSystemBarBackgrounds);
-				Window?.SetStatusBarColor(new Color(color));
+				Window?.SetStatusBarColor(color);
 			}
 		}
+
+		#endregion
 
 		#region Life cycle
 
