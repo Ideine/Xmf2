@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -162,24 +163,42 @@ namespace Xmf2.Rest.OAuth2
 		    return Refresh(ct);
 	    }
 
+	    public void InitializeCredentials(string accessToken, string refreshToken, DateTime expireDate)
+	    {
+		    var result = new OAuth2AuthResult
+		    {
+			    AccessToken = accessToken,
+			    RefreshToken = refreshToken,
+			    ExpiresAt = expireDate,
+			    IsSuccess = true,
+		    };
+
+		    HandleAuthResponse(result);
+	    }
+
+	    protected void HandleAuthResponse(OAuth2AuthResult result)
+	    {
+		    if (result.IsSuccess)
+		    {
+			    AccessToken = result.AccessToken;
+			    RefreshToken = result.RefreshToken;
+
+			    OAuth2Authenticator authenticator = OAuth2Authenticator ?? CreateAuthenticator();
+			    authenticator.Access = result;
+			    Authenticator = OAuth2Authenticator = authenticator;
+		    }
+
+		    RaiseOnAuthEvents(result);
+	    }
+
 		protected async Task<OAuth2AuthResult> ExecuteAuthRequest(IRestRequest request, CancellationToken ct)
 	    {
 			request.AddHeader(OAuth2Authenticator.NO_AUTH_HEADER, true);
 			IRestResponse response = await Execute(request, ct);
 			OAuth2AuthResult result = Configuration.HandleAuthResult(response);
+
+		    HandleAuthResponse(result);
 			
-			if (result.IsSuccess)
-			{
-				AccessToken = result.AccessToken;
-				RefreshToken = result.RefreshToken;
-
-				OAuth2Authenticator authenticator = OAuth2Authenticator ?? CreateAuthenticator();
-				authenticator.Access = result;
-				Authenticator = OAuth2Authenticator = authenticator;
-			}
-
-			RaiseOnAuthEvents(result);
-
 		    return result;
 	    }
 
@@ -197,6 +216,18 @@ namespace Xmf2.Rest.OAuth2
 				{
 					return await RestResponse.CreateResponse<T>(this, request, response, ct).ConfigureAwait(false);
 				}
+
+				try
+				{
+					throw new Exception("Invalid response status code");
+				}
+				catch (Exception ex)
+				{
+					Debug.WriteLine($"LSTLOG Invalid status code: {response.StatusCode} / {this.BuildUri(request)}");
+					Debug.WriteLine($"LSTLOG stack: {ex.StackTrace}");
+				}
+				
+				
 				IRestResponse restResponse = await RestResponse.CreateResponse(this, request, response, ct).ConfigureAwait(false);
 				throw new RestException(restResponse);
 			}

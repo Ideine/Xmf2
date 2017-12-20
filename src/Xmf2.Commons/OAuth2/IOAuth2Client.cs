@@ -29,6 +29,8 @@ namespace Xmf2.Rest.OAuth2
 
 		Task<OAuth2AuthResult> Refresh(CancellationToken ct);
 
+		void InitializeCredentials(string accessToken, string refreshToken, DateTime expireDate);
+		
 		void Logout();
 	}
 }
