@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Specialized;
 using System.Windows.Input;
 using Android.Content;
 using Android.OS;
@@ -27,7 +28,7 @@ namespace Xmf2.Rx.Droid.ListElement
 				if (!Equals(_itemsSource, value))
 				{
 					_itemsSource = value;
-					_itemsSource.CollectionChanged += OnCollectionChanged;
+					_itemsSource.CollectionChanged += CollectionChanged;
 				}
 				NotifyDataSetChanged();
 			}
@@ -38,9 +39,7 @@ namespace Xmf2.Rx.Droid.ListElement
 			Context = context;
 		}
 
-		protected BaseReactiveRecyclerViewAdapter(IntPtr javaRef, Android.Runtime.JniHandleOwnership transfer) : base(javaRef, transfer)
-		{
-		}
+		protected BaseReactiveRecyclerViewAdapter(IntPtr javaRef, Android.Runtime.JniHandleOwnership transfer) : base(javaRef, transfer) { }
 
 		public override int ItemCount => ItemsSource?.Count ?? 0;
 
@@ -66,7 +65,7 @@ namespace Xmf2.Rx.Droid.ListElement
 			return viewHolder;
 		}
 
-		private void OnCollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+		protected virtual void OnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
 		{
 			new Handler(Looper.MainLooper).Post(() =>
 			{
@@ -84,10 +83,14 @@ namespace Xmf2.Rx.Droid.ListElement
 					default:
 						NotifyDataSetChanged();
 						break;
-
 				}
 			});
+		}
 
+
+		private void CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+		{
+			OnCollectionChanged(sender, e);
 		}
 
 		protected override void Dispose(bool disposing)
@@ -96,7 +99,7 @@ namespace Xmf2.Rx.Droid.ListElement
 			{
 				if (ItemsSource != null)
 				{
-					ItemsSource.CollectionChanged -= OnCollectionChanged;
+					ItemsSource.CollectionChanged -= CollectionChanged;
 				}
 			}
 			base.Dispose(disposing);
