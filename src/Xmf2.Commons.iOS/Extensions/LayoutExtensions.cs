@@ -219,14 +219,14 @@ public static class CustomAutoLayoutExtensions
 	{
 		foreach (var view in views)
 		{
-			containerView.ConstrainLayout(() => view.CenterX() == containerView.CenterX());
+			containerView.WithConstraint(view, CenterX, Equal, containerView, CenterX, 1f, 0f);
 		}
 		return containerView;
 	}
 
 	public static UIView CenterVertically(this UIView containerView, UIView view)
 	{
-		containerView.ConstrainLayout(() => view.CenterY() == containerView.CenterY());
+		containerView.WithConstraint(view, CenterY, Equal, containerView, CenterY, 1f, 0f);
 		return containerView;
 	}
 
@@ -234,7 +234,7 @@ public static class CustomAutoLayoutExtensions
 	{
 		foreach (UIView view in views)
 		{
-			containerView.ConstrainLayout(() => view.CenterY() == containerView.CenterY());
+			containerView.WithConstraint(view, CenterY, Equal, containerView, CenterY, 1f, 0f);
 		}
 		return containerView;
 	}
