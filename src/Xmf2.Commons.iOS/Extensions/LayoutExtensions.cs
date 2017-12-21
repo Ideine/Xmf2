@@ -359,10 +359,11 @@ public static class CustomAutoLayoutExtensions
 	{
 		return view.WithConstraint(v1, Top, Equal, v2, Top, 1f, offset);
 	}
-	
-	public static UIView AlignOnBottom(this UIView view, UIView v1, UIView v2, int offset = 0)
+
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static UIView AlignOnBottom(this UIView view, UIView v1, UIView v2, float offset = 0)
 	{
-		view.ConstrainLayout(() => v1.Bottom() == v2.Bottom() + offset);
+		view.WithConstraint(v1, Bottom, Equal, v2, Bottom, 1f, offset);
 		return view;
 	}
 
@@ -441,13 +442,14 @@ public static class CustomAutoLayoutExtensions
 		return scroll;
 	}
 
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static UIScrollView HorizontalScrollContentConstraint(this UIScrollView scroll, UIView content)
 	{
-		scroll.ConstrainLayout(() => scroll.Left()	 == content.Left()
-							      && scroll.Right()	 == content.Right()
-							      && scroll.Top()	 == content.Top()
-							      && scroll.Bottom() == content.Bottom()
-							      && scroll.CenterY()== content.CenterY());
+		scroll.WithConstraint(scroll, Left,		Equal, content, Left,	 1f, 0f)
+			  .WithConstraint(scroll, Right,	Equal, content, Right,	 1f, 0f)
+			  .WithConstraint(scroll, Top,		Equal, content, Top,	 1f, 0f)
+			  .WithConstraint(scroll, Bottom,	Equal, content, Bottom,  1f, 0f)
+			  .WithConstraint(scroll, CenterY,	Equal, content, CenterY, 1f, 0f);
 		return scroll;
 	}
 
