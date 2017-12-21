@@ -24,7 +24,7 @@ namespace Xmf2.Rx.Droid.BaseView
 			OnViewModelSet();
 			SetViewModelBindings();
 		}
-		
+
 		protected BaseReactiveDialogFragment()
 		{
 		}
@@ -39,7 +39,7 @@ namespace Xmf2.Rx.Droid.BaseView
 
 		protected virtual void SetViewModelBindings()
 		{
-			
+
 		}
 
 		protected void StretchContent()
@@ -52,8 +52,33 @@ namespace Xmf2.Rx.Droid.BaseView
 			Display display = Activity.WindowManager.DefaultDisplay;
 			Point size = new Point();
 			display.GetSize(size);
-			int width = (int) (size.X * widthRatio);
-			int height = (int) (size.Y * heightRatio);
+			int width = (int)(size.X * widthRatio);
+			int height = (int)(size.Y * heightRatio);
+			Dialog.Window.SetLayout(width, height);
+		}
+	}
+
+	public abstract class BaseReactiveDialogFragment : XMFReactiveDialogFragment
+	{
+
+		protected virtual bool IsDialogCancelable { get; set; } = false;
+
+		protected BaseReactiveDialogFragment() { }
+
+		protected BaseReactiveDialogFragment(IntPtr handle, JniHandleOwnership ownership) : base(handle, ownership) { }
+
+		protected void StretchContent()
+		{
+			ApplySize(1f, 1f);
+		}
+
+		private void ApplySize(float widthRatio, float heightRatio)
+		{
+			Display display = Activity.WindowManager.DefaultDisplay;
+			Point size = new Point();
+			display.GetSize(size);
+			int width = (int)(size.X * widthRatio);
+			int height = (int)(size.Y * heightRatio);
 			Dialog.Window.SetLayout(width, height);
 		}
 	}
