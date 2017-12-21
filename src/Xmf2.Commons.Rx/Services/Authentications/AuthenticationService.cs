@@ -28,14 +28,15 @@ namespace Xmf2.Commons.Rx.Services.Authentications
 			_logger = logger;
 			_errorManager = errorManager;
 
+			_client.OnAuthSuccess += OnClientAuthenticationSuccess;
+			_client.OnAuthError += OnClientAuthenticationError;
+
+
 			if (_storageService.Has().Result)
 			{
 				var authDetails = _storageService.Get().Result;
 				client.InitializeCredentials(authDetails.AccessToken, authDetails.RefreshToken, authDetails.ExpireDate);
 			}
-
-			_client.OnAuthSuccess += OnClientAuthenticationSuccess;
-			_client.OnAuthError += OnClientAuthenticationError;
 		}
 
 		protected virtual void OnClientAuthenticationSuccess(object sender, OAuth2AuthResult result)
