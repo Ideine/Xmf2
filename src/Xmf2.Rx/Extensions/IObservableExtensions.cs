@@ -126,20 +126,25 @@ namespace System
 		#region Tuple Subscribe
 		public static IDisposable Subscribe<T1, T2>(this IObservable<Tuple<T1, T2>> source, Action<T1, T2> onNext)
 		{
-			return source.Subscribe(tuple => onNext(tuple.Item1, tuple.Item2));
+			return source.Select(NullToTupleWithDefault).Subscribe(tuple => onNext(tuple.Item1, tuple.Item2));
 		}
 		public static IDisposable Subscribe<T1, T2, T3>(this IObservable<Tuple<T1, T2, T3>> source, Action<T1, T2, T3> onNext)
 		{
-			return source.Subscribe(tuple => onNext(tuple.Item1, tuple.Item2, tuple.Item3));
+			return source.Select(NullToTupleWithDefault).Subscribe(tuple => onNext(tuple.Item1, tuple.Item2, tuple.Item3));
 		}
 		public static IDisposable Subscribe<T1, T2, T3, T4>(this IObservable<Tuple<T1, T2, T3, T4>> source, Action<T1, T2, T3, T4> onNext)
 		{
-			return source.Subscribe(tuple => onNext(tuple.Item1, tuple.Item2, tuple.Item3, tuple.Item4));
+			return source.Select(NullToTupleWithDefault).Subscribe(tuple => onNext(tuple.Item1, tuple.Item2, tuple.Item3, tuple.Item4));
 		}
 		public static IDisposable Subscribe<T1, T2, T3, T4, T5>(this IObservable<Tuple<T1, T2, T3, T4, T5>> source, Action<T1, T2, T3, T4, T5> onNext)
 		{
-			return source.Subscribe(tuple => onNext(tuple.Item1, tuple.Item2, tuple.Item3, tuple.Item4, tuple.Item5));
+			return source.Select(NullToTupleWithDefault).Subscribe(tuple => onNext(tuple.Item1, tuple.Item2, tuple.Item3, tuple.Item4, tuple.Item5));
 		}
+		
+		private static Tuple<T1, T2> NullToTupleWithDefault<T1, T2>(Tuple<T1, T2> tuple) => tuple ?? new Tuple<T1, T2>(default(T1), default(T2));
+		private static Tuple<T1, T2, T3> NullToTupleWithDefault<T1, T2, T3>(Tuple<T1, T2, T3> tuple) => tuple ?? new Tuple<T1, T2, T3>(default(T1), default(T2), default(T3));
+		private static Tuple<T1, T2, T3, T4> NullToTupleWithDefault<T1, T2, T3, T4>(Tuple<T1, T2, T3, T4> tuple) => tuple ?? new Tuple<T1, T2, T3, T4>(default(T1), default(T2), default(T3), default(T4));
+		private static Tuple<T1, T2, T3, T4, T5> NullToTupleWithDefault<T1, T2, T3, T4, T5>(Tuple<T1, T2, T3, T4, T5> tuple) => tuple ?? new Tuple<T1, T2, T3, T4, T5>(default(T1), default(T2), default(T3), default(T4), default(T5));
 
 		#endregion
 
