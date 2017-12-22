@@ -79,6 +79,15 @@ namespace UIKit
 			return topSuperView;
 		}
 
+		public static UIView RemoveSubviews(this UIView view)
+		{
+			foreach (var subView in view.Subviews)
+			{
+				subView.RemoveFromSuperview();
+			}
+			return view;
+		}
+
 		public static bool IsLandscape()
 		{
 			var orientation = UIApplication.SharedApplication.StatusBarOrientation;
