@@ -130,7 +130,7 @@ public static class CustomAutoLayoutExtensions
 			UIView v1 = views[i - 1];
 			UIView v2 = views[i];
 
-			containerView.ConstrainLayout(() => v1.Width() == v2.Width());
+			containerView.WithConstraint(v1, Width, Equal, v2, Width, 1f, 0f);
 		}
 
 		return containerView;
@@ -245,16 +245,15 @@ public static class CustomAutoLayoutExtensions
 		return containerView.WithConstraint(containerView, Width, Equal, view, Width, 1, margin);
 	}
 
-	public static UIView FillHeight(this UIView containerView, UIView view, int margin = 0)
+	public static UIView FillHeight(this UIView containerView, UIView view, float margin = 0)
 	{
-		containerView.ConstrainLayout(() => containerView.Height() == view.Height() + margin);
-		return containerView;
+		return containerView.WithConstraint(containerView, Height, Equal, view, Height, 1f,  margin);
 	}
 	public static UIView FillHeight(this UIView containerView, params UIView[] views)
 	{
 		foreach (var view in views)
 		{
-			containerView.ConstrainLayout(() => containerView.Height() == view.Height() + 0);
+			containerView.FillHeight(view, 0f);
 		}
 		return containerView;
 	}
@@ -399,11 +398,10 @@ public static class CustomAutoLayoutExtensions
 
 	public static UIView Same(this UIView view, UIView reference, UIView dest)
 	{
-		view.ConstrainLayout(() => reference.CenterY() == dest.CenterY()
-							 && reference.CenterX() == dest.CenterX()
-							 && reference.Height() == dest.Height()
-							 && reference.Width() == dest.Width());
-		return view;
+		return view.WithConstraint(reference, CenterY,Equal, dest, CenterY, 1f, 0f)
+				   .WithConstraint(reference, CenterX,Equal, dest, CenterX, 1f, 0f)
+				   .WithConstraint(reference, Height ,Equal, dest, Height , 1f, 0f)
+				   .WithConstraint(reference, Width  ,Equal, dest, Width  , 1f, 0f);
 	}
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
