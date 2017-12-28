@@ -1,5 +1,6 @@
 ﻿using System;
 using Android.Text;
+using Android.Text.Style;
 using Java.Lang;
 
 namespace Android.Widget
@@ -21,6 +22,13 @@ namespace Android.Widget
 				}
 				textView.SetText(text, TextView.BufferType.Spannable);
 			}
+		}
+
+		public static void SetUnderlineText(this TextView textView, string text)
+		{
+			var spannableText = new SpannableString(text);
+			spannableText.SetSpan(new UnderlineSpan(), 0, text.Length, 0);
+			textView.SetText(spannableText, TextView.BufferType.Spannable);
 		}
 	}
 }
