@@ -8,16 +8,19 @@ namespace Android.Widget
 	{
 		public static void SetTextFromHtml(this TextView textView, string htmlText)
 		{
-			ICharSequence text = null;
-			if (Android.OS.Build.VERSION.SdkInt >= Android.OS.BuildVersionCodes.N)
+			if (!string.IsNullOrEmpty(htmlText))
 			{
-				text = Html.FromHtml(htmlText, FromHtmlOptions.ModeCompact);
+				ICharSequence text = null;
+				if (Android.OS.Build.VERSION.SdkInt >= Android.OS.BuildVersionCodes.N)
+				{
+					text = Html.FromHtml(htmlText, FromHtmlOptions.ModeCompact);
+				}
+				else
+				{
+					text = Html.FromHtml(htmlText);
+				}
+				textView.SetText(text, TextView.BufferType.Spannable);
 			}
-			else
-			{
-				text = Html.FromHtml(htmlText);
-			}
-			textView.SetText(text, TextView.BufferType.Spannable);
 		}
 	}
 }
