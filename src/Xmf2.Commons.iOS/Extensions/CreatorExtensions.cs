@@ -599,6 +599,12 @@ public static class CreatorExtensions
 		return input;
 	}
 
+	public static UITextField WithReturnKey(this UITextField input, UIReturnKeyType returnKeyType)
+	{
+		input.ReturnKeyType = returnKeyType;
+		return input;
+	}
+
 	public static UITextField WithBorderStyle(this UITextField input, UITextBorderStyle style)
 	{
 		input.BorderStyle = style;
