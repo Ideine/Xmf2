@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Foundation;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -551,6 +552,17 @@ public static class CustomAutoLayoutExtensions
 		var delta = subviewsToAdd.Except(view.Subviews).ToArray();
 		view.AddSubviews(delta);
 		return view;
+	}
+
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static UIView WithConstraint(this UIView constrainedView, UIView view, NSLayoutAttribute attribute, NSLayoutRelation relation, nfloat multiplier, nfloat constant)
+	{
+		if (view != null && view != constrainedView)
+		{
+			view.TranslatesAutoresizingMaskIntoConstraints = false;
+		}
+		constrainedView.AddConstraint(NSLayoutConstraint.Create(view, attribute, relation, multiplier, constant));
+		return constrainedView;
 	}
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
