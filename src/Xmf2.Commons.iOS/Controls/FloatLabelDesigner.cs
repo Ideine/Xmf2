@@ -15,7 +15,8 @@ namespace Xmf2.Commons.iOS.Controls
 			UIFont textFont = UIFont.SystemFontOfSize(14);
 
 			var floatLabel = FloatLabeledTextField.CreateOnFirstCharTextField(textColor, textFont, placeholder, textColor, placeholderColor, placeholderFont);
-			floatLabel.OnReturnNextResponder(next, next != null ? UIReturnKeyType.Next : UIReturnKeyType.Done, onEnterCallback);
+			floatLabel.OnReturnNextResponder(next, onEnterCallback)
+					  .WithReturnKey(next != null ? UIReturnKeyType.Next : UIReturnKeyType.Done);
 			return floatLabel;
 		}
 
@@ -27,7 +28,8 @@ namespace Xmf2.Commons.iOS.Controls
 			UIFont textFont = UIFont.SystemFontOfSize(14);
 
 			var floatLabel = FloatLabeledTextField.CreateOnFirstCharTextField(textColor, textFont, placeholder, textColor, placeholderColor, placeholderFont);
-			floatLabel.OnReturnNextResponder(next, next != null ? UIReturnKeyType.Next : UIReturnKeyType.Done, onEnterCallback);
+			floatLabel.OnReturnNextResponder(next, onEnterCallback)
+					  .WithReturnKey(next != null ? UIReturnKeyType.Next : UIReturnKeyType.Done);
 			return floatLabel;
 		}
 

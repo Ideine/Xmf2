@@ -464,11 +464,10 @@ public static class CreatorExtensions
 		return input;
 	}
 
-	public static UITextField AsPasswordField(this UITextField input, UIReturnKeyType returnKeyType)
+	public static UITextField AsPasswordField(this UITextField input)
 	{
 		input.KeyboardType = UIKeyboardType.Default;
 		input.SpellCheckingType = UITextSpellCheckingType.No;
-		input.ReturnKeyType = returnKeyType;
 		input.AutocorrectionType = UITextAutocorrectionType.No;
 		input.AutocapitalizationType = UITextAutocapitalizationType.None;
 		input.SecureTextEntry = true;
@@ -485,20 +484,18 @@ public static class CreatorExtensions
 		return input;
 	}
 
-	public static UITextField AsEmailField(this UITextField input, UIReturnKeyType returnKeyType)
+	public static UITextField AsEmailField(this UITextField input)
 	{
 		input.KeyboardType = UIKeyboardType.EmailAddress;
 		input.SpellCheckingType = UITextSpellCheckingType.No;
-		input.ReturnKeyType = returnKeyType;
 		input.AutocorrectionType = UITextAutocorrectionType.No;
 		input.AutocapitalizationType = UITextAutocapitalizationType.None;
 		return input;
 	}
-	public static UITextField AsNumpadField(this UITextField input, UIReturnKeyType returnKeyType)
+	public static UITextField AsNumpadField(this UITextField input)
 	{
 		input.KeyboardType = UIKeyboardType.NumberPad;
 		input.SpellCheckingType = UITextSpellCheckingType.No;
-		input.ReturnKeyType = returnKeyType;
 		input.AutocorrectionType = UITextAutocorrectionType.No;
 		input.AutocapitalizationType = UITextAutocapitalizationType.None;
 		return input;
@@ -587,9 +584,8 @@ public static class CreatorExtensions
 		return input;
 	}
 
-	public static UITextField OnReturnNextResponder(this UITextField input, UIResponder nextReponder, UIReturnKeyType returnKeyType = UIReturnKeyType.Default, Action action = null)
+	public static UITextField OnReturnNextResponder(this UITextField input, UIResponder nextReponder, Action action = null)
 	{
-		input.ReturnKeyType = returnKeyType;
 		input.ShouldReturn += (textField) =>
 		{
 			action?.Invoke();
