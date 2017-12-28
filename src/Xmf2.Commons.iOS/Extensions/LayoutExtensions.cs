@@ -91,6 +91,13 @@ public static class CustomAutoLayoutExtensions
 		return containerView;
 	}
 
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static UIView CenterAndLimitHeight(this UIView containerView, UIView view, float margin = 0)
+	{
+		return containerView.WithConstraint(view, CenterY, Equal, containerView, CenterY, 1f, 0f)
+							.WithConstraint(view, Height, LessThanOrEqual, containerView, Height, 1f, -margin);
+	}
+
 	public static UIView VerticalFlow(this UIView containerView, params UIView[] views)
 	{
 		if (views == null)
@@ -281,6 +288,7 @@ public static class CustomAutoLayoutExtensions
 		containerView.WithConstraint(right, Left, GreaterThanOrEqual, left, Right, 1f, margin);
 		return containerView;
 	}
+
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static UIView ConstrainHeight(this UIView view, float height)
@@ -558,5 +566,20 @@ public static class CustomAutoLayoutExtensions
 		}
 		constrainedView.AddConstraint(NSLayoutConstraint.Create(view1, attribute1, relation, view2, attribute2, multiplier, constant));
 		return constrainedView;
+	}
+
+
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static UIView WithContentCompressionResistancePriority(this UIView view, UILayoutPriority priority, UILayoutConstraintAxis axis)
+	{
+		view.SetContentCompressionResistancePriority((float)priority, axis);
+		return view;
+	}
+
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static UIView WithContentHuggingPriority(this UIView view, UILayoutPriority priority, UILayoutConstraintAxis axis)
+	{
+		view.SetContentHuggingPriority((float)priority, axis);
+		return view;
 	}
 }

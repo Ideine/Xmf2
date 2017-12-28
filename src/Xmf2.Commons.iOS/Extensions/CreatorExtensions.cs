@@ -69,6 +69,11 @@ public static class CreatorExtensions
 		button.SetTitle(title, UIControlState.Normal);
 		return button;
 	}
+	public static TUIButton WithTitle<TUIButton>(this TUIButton button, NSAttributedString title) where TUIButton : UIButton
+	{
+		button.SetAttributedTitle(title, UIControlState.Normal);
+		return button;
+	}
 
 	public static TUIButton WithTextColor<TUIButton>(this TUIButton button, uint color, UIControlState forState) where TUIButton : UIButton
 	{
