@@ -440,12 +440,22 @@ public static class CustomAutoLayoutExtensions
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static UIScrollView VerticalScrollContentConstraint(this UIScrollView scroll, UIView content, float horizontalMargin)
 	{
-		scroll
-			.WithConstraint(scroll, Left, Equal, content, Left, 1, -horizontalMargin / 2)
-			.WithConstraint(scroll, Right, Equal, content, Right, 1f, horizontalMargin / 2)
-			.WithConstraint(content, Top, Equal, scroll, Top, 1f, 0f)
-			.WithConstraint(scroll, Bottom, Equal, content, Bottom, 1f, 0f)
-			.WithConstraint(scroll, CenterX, Equal, content, CenterX, 1f, 0f);
+		scroll.WithConstraint(scroll,  Left,	Equal, content, Left,	1, -horizontalMargin / 2f)
+			  .WithConstraint(scroll,  Right,	Equal, content, Right,	1f, horizontalMargin / 2f)
+			  .WithConstraint(scroll,  Top,		Equal, content,	Top,	1f, 0f)
+			  .WithConstraint(scroll,  Bottom,	Equal, content, Bottom, 1f, 0f)
+			  .WithConstraint(scroll,  CenterX, Equal, content, CenterX,1f, 0f);
+		return scroll;
+	}
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static UIScrollView VerticalScrollFilledContentConstraint(this UIScrollView scroll, UIView content, float horizontalMargin)
+	{
+		scroll.WithConstraint(scroll,  Left,	Equal,				content, Left,	 1, -horizontalMargin / 2f)
+			  .WithConstraint(scroll,  Right,	Equal,				content, Right,	 1f, horizontalMargin / 2f)
+			  .WithConstraint(scroll,  Top,		Equal,				content, Top,	 1f, 0f)
+			  .WithConstraint(scroll,  Bottom,	Equal,				content, Bottom, 1f, 0f)
+			  .WithConstraint(scroll,  Height,  LessThanOrEqual,	content, Height, 1f, 0f)
+			  .WithConstraint(scroll,  CenterX, Equal,				content, CenterX,1f, 0f);
 		return scroll;
 	}
 
