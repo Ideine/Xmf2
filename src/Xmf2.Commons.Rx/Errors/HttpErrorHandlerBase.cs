@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Xmf2.Commons.Logs;
 using Xmf2.Commons.Exceptions;
 using Xmf2.Commons.Errors;
+using System.Collections.Generic;
 
 namespace Xmf2.Commons.Rx.Errors
 {
@@ -16,6 +17,17 @@ namespace Xmf2.Commons.Rx.Errors
 		private readonly Lazy<WebExceptionStatus[]> _retryStatus;
 		private readonly Lazy<WebExceptionStatus[]> _timeoutStatus;
 		private readonly Lazy<WebExceptionStatus[]> _noInternetStatus;
+
+		private readonly List<string> _noInternetMessages = new List<string>()
+		{
+			"SSL handshake timed out",
+			"Unable to resolve host",
+			"The operation has timed out",
+			"Socket closed",
+			"A task was canceled",
+			"Bad file descriptor",
+			"Invalid argument"
+		};
 
 		public HttpErrorHandlerBase(ILogger logger)
 		{
@@ -60,12 +72,45 @@ namespace Xmf2.Commons.Rx.Errors
 				case WebException webException when _timeoutStatus.Value.Contains(webException.Status):
 					return new AccessDataException(AccessDataException.ErrorType.Timeout, ex);
 
+				case TimeoutException timeoutException:
+					return new AccessDataException(AccessDataException.ErrorType.Timeout, ex);
+
 				case Rest.OAuth2.RestException restException when HttpStatusCode.NotFound == restException?.Response.StatusCode:
 					return new AccessDataException(AccessDataException.ErrorType.NotFound, ex);
 
+				case Exception exType when exType.GetType().FullName.Contains("IOException"):
+					return new AccessDataException(AccessDataException.ErrorType.NoInternetConnexion, ex);
+
 				default:
-					return new AccessDataException(AccessDataException.ErrorType.Unknown, ex);
+					return IsInternetException(ex) ?
+						new AccessDataException(AccessDataException.ErrorType.NoInternetConnexion, ex)
+						: new AccessDataException(AccessDataException.ErrorType.Unknown, ex);
 			}
+		}
+
+		protected virtual bool IsInternetException(Exception ex)
+		{
+			if(ex is AggregateException aggEx && aggEx.InnerExceptions != null)
+			{
+				if(aggEx.InnerExceptions.Any(IsInternetException))
+				{
+					return true;
+				}
+			}
+
+			if(ex.InnerException != null)
+			{
+				if(IsInternetException(ex.InnerException))
+				{
+					return true;
+				}
+			}
+
+			if (ex.Message != null)
+			{
+				return _noInternetMessages.Any(msg => ex.Message.Contains(msg));
+			}
+			return false;
 		}
 
 		protected virtual IObservable<TResult> ApplyRetryPolicy<TResult>(IObservable<TResult> source)
