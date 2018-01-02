@@ -55,7 +55,7 @@ namespace Xmf2.Commons.Rx.ViewModels
 		protected Task WrapForError(IObservable<Unit> source, CustomErrorHandler errorHandler = null)
 		{
 			return ErrorHanler.Value
-							  .Execute(source.Timeout(TimeSpan.FromMinutes(10)), errorHandler)
+							  .Execute(source.Timeout(TimeSpan.FromSeconds(90)), errorHandler)
 							  .Catch<Unit, Exception>(ex => Observable.Return(default(Unit)))
 							  .WaitForOneAsync();
 		}
@@ -63,7 +63,7 @@ namespace Xmf2.Commons.Rx.ViewModels
 		protected Task<TResult> WrapForError<TResult>(IObservable<TResult> source, CustomErrorHandler errorHandler = null)
 		{
 			return ErrorHanler.Value
-				              .Execute(source.Timeout(TimeSpan.FromMinutes(10)), errorHandler)
+				              .Execute(source.Timeout(TimeSpan.FromSeconds(90)), errorHandler)
 							  .Catch<TResult, Exception>(ex => Observable.Return(default(TResult)))
 							  .WaitForOneAsync();
 		}
