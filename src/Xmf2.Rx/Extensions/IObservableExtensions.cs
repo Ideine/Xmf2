@@ -5,6 +5,7 @@ using System.Reactive.Linq;
 using System.Threading.Tasks;
 using Splat;
 using Xmf2.Commons.Errors;
+using System.Collections.Generic;
 
 namespace System
 {
@@ -117,11 +118,43 @@ namespace System
 		{
 			return source.Select(tuple => selector(tuple.Item1, tuple.Item2, tuple.Item3, tuple.Item4, tuple.Item5));
 		}
+		public static IObservable<TResult> Select<T1, T2, T3, T4, T5, T6, TResult>(this IObservable<Tuple<T1, T2, T3, T4, T5, T6>> source, Func<T1, T2, T3, T4, T5, T6, TResult> selector)
+		{
+			return source.Select(tuple => selector(tuple.Item1, tuple.Item2, tuple.Item3, tuple.Item4, tuple.Item5, tuple.Item6));
+		}
 
 		public static IObservable<TSource> StartWithDefault<TSource>(this IObservable<TSource> source)
 		{
 			return source.StartWith(default(TSource));
 		}
+
+		#region AsArray
+
+		public static IObservable<T[]> AsArray<T>(this IObservable<Tuple<T, T>> source)
+		{
+			return source.Select(tuple => new T[] { tuple.Item1, tuple.Item2 });
+		}
+		public static IObservable<T[]> AsArray<T>(this IObservable<Tuple<T, T, T>> source)
+		{
+			return source.Select(tuple => new T[] { tuple.Item1, tuple.Item2, tuple.Item3 });
+		}
+		public static IObservable<T[]> AsArray<T>(this IObservable<Tuple<T, T, T, T>> source)
+		{
+			return source.Select(tuple => new T[] { tuple.Item1, tuple.Item2, tuple.Item3, tuple.Item4 });
+		}
+		public static IObservable<T[]> AsArray<T>(this IObservable<Tuple<T, T, T, T, T>> source)
+		{
+			return source.Select(tuple => new T[] { tuple.Item1, tuple.Item2, tuple.Item3, tuple.Item4, tuple.Item5});
+		}
+		public static IObservable<T[]> AsArray<T>(this IObservable<Tuple<T, T, T, T, T, T>> source)
+		{
+			return source.Select(tuple => new T[] { tuple.Item1, tuple.Item2, tuple.Item3, tuple.Item4, tuple.Item5, tuple.Item6 });
+		}
+		public static IObservable<T[]> AsArray<T>(this IObservable<Tuple<T, T, T, T, T, T, T>> source)
+		{
+			return source.Select(tuple => new T[] { tuple.Item1, tuple.Item2, tuple.Item3, tuple.Item4, tuple.Item5, tuple.Item6, tuple.Item7 });
+		}
+		#endregion AsArray
 
 		#region Tuple Subscribe
 		public static IDisposable Subscribe<T1, T2>(this IObservable<Tuple<T1, T2>> source, Action<T1, T2> onNext)
@@ -183,6 +216,10 @@ namespace System
 		public static IObservable<TResult> Select<T1, T2, T3, T4, T5, TResult>(this IObservable<(T1, T2, T3, T4, T5)> source, Func<T1, T2, T3, T4, T5, TResult> selector)
 		{
 			return source.Select(tuple => selector(tuple.Item1, tuple.Item2, tuple.Item3, tuple.Item4, tuple.Item5));
+		}
+		public static IObservable<TResult> Select<T1, T2, T3, T4, T5, T6, TResult>(this IObservable<(T1, T2, T3, T4, T5, T6)> source, Func<T1, T2, T3, T4, T5, T6, TResult> selector)
+		{
+			return source.Select(tuple => selector(tuple.Item1, tuple.Item2, tuple.Item3, tuple.Item4, tuple.Item5, tuple.Item6));
 		}
 		#endregion
 
