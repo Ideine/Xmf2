@@ -15,13 +15,13 @@ namespace Xmf2.Commons.iOS.Controls
 		}
 
 		[Obsolete("Use SwappedTitleEdgeInsets instead")]
-		public override UIEdgeInsets TitleEdgeInsets { get => base.TitleEdgeInsets; set => base.TitleEdgeInsets = value; }
+		public new UIEdgeInsets TitleEdgeInsets { get => base.TitleEdgeInsets; set => base.TitleEdgeInsets = value; }
 
 		[Obsolete("Use SwappedImageEdgeInsets instead")]
-		public override UIEdgeInsets ImageEdgeInsets { get => base.ImageEdgeInsets; set => base.ImageEdgeInsets = value; }
+		public new UIEdgeInsets ImageEdgeInsets { get => base.ImageEdgeInsets; set => base.ImageEdgeInsets = value; }
 
 		[Obsolete("Use SwappedHorizontalAlignment instead")]
-		public override UIControlContentHorizontalAlignment HorizontalAlignment { get => base.HorizontalAlignment; set => base.HorizontalAlignment = value; }
+		public new UIControlContentHorizontalAlignment HorizontalAlignment { get => base.HorizontalAlignment; set => base.HorizontalAlignment = value; }
 
 		public virtual UIEdgeInsets SwappedTitleEdgeInsets
 		{
