@@ -47,9 +47,22 @@ public static class CreatorExtensions
 	}
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static TUIButton WithImageEdgeInset<TUIButton>(this TUIButton button, nfloat top, nfloat left, nfloat bottom, nfloat right) where TUIButton : UIButton
+	{
+		return button.WithImageEdgeInset(new UIEdgeInsets(top, left, bottom, right));
+	}
+
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static TUIButton WithContentEdgeInset<TUIButton>(this TUIButton button, UIEdgeInsets insets) where TUIButton : UIButton
 	{
 		button.ContentEdgeInsets = insets;
+		return button;
+	}
+
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static TUIButton WithImageEdgeInset<TUIButton>(this TUIButton button, UIEdgeInsets insets) where TUIButton : UIButton
+	{
+		button.ImageEdgeInsets = insets;
 		return button;
 	}
 
