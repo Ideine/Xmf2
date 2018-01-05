@@ -49,6 +49,8 @@ namespace Xmf2.Notification.Droid
 						content = message.Data["message"];
 					}
 
+					message.Data.TryGetValue("data", out string deeplinkData);
+
 					if (content != null)
 					{
 						var setupSingleton = MvxAndroidSetupSingleton.EnsureSingletonAvailable(ApplicationContext);
@@ -56,7 +58,7 @@ namespace Xmf2.Notification.Droid
 
 						try
 						{
-							Mvx.Resolve<INotificationDisplayService>().ShowNotification(this, notification, content);
+							Mvx.Resolve<INotificationDisplayService>().ShowNotification(this, notification, content, deeplinkData);
 						}
 						catch (Exception e)
 						{
