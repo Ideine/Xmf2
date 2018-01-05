@@ -53,6 +53,8 @@ namespace Xmf2.Commons.MvxExtends.Touch.ViewComponents
 
 		public UIColor FeedbackColor { get; set; } = UIColor.LightGray;
 
+		public int SeparatorHeight { get; set; } = 1;
+
 		private bool _canLayout;
 
 		public ItemsControl(int cellHeight, bool hasSeparator = true)
@@ -139,7 +141,7 @@ namespace Xmf2.Commons.MvxExtends.Touch.ViewComponents
 
 						Add(sep);
 						this.VerticalSpace(topView, sep, 0)
-						    .CenterAndFillWidth(sep);
+							.CenterAndFillWidth(sep);
 
 						topView = sep;
 					}
@@ -186,7 +188,7 @@ namespace Xmf2.Commons.MvxExtends.Touch.ViewComponents
 
 			UIView sep = this.CreateView()
 							 .WithBackgroundColor(SeparatorColor)
-							 .ConstrainHeight(1);
+							 .ConstrainHeight(SeparatorHeight);
 
 			_usingSeparators.Add(sep);
 			return sep;
