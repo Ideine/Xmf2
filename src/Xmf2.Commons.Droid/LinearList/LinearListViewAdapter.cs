@@ -97,7 +97,6 @@ namespace Xmf2.Commons.Droid.LinearList
 			catch (ArgumentOutOfRangeException e)
 			{
 				Android.Util.Log.Warn("XMF2BUG", e.ToString());
-				System.Diagnostics.Debugger.Break();
 				return null;
 			}
 		}
