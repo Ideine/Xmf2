@@ -88,7 +88,19 @@ namespace Xmf2.Commons.Droid.LinearList
 			new Handler(Looper.MainLooper).Post(() => DataSetChanged?.Invoke(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset)));
 		}
 
-		public virtual object GetRawItem(int position) => ItemsSource[position];
+		public virtual object GetRawItem(int position)
+		{
+			try
+			{
+				return ItemsSource[position];
+			}
+			catch (ArgumentOutOfRangeException e)
+			{
+				Android.Util.Log.Warn("XMF2BUG", e.ToString());
+				System.Diagnostics.Debugger.Break();
+				return null;
+			}
+		}
 
 		public override Java.Lang.Object GetItem(int position) => null;
 
