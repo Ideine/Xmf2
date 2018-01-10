@@ -103,6 +103,7 @@
     <Compile Include="Extensions\TextViewExtensions.cs" />
     <Compile Include="Decorators\DividerItemDecoration.cs" />
     <Compile Include="Controls\SquareRelativeLayout.cs" />
+    <Compile Include="Services\AppVersionService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Helpers\" />
