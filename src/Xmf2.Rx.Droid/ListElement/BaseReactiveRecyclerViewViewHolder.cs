@@ -1,13 +1,9 @@
 ﻿using System;
 using System.Reactive;
-using System.Reactive.Concurrency;
-using System.Reactive.Linq;
-using System.Reactive.Subjects;
 using System.Windows.Input;
 using Android.Content;
 using Android.Views;
 using ReactiveUI;
-using ReactiveUI.Android.Support;
 using Xmf2.Rx.Helpers;
 
 namespace Xmf2.Rx.Droid.ListElement
@@ -68,12 +64,12 @@ namespace Xmf2.Rx.Droid.ListElement
 
 		#region Lifecycle
 
-		public void OnViewAttachedToWindow()
+		public virtual void OnViewAttachedToWindow()
 		{
 			_activationImplementation.Activate();
 		}
 
-		public void OnViewDetachedFromWindow()
+		public virtual void OnViewDetachedFromWindow()
 		{
 			_activationImplementation.Deactivate();
 		}
