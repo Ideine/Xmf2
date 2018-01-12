@@ -151,7 +151,11 @@ public static class CustomAutoLayoutExtensions
 
 	public static UIView IncloseFromBottom(this UIView containerView, UIView view, float margin)
 	{
-		return containerView.WithConstraint(containerView, Bottom, GreaterThanOrEqual, view, Bottom, 1f, margin);
+		return IncloseFromBottom(containerView, containerView, view, margin);
+	}
+	public static UIView IncloseFromBottom(this UIView constrainedView, UIView inclosingView, UIView view, float margin)
+	{
+		return constrainedView.WithConstraint(inclosingView, Bottom, GreaterThanOrEqual, view, Bottom, 1f, margin);
 	}
 
 	public static UIView IncloseFromTop(this UIView containerView, UIView view)
@@ -161,7 +165,12 @@ public static class CustomAutoLayoutExtensions
 
 	public static UIView IncloseFromTop(this UIView containerView, UIView view, float margin)
 	{
-		return containerView.WithConstraint(containerView, Top, LessThanOrEqual, view, Top, 1f, -margin);
+		return IncloseFromTop(containerView, containerView, view, margin);
+	}
+
+	public static UIView IncloseFromTop(this UIView constrainedView, UIView inclosingView, UIView view, float margin)
+	{
+		return constrainedView.WithConstraint(inclosingView, Top, LessThanOrEqual, view, Top, 1f, -margin);
 	}
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
