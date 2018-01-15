@@ -7,12 +7,18 @@ namespace UIKit
 	public static class ViewExtensions
 	{
 		private static readonly NSString _searchField = new NSString("_searchField");
+		private static readonly NSString _searchCancelButton = new NSString("cancelButton");
 
 		public static UITextField TextField(this UISearchBar searchBar)
 		{
-			var textField = searchBar.ValueForKey(_searchField) as UITextField;
-			return textField;
+			return searchBar.ValueForKey(_searchField) as UITextField;
 		}
+
+		public static UIButton CancelButton(this UISearchBar searchBar)
+		{
+			return searchBar.ValueForKey(_searchCancelButton) as UIButton;
+		}
+
 		/// <summary>
 		/// Find the first responder in the <paramref name="view"/>'s subview hierarchy
 		/// </summary>
