@@ -478,6 +478,17 @@ public static class CustomAutoLayoutExtensions
 			  .WithConstraint(scroll, CenterY,	Equal, content, CenterY, 1f, 0f);
 		return scroll;
 	}
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static UIScrollView HorizontalScrollFilledContentConstraint(this UIScrollView scroll, UIView content, float verticalMargin)
+	{
+		scroll.WithConstraint(scroll,  Left,	Equal,				content, Left,	 1f, 0f)
+			  .WithConstraint(scroll,  Right,	Equal,				content, Right,	 1f, 0f)
+			  .WithConstraint(scroll,  Top,		Equal,				content, Top,	 1f, -verticalMargin/ 2f)
+			  .WithConstraint(scroll,  Bottom,	Equal,				content, Bottom, 1f, verticalMargin / 2f)
+			  .WithConstraint(scroll,  Width,	LessThanOrEqual,	content, Width,  1f, 0f)
+			  .WithConstraint(scroll,  CenterY, Equal,				content, CenterY,1f, 0f);
+		return scroll;
+	}
 
 	public static UILabel ConstrainHeightForOneLiner(this UILabel label)
 	{
