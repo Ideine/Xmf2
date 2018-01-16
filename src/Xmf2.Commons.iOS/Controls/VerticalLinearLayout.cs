@@ -14,7 +14,7 @@ namespace Xmf2.Commons.iOS.Controls
 			TranslatesAutoresizingMaskIntoConstraints = false;
 		}
 
-		public void Clear()
+		public List<UIView> Clear()
 		{
 			_lastView = null;
 			_endConstraint = null;
@@ -25,6 +25,7 @@ namespace Xmf2.Commons.iOS.Controls
 				view.RemoveFromSuperview();
 			}
 			RemoveConstraints(Constraints);
+			return views;
 		}
 
 		public void AddItem(UIView item)
