@@ -232,11 +232,16 @@ public static class CustomAutoLayoutExtensions
 	{
 		return containerView.WithConstraint(containerView, CenterX, Equal, view, CenterX, 1f, 0f);
 	}
+
 	public static UIView CenterHorizontally(this UIView containerView, params UIView[] views)
+	{
+		return containerView.CenterHorizontally(0f, views);
+	}
+	public static UIView CenterHorizontally(this UIView containerView, float offset, params UIView[] views)
 	{
 		foreach (var view in views)
 		{
-			containerView.WithConstraint(view, CenterX, Equal, containerView, CenterX, 1f, 0f);
+			containerView.WithConstraint(view, CenterX, Equal, containerView, CenterX, 1f, offset);
 		}
 		return containerView;
 	}
@@ -246,15 +251,19 @@ public static class CustomAutoLayoutExtensions
 		containerView.WithConstraint(view, CenterY, Equal, containerView, CenterY, 1f, 0f);
 		return containerView;
 	}
-
 	public static UIView CenterVertically(this UIView containerView, params UIView[] views)
+	{
+		return containerView.CenterVertically(0f, views);
+	}
+	public static UIView CenterVertically(this UIView containerView, float offset, params UIView[] views)
 	{
 		foreach (UIView view in views)
 		{
-			containerView.WithConstraint(view, CenterY, Equal, containerView, CenterY, 1f, 0f);
+			containerView.WithConstraint(view, CenterY, Equal, containerView, CenterY, 1f, offset);
 		}
 		return containerView;
 	}
+
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static UIView FillWidth(this UIView containerView, UIView view, float margin = 0f)
