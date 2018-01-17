@@ -531,26 +531,38 @@ public static class CustomAutoLayoutExtensions
 
 	public static UIView EnsureRemove(this UIView view, IEnumerable<NSLayoutConstraint> constraintsToRemove)
 	{
-		return EnsureRemove(view, constraintsToRemove.ToArray());
+		return EnsureRemove(view, constraintsToRemove?.ToArray());
 	}
 	public static UIView EnsureRemove(this UIView view, params NSLayoutConstraint[] constraintsToRemove)
 	{
+		if (constraintsToRemove == null)
+		{
+			return view;
+		}
 		var delta = view.Constraints.Intersect(constraintsToRemove).ToArray();
 		view.RemoveConstraints(delta);
 		return view;
 	}
 	public static UIView EnsureAdd(this UIView view, IEnumerable<NSLayoutConstraint> constraintsToAdd)
 	{
-		return EnsureAdd(view, constraintsToAdd.ToArray());
+		return EnsureAdd(view, constraintsToAdd?.ToArray());
 	}
 	public static UIView EnsureAdd(this UIView view, params NSLayoutConstraint[] constraintsToAdd)
 	{
+		if (constraintsToAdd == null)
+		{
+			return view;
+		}
 		var delta = constraintsToAdd.Except(view.Constraints).ToArray();
 		view.AddConstraints(delta);
 		return view;
 	}
 	public static UIView EnsureAdd(this UIView view, params UIGestureRecognizer[] gestureRecognizersToAdd)
 	{
+		if (gestureRecognizersToAdd == null)
+		{
+			return view;
+		}
 		var delta = gestureRecognizersToAdd.Except(view.GestureRecognizers ?? new UIGestureRecognizer[]{}).ToArray();
 		foreach (var recognizer in delta)
 		{
@@ -560,6 +572,10 @@ public static class CustomAutoLayoutExtensions
 	}
 	public static UIView EnsureRemove(this UIView view, params UIGestureRecognizer[] gestureRecognizersToRemove)
 	{
+		if (gestureRecognizersToRemove == null)
+		{
+			return view;
+		}
 		var delta = view.GestureRecognizers?.Intersect(gestureRecognizersToRemove).ToArray() ?? new UIGestureRecognizer[]{};
 		foreach (var recognizer in delta)
 		{
@@ -569,6 +585,10 @@ public static class CustomAutoLayoutExtensions
 	}
 	public static UIView EnsureRemove(this UIView view, params UIView[] subviewsToRemove)
 	{
+		if (subviewsToRemove == null)
+		{
+			return view;
+		}
 		var delta = view.Subviews.Intersect(subviewsToRemove).ToArray();
 		foreach (var subView in delta)
 		{
@@ -579,6 +599,10 @@ public static class CustomAutoLayoutExtensions
 
 	public static UIView EnsureAdd(this UIView view, params UIView[] subviewsToAdd)
 	{
+		if (subviewsToAdd == null)
+		{
+			return view;
+		}
 		var delta = subviewsToAdd.Except(view.Subviews).ToArray();
 		view.AddSubviews(delta);
 		return view;
