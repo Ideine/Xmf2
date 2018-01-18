@@ -75,6 +75,53 @@ namespace System
 			}).DisposeWith(disposable);
 		}
 
+
+		public static void SubscribeAndDispose<T,R>(this IObservable<T> observable, Func<T, R> onNext)
+		{
+			CompositeDisposable disposable = new CompositeDisposable();
+			observable.Subscribe(x =>
+			{
+				onNext(x);
+				disposable.Dispose();
+			}).DisposeWith(disposable);
+		}
+		public static void SubscribeAndDispose<T1, T2, R>(this IObservable<Tuple<T1, T2>> observable, Func<T1, T2, R> onNext)
+		{
+			CompositeDisposable disposable = new CompositeDisposable();
+			observable.Subscribe(tuple =>
+			{
+				onNext(tuple.Item1, tuple.Item2);
+				disposable.Dispose();
+			}).DisposeWith(disposable);
+		}
+		public static void SubscribeAndDispose<T1, T2, T3, R>(this IObservable<Tuple<T1, T2, T3>> observable, Func<T1, T2, T3, R> onNext)
+		{
+			CompositeDisposable disposable = new CompositeDisposable();
+			observable.Subscribe(tuple =>
+			{
+				onNext(tuple.Item1, tuple.Item2, tuple.Item3);
+				disposable.Dispose();
+			}).DisposeWith(disposable);
+		}
+		public static void SubscribeAndDispose<T1, T2, T3, T4, R>(this IObservable<Tuple<T1, T2, T3, T4>> observable, Func<T1, T2, T3, T4, R> onNext)
+		{
+			CompositeDisposable disposable = new CompositeDisposable();
+			observable.Subscribe(tuple =>
+			{
+				onNext(tuple.Item1, tuple.Item2, tuple.Item3, tuple.Item4);
+				disposable.Dispose();
+			}).DisposeWith(disposable);
+		}
+		public static void SubscribeAndDispose<T1, T2, T3, T4, T5, R>(this IObservable<Tuple<T1, T2, T3, T4, T5>> observable, Func<T1, T2, T3, T4, T5, R> onNext)
+		{
+			CompositeDisposable disposable = new CompositeDisposable();
+			observable.Subscribe(tuple =>
+			{
+				onNext(tuple.Item1, tuple.Item2, tuple.Item3, tuple.Item4, tuple.Item5);
+				disposable.Dispose();
+			}).DisposeWith(disposable);
+		}
+
 		public static IObservable<T> WithErrorHandling<T>(this IObservable<T> observable, CustomErrorHandler customHandler = null)
 		{
 			IErrorHandler errorHandler = Locator.Current.GetService<IErrorHandler>();
