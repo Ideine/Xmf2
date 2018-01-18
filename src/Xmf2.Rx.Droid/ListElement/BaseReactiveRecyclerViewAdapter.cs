@@ -78,7 +78,14 @@ namespace Xmf2.Rx.Droid.ListElement
 						NotifyItemMoved(e.OldStartingIndex, e.NewStartingIndex);
 						break;
 					case System.Collections.Specialized.NotifyCollectionChangedAction.Remove:
-						NotifyItemRemoved(e.OldStartingIndex);
+						if (e.OldItems.Count > 1)
+						{
+							NotifyItemRangeRemoved(e.OldStartingIndex, e.OldItems.Count);
+						}
+						else
+						{
+							NotifyItemRemoved(e.OldStartingIndex);
+						}
 						break;
 					default:
 						NotifyDataSetChanged();
