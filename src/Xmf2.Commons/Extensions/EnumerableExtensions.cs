@@ -66,5 +66,22 @@ namespace System.Collections.Generic
 		{
 			return source.Except(new T[] { exclude });
 		}
+
+		public static T Aggregate<T>(this IEnumerable<T> source, Func<T, T, T> func)
+		{
+			var enumerator = source.GetEnumerator();
+			return enumerator.MoveNext()
+				 ? Aggregate(enumerator, enumerator.Current, func)
+				 : default(T);
+		}
+
+		private static T Aggregate<T>(this IEnumerator<T> enumerator, T acc, Func<T, T, T> func)
+		{
+			while (enumerator.MoveNext())
+			{
+				acc = func(acc, enumerator.Current);
+			}
+			return acc;
+		}
 	}
 }
