@@ -513,6 +513,14 @@ public static class CreatorExtensions
 		input.AutocapitalizationType = UITextAutocapitalizationType.None;
 		return input;
 	}
+	public static UITextField AsPhonepadField(this UITextField input)
+	{
+		input.KeyboardType = UIKeyboardType.PhonePad;
+		input.SpellCheckingType = UITextSpellCheckingType.No;
+		input.AutocorrectionType = UITextAutocorrectionType.No;
+		input.AutocapitalizationType = UITextAutocapitalizationType.None;
+		return input;
+	}
 
 	public static UITextField WithTextColor(this UITextField input, int color)
 	{
