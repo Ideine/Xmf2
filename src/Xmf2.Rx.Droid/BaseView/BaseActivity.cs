@@ -110,6 +110,7 @@ namespace Xmf2.Rx.Droid.BaseView
 
 		protected override void OnDestroy()
 		{
+			LoadingViewHelper?.Dispose();
 			_lifecycleMonitor.Value.OnDestroy(this);
 			base.OnDestroy();
 		}
@@ -126,10 +127,9 @@ namespace Xmf2.Rx.Droid.BaseView
 
 		public void HideKeyboard()
 		{
-			InputMethodManager inputManager = (InputMethodManager)GetSystemService(InputMethodService);
-			if (inputManager != null && CurrentFocus != null)
+			if(CurrentFocus != null && GetSystemService(InputMethodService) is InputMethodManager inputManager)
 			{
-				inputManager.HideSoftInputFromWindow(CurrentFocus.WindowToken, HideSoftInputFlags.NotAlways);
+				inputManager.HideSoftInputFromWindow(CurrentFocus.WindowToken, HideSoftInputFlags.NotAlways);	
 			}
 		}
 
