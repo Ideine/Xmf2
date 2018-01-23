@@ -61,16 +61,16 @@ namespace Xmf2.Rx.ViewModels
 		{
 			return ErrorHandler.Value
 							   .Execute(source.Timeout(TimeSpan.FromSeconds(ObservableTimeout)), errorHandler)
-							  .Catch<Unit, Exception>(ex => Observable.Return(default(Unit)))
-							  .WaitForOneAsync();
+							   .Catch<Unit, Exception>(ex => Observable.Return(default(Unit)))
+							   .WaitForOneAsync();
 		}
 
 		protected Task<TResult> WrapForError<TResult>(IObservable<TResult> source, CustomErrorHandler errorHandler = null)
 		{
 			return ErrorHandler.Value
-							  .Execute(source.Timeout(TimeSpan.FromSeconds(ObservableTimeout)), errorHandler)
-							  .Catch<TResult, Exception>(ex => Observable.Return(default(TResult)))
-							  .WaitForOneAsync();
+							   .Execute(source.Timeout(TimeSpan.FromSeconds(ObservableTimeout)), errorHandler)
+							   .Catch<TResult, Exception>(ex => Observable.Return(default(TResult)))
+							   .WaitForOneAsync();
 		}
 
 		protected Task WrapForError(Func<Task> action, CustomErrorHandler errorHandler = null) => WrapForError(Observable.FromAsync(action), errorHandler);
