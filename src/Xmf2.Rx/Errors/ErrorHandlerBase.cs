@@ -73,9 +73,9 @@ namespace Xmf2.Rx.Errors
 					return ShowErrorForAccessDataException(accessData, callbackAction);
 				case ManagedException managed:
 					return ShowErrorForManagedException(managed, callbackAction);
+				default:
+					return ShowErrorForException(ex, callbackAction);
 			}
-
-			return ShowErrorForException(ex, callbackAction);
 		}
 
 		protected virtual bool ShowErrorForAccessDataException(AccessDataException accessDataException, Action asyncCallback)
