@@ -18,18 +18,15 @@ namespace Xmf2.Rx.Droid.BaseView
 		{
 			base.OnActivityCreated(savedInstanceState);
 			ViewModel = GetViewModel();
-			OnViewModelSet();
+			if (ViewModel != null)
+			{
+				OnViewModelSet();
+			}
 		}
 
-		protected virtual void OnViewModelSet()
-		{
-			SetViewModelBindings();
-		}
+		protected virtual void OnViewModelSet() => SetViewModelBindings();
 
-		protected virtual void SetViewModelBindings()
-		{
-
-		}
+		protected virtual void SetViewModelBindings() { }
 	}
 
 	public abstract class BaseReactiveFragmentWithLifeCycleManagement<TViewModel> : BaseReactiveFragment<TViewModel> where TViewModel : BaseViewModel
