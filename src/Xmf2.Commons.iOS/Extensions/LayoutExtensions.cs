@@ -273,7 +273,7 @@ public static class CustomAutoLayoutExtensions
 
 	public static UIView FillHeight(this UIView containerView, UIView view, float margin = 0)
 	{
-		return containerView.WithConstraint(containerView, Height, Equal, view, Height, 1f,  margin);
+		return containerView.WithConstraint(containerView, Height, Equal, view, Height, 1f, margin);
 	}
 	public static UIView FillHeight(this UIView containerView, params UIView[] views)
 	{
@@ -329,7 +329,7 @@ public static class CustomAutoLayoutExtensions
 	public static UIView ConstrainSize(this UIView view, float width, float height)
 	{
 		view.TranslatesAutoresizingMaskIntoConstraints = false;
-		view.AddConstraint(NSLayoutConstraint.Create(view, Width,  Equal, 1, width));
+		view.AddConstraint(NSLayoutConstraint.Create(view, Width, Equal, 1, width));
 		view.AddConstraint(NSLayoutConstraint.Create(view, Height, Equal, 1, height));
 		return view;
 	}
@@ -372,7 +372,7 @@ public static class CustomAutoLayoutExtensions
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static UIView AlignOnLeft(this UIView view, UIView v1, UIView v2, float offset = 0)
 	{
-		return view.WithConstraint(v1, Left, Equal, v2, Left, 1f,  offset);
+		return view.WithConstraint(v1, Left, Equal, v2, Left, 1f, offset);
 	}
 
 	public static UIView AlignOnRight(this UIView view, UIView v1, UIView v2, int offset = 0)
@@ -425,10 +425,10 @@ public static class CustomAutoLayoutExtensions
 
 	public static UIView Same(this UIView view, UIView reference, UIView dest)
 	{
-		return view.WithConstraint(reference, CenterY,Equal, dest, CenterY, 1f, 0f)
-				   .WithConstraint(reference, CenterX,Equal, dest, CenterX, 1f, 0f)
-				   .WithConstraint(reference, Height ,Equal, dest, Height , 1f, 0f)
-				   .WithConstraint(reference, Width  ,Equal, dest, Width  , 1f, 0f);
+		return view.WithConstraint(reference, CenterY, Equal, dest, CenterY, 1f, 0f)
+				   .WithConstraint(reference, CenterX, Equal, dest, CenterX, 1f, 0f)
+				   .WithConstraint(reference, Height, Equal, dest, Height, 1f, 0f)
+				   .WithConstraint(reference, Width, Equal, dest, Width, 1f, 0f);
 	}
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -458,44 +458,44 @@ public static class CustomAutoLayoutExtensions
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static UIScrollView VerticalScrollContentConstraint(this UIScrollView scroll, UIView content, float horizontalMargin)
 	{
-		scroll.WithConstraint(scroll,  Left,	Equal, content, Left,	1, -horizontalMargin / 2f)
-			  .WithConstraint(scroll,  Right,	Equal, content, Right,	1f, horizontalMargin / 2f)
-			  .WithConstraint(scroll,  Top,		Equal, content,	Top,	1f, 0f)
-			  .WithConstraint(scroll,  Bottom,	Equal, content, Bottom, 1f, 0f)
-			  .WithConstraint(scroll,  CenterX, Equal, content, CenterX,1f, 0f);
+		scroll.WithConstraint(scroll, Left, Equal, content, Left, 1, -horizontalMargin / 2f)
+			  .WithConstraint(scroll, Right, Equal, content, Right, 1f, horizontalMargin / 2f)
+			  .WithConstraint(scroll, Top, Equal, content, Top, 1f, 0f)
+			  .WithConstraint(scroll, Bottom, Equal, content, Bottom, 1f, 0f)
+			  .WithConstraint(scroll, CenterX, Equal, content, CenterX, 1f, 0f);
 		return scroll;
 	}
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static UIScrollView VerticalScrollFilledContentConstraint(this UIScrollView scroll, UIView content, float horizontalMargin)
 	{
-		scroll.WithConstraint(scroll,  Left,	Equal,				content, Left,	 1, -horizontalMargin / 2f)
-			  .WithConstraint(scroll,  Right,	Equal,				content, Right,	 1f, horizontalMargin / 2f)
-			  .WithConstraint(scroll,  Top,		Equal,				content, Top,	 1f, 0f)
-			  .WithConstraint(scroll,  Bottom,	Equal,				content, Bottom, 1f, 0f)
-			  .WithConstraint(scroll,  Height,  LessThanOrEqual,	content, Height, 1f, 0f)
-			  .WithConstraint(scroll,  CenterX, Equal,				content, CenterX,1f, 0f);
+		scroll.WithConstraint(scroll, Left, Equal, content, Left, 1, -horizontalMargin / 2f)
+			  .WithConstraint(scroll, Right, Equal, content, Right, 1f, horizontalMargin / 2f)
+			  .WithConstraint(scroll, Top, Equal, content, Top, 1f, 0f)
+			  .WithConstraint(scroll, Bottom, Equal, content, Bottom, 1f, 0f)
+			  .WithConstraint(scroll, Height, LessThanOrEqual, content, Height, 1f, 0f)
+			  .WithConstraint(scroll, CenterX, Equal, content, CenterX, 1f, 0f);
 		return scroll;
 	}
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static UIScrollView HorizontalScrollContentConstraint(this UIScrollView scroll, UIView content)
 	{
-		scroll.WithConstraint(scroll, Left,		Equal, content, Left,	 1f, 0f)
-			  .WithConstraint(scroll, Right,	Equal, content, Right,	 1f, 0f)
-			  .WithConstraint(scroll, Top,		Equal, content, Top,	 1f, 0f)
-			  .WithConstraint(scroll, Bottom,	Equal, content, Bottom,  1f, 0f)
-			  .WithConstraint(scroll, CenterY,	Equal, content, CenterY, 1f, 0f);
+		scroll.WithConstraint(scroll, Left, Equal, content, Left, 1f, 0f)
+			  .WithConstraint(scroll, Right, Equal, content, Right, 1f, 0f)
+			  .WithConstraint(scroll, Top, Equal, content, Top, 1f, 0f)
+			  .WithConstraint(scroll, Bottom, Equal, content, Bottom, 1f, 0f)
+			  .WithConstraint(scroll, CenterY, Equal, content, CenterY, 1f, 0f);
 		return scroll;
 	}
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static UIScrollView HorizontalScrollFilledContentConstraint(this UIScrollView scroll, UIView content, float verticalMargin)
 	{
-		scroll.WithConstraint(scroll,  Left,	Equal,				content, Left,	 1f, 0f)
-			  .WithConstraint(scroll,  Right,	Equal,				content, Right,	 1f, 0f)
-			  .WithConstraint(scroll,  Top,		Equal,				content, Top,	 1f, -verticalMargin/ 2f)
-			  .WithConstraint(scroll,  Bottom,	Equal,				content, Bottom, 1f, verticalMargin / 2f)
-			  .WithConstraint(scroll,  Width,	LessThanOrEqual,	content, Width,  1f, 0f)
-			  .WithConstraint(scroll,  CenterY, Equal,				content, CenterY,1f, 0f);
+		scroll.WithConstraint(scroll, Left, Equal, content, Left, 1f, 0f)
+			  .WithConstraint(scroll, Right, Equal, content, Right, 1f, 0f)
+			  .WithConstraint(scroll, Top, Equal, content, Top, 1f, -verticalMargin / 2f)
+			  .WithConstraint(scroll, Bottom, Equal, content, Bottom, 1f, verticalMargin / 2f)
+			  .WithConstraint(scroll, Width, LessThanOrEqual, content, Width, 1f, 0f)
+			  .WithConstraint(scroll, CenterY, Equal, content, CenterY, 1f, 0f);
 		return scroll;
 	}
 
@@ -572,7 +572,7 @@ public static class CustomAutoLayoutExtensions
 		{
 			return view;
 		}
-		var delta = gestureRecognizersToAdd.Except(view.GestureRecognizers ?? new UIGestureRecognizer[]{}).ToArray();
+		var delta = gestureRecognizersToAdd.Except(view.GestureRecognizers ?? new UIGestureRecognizer[] { }).ToArray();
 		foreach (var recognizer in delta)
 		{
 			view.AddGestureRecognizer(recognizer);
@@ -585,7 +585,7 @@ public static class CustomAutoLayoutExtensions
 		{
 			return view;
 		}
-		var delta = view.GestureRecognizers?.Intersect(gestureRecognizersToRemove).ToArray() ?? new UIGestureRecognizer[]{};
+		var delta = view.GestureRecognizers?.Intersect(gestureRecognizersToRemove).ToArray() ?? new UIGestureRecognizer[] { };
 		foreach (var recognizer in delta)
 		{
 			view.RemoveGestureRecognizer(recognizer);
@@ -652,7 +652,7 @@ public static class CustomAutoLayoutExtensions
 	}
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public static UIView WithContentHuggingPriority(this UIView view, UILayoutPriority priority, UILayoutConstraintAxis axis)
+	public static TView WithContentHuggingPriority<TView>(this TView view, UILayoutPriority priority, UILayoutConstraintAxis axis) where TView : UIView
 	{
 		view.SetContentHuggingPriority((float)priority, axis);
 		return view;
