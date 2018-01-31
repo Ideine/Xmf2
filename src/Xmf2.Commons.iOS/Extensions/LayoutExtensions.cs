@@ -651,6 +651,9 @@ public static class CustomAutoLayoutExtensions
 		return view;
 	}
 
+	/// <summary>
+	/// Sets the resistance to expansion beyond the UIKit.UIView's UIKit.UIView.IntrinsicContentSize.
+	/// </summary>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static TView WithContentHuggingPriority<TView>(this TView view, UILayoutPriority priority, UILayoutConstraintAxis axis) where TView : UIView
 	{
