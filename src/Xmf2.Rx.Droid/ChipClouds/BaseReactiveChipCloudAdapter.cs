@@ -10,11 +10,9 @@ namespace Xmf2.Rx.Droid.ChipClouds
 {
 	public class BaseReactiveChipCloudAdapter<ItemData, ViewHolder> : ChipCloudAdapter where ViewHolder : ChipCloudViewHolder
 	{
-		private readonly LayoutInflater _layoutInflater;
-
 		public BaseReactiveChipCloudAdapter(Context context) : base(context)
 		{
-			_layoutInflater = LayoutInflater.From(Context);
+			
 		}
 
 		public new List<ItemData> ItemSource
@@ -25,7 +23,11 @@ namespace Xmf2.Rx.Droid.ChipClouds
 
 		public override ChipCloudViewHolder OnCreateViewHolder(ViewGroup parent, int position)
 		{
-			var view = _layoutInflater.Inflate(ItemTemplate, parent, false);
+			View view;
+			using (var inflater = LayoutInflater.From(Context))
+			{
+				view = inflater.Inflate(ItemTemplate, parent, false);
+			}
 			var viewHolder = Activator.CreateInstance(typeof(ViewHolder), view) as ViewHolder;
 			return viewHolder;
 
