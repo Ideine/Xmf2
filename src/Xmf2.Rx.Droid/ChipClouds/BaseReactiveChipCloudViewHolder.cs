@@ -78,13 +78,16 @@ namespace Xmf2.Rx.Droid.ChipClouds
 		
 		#endregion
 
-		public override void Dispose()
+		protected override void Dispose(bool disposing)
 		{
-			if (ItemView != null)
+			if (disposing)
 			{
-				ItemView.Click -= OnClickItem;
+				if (ItemView != null)
+				{
+					ItemView.Click -= OnClickItem;
+				}
 			}
-			base.Dispose();
+			base.Dispose(disposing);
 		}
 
 	}
