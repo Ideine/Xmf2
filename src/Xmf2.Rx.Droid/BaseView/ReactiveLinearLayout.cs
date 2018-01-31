@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Reactive;
 using System.Reactive.Concurrency;
+using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using Android.Content;
@@ -14,6 +15,8 @@ namespace Xmf2.Rx.Droid.BaseView
 {
 	public class ReactiveLinearLayout<TViewModel> : LinearLayout, IViewFor<TViewModel>, ICanActivate where TViewModel : class
 	{
+		protected CompositeDisposable _dispo = new CompositeDisposable();
+
 		#region Constructor
 
 		public ReactiveLinearLayout(Context context) : base(context) { }
@@ -52,6 +55,16 @@ namespace Xmf2.Rx.Droid.BaseView
 		{
 			get => ViewModel as TViewModel;
 			set => ViewModel = value as TViewModel;
+		}
+
+		protected override void Dispose(bool disposing)
+		{
+			if (disposing)
+			{
+				_dispo?.Dispose();
+				_dispo = null;
+			}
+			base.Dispose(disposing);
 		}
 
 		private readonly CanActivateImplementation _activationImpl = new CanActivateImplementation();

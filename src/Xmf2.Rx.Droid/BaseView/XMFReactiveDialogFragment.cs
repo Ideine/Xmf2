@@ -37,7 +37,7 @@ namespace Xmf2.Rx.Droid.BaseView
 		object IViewFor.ViewModel
 		{
 			get => _ViewModel;
-			set => _ViewModel = (TViewModel) value;
+			set => _ViewModel = (TViewModel)value;
 		}
 	}
 
@@ -130,6 +130,12 @@ namespace Xmf2.Rx.Droid.BaseView
 		{
 			base.OnResume();
 			_activationImplementation.Activate();
+		}
+
+		public override void OnDestroy()
+		{
+			base.OnDestroy();
+			Dispose();
 		}
 	}
 }

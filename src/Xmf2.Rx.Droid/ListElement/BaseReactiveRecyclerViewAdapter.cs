@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Specialized;
+using System.Reactive.Disposables;
 using System.Windows.Input;
 using Android.Content;
 using Android.OS;
@@ -11,6 +12,8 @@ namespace Xmf2.Rx.Droid.ListElement
 {
 	public class BaseReactiveRecyclerViewAdapter<TItemData, TViewHolder> : RecyclerView.Adapter where TViewHolder : RecyclerView.ViewHolder, IRecyclerViewViewHolder
 	{
+		protected CompositeDisposable UiDispo = new CompositeDisposable();
+
 		public int ItemTemplate { get; set; }
 
 		public ICommand ItemClick { get; set; }
@@ -58,11 +61,15 @@ namespace Xmf2.Rx.Droid.ListElement
 
 		public override RecyclerView.ViewHolder OnCreateViewHolder(ViewGroup parent, int viewType)
 		{
-			var view = LayoutInflater.From(Context).Inflate(ItemTemplate, parent, false);
+			View view;
+			using (var inflater = LayoutInflater.From(Context))
+			{
+				view = inflater.Inflate(ItemTemplate, parent, false);
+			}
 			var viewHolder = Activator.CreateInstance(typeof(TViewHolder), view) as TViewHolder;
 			viewHolder.ItemClick = ItemClick;
 			viewHolder.ItemLongClick = ItemLongClick;
-			return viewHolder;
+			return viewHolder.DisposeWith(UiDispo);
 		}
 
 		protected virtual void OnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
@@ -71,13 +78,13 @@ namespace Xmf2.Rx.Droid.ListElement
 			{
 				switch (e.Action)
 				{
-					case System.Collections.Specialized.NotifyCollectionChangedAction.Add:
+					case NotifyCollectionChangedAction.Add:
 						NotifyItemInserted(e.NewStartingIndex);
 						break;
-					case System.Collections.Specialized.NotifyCollectionChangedAction.Move:
+					case NotifyCollectionChangedAction.Move:
 						NotifyItemMoved(e.OldStartingIndex, e.NewStartingIndex);
 						break;
-					case System.Collections.Specialized.NotifyCollectionChangedAction.Remove:
+					case NotifyCollectionChangedAction.Remove:
 						if (e.OldItems.Count > 1)
 						{
 							NotifyItemRangeRemoved(e.OldStartingIndex, e.OldItems.Count);
@@ -108,6 +115,8 @@ namespace Xmf2.Rx.Droid.ListElement
 				{
 					ItemsSource.CollectionChanged -= CollectionChanged;
 				}
+				UiDispo?.Dispose();
+				UiDispo = null;
 			}
 			base.Dispose(disposing);
 		}

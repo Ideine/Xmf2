@@ -116,6 +116,21 @@ namespace Xmf2.Rx.Droid.BaseView
 			base.OnStop();
 		}
 
+		protected override void OnDestroy()
+		{
+			base.OnDestroy();
+			Dispose();
+		}
+
+		protected override void Dispose(bool disposing)
+		{
+			if (disposing)
+			{
+				LoadingViewHelper?.Dispose();
+			}
+			base.Dispose(disposing);
+		}
+
 		#endregion
 
 		#region Keyboard
