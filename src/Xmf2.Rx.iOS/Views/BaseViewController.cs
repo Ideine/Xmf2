@@ -77,10 +77,7 @@ namespace Xmf2.Rx.iOS
 			ViewModel?.CloseCommand.TryExecute();
 		}
 
-		public override UIStatusBarStyle PreferredStatusBarStyle()
-		{
-			return UIStatusBarStyle.LightContent;
-		}
+		public override UIStatusBarStyle PreferredStatusBarStyle() => UIStatusBarStyle.LightContent;
 
 		#region Keyboard Features 
 		//Code from MvvmCross https://github.com/MvvmCross/MvvmCross
