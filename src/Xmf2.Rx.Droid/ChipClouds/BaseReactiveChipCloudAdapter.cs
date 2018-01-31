@@ -28,6 +28,7 @@ namespace Xmf2.Rx.Droid.ChipClouds
 			var view = _layoutInflater.Inflate(ItemTemplate, parent, false);
 			var viewHolder = Activator.CreateInstance(typeof(ViewHolder), view) as ViewHolder;
 			return viewHolder;
+
 		}
 
 		public override void OnBindViewHolder(ChipCloudViewHolder holder, int position)
