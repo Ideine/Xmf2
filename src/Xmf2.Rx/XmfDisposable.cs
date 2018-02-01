@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reactive.Disposables;
+using ReactiveUI;
 
 namespace Xmf2.Rx
 {
@@ -9,6 +10,12 @@ namespace Xmf2.Rx
 		public static TDisposable DisposeWith<TDisposable>(this TDisposable disposable, XmfDisposable container) where TDisposable : IDisposable
 		{
 			container.Add(disposable);
+			return disposable;
+		}
+
+		public static TDisposable DisposeEvent<TDisposable>(this TDisposable disposable, XmfDisposable container) where TDisposable : IDisposable
+		{
+			container.AddEvent(disposable);
 			return disposable;
 		}
 
@@ -29,29 +36,39 @@ namespace Xmf2.Rx
 			container.AddLayoutHolder(disposable);
 			return disposable;
 		}
-	}
 
-	public class XmfDisposable : IDisposable
-	{
-		private readonly CompositeDisposable _firstDisposable;
-		private readonly CompositeDisposable _viewDisposable;
-		private readonly CompositeDisposable _layoutHolderDisposable;
-		private readonly List<IDisposable> _bindings = new List<IDisposable>();
-
-		public XmfDisposable()
+		public static void WhenActivatedAndDispose(this ISupportsActivation This, XmfDisposable disposables, Action<CompositeDisposable> block)
 		{
-			_firstDisposable = new CompositeDisposable();
-			_viewDisposable = new CompositeDisposable();
-			_layoutHolderDisposable = new CompositeDisposable();
+			This.WhenActivated(dispo =>
+			{
+				dispo.DisposeBinding(disposables);
+				block(dispo);
+			});
 		}
 
-		public void Add(IDisposable d) => _firstDisposable.Add(d);
+		public static IDisposable WhenActivatedAndDispose(this IActivatable This, XmfDisposable disposables, Action<CompositeDisposable> block, IViewFor view = null)
+		{
+			return This.WhenActivated(dispo =>
+			{
+				dispo.DisposeBinding(disposables);
+				block(dispo);
+			});
+		}
+	}
 
-		public void AddView(IDisposable d) => _viewDisposable.Add(d);
+	public class ActionDisposable : IDisposable
+	{
+		private Action _action;
 
-		public void AddLayoutHolder(IDisposable d) => _layoutHolderDisposable.Add(d);
+		private ActionDisposable(Action action)
+		{
+			_action = action;
+		}
 
-		public void AddBinding(IDisposable d) => _bindings.Add(d);
+		public static IDisposable From(Action action)
+		{
+			return new ActionDisposable(action);
+		}
 
 		private bool disposedValue = false; // To detect redundant calls
 
@@ -61,11 +78,58 @@ namespace Xmf2.Rx
 			{
 				if (disposing)
 				{
-					foreach(IDisposable d in _bindings)
+					_action();
+					_action = null;
+				}
+
+				disposedValue = true;
+			}
+		}
+
+		~ActionDisposable()
+		{
+			Dispose(false);
+		}
+
+		public void Dispose()
+		{
+			Dispose(true);
+			GC.SuppressFinalize(this);
+		}
+	}
+
+	public class XmfDisposable : IDisposable
+	{
+		private readonly List<IDisposable> _bindings = new List<IDisposable>();
+		private readonly CompositeDisposable _eventsDisposable = new CompositeDisposable();
+		private readonly CompositeDisposable _firstDisposable = new CompositeDisposable();
+		private readonly CompositeDisposable _viewDisposable = new CompositeDisposable();
+		private readonly CompositeDisposable _layoutHolderDisposable = new CompositeDisposable();
+
+		public void Add(IDisposable d) => _firstDisposable.Add(d);
+
+		public void AddView(IDisposable d) => _viewDisposable.Add(d);
+
+		public void AddLayoutHolder(IDisposable d) => _layoutHolderDisposable.Add(d);
+
+		public void AddBinding(IDisposable d) => _bindings.Add(d);
+
+		public void AddEvent(IDisposable d) => _eventsDisposable.Add(d);
+
+		private bool disposedValue = false; // To detect redundant calls
+
+		protected virtual void Dispose(bool disposing)
+		{
+			if (!disposedValue)
+			{
+				if (disposing)
+				{
+					foreach (IDisposable d in _bindings)
 					{
 						TryDispose(d);
 					}
 
+					_eventsDisposable.Dispose();
 					_firstDisposable.Dispose();
 					_viewDisposable.Dispose();
 					_layoutHolderDisposable.Dispose();
