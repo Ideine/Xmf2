@@ -37,6 +37,13 @@ namespace Xmf2.Rx
 			return disposable;
 		}
 
+		public static XmfDisposable RegisterAndDisposeListeners<TListener>(this XmfDisposable container, Action<TListener> setListener, TListener value) where TListener : class
+		{
+			setListener(value);
+			ActionDisposable.From(() => setListener(null)).DisposeEvent(container);
+			return container;
+		}
+
 		public static void WhenActivatedAndDispose(this ISupportsActivation This, XmfDisposable disposables, Action<CompositeDisposable> block)
 		{
 			This.WhenActivated(dispo =>
@@ -52,7 +59,7 @@ namespace Xmf2.Rx
 			{
 				dispo.DisposeBinding(disposables);
 				block(dispo);
-			});
+			}, view);
 		}
 	}
 
