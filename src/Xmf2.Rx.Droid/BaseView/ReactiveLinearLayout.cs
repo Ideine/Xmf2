@@ -15,7 +15,7 @@ namespace Xmf2.Rx.Droid.BaseView
 {
 	public class ReactiveLinearLayout<TViewModel> : LinearLayout, IViewFor<TViewModel>, ICanActivate where TViewModel : class
 	{
-		protected CompositeDisposable _dispo = new CompositeDisposable();
+		protected readonly XmfDisposable Disposable = new XmfDisposable();
 
 		#region Constructor
 
@@ -61,8 +61,7 @@ namespace Xmf2.Rx.Droid.BaseView
 		{
 			if (disposing)
 			{
-				_dispo?.Dispose();
-				_dispo = null;
+				Disposable.Dispose();
 			}
 			base.Dispose(disposing);
 		}
