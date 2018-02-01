@@ -117,24 +117,10 @@ namespace Xmf2.Rx.Droid.BaseView
 			_activationImplementation.Activate();
 		}
 
-		protected override void Dispose(bool disposing)
-		{
-			base.Dispose(disposing);
-		}
-		public override void OnDestroy()
-		{
-			base.OnDestroy();
-			Dispose();
-		}
 		public override void OnDetach()
 		{
 			base.OnDetach();
-			//Dispose();
-		}
-
-		public override void OnDestroyView()
-		{
-			base.OnDestroyView();
+			Dispose();
 		}
 	}
 }

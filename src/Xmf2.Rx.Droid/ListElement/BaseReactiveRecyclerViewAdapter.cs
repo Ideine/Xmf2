@@ -120,6 +120,7 @@ namespace Xmf2.Rx.Droid.ListElement
 			}
 			base.Dispose(disposing);
 		}
+
 		#region View holders Lifecycle
 
 		public override void OnViewAttachedToWindow(Java.Lang.Object holder)
