@@ -11,7 +11,7 @@ namespace Xmf2.Commons.Droid.Helpers
 	public class ProgressWebChromeClient : Android.Webkit.WebChromeClient
 	{
 		private int _currentProgress;
-		private readonly LoadingViewHelper _loadingView;
+		private LoadingViewHelper _loadingView;
 
 		protected ProgressWebChromeClient(IntPtr handle, JniHandleOwnership transer) : base(handle, transer) { }
 
@@ -23,15 +23,32 @@ namespace Xmf2.Commons.Droid.Helpers
 
 		public override void OnProgressChanged(Android.Webkit.WebView view, int newProgress)
 		{
-			if (newProgress > _currentProgress && !_loadingView.IsBusy)
+			try
 			{
-				_loadingView.IsBusy = true;
+				if (newProgress > _currentProgress && !_loadingView.IsBusy)
+				{
+					_loadingView.IsBusy = true;
+				}
+				if (newProgress == 100)
+				{
+					_loadingView.IsBusy = false;
+				}
+				_currentProgress = newProgress;
 			}
-			if (newProgress == 100)
+			catch (NullReferenceException e)
 			{
-				_loadingView.IsBusy = false;
+				System.Diagnostics.Debug.WriteLine(e);
 			}
-			_currentProgress = newProgress;
+		}
+
+		protected override void Dispose(bool disposing)
+		{
+			if (disposing)
+			{
+				_loadingView = null;
+			}
+			base.Dispose(disposing);
+
 		}
 	}
 }

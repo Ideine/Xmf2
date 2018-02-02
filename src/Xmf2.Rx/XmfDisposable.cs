@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reactive.Concurrency;
 using System.Reactive.Disposables;
+using System.Threading.Tasks;
 using ReactiveUI;
 
 namespace Xmf2.Rx
@@ -137,9 +139,18 @@ namespace Xmf2.Rx
 					}
 
 					_eventsDisposable.Dispose();
-					_firstDisposable.Dispose();
-					_viewDisposable.Dispose();
-					_layoutHolderDisposable.Dispose();
+
+					Task.Run(async () =>
+					{
+						await Task.Delay(TimeSpan.FromSeconds(10));
+						RxApp.MainThreadScheduler.Schedule(() =>
+						{
+							_firstDisposable.Dispose();
+							_viewDisposable.Dispose();
+							_layoutHolderDisposable.Dispose();
+						});
+					});
+
 				}
 
 				disposedValue = true;
