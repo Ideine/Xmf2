@@ -1,11 +1,10 @@
-﻿using System;
+﻿using Splat;
+using System;
 using System.Reactive;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
-using Splat;
 using Xmf2.Commons.Errors;
-using System.Collections.Generic;
 
 namespace System
 {
@@ -302,6 +301,10 @@ namespace System
 		public static IObservable<TResult> Select<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, TResult>(this IObservable<(T1, T2, T3, T4, T5, T6, T7, T8, T9, T10)> source, Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, TResult> selector)
 		{
 			return source.Select(tuple => selector(tuple.Item1, tuple.Item2, tuple.Item3, tuple.Item4, tuple.Item5, tuple.Item6, tuple.Item7, tuple.Item8, tuple.Item9, tuple.Item10));
+		}
+		public static IObservable<TResult> Select<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, TResult>(this IObservable<(T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11)> source, Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, TResult> selector)
+		{
+			return source.Select(tuple => selector(tuple.Item1, tuple.Item2, tuple.Item3, tuple.Item4, tuple.Item5, tuple.Item6, tuple.Item7, tuple.Item8, tuple.Item9, tuple.Item10, tuple.Item11));
 		}
 
 		#endregion
