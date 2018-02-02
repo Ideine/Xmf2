@@ -7,12 +7,15 @@ using Android.Views;
 using ReactiveUI;
 using Xmf2.Commons.Droid.LinearList;
 using Xmf2.Rx.Helpers;
+using Xmf2.Rx;
 
 namespace Xmf2.Rx.Droid.LinearList
 {
-	public class BaseReactiveLinearLayoutViewViewHolder<TViewModel> : LinearListViewHolder, IViewFor<TViewModel>, IViewFor, ICanActivate 
+	public class BaseReactiveLinearLayoutViewViewHolder<TViewModel> : LinearListViewHolder, IViewFor<TViewModel>, IViewFor, ICanActivate
 		where TViewModel : class, IReactiveObject
 	{
+		protected XmfDisposable Disposable = new XmfDisposable();
+
 		private readonly CanActivateImplementation _activationImplementation = new CanActivateImplementation();
 
 		public IObservable<Unit> Activated => _activationImplementation.Activated;
@@ -69,5 +72,14 @@ namespace Xmf2.Rx.Droid.LinearList
 		public virtual void OnViewRecycled() { }
 
 		#endregion
+
+		protected override void Dispose(bool disposing)
+		{
+			if (disposing)
+			{
+				Disposable.Dispose();
+			}
+			base.Dispose(disposing);
+		}
 	}
 }

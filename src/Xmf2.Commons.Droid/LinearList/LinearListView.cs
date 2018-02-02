@@ -101,7 +101,11 @@ namespace Xmf2.Commons.Droid.LinearList
 		{
 			if (disposing)
 			{
-				_adapter.Dispose();
+				if (_adapter != null)
+				{
+					_adapter.DataSetChanged -= AdapterOnDataSetChanged;
+					_adapter.Dispose();
+				}
 				_adapter = null;
 			}
 			base.Dispose(disposing);
@@ -155,11 +159,18 @@ namespace Xmf2.Commons.Droid.LinearList
 
 			private void Refill(ViewGroup viewGroup, IAdapter adapter)
 			{
-				viewGroup.RemoveAllViews();
-				var count = adapter.Count;
-				for (var i = 0; i < count; i++)
+				try
 				{
-					viewGroup.AddView(adapter.GetView(i, null, viewGroup));
+					viewGroup.RemoveAllViews();
+					var count = adapter.Count;
+					for (var i = 0; i < count; i++)
+					{
+						viewGroup.AddView(adapter.GetView(i, null, viewGroup));
+					}
+				}
+				catch(Exception)
+				{
+					
 				}
 			}
 
