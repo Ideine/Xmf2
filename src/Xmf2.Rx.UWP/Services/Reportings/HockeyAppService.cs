@@ -11,6 +11,7 @@ namespace Xmf2.Rx.UWP.Services.Reportings
 
         public HockeyAppService(string appId)
         {
+            _appId = appId;
             _manager = Microsoft.HockeyApp.HockeyClient.Current;
         }
 
