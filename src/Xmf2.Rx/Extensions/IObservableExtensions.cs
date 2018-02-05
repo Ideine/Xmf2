@@ -28,7 +28,7 @@ namespace System
 			}).Subscribe();
 		}
 
-		public static void SubscribeAndDispose<T>(this IObservable<T> observable, Action<T> onNext)
+		public static IDisposable SubscribeAndDispose<T>(this IObservable<T> observable, Action<T> onNext)
 		{
 			CompositeDisposable disposable = new CompositeDisposable();
 			observable.Subscribe(x =>
@@ -36,6 +36,7 @@ namespace System
 				onNext(x);
 				disposable.Dispose();
 			}).DisposeWith(disposable);
+			return disposable;
 		}
 
 		public static void SubscribeAndDispose<T1, T2>(this IObservable<Tuple<T1, T2>> observable, Action<T1, T2> onNext)

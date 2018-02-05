@@ -97,9 +97,13 @@ namespace Xmf2.Commons.Droid.LinearList
 		{
 			if (ItemView != null)
 			{
-				ItemView.ViewAttachedToWindow -= ItemViewAttachedToWindow;
-				ItemView.ViewDetachedFromWindow -= ItemViewDetachedFromWindow;
-				ItemView.Click -= OnClickOnItemView;
+				try
+				{
+					ItemView.ViewAttachedToWindow -= ItemViewAttachedToWindow;
+					ItemView.ViewDetachedFromWindow -= ItemViewDetachedFromWindow;
+					ItemView.Click -= OnClickOnItemView;
+				}
+				catch (ObjectDisposedException) { }
 			}
 			base.Dispose(disposing);
 		}

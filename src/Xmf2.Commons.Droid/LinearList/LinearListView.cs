@@ -97,9 +97,23 @@ namespace Xmf2.Commons.Droid.LinearList
 			boundChild?.Dispose();
 		}
 
-		public class LinearItemLayoutAdapter
+		protected override void Dispose(bool disposing)
 		{
-			private readonly LinearListView _linearListView;
+			if (disposing)
+			{
+				if (_adapter != null)
+				{
+					_adapter.DataSetChanged -= AdapterOnDataSetChanged;
+					_adapter.Dispose();
+				}
+				_adapter = null;
+			}
+			base.Dispose(disposing);
+		}
+
+		public class LinearItemLayoutAdapter : IDisposable
+		{
+			private LinearListView _linearListView;
 
 			public LinearItemLayoutAdapter(LinearListView viewGroup)
 			{
@@ -145,11 +159,19 @@ namespace Xmf2.Commons.Droid.LinearList
 
 			private void Refill(ViewGroup viewGroup, IAdapter adapter)
 			{
-				viewGroup.RemoveAllViews();
-				var count = adapter.Count;
-				for (var i = 0; i < count; i++)
+				try
 				{
-					viewGroup.AddView(adapter.GetView(i, null, viewGroup));
+					viewGroup.RemoveAllViews();
+					var count = adapter.Count;
+					for (var i = 0; i < count; i++)
+					{
+						viewGroup.AddView(adapter.GetView(i, null, viewGroup));
+					}
+				}
+				catch (Exception e)
+				{
+					//viewGroup can be null or disposed if Refill come after a Dispose
+					System.Diagnostics.Debug.WriteLine(e);
 				}
 			}
 
@@ -177,6 +199,35 @@ namespace Xmf2.Commons.Droid.LinearList
 					viewGroup.AddView(adapter.GetView(startIndex + i, null, viewGroup), startIndex + i);
 				}
 			}
+
+			#region IDisposable Support
+			private bool disposedValue = false; // To detect redundant calls
+
+			protected virtual void Dispose(bool disposing)
+			{
+				if (!disposedValue)
+				{
+					if (disposing)
+					{
+						_linearListView = null;
+					}
+					disposedValue = true;
+				}
+			}
+
+
+			~LinearItemLayoutAdapter()
+			{
+				Dispose(false);
+			}
+
+
+			public void Dispose()
+			{
+				Dispose(true);
+				GC.SuppressFinalize(this);
+			}
+			#endregion
 		}
 
 	}

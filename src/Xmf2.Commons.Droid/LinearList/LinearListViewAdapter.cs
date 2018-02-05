@@ -117,8 +117,10 @@ namespace Xmf2.Commons.Droid.LinearList
 
 			if (convertView == null)
 			{
-				var layoutInflater = LayoutInflater.From(Context);
-				convertView = layoutInflater.Inflate(ItemTemplateId, parent, false);
+				using (var layoutInflater = LayoutInflater.From(Context))
+				{
+					convertView = layoutInflater.Inflate(ItemTemplateId, parent, false);
+				}
 			}
 
 			if (convertView.Tag == null)

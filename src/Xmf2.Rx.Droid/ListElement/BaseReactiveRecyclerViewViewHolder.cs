@@ -12,6 +12,8 @@ namespace Xmf2.Rx.Droid.ListElement
 	{
 		protected Context Context { get; }
 
+		protected readonly XmfDisposable Disposable = new XmfDisposable();
+
 		private readonly CanActivateImplementation _activationImplementation = new CanActivateImplementation();
 
 		public IObservable<Unit> Activated => _activationImplementation.Activated;
@@ -21,7 +23,6 @@ namespace Xmf2.Rx.Droid.ListElement
 		public ICommand ItemClick { get; set; }
 
 		public ICommand ItemLongClick { get; set; }
-
 
 		public BaseReactiveRecyclerViewViewHolder(View view) : base(view)
 		{
@@ -90,6 +91,7 @@ namespace Xmf2.Rx.Droid.ListElement
 				{
 					ItemView.LongClick -= OnLongClickItem;
 				}
+				Disposable.Dispose();
 			}
 			base.Dispose(disposing);
 		}

@@ -14,6 +14,11 @@ namespace Xmf2.Commons.Droid.ChipClouds
 			ItemView.ViewDetachedFromWindow += NotifyViewDetachedFromWindow;
 		}
 
+		~ChipCloudViewHolder()
+		{
+			Dispose(false);
+		}
+
 		void NotifyViewAttachedToWindow(object sender, View.ViewAttachedToWindowEventArgs e)
 		{
 			OnViewAttachedToWindow();
@@ -34,12 +39,21 @@ namespace Xmf2.Commons.Droid.ChipClouds
 			Dispose();
 		}
 
-		public virtual void Dispose()
+		public void Dispose()
 		{
-			if (ItemView != null)
+			Dispose(true);
+			GC.SuppressFinalize(this);
+		}
+
+		protected virtual void Dispose(bool disposing)
+		{
+			if(disposing)
 			{
-				ItemView.ViewDetachedFromWindow -= NotifyViewDetachedFromWindow;
-				ItemView.ViewAttachedToWindow -= NotifyViewAttachedToWindow;
+				if (ItemView != null)
+				{
+					ItemView.ViewDetachedFromWindow -= NotifyViewDetachedFromWindow;
+					ItemView.ViewAttachedToWindow -= NotifyViewAttachedToWindow;
+				}
 			}
 		}
 	}

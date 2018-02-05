@@ -12,10 +12,12 @@ using Xmf2.Rx.Helpers;
 
 namespace Xmf2.Rx.Droid.ChipClouds
 {
-	public class BaseReactiveChipCloudViewHolder<TViewModel> : ChipCloudViewHolder, IViewFor<TViewModel>, IViewFor, ICanActivate 
-		where TViewModel : class, IReactiveObject 
+	public class BaseReactiveChipCloudViewHolder<TViewModel> : ChipCloudViewHolder, IViewFor<TViewModel>, IViewFor, ICanActivate
+		where TViewModel : class, IReactiveObject
 	{
 		public readonly Context Context;
+
+		protected XmfDisposable Disposable = new XmfDisposable();
 
 		private TViewModel _viewModel;
 		public TViewModel ViewModel
@@ -46,7 +48,7 @@ namespace Xmf2.Rx.Droid.ChipClouds
 		public ICommand ItemClick { get; set; }
 
 		public BaseReactiveChipCloudViewHolder(View view) : base(view)
-        {
+		{
 			Context = view.Context;
 			OnContentViewSet();
 			SetViewModelBindings();
@@ -75,16 +77,20 @@ namespace Xmf2.Rx.Droid.ChipClouds
 		{
 			_activationImplementation.Deactivate();
 		}
-		
+
 		#endregion
 
-		public override void Dispose()
+		protected override void Dispose(bool disposing)
 		{
-			if (ItemView != null)
+			base.Dispose(disposing);
+			if (disposing)
 			{
-				ItemView.Click -= OnClickItem;
+				if (ItemView != null)
+				{
+					ItemView.Click -= OnClickItem;
+				}
+				Disposable.Dispose();
 			}
-			base.Dispose();
 		}
 
 	}

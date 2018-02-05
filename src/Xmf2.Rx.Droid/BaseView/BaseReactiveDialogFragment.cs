@@ -25,22 +25,13 @@ namespace Xmf2.Rx.Droid.BaseView
 			SetViewModelBindings();
 		}
 
-		protected BaseReactiveDialogFragment()
-		{
-		}
+		protected BaseReactiveDialogFragment() { }
 
-		protected BaseReactiveDialogFragment(IntPtr handle, JniHandleOwnership ownership) : base(handle, ownership)
-		{
-		}
+		protected BaseReactiveDialogFragment(IntPtr handle, JniHandleOwnership ownership) : base(handle, ownership) { }
 
-		protected virtual void OnViewModelSet()
-		{
-		}
+		protected virtual void OnViewModelSet() { }
 
-		protected virtual void SetViewModelBindings()
-		{
-
-		}
+		protected virtual void SetViewModelBindings() { }
 
 		protected void StretchContent()
 		{
@@ -60,7 +51,6 @@ namespace Xmf2.Rx.Droid.BaseView
 
 	public abstract class BaseReactiveDialogFragment : XMFReactiveDialogFragment
 	{
-
 		protected virtual bool IsDialogCancelable { get; set; } = false;
 
 		protected BaseReactiveDialogFragment() { }

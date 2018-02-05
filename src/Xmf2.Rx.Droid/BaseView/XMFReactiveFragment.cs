@@ -116,5 +116,11 @@ namespace Xmf2.Rx.Droid.BaseView
 			base.OnResume();
 			_activationImplementation.Activate();
 		}
+
+		public override void OnDetach()
+		{
+			base.OnDetach();
+			Dispose();
+		}
 	}
 }

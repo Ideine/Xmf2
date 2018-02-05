@@ -1,11 +1,12 @@
-﻿using Android.Content;
+﻿using System;
+using Android.Content;
 using Android.Graphics;
 using Android.Views;
 using Android.Widget;
 
 namespace Xmf2.Commons.Droid.Helpers
 {
-	public class LoadingViewHelper
+	public class LoadingViewHelper : IDisposable
 	{
 		private readonly Context _context;
 		private readonly ViewGroup _viewGroup;
@@ -43,12 +44,22 @@ namespace Xmf2.Commons.Droid.Helpers
 		{
 			if (_loadingView == null)
 			{
-				var loadingView = LayoutInflater.From(_context).Inflate(_loadingViewResource, null);
-				UIHelper.SetColorFilter(loadingView.FindViewById<ProgressBar>(_progress), Color.White);
+				View loadingView;
+				using (var inflater = LayoutInflater.From(_context))
+				{
+					loadingView = inflater.Inflate(_loadingViewResource, null);
+				}
+				using (var progressView = loadingView.FindViewById<ProgressBar>(_progress))
+				{
+					UIHelper.SetColorFilter(progressView, Color.White);
+				}
 				if (_viewGroup != null)
 				{
 					_loadingView = loadingView;
-					_viewGroup.AddView(_loadingView, GetLayoutManager());
+					using (var layoutManager = GetLayoutManager())
+					{
+						_viewGroup.AddView(_loadingView, layoutManager);
+					}
 					_loadingView.Visibility = ViewStates.Gone;
 				}
 			}
@@ -57,6 +68,12 @@ namespace Xmf2.Commons.Droid.Helpers
 		private ViewGroup.LayoutParams GetLayoutManager()
 		{
 			return new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MatchParent, ViewGroup.LayoutParams.MatchParent);
+		}
+
+		public void Dispose()
+		{
+			_viewGroup.Dispose();
+			_loadingView.Dispose();
 		}
 	}
 }
