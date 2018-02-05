@@ -6,7 +6,9 @@ namespace Xmf2.Commons.Services.Authentications
 {
 	public interface IAuthenticationService
 	{
-		IObservable<bool> IsLogged { get; }
+		IObservable<bool> IsLoggedObservable { get; }
+
+		bool IsLogged { get; }
 
 		IObservable<bool> LoginWithCredentials(string login, string password);
 

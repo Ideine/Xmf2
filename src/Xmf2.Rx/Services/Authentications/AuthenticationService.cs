@@ -21,7 +21,8 @@ namespace Xmf2.Rx.Services.Authentications
 		private readonly IHttpErrorHandler _errorManager;
 		private readonly Subject<bool> _isLogged = new Subject<bool>();
 
-		public IObservable<bool> IsLogged { get; }
+		public IObservable<bool> IsLoggedObservable { get; }
+		public bool IsLogged { get; private set; }
 
 		public AuthenticationService(IOAuth2Client client, IUserStorageService storageService, ILogger logger, IHttpErrorHandler errorManager)
 		{
@@ -29,7 +30,11 @@ namespace Xmf2.Rx.Services.Authentications
 			_storageService = storageService;
 			_logger = logger;
 			_errorManager = errorManager;
-			IsLogged = _isLogged.StartWith(false).ToObservableForBinding();
+
+			var isLoggedTask = _storageService.Has();
+			isLoggedTask.Wait();
+			this.IsLogged = isLoggedTask.Result;
+			IsLoggedObservable = _isLogged.StartWith(IsLogged).ToObservableForBinding();
 
 			_client.OnAuthSuccess += OnClientAuthenticationSuccess;
 			_client.OnAuthError += OnClientAuthenticationError;
@@ -37,7 +42,7 @@ namespace Xmf2.Rx.Services.Authentications
 
 		protected virtual void OnClientAuthenticationSuccess(object sender, OAuth2AuthResult result)
 		{
-			_isLogged.OnNext(true);
+			_isLogged.OnNext(IsLogged = true);
 			_storageService.Store(new AuthenticationDetailStorageModel
 			{
 				AccessToken = result.AccessToken,
@@ -121,7 +126,7 @@ namespace Xmf2.Rx.Services.Authentications
 
 		public Task Logout(CancellationToken ct)
 		{
-			_isLogged.OnNext(false);
+			_isLogged.OnNext(IsLogged = false);
 			_storageService.Delete(ct);
 			_client.Logout();
 			CacheEngine.InvalidateScope(CacheEngine.SCOPE_USER);
