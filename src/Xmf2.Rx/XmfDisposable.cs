@@ -142,6 +142,7 @@ namespace Xmf2.Rx
 
 					Task.Run(async () =>
 					{
+						//Wait for binding & event finish disposing
 						await Task.Delay(TimeSpan.FromSeconds(10));
 						RxApp.MainThreadScheduler.Schedule(() =>
 						{

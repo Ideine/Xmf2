@@ -168,9 +168,10 @@ namespace Xmf2.Commons.Droid.LinearList
 						viewGroup.AddView(adapter.GetView(i, null, viewGroup));
 					}
 				}
-				catch(Exception)
+				catch (Exception e)
 				{
-					
+					//viewGroup can be null or disposed if Refill come after a Dispose
+					System.Diagnostics.Debug.WriteLine(e);
 				}
 			}
 
