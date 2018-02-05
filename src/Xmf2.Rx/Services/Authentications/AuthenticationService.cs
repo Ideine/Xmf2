@@ -30,10 +30,8 @@ namespace Xmf2.Rx.Services.Authentications
 			_storageService = storageService;
 			_logger = logger;
 			_errorManager = errorManager;
-
-			var isLoggedTask = _storageService.Has();
-			isLoggedTask.Wait();
-			this.IsLogged = isLoggedTask.Result;
+			
+			this.IsLogged = false;
 			IsLoggedObservable = _isLogged.StartWith(IsLogged).ToObservableForBinding();
 
 			_client.OnAuthSuccess += OnClientAuthenticationSuccess;
