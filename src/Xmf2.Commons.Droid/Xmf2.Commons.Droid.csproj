@@ -83,6 +83,7 @@
     <Compile Include="ChipClouds\ChipCloudViewHolder.cs" />
     <Compile Include="ChipClouds\FlowLayout.cs" />
     <Compile Include="ChipClouds\LayoutProcessor.cs" />
+    <Compile Include="Services\AppVersionService.cs" />
     <Compile Include="Services\LifecycleMonitor.cs" />
     <Compile Include="Services\Resources\AssetService.cs" />
     <Compile Include="Services\DroidUIDispatcher.cs" />
@@ -92,16 +93,7 @@
     <Compile Include="Helpers\ProgressWebChromeClient.cs" />
     <Compile Include="Services\Licences\LicenceReaderService.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Helpers\" />
-    <Folder Include="LinearList\" />
-    <Folder Include="ChipClouds\" />
-    <Folder Include="Services\" />
-    <Folder Include="Services\Resources\" />
-    <Folder Include="Extensions\" />
-    <Folder Include="Decorators\" />
-    <Folder Include="Services\Licences\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\Xmf2.Commons\Xmf2.Commons.csproj">
       <Project>{2FEDEE25-6302-4150-8E99-CF172E061390}</Project>
