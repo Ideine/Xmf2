@@ -2,6 +2,7 @@
 {
 	public static void NoOp() { }
 	public static void NoOp<T1>(T1 a1) { }
+	public static void NoOp<T1, T2>(T1 a1, T2 a2) { }
 	public static void NoOp<T1, T2, T3>(T1 a1, T2 a2, T3 a3) { }
 	public static void NoOp<T1, T2, T3, T4>(T1 a1, T2 a2, T3 a3, T4 a4) { }
 	public static void NoOp<T1, T2, T3, T4, T5>(T1 a1, T2 a2, T3 a3, T4 a4, T5 a5) { }
