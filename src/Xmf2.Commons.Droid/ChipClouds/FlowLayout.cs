@@ -21,7 +21,7 @@ namespace Xmf2.Commons.Droid.ChipClouds
 
 		public virtual FlowGravity FlowGravity { get; set; } = FlowGravity.Center;
 
-		private int _lineHeight;
+		//private int _lineHeight;
 
 		#region Constructors
 
@@ -80,18 +80,20 @@ namespace Xmf2.Commons.Droid.ChipClouds
 				{
 					child.Measure(MeasureSpec.MakeMeasureSpec(width, MeasureSpecMode.AtMost), childHeightMeasureSpec);
 					int childW = child.MeasuredWidth;
-					lineHeight = System.Math.Max(lineHeight, child.MeasuredHeight + VerticalSpacing);
 
 					if (xPos + childW > width)
 					{
 						xPos = PaddingLeft;
 						yPos += lineHeight;
+						lineHeight = 0;
 					}
+					int childRequestedHeight = child.MeasuredHeight + VerticalSpacing;
+					lineHeight = Math.Max(lineHeight, childRequestedHeight);
 
 					xPos += childW + MinimumHorizontalSpacing;
 				}
 			}
-			this._lineHeight = lineHeight;
+			//this._lineHeight = lineHeight;
 
 			if (MeasureSpec.GetMode(heightMeasureSpec) == MeasureSpecMode.Unspecified ||
 			   (MeasureSpec.GetMode(heightMeasureSpec) == MeasureSpecMode.AtMost && yPos + lineHeight < height))
@@ -110,8 +112,31 @@ namespace Xmf2.Commons.Droid.ChipClouds
 
 			_layoutProcessor.Width = width;
 
+			int lineHeight = 0;
 			for (int i = 0; i < count; i++)
 			{
+				View child = GetChildAt(i);
+				if (child.Visibility != ViewStates.Gone)
+				{
+					int childW = child.MeasuredWidth;
+					int childH = child.MeasuredHeight;
+
+					if (xPos + childW > width)
+					{
+						xPos = PaddingLeft;
+						yPos += lineHeight;
+						lineHeight = 0;
+						_layoutProcessor.LayoutPreviousRow();
+					}
+					int childRequestedHeight = child.MeasuredHeight + VerticalSpacing;
+					lineHeight = Math.Max(lineHeight, childRequestedHeight);
+
+					_layoutProcessor.AddViewForLayout(child, yPos, childW, childH);
+					xPos += childW + MinimumHorizontalSpacing;
+				}
+
+
+				/*
 				View child = GetChildAt(i);
 				if (child.Visibility != ViewStates.Gone)
 				{
@@ -126,6 +151,7 @@ namespace Xmf2.Commons.Droid.ChipClouds
 					_layoutProcessor.AddViewForLayout(child, yPos, childW, childH);
 					xPos += childW + MinimumHorizontalSpacing;
 				}
+				*/
 			}
 			_layoutProcessor.LayoutPreviousRow();
 			_layoutProcessor.Clear();

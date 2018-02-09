@@ -28,7 +28,7 @@ namespace System
 			}).Subscribe();
 		}
 
-		public static void SubscribeAndDispose<T>(this IObservable<T> observable, Action<T> onNext)
+		public static CompositeDisposable SubscribeAndDispose<T>(this IObservable<T> observable, Action<T> onNext)
 		{
 			CompositeDisposable disposable = new CompositeDisposable();
 
@@ -37,6 +37,8 @@ namespace System
 				onNext(x);
 				disposable.Dispose();
 			}).DisposeWith(disposable);
+
+			return disposable;
 		}
 
 		public static IObservable<T> WithErrorHandling<T>(this IObservable<T> observable, CustomErrorHandler customHandler = null)
