@@ -35,7 +35,7 @@ public static class FragmentExtensions
 			transaction.AddToBackStack(fragment.GetType().Name);
 		}
 
-		transaction?.Replace(container, fragment).CommitAllowingStateLoss();
+		transaction?.Add(container, fragment).CommitAllowingStateLoss();
 		activity.SupportFragmentManager.ExecutePendingTransactions();
 	}
 }
