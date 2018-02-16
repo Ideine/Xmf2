@@ -17,5 +17,10 @@ namespace Xmf2.Commons.UWP.Services
         {
             return Package.Current.Id.Version.Build.ToString();
         }
+
+        public Version GetFullVersion()
+        {
+            return Version.Parse(GetVersion());
+        }
     }
 }

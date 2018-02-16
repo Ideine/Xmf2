@@ -1,4 +1,5 @@
-﻿using Android.Content;
+﻿using System;
+using Android.Content;
 using Android.Content.PM;
 using Xmf2.Commons.Services.Versions;
 
@@ -23,5 +24,16 @@ namespace Xmf2.Commons.Droid.Services
             PackageInfo packageInfo = _applicationContext.PackageManager.GetPackageInfo(_applicationContext.PackageName, 0);
             return packageInfo.VersionCode.ToString();
         }
+
+		public Version GetFullVersion()
+		{
+			var packageInfo = _applicationContext.PackageManager.GetPackageInfo(_applicationContext.PackageName, 0);
+			string fullVersion = $"{packageInfo.VersionName}.{packageInfo.VersionCode}";
+			if(Version.TryParse(fullVersion, out Version result))
+			{
+				return result;
+			}
+			return new Version(0, 0, 0, 0);
+		}
     }
 }

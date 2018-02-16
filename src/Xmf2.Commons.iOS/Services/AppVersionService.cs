@@ -18,5 +18,15 @@ namespace Xmf2.Commons.iOS.Services
             var appVersion = Version.Parse(GetVersion());
             return appVersion.Build.ToString();
         }
+
+		public Version GetFullVersion()
+		{
+			string fullVersion = NSBundle.MainBundle.InfoDictionary["CFBundleVersion"].ToString();
+			if (Version.TryParse(fullVersion, out Version result))
+			{
+				return result;
+			}
+			return new Version(0, 0, 0, 0);
+		}
     }
 }

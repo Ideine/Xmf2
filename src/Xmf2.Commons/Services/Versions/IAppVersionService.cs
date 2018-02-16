@@ -7,5 +7,7 @@ namespace Xmf2.Commons.Services.Versions
 		string GetVersion();
 
         string GetBuildVersion();
+
+		Version GetFullVersion();
     }
 }
