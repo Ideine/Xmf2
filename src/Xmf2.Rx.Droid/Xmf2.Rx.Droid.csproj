@@ -124,11 +124,11 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Xmf2.Commons\Xmf2.Commons.csproj">
-      <Project>{2FEDEE25-6302-4150-8E99-CF172E061390}</Project>
+      <Project>{D2AE31F1-923F-431E-A0DE-CA5B19850A87}</Project>
       <Name>Xmf2.Commons</Name>
     </ProjectReference>
     <ProjectReference Include="..\Xmf2.Rx\Xmf2.Rx.csproj">
-      <Project>{04A83411-55E5-4599-990F-FDDA46ABD2C0}</Project>
+      <Project>{B53B90CF-95FD-4CE1-B843-EAD72F60ED7B}</Project>
       <Name>Xmf2.Rx</Name>
     </ProjectReference>
     <ProjectReference Include="..\Xmf2.Commons.Droid\Xmf2.Commons.Droid.csproj">
