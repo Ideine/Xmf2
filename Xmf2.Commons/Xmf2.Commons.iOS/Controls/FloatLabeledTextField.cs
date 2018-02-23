@@ -20,6 +20,8 @@ namespace Xmf2.Commons.iOS.Controls
 			Unknow, Normal, Disabled, Focused
 		}
 
+		private readonly object _locker = new object();
+
 		private StateEnum _oldState;
 
 		protected ActivationMode Mode;
@@ -139,8 +141,6 @@ namespace Xmf2.Commons.iOS.Controls
 						},
 						() => { });
 		}
-
-		private readonly object _locker = new object();
 
 		public override void LayoutSubviews()
 		{
