@@ -27,6 +27,8 @@ namespace Xmf2.Rx.Droid.BaseView
 	{
 		public abstract TViewModel GetViewModel();
 
+		protected readonly XmfDisposable Disposable = new XmfDisposable();
+
 		#region Busy Indicator
 
 		protected virtual int LoadingViewLayout => -1;
@@ -127,6 +129,7 @@ namespace Xmf2.Rx.Droid.BaseView
 			if (disposing)
 			{
 				LoadingViewHelper?.Dispose();
+				Disposable.Dispose();
 			}
 			base.Dispose(disposing);
 		}
