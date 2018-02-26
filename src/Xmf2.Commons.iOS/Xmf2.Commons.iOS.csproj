@@ -87,6 +87,7 @@
     <Compile Include="Services\AppVersionService.cs" />
     <Compile Include="Services\AppStoreService.cs" />
     <Compile Include="Services\iOSUIDispatcher.cs" />
+    <Compile Include="Services\OpenWebUrlService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Xmf2.Commons\Xmf2.Commons.csproj">

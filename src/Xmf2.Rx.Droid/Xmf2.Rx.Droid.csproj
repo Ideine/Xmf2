@@ -121,6 +121,7 @@
     <Compile Include="BaseView\BaseReactiveDialogFragment.cs" />
     <Compile Include="BaseView\XMFReactiveFragment.cs" />
     <Compile Include="BaseView\BaseReactiveFragment.cs" />
+    <Compile Include="Services\OpenWebUrlService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Xmf2.Commons\Xmf2.Commons.csproj">
