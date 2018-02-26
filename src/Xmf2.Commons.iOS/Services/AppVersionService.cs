@@ -9,7 +9,7 @@ namespace Xmf2.Commons.iOS.Services
 		{
 			//CFBundleVersion : 1.0.0
 			//CFBundleShortVersionString : 1.0
-			return NSBundle.MainBundle.InfoDictionary["CFShortBundleVersion"].ToString();
+			return NSBundle.MainBundle.InfoDictionary["CFBundleShortVersionString"].ToString();
 		}
 
 		public string GetFullVersion()
