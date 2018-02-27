@@ -43,8 +43,6 @@ namespace Xmf2.Rx.iOS.Controls.ItemControls
 		Subject<Unit> deactivated = new Subject<Unit>();
 		public IObservable<Unit> Deactivated => deactivated.AsObservable();
 
-		public BaseReactiveItemCell() { }
-
 		public int GetAffinityForView(Type view)
 		{
 			return (typeof(ICanActivate).GetTypeInfo().IsAssignableFrom(view.GetTypeInfo())) ? 10 : 0;

@@ -87,7 +87,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Xmf2.Commons\Xmf2.Commons.csproj">
-      <Project>{2FEDEE25-6302-4150-8E99-CF172E061390}</Project>
+      <Project>{9D1BB55C-153D-4456-A691-9AB50F5C6F2A}</Project>
       <Name>Xmf2.Commons</Name>
     </ProjectReference>
   </ItemGroup>
