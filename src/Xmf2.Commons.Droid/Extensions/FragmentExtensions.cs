@@ -29,21 +29,21 @@ public static class FragmentExtensions
 
 	public static void ShowFragment(this AppCompatActivity activity, Fragment fragment, int container, bool addToBackStack = false)
 	{
-		ProcessTransaction(activity, fragment, container, addToBackStack, (transaction) =>
+		ProcessTransaction(activity, fragment, (transaction) =>
 		{
 			transaction?.Add(container, fragment).CommitAllowingStateLoss();
-		});
+		}, addToBackStack);
 	}
 
 	public static void ReplaceFragment(this AppCompatActivity activity, Fragment fragment, int container, bool addToBackStack = false)
 	{
-		ProcessTransaction(activity, fragment, container, addToBackStack, (transaction) =>
-		{
-			transaction?.Replace(container, fragment).CommitAllowingStateLoss();
-		});
+		ProcessTransaction(activity, fragment, (transaction) =>
+	   {
+		   transaction?.Replace(container, fragment).CommitAllowingStateLoss();
+	   }, addToBackStack);
 	}
 
-	public static void ProcessTransaction(AppCompatActivity activity, Fragment fragment, int container, bool addToBackStack = false, Action<FragmentTransaction> exectuteTrancation = null)
+	public static void ProcessTransaction(AppCompatActivity activity, Fragment fragment, Action<FragmentTransaction> exectuteTrancation, bool addToBackStack = false)
 	{
 		using (var transaction = activity.SupportFragmentManager.BeginTransaction())
 		{
