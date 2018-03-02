@@ -1,4 +1,5 @@
-﻿using Android.Support.V4.App;
+﻿using System;
+using Android.Support.V4.App;
 using Android.Support.V7.App;
 
 public static class FragmentExtensions
@@ -28,14 +29,30 @@ public static class FragmentExtensions
 
 	public static void ShowFragment(this AppCompatActivity activity, Fragment fragment, int container, bool addToBackStack = false)
 	{
-		var transaction = activity.SupportFragmentManager.BeginTransaction();
-
-		if (addToBackStack)
+		ProcessTransaction(activity, fragment, container, addToBackStack, (transaction) =>
 		{
-			transaction.AddToBackStack(fragment.GetType().Name);
-		}
+			transaction?.Add(container, fragment).CommitAllowingStateLoss();
+		});
+	}
 
-		transaction?.Add(container, fragment).CommitAllowingStateLoss();
-		activity.SupportFragmentManager.ExecutePendingTransactions();
+	public static void ReplaceFragment(this AppCompatActivity activity, Fragment fragment, int container, bool addToBackStack = false)
+	{
+		ProcessTransaction(activity, fragment, container, addToBackStack, (transaction) =>
+		{
+			transaction?.Replace(container, fragment).CommitAllowingStateLoss();
+		});
+	}
+
+	public static void ProcessTransaction(AppCompatActivity activity, Fragment fragment, int container, bool addToBackStack = false, Action<FragmentTransaction> exectuteTrancation = null)
+	{
+		using (var transaction = activity.SupportFragmentManager.BeginTransaction())
+		{
+			if (addToBackStack)
+			{
+				transaction?.AddToBackStack(fragment.GetType().Name);
+			}
+			exectuteTrancation?.Invoke(transaction);
+			activity.SupportFragmentManager.ExecutePendingTransactions();
+		}
 	}
 }
