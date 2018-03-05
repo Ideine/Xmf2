@@ -104,6 +104,7 @@
     <Compile Include="Decorators\DividerItemDecoration.cs" />
     <Compile Include="Controls\SquareRelativeLayout.cs" />
     <Compile Include="Services\AppVersionService.cs" />
+    <Compile Include="Extensions\ActivityExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Helpers\" />
