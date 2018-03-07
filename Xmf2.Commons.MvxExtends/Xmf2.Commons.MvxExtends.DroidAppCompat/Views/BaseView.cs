@@ -2,67 +2,69 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
 using Android.App;
 using Android.Content;
 using Android.OS;
 using Android.Runtime;
 using Android.Views;
 using Android.Widget;
-
 using MvvmCross.Droid.Support.V7.AppCompat;
 using Xmf2.Commons.MvxExtends.ViewModels;
 
 namespace Xmf2.Commons.MvxExtends.DroidAppCompat.Views
 {
-    public abstract class BaseView<TViewModel> : MvxAppCompatActivity<TViewModel> where TViewModel : BaseViewModel
-    {
-        protected override void OnDestroy()
-        {
-            base.OnDestroy();
-            this.DisposeManagedObjects();
-        }
+	public abstract class BaseView<TViewModel> : MvxAppCompatActivity<TViewModel> where TViewModel : BaseViewModel
+	{
+		protected override void OnDestroy()
+		{
+			base.OnDestroy();
+			this.DisposeManagedObjects();
+		}
 
-        #region Dispose
+		protected BaseView(IntPtr ptr, JniHandleOwnership ownership) : base(ptr, ownership) { }
 
-        private bool disposed = false;
+		protected BaseView() { }
 
-        protected override void Dispose(bool disposing)
-        {
-            try
-            {
-                if (!disposed)
-                {
-                    if (disposing)
-                    {
-                        // Manual release of managed resources.
-                        this.DisposeManagedObjects();
-                    }
-                    // Release unmanaged resources.
-                    this.DisposeUnmanagedObjects();
+		#region Dispose
 
-                    disposed = true;
+		private bool disposed = false;
 
-                    base.Dispose(disposing);
-                }
-            }
-            catch { }
-        }
+		protected override void Dispose(bool disposing)
+		{
+			try
+			{
+				if (!disposed)
+				{
+					if (disposing)
+					{
+						// Manual release of managed resources.
+						this.DisposeManagedObjects();
+					}
 
-        ~BaseView()
-        {
-            Dispose(false);
-        }
+					// Release unmanaged resources.
+					this.DisposeUnmanagedObjects();
 
-        protected virtual void DisposeManagedObjects()
-        {
-            if (this.ViewModel != null)
-                this.ViewModel.Dispose();
-        }
+					disposed = true;
 
-        protected virtual void DisposeUnmanagedObjects()
-        { }
+					base.Dispose(disposing);
+				}
+			}
+			catch { }
+		}
 
-        #endregion
-    }
+		~BaseView()
+		{
+			Dispose(false);
+		}
+
+		protected virtual void DisposeManagedObjects()
+		{
+			if (this.ViewModel != null)
+				this.ViewModel.Dispose();
+		}
+
+		protected virtual void DisposeUnmanagedObjects() { }
+
+		#endregion
+	}
 }
