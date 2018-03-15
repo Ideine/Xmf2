@@ -7,9 +7,9 @@ using Android.Widget;
 
 namespace Xmf2.Commons.Droid.Helpers
 {
-	public class LoadingViewHelper
+	public class LoadingViewHelper : IDisposable
 	{
-		private readonly Activity _activity;
+		private Activity _activity;
 
 		public View LoadingView { get; private set; }
 
@@ -44,10 +44,16 @@ namespace Xmf2.Commons.Droid.Helpers
 			{
 				var decorView = _activity.Window.DecorView;
 				LoadingView = LayoutInflater.From(_activity).Inflate(_loadingViewResource, null);
-				UIHelper.SetColorFilter(LoadingView.FindViewById<ProgressBar>(_progress), Color.White);
+				using (var progress = LoadingView.FindViewById<ProgressBar>(_progress))
+				{
+					UIHelper.SetColorFilter(progress, Color.White);
+				}
 				if (decorView is ViewGroup viewGroup)
 				{
-					viewGroup.AddView(LoadingView, GetLayoutParams());
+					using (var parameters = GetLayoutParams())
+					{
+						viewGroup.AddView(LoadingView, parameters);
+					}
 					LoadingView.Visibility = ViewStates.Gone;
 				}
 			}
@@ -56,6 +62,13 @@ namespace Xmf2.Commons.Droid.Helpers
 		private ViewGroup.LayoutParams GetLayoutParams()
 		{
 			return new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MatchParent, ViewGroup.LayoutParams.MatchParent);
+		}
+
+		public void Dispose()
+		{
+			LoadingView?.Dispose();
+			LoadingView = null;
+			_activity = null;
 		}
 	}
 }

@@ -15,7 +15,7 @@ namespace Xmf2.Rx.Droid.ListElement
 	public class BaseReactiveRecyclerViewViewHolder<TViewModel> : XMF2ReactiveRecyclerViewViewHolder<TViewModel>, ICanActivate, IRecyclerViewViewHolder 
 		where TViewModel : class, IReactiveObject
 	{
-		protected Context Context { get; }
+		protected Context Context { get; private set; }
 
 		private readonly CanActivateImplementation _activationImplementation = new CanActivateImplementation();
 
@@ -72,12 +72,12 @@ namespace Xmf2.Rx.Droid.ListElement
 
 		#region Lifecycle
 
-		public void OnViewAttachedToWindow()
+		public virtual void OnViewAttachedToWindow()
 		{
 			_activationImplementation.Activate();
 		}
 
-		public void OnViewDetachedFromWindow()
+		public virtual void OnViewDetachedFromWindow()
 		{
 			_activationImplementation.Deactivate();
 		}
@@ -93,11 +93,12 @@ namespace Xmf2.Rx.Droid.ListElement
 				if (ItemView != null)
 				{
 					ItemView.Click -= OnClickItem;
-				}
-				if (ItemView != null)
-				{
 					ItemView.LongClick -= OnLongClickItem;
 				}
+
+				ItemClick = null;
+				ItemLongClick = null;
+				Context = null;
 			}
 			base.Dispose(disposing);
 		}

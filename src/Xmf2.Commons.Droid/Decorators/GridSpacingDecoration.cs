@@ -1,5 +1,6 @@
 ﻿using System;
 using Android.Graphics;
+using Android.Runtime;
 using Android.Support.V7.Widget;
 using Android.Views;
 
@@ -25,6 +26,8 @@ namespace Xmf2.Commons.Droid.Decorators
 			_rightSpacing = rightSpacing;
 			_includeEdges = includeEdges;
 		}
+
+		protected GridSpacingDecoration(IntPtr handle, JniHandleOwnership transer) : base(handle, transer) { }
 
 		public override void GetItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state)
 		{

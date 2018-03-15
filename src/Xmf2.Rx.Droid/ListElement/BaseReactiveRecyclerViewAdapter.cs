@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reactive.Disposables;
 using System.Windows.Input;
 using Android.Content;
 using Android.OS;
@@ -16,7 +17,8 @@ namespace Xmf2.Rx.Droid.ListElement
 
 		public ICommand ItemLongClick { get; set; }
 
-		protected readonly Context Context;
+		protected Context Context;
+		private CompositeDisposable _disposables = new CompositeDisposable();
 
 		private IReadOnlyReactiveList<ItemData> _itemsSource;
 		public IReadOnlyReactiveList<ItemData> ItemsSource
@@ -26,8 +28,15 @@ namespace Xmf2.Rx.Droid.ListElement
 			{
 				if (!Equals(_itemsSource, value))
 				{
+					if (_itemsSource != null)
+					{
+						_itemsSource.CollectionChanged -= OnCollectionChanged;
+					}
 					_itemsSource = value;
-					_itemsSource.CollectionChanged += OnCollectionChanged;
+					if (value != null)
+					{
+						value.CollectionChanged += OnCollectionChanged;
+					}
 				}
 				NotifyDataSetChanged();
 			}
@@ -42,12 +51,9 @@ namespace Xmf2.Rx.Droid.ListElement
 		{
 		}
 
-		public override int ItemCount => ItemsSource == null ? 0 : ItemsSource.Count;
+		public override int ItemCount => ItemsSource?.Count ?? 0;
 
-		object ItemAt(int position)
-		{
-			return ItemsSource[position];
-		}
+		object ItemAt(int position) => ItemsSource[position];
 
 		public override void OnBindViewHolder(RecyclerView.ViewHolder holder, int position)
 		{
@@ -59,23 +65,28 @@ namespace Xmf2.Rx.Droid.ListElement
 
 		public override RecyclerView.ViewHolder OnCreateViewHolder(ViewGroup parent, int viewType)
 		{
-			var view = LayoutInflater.From(Context).Inflate(ItemTemplate, parent, false);
-			var viewHolder = Activator.CreateInstance(typeof(ViewHolder), view) as ViewHolder;
+			ViewHolder viewHolder;
+			using (var view = LayoutInflater.From(Context).Inflate(ItemTemplate, parent, false))
+			{
+				viewHolder = Activator.CreateInstance(typeof(ViewHolder), view) as ViewHolder;
+			}
 			viewHolder.ItemClick = ItemClick;
 			viewHolder.ItemLongClick = ItemLongClick;
+			viewHolder.DisposeWith(_disposables);
 			return viewHolder;
 		}
 
 		private void OnCollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
 		{
 			new Handler(Looper.MainLooper).Post(() => NotifyDataSetChanged());
-
 		}
 
 		protected override void Dispose(bool disposing)
 		{
 			if (disposing)
 			{
+				_disposables?.Dispose();
+				_disposables = null;
 				if (ItemsSource != null)
 				{
 					ItemsSource.CollectionChanged -= OnCollectionChanged;
@@ -83,6 +94,7 @@ namespace Xmf2.Rx.Droid.ListElement
 			}
 			base.Dispose(disposing);
 		}
+
 		#region View holders Lifecycle
 
 		public override void OnViewAttachedToWindow(Java.Lang.Object holder)
