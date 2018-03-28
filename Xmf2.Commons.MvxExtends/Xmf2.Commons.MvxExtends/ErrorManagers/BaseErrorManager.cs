@@ -1,16 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using MvvmCross.Platform;
 using Xmf2.Commons.MvxExtends.Logs;
 
 namespace Xmf2.Commons.MvxExtends.ErrorManagers
 {
-    public abstract class BaseErrorManager : IErrorManager
+	public abstract class BaseErrorManager : IErrorManager	
     {
-        ILogger _logger;
+        protected ILogger _logger;
 
         public BaseErrorManager()
         {
