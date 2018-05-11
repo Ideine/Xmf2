@@ -3,7 +3,6 @@ using System.Linq;
 using Android.App;
 using Android.Content;
 using Android.Util;
-using Firebase.Iid;
 using Firebase.Messaging;
 using Splat;
 
@@ -46,6 +45,10 @@ namespace Xmf2.Notification.Droid
 					else if (message.Data.ContainsKey("message"))
 					{
 						content = message.Data["message"];
+					}
+					else if (content == null && message.Data.ContainsKey("data"))
+					{
+						content = message.Data["data"];
 					}
 
 					if (content != null)
