@@ -1,9 +1,20 @@
 ﻿using System;
+using System.Runtime.CompilerServices;
 using UIKit;
+
+using static UIKit.NSLayoutAttribute;
+using static UIKit.NSLayoutRelation;
 
 public static class CustomAutoLayoutExtensions
 {
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static UIView CenterAndFillWidth(this UIView containerView, params UIView[] views)
+	{
+		return CenterAndFillWidth(containerView, 0f, views);
+	}
+
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static UIView CenterAndFillWidth(this UIView containerView, float margin, params UIView[] views)
 	{
 		if (views == null)
 		{
@@ -12,13 +23,18 @@ public static class CustomAutoLayoutExtensions
 
 		foreach (UIView view in views)
 		{
-			containerView.ConstrainLayout(() =>
-										  view.CenterX() == containerView.CenterX()
-										  && view.Width() == containerView.Width()
-										 );
+			containerView.CenterAndFillWidth(view, margin);
 		}
 
 		return containerView;
+	}
+
+
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static UIView CenterAndFillWidth(this UIView containerView, UIView view, float margin = 0)
+	{
+		return containerView.WithConstraint(view, CenterX, Equal, containerView, CenterX, 1f, 0f)
+							.WithConstraint(view, Width, Equal, containerView, Width, 1f, -margin);
 	}
 
 	public static void VerticalFlow(this UIView containerView, params UIView[] views)
@@ -125,6 +141,14 @@ public static class CustomAutoLayoutExtensions
 		return containerView;
 	}
 
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static UIView MinHorizontalSpace(this UIView containerView, UIView left, UIView right, float margin = 0f)
+	{
+		containerView.WithConstraint(right, Left, GreaterThanOrEqual, left, Right, 1f, margin);
+		return containerView;
+	}
+
+
 	public static UIView ConstrainHeight(this UIView view, int height)
 	{
 		view.ConstrainLayout(() => view.Height() == height);
@@ -226,6 +250,23 @@ public static class CustomAutoLayoutExtensions
 							   && scroll.Bottom() == content.Bottom()
 							   && scroll.CenterX() == content.CenterX());
 		return scroll;
+	}
+
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static UIView WithConstraint(this UIView constrainedView, UIView view1, NSLayoutAttribute attribute1, NSLayoutRelation relation, UIView view2, NSLayoutAttribute attribute2, nfloat multiplier, nfloat constant)
+	{
+		if (view1 != null && view1 != constrainedView)
+		{
+			view1.TranslatesAutoresizingMaskIntoConstraints = false;
+		}
+
+		if (view2 != null && view2 != constrainedView)
+		{
+			view2.TranslatesAutoresizingMaskIntoConstraints = false;
+		}
+
+		constrainedView.AddConstraint(NSLayoutConstraint.Create(view1, attribute1, relation, view2, attribute2, multiplier, constant));
+		return constrainedView;
 	}
 
 	#if DEBUG
