@@ -24,6 +24,14 @@ namespace Android.Widget
 			}
 		}
 
+		public static void Underline(this TextView textView)
+		{
+			if (textView != null)
+			{
+				textView.SetUnderlineText(textView.Text?.ToString() ?? string.Empty);
+			}
+		}
+
 		public static void SetUnderlineText(this TextView textView, string text)
 		{
 			var spannableText = new SpannableString(text);
