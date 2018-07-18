@@ -29,7 +29,7 @@ public static class FragmentExtensions
 
 	public static void ShowFragment(this AppCompatActivity activity, Fragment fragment, int container, bool addToBackStack = false)
 	{
-		ProcessTransaction(activity, fragment, (transaction) =>
+		ProcessTransaction(activity.SupportFragmentManager, fragment, (transaction) =>
 		{
 			transaction?.Add(container, fragment).CommitAllowingStateLoss();
 		}, addToBackStack);
@@ -37,22 +37,30 @@ public static class FragmentExtensions
 
 	public static void ReplaceFragment(this AppCompatActivity activity, Fragment fragment, int container, bool addToBackStack = false)
 	{
-		ProcessTransaction(activity, fragment, (transaction) =>
+		ProcessTransaction(activity.SupportFragmentManager, fragment, (transaction) =>
 	   {
 		   transaction?.Replace(container, fragment).CommitAllowingStateLoss();
 	   }, addToBackStack);
 	}
 
-	public static void ProcessTransaction(AppCompatActivity activity, Fragment fragment, Action<FragmentTransaction> exectuteTrancation, bool addToBackStack = false)
+	public static void ReplaceFragment(this Fragment activity, Fragment fragment, int container, bool addToBackStack = false)
 	{
-		using (var transaction = activity.SupportFragmentManager.BeginTransaction())
+		ProcessTransaction(activity.ChildFragmentManager, fragment, (transaction) =>
+		{
+			transaction?.Replace(container, fragment).CommitAllowingStateLoss();
+		}, addToBackStack);
+	}
+
+	public static void ProcessTransaction(FragmentManager fragmentManager, Fragment fragment, Action<FragmentTransaction> exectuteTrancation, bool addToBackStack = false)
+	{
+		using (var transaction = fragmentManager.BeginTransaction())
 		{
 			if (addToBackStack)
 			{
 				transaction?.AddToBackStack(fragment.GetType().Name);
 			}
 			exectuteTrancation?.Invoke(transaction);
-			activity.SupportFragmentManager.ExecutePendingTransactions();
+			fragmentManager.ExecutePendingTransactions();
 		}
 	}
 }
