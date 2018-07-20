@@ -1024,5 +1024,8 @@ public static class CreatorExtensions
 
 	#endregion UITableView
 
-
+	public static string AsMultiline(this string str)
+	{
+		return str.Replace("¤", Environment.NewLine);
+	}
 }
