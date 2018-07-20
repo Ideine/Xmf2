@@ -53,6 +53,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controls\BaseDialogViewController.cs" />
+    <Compile Include="Controls\VisibilityToggleContainer.cs" />
     <Compile Include="Controls\ItemsControl\BaseItemCell.cs" />
     <Compile Include="Controls\ItemsControl\ItemsControlView.cs" />
     <Compile Include="Controls\ItemsControl\IUIComponent.cs" />

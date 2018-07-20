@@ -793,6 +793,18 @@ public static class CreatorExtensions
 		return view;
 	}
 
+	public static UIImageView WithAutoDimensions(this UIImageView view)
+	{
+		CGSize size = view.Image.Size;
+
+		NSLayoutConstraint.ActivateConstraints(new []
+		{
+			view.WidthAnchor.ConstraintEqualTo(size.Width),
+			view.HeightAnchor.ConstraintEqualTo(size.Height),
+		});
+		return view;
+	}
+	
 	public static UIImageView UniformToFit(this UIImageView view)
 	{
 		view.ContentMode = UIViewContentMode.ScaleAspectFit;

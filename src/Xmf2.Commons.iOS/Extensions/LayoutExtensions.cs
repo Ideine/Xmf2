@@ -663,7 +663,7 @@ public static class CustomAutoLayoutExtensions
 
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public static UIView WithContentCompressionResistancePriority(this UIView view, UILayoutPriority priority, UILayoutConstraintAxis axis)
+	public static TView WithContentCompressionResistancePriority<TView>(this TView view, UILayoutPriority priority, UILayoutConstraintAxis axis) where TView : UIView
 	{
 		view.SetContentCompressionResistancePriority((float)priority, axis);
 		return view;
