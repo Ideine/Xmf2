@@ -211,7 +211,7 @@ public static class CreatorExtensions
 		return button;
 	}
 
-	public static TUIButton WithSystemFont<TUIButton>(this TUIButton button, int size, UIFontWeight weight = UIFontWeight.Regular) where TUIButton : UIButton
+	public static TUIButton WithSystemFont<TUIButton>(this TUIButton button, float size, UIFontWeight weight = UIFontWeight.Regular) where TUIButton : UIButton
 	{
 		button.Font = UIFont.SystemFontOfSize(size, weight);
 		return button;
@@ -436,7 +436,11 @@ public static class CreatorExtensions
 	public static UILabel WithTextColor(this UILabel label, int color)
 	{
 		return WithTextColor(label, color.ColorFromHex());
-	}
+    }
+    public static UILabel WithTextColor(this UILabel label, uint color)
+    {
+        return WithTextColor(label, color.ColorFromHex());
+    }
 	public static UILabel WithTextColor(this UILabel label, UIColor color)
 	{
 		label.TextColor = color;
@@ -468,7 +472,7 @@ public static class CreatorExtensions
 		return label;
 	}
 
-	public static UILabel WithSystemFont(this UILabel label, int size, UIFontWeight weight = UIFontWeight.Regular)
+	public static UILabel WithSystemFont(this UILabel label, float size, UIFontWeight weight = UIFontWeight.Regular)
 	{
 		label.Font = UIFont.SystemFontOfSize(size, weight);
 		return label;
