@@ -355,6 +355,20 @@ public static class CreatorExtensions
 	#region ScrollView
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static NestedScrollView CreateVerticalNestedScroll(this object _)
+	{
+		return new NestedScrollView
+		{
+			AlwaysBounceHorizontal = false,
+			AlwaysBounceVertical = true,
+			Bounces = true,
+			BouncesZoom = false,
+			ShowsVerticalScrollIndicator = true,
+			ShowsHorizontalScrollIndicator = false
+		}.WithContentInsetAdjustementBehavior(UIScrollViewContentInsetAdjustmentBehavior.Never);
+	}
+	
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static UIScrollView CreateVerticalScroll(this UIResponder _)
 	{
 		return new UIScrollView()
@@ -458,6 +472,48 @@ public static class CreatorExtensions
 	{
 		label.Font = UIFont.SystemFontOfSize(size, weight);
 		return label;
+	}
+	
+	public static TView WithSketchShadow<TView>(this TView view, uint shadowColor, float x = 0, float y = 0, float blur = 4, float spread = 0) where TView : UIView
+	{
+		//Reference : https://stackoverflow.com/a/48489506/1479638
+		UIColor color = shadowColor.ColorFromHex();
+		view.Layer.ShadowColor = color.ColorWithAlpha(1).CGColor;
+		view.Layer.ShadowOpacity = (float) color.CGColor.Alpha;
+		view.Layer.ShadowOffset = new CGSize(x, y);
+		view.Layer.ShadowRadius = blur / 2f;
+		/*
+		if (spread == 0)
+		{
+			view.Layer.ShadowPath = null;
+		}
+		else
+		{
+			view.Layer.ShadowPath = UIBezierPath.FromRect(view.Layer.Bounds.Inset(-spread, -spread)).CGPath;
+		}
+		*/
+		return view;
+	}
+	
+	public static TView WithSketchShadow<TView>(this TView view, UIColor shadowColor, float x = 0, float y = 0, float blur = 4, float spread = 0) where TView : UIView
+	{
+		//Reference : https://stackoverflow.com/a/48489506/1479638
+		UIColor color = shadowColor;
+		view.Layer.ShadowColor = color.ColorWithAlpha(1).CGColor;
+		view.Layer.ShadowOpacity = (float) color.CGColor.Alpha;
+		view.Layer.ShadowOffset = new CGSize(x, y);
+		view.Layer.ShadowRadius = blur / 2f;
+		/*
+		if (spread == 0)
+		{
+			view.Layer.ShadowPath = null;
+		}
+		else
+		{
+			view.Layer.ShadowPath = UIBezierPath.FromRect(view.Layer.Bounds.Inset(-spread, -spread)).CGPath;
+		}
+		*/
+		return view;
 	}
 
 	#endregion UILabel
