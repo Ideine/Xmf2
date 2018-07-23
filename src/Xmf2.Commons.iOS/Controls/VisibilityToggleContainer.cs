@@ -44,6 +44,12 @@ namespace Xmf2.Commons.iOS.Controls
 			};
 		}
 
+        public VisibilityToggleContainer WithChild(UIView child)
+        {
+            SetChild(child);
+            return this;
+        }
+
 		private void ShowChildView(bool value)
 		{
 			if (Visible == value)
