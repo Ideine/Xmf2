@@ -387,6 +387,13 @@ public static class CustomAutoLayoutExtensions
 	}
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static UIView AlignOnBaseline(this UIView view, UIView v1, UIView v2, float offset = 0)
+	{
+		view.WithConstraint(v1, Baseline, Equal, v2, Baseline, 1f, offset);
+		return view;
+	}
+	
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static UIView AlignOnBottom(this UIView view, UIView v1, UIView v2, float offset = 0)
 	{
 		view.WithConstraint(v1, Bottom, Equal, v2, Bottom, 1f, offset);
@@ -435,6 +442,17 @@ public static class CustomAutoLayoutExtensions
 	public static UIView SameWidth(this UIView view, UIView v1, UIView v2, float margin = 0f)
 	{
 		return view.WithConstraint(v1, Width, Equal, v2, Width, 1f, margin);
+	}
+	
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static UIView SameWidth(this UIView view, UIView v1, params UIView[] v2)
+	{
+		foreach (var v in v2)
+		{
+			view.WithConstraint(v1, Width, Equal, v, Width, 1f, 0);
+		}
+
+		return view;
 	}
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -645,7 +663,7 @@ public static class CustomAutoLayoutExtensions
 
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public static UIView WithContentCompressionResistancePriority(this UIView view, UILayoutPriority priority, UILayoutConstraintAxis axis)
+	public static TView WithContentCompressionResistancePriority<TView>(this TView view, UILayoutPriority priority, UILayoutConstraintAxis axis) where TView : UIView
 	{
 		view.SetContentCompressionResistancePriority((float)priority, axis);
 		return view;

@@ -211,7 +211,7 @@ public static class CreatorExtensions
 		return button;
 	}
 
-	public static TUIButton WithSystemFont<TUIButton>(this TUIButton button, int size, UIFontWeight weight = UIFontWeight.Regular) where TUIButton : UIButton
+	public static TUIButton WithSystemFont<TUIButton>(this TUIButton button, float size, UIFontWeight weight = UIFontWeight.Regular) where TUIButton : UIButton
 	{
 		button.Font = UIFont.SystemFontOfSize(size, weight);
 		return button;
@@ -355,6 +355,20 @@ public static class CreatorExtensions
 	#region ScrollView
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static NestedScrollView CreateVerticalNestedScroll(this object _)
+	{
+		return new NestedScrollView
+		{
+			AlwaysBounceHorizontal = false,
+			AlwaysBounceVertical = true,
+			Bounces = true,
+			BouncesZoom = false,
+			ShowsVerticalScrollIndicator = true,
+			ShowsHorizontalScrollIndicator = false
+		}.WithContentInsetAdjustementBehavior(UIScrollViewContentInsetAdjustmentBehavior.Never);
+	}
+	
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static UIScrollView CreateVerticalScroll(this UIResponder _)
 	{
 		return new UIScrollView()
@@ -422,7 +436,11 @@ public static class CreatorExtensions
 	public static UILabel WithTextColor(this UILabel label, int color)
 	{
 		return WithTextColor(label, color.ColorFromHex());
-	}
+    }
+    public static UILabel WithTextColor(this UILabel label, uint color)
+    {
+        return WithTextColor(label, color.ColorFromHex());
+    }
 	public static UILabel WithTextColor(this UILabel label, UIColor color)
 	{
 		label.TextColor = color;
@@ -454,10 +472,52 @@ public static class CreatorExtensions
 		return label;
 	}
 
-	public static UILabel WithSystemFont(this UILabel label, int size, UIFontWeight weight = UIFontWeight.Regular)
+	public static UILabel WithSystemFont(this UILabel label, float size, UIFontWeight weight = UIFontWeight.Regular)
 	{
 		label.Font = UIFont.SystemFontOfSize(size, weight);
 		return label;
+	}
+	
+	public static TView WithSketchShadow<TView>(this TView view, uint shadowColor, float x = 0, float y = 0, float blur = 4, float spread = 0) where TView : UIView
+	{
+		//Reference : https://stackoverflow.com/a/48489506/1479638
+		UIColor color = shadowColor.ColorFromHex();
+		view.Layer.ShadowColor = color.ColorWithAlpha(1).CGColor;
+		view.Layer.ShadowOpacity = (float) color.CGColor.Alpha;
+		view.Layer.ShadowOffset = new CGSize(x, y);
+		view.Layer.ShadowRadius = blur / 2f;
+		/*
+		if (spread == 0)
+		{
+			view.Layer.ShadowPath = null;
+		}
+		else
+		{
+			view.Layer.ShadowPath = UIBezierPath.FromRect(view.Layer.Bounds.Inset(-spread, -spread)).CGPath;
+		}
+		*/
+		return view;
+	}
+	
+	public static TView WithSketchShadow<TView>(this TView view, UIColor shadowColor, float x = 0, float y = 0, float blur = 4, float spread = 0) where TView : UIView
+	{
+		//Reference : https://stackoverflow.com/a/48489506/1479638
+		UIColor color = shadowColor;
+		view.Layer.ShadowColor = color.ColorWithAlpha(1).CGColor;
+		view.Layer.ShadowOpacity = (float) color.CGColor.Alpha;
+		view.Layer.ShadowOffset = new CGSize(x, y);
+		view.Layer.ShadowRadius = blur / 2f;
+		/*
+		if (spread == 0)
+		{
+			view.Layer.ShadowPath = null;
+		}
+		else
+		{
+			view.Layer.ShadowPath = UIBezierPath.FromRect(view.Layer.Bounds.Inset(-spread, -spread)).CGPath;
+		}
+		*/
+		return view;
 	}
 
 	#endregion UILabel
@@ -737,6 +797,18 @@ public static class CreatorExtensions
 		return view;
 	}
 
+	public static UIImageView WithAutoDimensions(this UIImageView view)
+	{
+		CGSize size = view.Image.Size;
+
+		NSLayoutConstraint.ActivateConstraints(new []
+		{
+			view.WidthAnchor.ConstraintEqualTo(size.Width),
+			view.HeightAnchor.ConstraintEqualTo(size.Height),
+		});
+		return view;
+	}
+	
 	public static UIImageView UniformToFit(this UIImageView view)
 	{
 		view.ContentMode = UIViewContentMode.ScaleAspectFit;
@@ -797,23 +869,47 @@ public static class CreatorExtensions
 		return view;
 	}
 
-	[Obsolete("Cette méthode ne doit être utilisée qu'en développement. Pour définir le fond d'une View utilisez WithBackgroundColor")]
-	public static TView WithDraftBackground<TView>(this TView view, int color) where TView : UIView
-	{
-#if DEBUG
-		view.BackgroundColor = color.ColorFromHex();
-#endif
-		return view;
-	}
+    [Obsolete("Cette méthode ne doit être utilisée qu'en développement. Pour définir le fond d'une View utilisez WithBackgroundColor")]
+    public static TView WithDraftBackground<TView>(this TView view, int color) where TView : UIView
+    {
 
-	[Obsolete("Cette méthode ne doit être utilisée qu'en développement. Pour définir le fond d'une View utilisez WithBackgroundColor")]
-	public static TView WithDraftBackground<TView>(this TView view, UIColor color = null) where TView : UIView
-	{
+
 #if DEBUG
-		view.BackgroundColor = color ?? UIColor.Orange.ColorWithAlpha(0.65f);
+        view.BackgroundColor = color.ColorFromHex();
+
+
 #endif
-		return view;
-	}
+        return view;
+    }
+
+    [Obsolete("Cette méthode ne doit être utilisée qu'en développement. Pour définir le fond d'une View utilisez WithBackgroundColor")]
+    public static TView WithDraftBackground<TView>(this TView view, uint color) where TView : UIView
+    {
+
+
+#if DEBUG
+        view.BackgroundColor = color.ColorFromHex();
+
+
+#endif
+        return view;
+    }
+
+    [Obsolete("Cette méthode ne doit être utilisée qu'en développement. Pour définir le fond d'une View utilisez WithBackgroundColor")]
+    public static TView WithDraftBackground<TView>(this TView view, UIColor color = null, bool addAlpha = true) where TView : UIView
+    {
+
+
+#if DEBUG
+        var lcolor = (color ?? UIColor.Orange);
+        view.BackgroundColor = addAlpha
+            ? lcolor.ColorWithAlpha(0.25f)
+            : lcolor;
+
+
+#endif
+        return view;
+    }
 
 	public static TView WithBackgroundColor<TView>(this TView view, UIColor color) where TView : UIView
 	{
@@ -956,5 +1052,8 @@ public static class CreatorExtensions
 
 	#endregion UITableView
 
-
+	public static string AsMultiline(this string str)
+	{
+		return str.Replace("¤", Environment.NewLine);
+	}
 }
