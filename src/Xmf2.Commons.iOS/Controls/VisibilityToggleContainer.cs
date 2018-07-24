@@ -9,6 +9,7 @@ namespace Xmf2.Commons.iOS.Controls
 	{
 		private UIView _child;
 		private NSLayoutConstraint[] _constraints;
+		private NSLayoutConstraint _emptyHeightConstraint;
 
 		public bool Visible
 		{
@@ -35,6 +36,9 @@ namespace Xmf2.Commons.iOS.Controls
 			_child = child;
 			_child.TranslatesAutoresizingMaskIntoConstraints = false;
 
+			_emptyHeightConstraint = HeightAnchor.ConstraintEqualTo(0);
+			AddConstraint(_emptyHeightConstraint);
+			
 			_constraints = new[]
 			{
 				NSLayoutConstraint.Create(this, Width, Equal, child, Width, 1, 0),
@@ -60,11 +64,13 @@ namespace Xmf2.Commons.iOS.Controls
 			if (value)
 			{
 				AddSubview(_child);
+				RemoveConstraint(_emptyHeightConstraint);
 				AddConstraints(_constraints);
 			}
 			else
 			{
 				RemoveConstraints(_constraints);
+				AddConstraint(_emptyHeightConstraint);
 				_child.RemoveFromSuperview();
 			}
 		}

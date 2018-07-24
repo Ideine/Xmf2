@@ -12,6 +12,9 @@ namespace Xmf2.Commons.iOS.Controls
 		public Action<UIHighlightButton> ToHighlightedAnimation { get; set; }
 		public Action<UIHighlightButton> FromHighlightedAnimation { get; set; }
 
+		public Action<UIHighlightButton> FromSelectedAnimation { get; set; }
+		public Action<UIHighlightButton> ToSelectedAnimation { get; set; }
+
 		public override bool Highlighted
 		{
 			get
@@ -52,6 +55,26 @@ namespace Xmf2.Commons.iOS.Controls
 						}, ActionHelper.NoOp);
 					}
 					base.Highlighted = value;
+				}
+			}
+		}
+
+		public override bool Selected
+		{
+			get => base.Selected;
+			set
+			{
+				if (base.Selected != value)
+				{
+					if (value)
+					{
+						Animate(0.2, () => ToSelectedAnimation?.Invoke(this), ActionHelper.NoOp);
+					}
+					else
+					{
+						Animate(0.2, () => FromSelectedAnimation?.Invoke(this), ActionHelper.NoOp);
+					}
+					base.Selected = value;
 				}
 			}
 		}
