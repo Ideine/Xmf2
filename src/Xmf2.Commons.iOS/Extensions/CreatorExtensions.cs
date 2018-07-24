@@ -70,7 +70,12 @@ public static class CreatorExtensions
 	{
 		button.HighlightColor = color.ColorFromHex();
 		return button;
-	}
+    }
+    public static TUIButton WithHighlightBackgroundColor<TUIButton>(this TUIButton button, uint color) where TUIButton : UIHighlightButton
+    {
+        button.HighlightColor = color.ColorFromHex();
+        return button;
+    }
 	public static TUIButton WithHighlightBackgroundColor<TUIButton>(this TUIButton button, UIColor color) where TUIButton : UIHighlightButton
 	{
 		button.HighlightColor = color;
