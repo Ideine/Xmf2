@@ -14,20 +14,12 @@ namespace UIKit
 
 		public static UIColor ColorFromHex(this uint hexValue)
 		{
-			//TODO : value with alpa 0 don't work
-			if (hexValue > 0xFFFFFF)
-			{
-				return UIColor.FromRGBA(
-					((hexValue & 0xFF0000) >> 16) / 255.0f,
-					((hexValue & 0xFF00) >> 8) / 255.0f,
-					(hexValue & 0xFF) / 255.0f,
-					((hexValue & 0xFF000000) >> 24) / 255.0f
-				);
-			}
-			else
-			{
-				return ((int)hexValue).ColorFromHex();
-			}
+			return UIColor.FromRGBA(
+				((hexValue & 0xFF0000) >> 16) / 255.0f,
+				((hexValue & 0xFF00) >> 8) / 255.0f,
+				(hexValue  & 0xFF) / 255.0f,
+				((hexValue & 0xFF000000) >> 24) / 255.0f
+			);
 		}
 
         public static CGColor CGColorFromHex(this int hexValue, float alpha = 1)
