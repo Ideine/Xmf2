@@ -869,23 +869,47 @@ public static class CreatorExtensions
 		return view;
 	}
 
-	[Obsolete("Cette méthode ne doit être utilisée qu'en développement. Pour définir le fond d'une View utilisez WithBackgroundColor")]
-	public static TView WithDraftBackground<TView>(this TView view, int color) where TView : UIView
-	{
-#if DEBUG
-		view.BackgroundColor = color.ColorFromHex();
-#endif
-		return view;
-	}
+    [Obsolete("Cette méthode ne doit être utilisée qu'en développement. Pour définir le fond d'une View utilisez WithBackgroundColor")]
+    public static TView WithDraftBackground<TView>(this TView view, int color) where TView : UIView
+    {
 
-	[Obsolete("Cette méthode ne doit être utilisée qu'en développement. Pour définir le fond d'une View utilisez WithBackgroundColor")]
-	public static TView WithDraftBackground<TView>(this TView view, UIColor color = null) where TView : UIView
-	{
+
 #if DEBUG
-		view.BackgroundColor = color ?? UIColor.Orange.ColorWithAlpha(0.65f);
+        view.BackgroundColor = color.ColorFromHex();
+
+
 #endif
-		return view;
-	}
+        return view;
+    }
+
+    [Obsolete("Cette méthode ne doit être utilisée qu'en développement. Pour définir le fond d'une View utilisez WithBackgroundColor")]
+    public static TView WithDraftBackground<TView>(this TView view, uint color) where TView : UIView
+    {
+
+
+#if DEBUG
+        view.BackgroundColor = color.ColorFromHex();
+
+
+#endif
+        return view;
+    }
+
+    [Obsolete("Cette méthode ne doit être utilisée qu'en développement. Pour définir le fond d'une View utilisez WithBackgroundColor")]
+    public static TView WithDraftBackground<TView>(this TView view, UIColor color = null, bool addAlpha = true) where TView : UIView
+    {
+
+
+#if DEBUG
+        var lcolor = (color ?? UIColor.Orange);
+        view.BackgroundColor = addAlpha
+            ? lcolor.ColorWithAlpha(0.25f)
+            : lcolor;
+
+
+#endif
+        return view;
+    }
 
 	public static TView WithBackgroundColor<TView>(this TView view, UIColor color) where TView : UIView
 	{
