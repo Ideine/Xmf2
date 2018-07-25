@@ -17,12 +17,16 @@ namespace Xmf2.Commons.iOS.Controls
 			set => ShowChildView(value);
 		}
 
-		public VisibilityToggleContainer()
+		public VisibilityToggleContainer(bool useEmptyHeightConstraint = false)
 		{
-			
+			if (useEmptyHeightConstraint)
+			{
+				_emptyHeightConstraint = HeightAnchor.ConstraintEqualTo(0);
+				AddConstraint(_emptyHeightConstraint);
+			}
 		}
 
-		public VisibilityToggleContainer(UIView child)
+		public VisibilityToggleContainer(UIView child, bool useEmptyHeightConstraint = false) : this(useEmptyHeightConstraint)
 		{
 			SetChild(child);
 		}
@@ -35,9 +39,6 @@ namespace Xmf2.Commons.iOS.Controls
 			}
 			_child = child;
 			_child.TranslatesAutoresizingMaskIntoConstraints = false;
-
-			_emptyHeightConstraint = HeightAnchor.ConstraintEqualTo(0);
-			AddConstraint(_emptyHeightConstraint);
 			
 			_constraints = new[]
 			{
@@ -64,13 +65,19 @@ namespace Xmf2.Commons.iOS.Controls
 			if (value)
 			{
 				AddSubview(_child);
-				RemoveConstraint(_emptyHeightConstraint);
+				if (_emptyHeightConstraint != null)
+				{
+					RemoveConstraint(_emptyHeightConstraint);
+				}
 				AddConstraints(_constraints);
 			}
 			else
 			{
 				RemoveConstraints(_constraints);
-				AddConstraint(_emptyHeightConstraint);
+				if (_emptyHeightConstraint != null)
+				{
+					AddConstraint(_emptyHeightConstraint);
+				}
 				_child.RemoveFromSuperview();
 			}
 		}
