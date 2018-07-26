@@ -57,27 +57,27 @@ namespace Xmf2.Rx.ViewModels
 
 		#region Wrap for error
 
-		protected Task WrapForError(IObservable<Unit> source, CustomErrorHandler errorHandler = null)
+		protected Task WrapForError(IObservable<Unit> source, CustomErrorHandler errorHandler = null, int? timeout = null)
 		{
 			return ErrorHandler.Value
-							   .Execute(source.Timeout(TimeSpan.FromSeconds(ObservableTimeout)), errorHandler)
+							   .Execute(source.Timeout(TimeSpan.FromSeconds(timeout ?? ObservableTimeout)), errorHandler)
 							   .Catch<Unit, Exception>(ex => Observable.Return(default(Unit)))
 							   .WaitForOneAsync();
 		}
-
-		protected Task<TResult> WrapForError<TResult>(IObservable<TResult> source, CustomErrorHandler errorHandler = null)
+		
+		protected Task<TResult> WrapForError<TResult>(IObservable<TResult> source, CustomErrorHandler errorHandler = null, int? timeout = null)
 		{
 			return ErrorHandler.Value
-							   .Execute(source.Timeout(TimeSpan.FromSeconds(ObservableTimeout)), errorHandler)
+							   .Execute(source.Timeout(TimeSpan.FromSeconds(timeout ?? ObservableTimeout)), errorHandler)
 							   .Catch<TResult, Exception>(ex => Observable.Return(default(TResult)))
 							   .WaitForOneAsync();
 		}
 
-		protected Task WrapForError(Func<Task> action, CustomErrorHandler errorHandler = null) => WrapForError(Observable.FromAsync(action), errorHandler);
+		protected Task WrapForError(Func<Task> action, CustomErrorHandler errorHandler = null, int? timeout = null) => WrapForError(Observable.FromAsync(action), errorHandler, timeout);
 
-		protected Task WrapForError(Action action, CustomErrorHandler errorHandler = null) => WrapForError(Observable.Start(action), errorHandler);
+		protected Task WrapForError(Action action, CustomErrorHandler errorHandler = null, int? timeout = null) => WrapForError(Observable.Start(action), errorHandler, timeout);
 
-		protected Task<TResult> WrapForError<TResult>(Func<Task<TResult>> action, CustomErrorHandler errorHandler = null) => WrapForError(Observable.FromAsync(action), errorHandler);
+		protected Task<TResult> WrapForError<TResult>(Func<Task<TResult>> action, CustomErrorHandler errorHandler = null, int? timeout = null) => WrapForError(Observable.FromAsync(action), errorHandler, timeout);
 
 		#endregion
 
