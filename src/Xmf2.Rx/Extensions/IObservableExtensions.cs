@@ -1,5 +1,6 @@
 ﻿using Splat;
 using System;
+using System.Collections.Generic;
 using System.Reactive;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
@@ -330,6 +331,32 @@ namespace System
 			IObservable<T4> observable3)
 		{
 			return Observable.CombineLatest(mainObservable, observable1, observable2, observable3, (mainObserved, _1, _2, _3) => mainObserved);
+		}
+
+		public static IObservable<T> XmfDistinctUntilChanged<T>(this IObservable<T> observable, IEqualityComparer<T> pEqualityComparer = null)
+		{
+			bool isFirst = true;
+			var previous = default(T);
+			var equalityComparer = pEqualityComparer ?? EqualityComparer<T>.Default;
+
+			return observable.Where(next =>
+			{
+				if (isFirst)
+				{
+					isFirst = false;
+					previous = next;
+					return true;
+				}
+				else if (!equalityComparer.Equals(previous, next))
+				{
+					previous = next;
+					return true;
+				}
+				else
+				{
+					return false;
+				}
+			});
 		}
 	}
 }
