@@ -635,6 +635,13 @@ public static class CustomAutoLayoutExtensions
 		return view;
 	}
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static UIView WithConstraint(this UIView constrainedView, params NSLayoutConstraint[] constraints)
+    {
+        constrainedView.AddConstraints(constraints);
+        return constrainedView;
+    }
+
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static UIView WithConstraint(this UIView constrainedView, UIView view, NSLayoutAttribute attribute, NSLayoutRelation relation, nfloat multiplier, nfloat constant)
 	{
