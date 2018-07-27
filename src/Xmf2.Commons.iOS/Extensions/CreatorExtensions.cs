@@ -592,6 +592,12 @@ public static class CreatorExtensions
 		return input;
 	}
 
+	public static UITextField WithCarretColor(this UITextField input, int color)
+	{
+		input.TintColor = color.ColorFromHex();
+		return input;
+	}
+	
 	public static UITextField WithTextColor(this UITextField input, int color)
 	{
 		return input.WithTextColor(color.ColorFromHex());
