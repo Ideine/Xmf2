@@ -12,7 +12,7 @@ namespace Xmf2.Commons.iOS.Controls
 		public BaseDialogViewController(bool allowDismiss, UIColor backgroundColor = null)
 		{
 			_allowDismiss = allowDismiss;
-			_backgroundColor = backgroundColor ?? UIColor.Black.ColorWithAlpha(200f);
+			_backgroundColor = backgroundColor ?? UIColor.Black.ColorWithAlpha(0.78f);
 			LoadModalContext();
 		}
 
