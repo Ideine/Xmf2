@@ -22,11 +22,7 @@ namespace Xmf2.Commons.iOS.Services
 
 		private void InternalOpenWebSite(string url)
 		{
-			if (UIDevice.CurrentDevice.CheckSystemVersion(10, 0))
-			{
-				UIApplication.SharedApplication.OpenUrl(new NSUrl(url), new NSDictionary(), _ => { });
-			}
-			else
+			if (UIDevice.CurrentDevice.CheckSystemVersion(9, 0))
 			{
 				SFSafariViewController controller = new SFSafariViewController(new NSUrl(url));
 
@@ -34,6 +30,10 @@ namespace Xmf2.Commons.iOS.Services
 				{
 					UIApplication.SharedApplication.KeyWindow.RootViewController.PresentViewController(controller, true, null);
 				}
+			}
+			else
+			{
+				UIApplication.SharedApplication.OpenUrl(new NSUrl(url), new NSDictionary(), _ => { });
 			}
 		}
 	}
