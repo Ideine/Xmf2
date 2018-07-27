@@ -354,6 +354,11 @@ public static class CreatorExtensions
 		parentView.AddSubviews(views);
 		return parentView;
 	}
+	public static TParentView WithSubviews<TParentView>(this TParentView parentView, UIView[] views) where TParentView : UIView
+	{
+		parentView.AddSubviews(views);
+		return parentView;
+	}
 
 	#endregion
 
