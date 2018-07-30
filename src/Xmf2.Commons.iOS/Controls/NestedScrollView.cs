@@ -471,7 +471,7 @@ namespace Xmf2.Commons.iOS.Controls
 				scrollView.AddObserver(this, SELECTOR_CONTENT_SIZE, NSKeyValueObservingOptions.Old, Handle);
 				view = new ScrollItemWrapper(scrollView, this);
 			}
-			else if (view is UIImageView && view.Frame.Equals(new CGRect(0, 0, 2.5f, 2.5f))) //TODO: review scrollbar detection
+			else if (IsAddedByOsScrollbar(view))
 			{
 				base.AddSubview(view);
 				return;
@@ -495,6 +495,20 @@ namespace Xmf2.Commons.iOS.Controls
 			_contentView.AddSubview(view);
 			
 			view.AddObserver(this, SELECTOR_BOUNDS_SIZE, NSKeyValueObservingOptions.Old, Handle);
+		}
+
+		private bool IsAddedByOsScrollbar(UIView view) //TODO: review scrollbar detection
+		{
+			if (view is UIImageView)
+			{
+				return view.Frame.Location == CGPoint.Empty
+				&& (view.Frame.Width <= 2.5f)
+				&& (view.Frame.Height <= 2.5f);
+			}
+			else
+			{
+				return false;
+			}
 		}
 
 		public void AddStickableView(UIView stickableView)
