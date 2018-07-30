@@ -11,7 +11,7 @@ namespace System.Reactive.Disposables
 		public static T DisposeInterceptedWith<T>(this T disposable, CompositeDisposable disposer) where T : IDisposable
 		{
 #if DEBUG
-			new DisposableWrapper<T>(forwardTo: disposable, onDispose: onDispose).DisposeWith(disposer);
+			new DisposableWrapper<T>(forwardTo: disposable).DisposeWith(disposer);
 			return disposable;
 #else
 			return disposable.DisposeWith(disposer);
