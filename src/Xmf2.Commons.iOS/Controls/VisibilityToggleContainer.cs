@@ -31,7 +31,7 @@ namespace Xmf2.Commons.iOS.Controls
 			SetChild(child);
 		}
 
-		public void SetChild(UIView child)
+		public void SetChild(UIView child, UIEdgeInsets? pInsets = null)
 		{
 			if(_child != null)
 			{
@@ -39,17 +39,19 @@ namespace Xmf2.Commons.iOS.Controls
 			}
 			_child = child;
 			_child.TranslatesAutoresizingMaskIntoConstraints = false;
-			
+
+			var insets = pInsets.HasValue ? pInsets.Value : UIEdgeInsets.Zero;
+
 			_constraints = new[]
 			{
-				NSLayoutConstraint.Create(this, Width, Equal, child, Width, 1, 0),
-				NSLayoutConstraint.Create(this, CenterX, Equal, _child, CenterX, 1, 0),
-				NSLayoutConstraint.Create(this, Height, Equal, _child, Height, 1, 0),
-				NSLayoutConstraint.Create(this, CenterY, Equal, _child, CenterY, 1, 0)
+				NSLayoutConstraint.Create(this, Left, 	Equal, _child, Left	  , 1f, -insets.Left),
+				NSLayoutConstraint.Create(this, Right, 	Equal, _child, Right  , 1f,  insets.Right),
+				NSLayoutConstraint.Create(this, Top, 	Equal, _child, Top	  , 1f, -insets.Top),
+				NSLayoutConstraint.Create(this, Bottom, Equal, _child, Bottom , 1f,  insets.Bottom)
 			};
 		}
 
-        public VisibilityToggleContainer WithChild(UIView child)
+		public VisibilityToggleContainer WithChild(UIView child, UIEdgeInsets? pInsets = null)
         {
             SetChild(child);
             return this;
