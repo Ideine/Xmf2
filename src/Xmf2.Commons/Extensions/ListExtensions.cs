@@ -6,5 +6,10 @@
 		{
 			list.AddRange(items);
 		}
+
+		public static void SortDescending<T>(this List<T> list, IComparer<T> comparer)
+		{
+			list.Sort((x, y) => comparer.Compare(y, x)/*(x,y) inversion is on purpose*/);
+		}
 	}
 }
