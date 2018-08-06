@@ -2,7 +2,7 @@
 
 namespace Xmf2.Core.iOS.Controls
 {
-	public abstract class UIBaseHighlightSelectedButton : UIButton
+	public class UIBaseHighlightSelectedButton : UIButton
 	{
 		public override bool Highlighted
 		{
@@ -15,7 +15,7 @@ namespace Xmf2.Core.iOS.Controls
 				}
 
 				base.Highlighted = value;
-				StateUpdate();
+				StateUpdate(Selected, value);
 			}
 		}
 
@@ -30,17 +30,17 @@ namespace Xmf2.Core.iOS.Controls
 				}
 
 				base.Selected = value;
-				StateUpdate();
+				StateUpdate(value, Highlighted);
 			}
 		}
 
-		protected virtual void StateUpdate()
+		protected virtual void StateUpdate(bool selected, bool highlighted)
 		{
-			if (Selected)
+			if (selected)
 			{
 				OnSelected();
 			}
-			else if (Highlighted)
+			else if (highlighted)
 			{
 				OnHighlighted();
 			}
@@ -50,8 +50,8 @@ namespace Xmf2.Core.iOS.Controls
 			}
 		}
 
-		protected abstract void OnNormal();
-		protected abstract void OnHighlighted();
-		protected abstract void OnSelected();
+		protected virtual void OnNormal() {}
+		protected virtual void OnHighlighted() {}
+		protected virtual void OnSelected() {}
 	}
 }
