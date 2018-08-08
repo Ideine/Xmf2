@@ -105,6 +105,8 @@
     <Compile Include="Controls\SquareRelativeLayout.cs" />
     <Compile Include="Services\AppVersionService.cs" />
     <Compile Include="Extensions\ActivityExtensions.cs" />
+    <Compile Include="Permissions\PermissionContainer.cs" />
+    <Compile Include="Permissions\IPermissionHandlingActivity.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Helpers\" />
@@ -117,6 +119,7 @@
     <Folder Include="Services\Licences\" />
     <Folder Include="Helpers\CustomAnimations\" />
     <Folder Include="Controls\" />
+    <Folder Include="Permissions\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Xmf2.Commons\Xmf2.Commons.csproj">
