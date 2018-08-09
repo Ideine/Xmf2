@@ -75,6 +75,13 @@ namespace System.Collections.Generic
 				 : default(T);
 		}
 
+		public static HashSet<T> SymmetricExceptWith<T>(this IEnumerable<T> setA, IEnumerable<T> setB)
+		{
+			var result = new HashSet<T>(setA);
+			setB.SymmetricExceptWith(setA);
+			return result;
+		}
+
 		private static T Aggregate<T>(this IEnumerator<T> enumerator, T acc, Func<T, T, T> func)
 		{
 			while (enumerator.MoveNext())
