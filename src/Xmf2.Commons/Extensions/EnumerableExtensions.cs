@@ -78,7 +78,7 @@ namespace System.Collections.Generic
 		public static HashSet<T> SymmetricExceptWith<T>(this IEnumerable<T> setA, IEnumerable<T> setB)
 		{
 			var result = new HashSet<T>(setA);
-			setB.SymmetricExceptWith(setA);
+			result.SymmetricExceptWith(setA);
 			return result;
 		}
 
