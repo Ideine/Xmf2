@@ -36,5 +36,7 @@ namespace Xmf2.Commons.iOS.Helpers
 				_loadingView = new UILoadingView(_parent);
 			}
 		}
+
+		public void WithTitle(string title) => _loadingView?.WithTitle(title);
 	}
 }
