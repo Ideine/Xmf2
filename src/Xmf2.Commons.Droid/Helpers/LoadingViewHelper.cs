@@ -15,6 +15,7 @@ namespace Xmf2.Commons.Droid.Helpers
 
 		private readonly int _loadingViewResource;
 		private readonly int _progress;
+		private readonly int _title;
 
 		private bool _isBusy;
 
@@ -31,13 +32,23 @@ namespace Xmf2.Commons.Droid.Helpers
 			}
 		}
 
-		public LoadingViewHelper(ViewGroup view, int loadingViewResource, int progress)
+		public LoadingViewHelper(ViewGroup view, int loadingViewResource, int progress, int title)
 		{
 			_context = view.Context;
 			_viewGroup = view;
 			_loadingViewResource = loadingViewResource;
 			_progress = progress;
+			_title = title;
 			CreateLoadingView();
+		}
+
+		public LoadingViewHelper WithTitle(string title)
+		{
+			using (var titleView = _loadingView.FindViewById<TextView>(_title))
+			{
+				titleView.Text = title;
+			}
+			return this;
 		}
 
 		private void CreateLoadingView()

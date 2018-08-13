@@ -33,6 +33,7 @@ namespace Xmf2.Rx.Droid.BaseView
 
 		protected virtual int LoadingViewLayout => -1;
 		protected virtual int LoadingViewProgressId => -1;
+		protected virtual int LoadingViewTitleId => -1;
 		protected abstract ViewGroup BusyViewGroup { get; }
 
 		protected LoadingViewHelper LoadingViewHelper { get; private set; }
@@ -85,9 +86,9 @@ namespace Xmf2.Rx.Droid.BaseView
 		{
 			base.OnCreate(savedInstanceState);
 			OnContentViewSet();
-			if (LoadingViewLayout >= 0 && LoadingViewProgressId >= 0)
+			if (LoadingViewLayout >= 0 && LoadingViewProgressId >= 0 && LoadingViewTitleId >= 0)
 			{
-				LoadingViewHelper = new LoadingViewHelper(BusyViewGroup, LoadingViewLayout, LoadingViewProgressId);
+				LoadingViewHelper = new LoadingViewHelper(BusyViewGroup, LoadingViewLayout, LoadingViewProgressId, LoadingViewTitleId);
 			}
 			ViewModel = GetViewModel();
 			OnViewModelSet();
