@@ -42,7 +42,7 @@ namespace Xmf2.Commons.iOS.Services
 		{
 			InvokeOnMainThread(() =>
 			{
-				var modalVC = UIApplication.SharedApplication.KeyWindow.RootViewController.PresentedViewController;
+				var modalVC = TopMostViewController();
 				if (modalVC == null)
 				{
 					NavigationController.PresentViewController(viewCreator(), animated: true, completionHandler: ActionHelper.NoOp);
@@ -105,9 +105,21 @@ namespace Xmf2.Commons.iOS.Services
 				return false;
 			}
 		}
+
 		protected bool TryToFindViewControllerInStackOfType<TViewController>(out TViewController viewController) where TViewController : class
 		{
 			return this.NavigationController.TryToFindViewControllerInStackOfType(out viewController);
+		}
+
+		private UIViewController TopMostViewController()
+		{
+			UIViewController topController = UIApplication.SharedApplication.KeyWindow?.RootViewController.PresentedViewController;
+
+			while (topController?.PresentedViewController != null)
+			{
+				topController = topController.PresentedViewController;
+			}
+			return topController;
 		}
 	}
 }
