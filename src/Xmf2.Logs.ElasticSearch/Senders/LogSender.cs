@@ -51,7 +51,7 @@ namespace Xmf2.Logs.ElasticSearch.Senders
 				{
 					_contentSemaphore.Release();
 				}
-				_waitingContent.AppendLine($"{{\"index\":{{\"_index\":\"{entry.Index}\", \"_type\":\"{entry.Type}\"}}")
+				_waitingContent.AppendLine($"{{\"index\":{{\"_index\":\"{entry.Index}\", \"_type\":\"{entry.Type}\"}}}}")
 					.AppendLine(entry.Content);
 				
 				StoreBuffer(_waitingContent.ToString());
@@ -106,8 +106,10 @@ namespace Xmf2.Logs.ElasticSearch.Senders
 
 				return response.IsSuccessStatusCode;
 			}
-			catch (Exception)
+			catch (Exception ex)
 			{
+				int i = 0;
+				i++;
 				//ignore 
 			}
 
