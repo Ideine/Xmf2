@@ -104,23 +104,23 @@ namespace Xmf2.Commons.iOS.Controls
 			}
 		}
 
-		public NavBarWithTwoActions ConstrainHeightToDefault(bool withStatusBarHeight = true)
+		private const float NOTCH_EXTRA_SPACE = 12f;
+		public NavBarWithTwoActions ConstrainHeightToDefault()
 		{
-			if (withStatusBarHeight)
-			{
-				this.ConstrainHeight(LayoutConsts.UINavBar_DefaultHeight + LayoutConsts.UIStatusBar_DefaultHeight);
-			}
-			else
-			{
-				this.ConstrainHeight(LayoutConsts.UINavBar_DefaultHeight);
-			}
+			this.ConstrainHeight(  LayoutConsts.UINavBar_DefaultHeight
+			                     + (this.HaveNotch() ? NOTCH_EXTRA_SPACE : 0f)
+			                     + LayoutConsts.UIStatusBar_DefaultHeight
+			                     );
 			return this;
 		}
 
 		protected virtual void ApplyAutoLayout()
 		{
+			var topMargin = LayoutConsts.UIStatusBar_DefaultHeight
+						  + (this.HaveNotch() ? NOTCH_EXTRA_SPACE : 0f);
+			
 			//Vertical Layout
-			this.AnchorTop(_container, LayoutConsts.UIStatusBar_DefaultHeight)
+			this.AnchorTop(_container, topMargin)
 				.AnchorBottom(_container);
 
 			_container.CenterVertically(LeftButton)

@@ -9,6 +9,7 @@ using static UIKit.NSLayoutRelation;
 
 public static class CustomAutoLayoutExtensions
 {
+	
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static UIView CenterAndFillWidth(this UIView containerView, params UIView[] views)
@@ -685,4 +686,63 @@ public static class CustomAutoLayoutExtensions
 		view.SetContentHuggingPriority((float)priority, axis);
 		return view;
 	}
+
+
+	#region IPhone X
+
+	private const string IPHONE_8_CDMA 		= "iPhone10,1";
+	private const string IPHONE_8_GSM 		= "iPhone10,4";
+	private const string IPHONE_8_PLUS_CDMA = "iPhone10,2";
+	private const string IPHONE_8_PLUS_GSM 	= "iPhone10,5";
+
+	private static readonly string[] _lookLikeIPhoneXNames =
+	{
+		IPHONE_8_CDMA, IPHONE_8_GSM, IPHONE_8_PLUS_CDMA, IPHONE_8_PLUS_GSM
+	};
+
+	private static bool? _haveVirtualButton;
+	public static bool HaveVirtualButton(this UIResponder _) => HaveVirtualButton();
+	public static bool HaveVirtualButton()
+	{
+		if (!_haveVirtualButton.HasValue)
+		{
+			var currentDevice = UIDevice.CurrentDevice;
+			//First iPhone with virtual home button released was 'iPhone X with iOS 11'...
+			//...so we have to hanlde virtual button only if os >= 11.
+			if (currentDevice.CheckSystemVersion(11, 0))
+			{
+				_haveVirtualButton = currentDevice.Model.StartsWith("iPhone10", StringComparison.InvariantCultureIgnoreCase)
+								   || !_lookLikeIPhoneXNames.Contains(currentDevice.Model); //We must exclude iPhone 8, they start with 'iPhone10' but it's not 'iPhone X'.
+			}
+			else
+			{
+				_haveVirtualButton = false;
+			}
+		}
+		return _haveVirtualButton.Value;
+	}
+
+	private static bool? _haveNotch;
+	public static bool HaveNotch(this UIResponder _) => HaveNotch();
+	public static bool HaveNotch()
+	{
+		if (!_haveNotch.HasValue)
+		{
+			var currentDevice = UIDevice.CurrentDevice;
+			//First iPhone with notch released was 'iPhone X with iOS 11'...
+			//...so we have to hanlde notch only if os >= 11.
+			if (currentDevice.CheckSystemVersion(11, 0))
+			{
+				_haveNotch = currentDevice.Model.StartsWith("iPhone10", StringComparison.InvariantCultureIgnoreCase)
+								   || !_lookLikeIPhoneXNames.Contains(currentDevice.Model); //We must exclude iPhone 8, they start with 'iPhone10' but it's not 'iPhone X'.
+			}
+			else
+			{
+				_haveNotch = false;
+			}
+		}
+		return _haveNotch.Value;
+	}
+
+	#endregion IPhone X
 }
