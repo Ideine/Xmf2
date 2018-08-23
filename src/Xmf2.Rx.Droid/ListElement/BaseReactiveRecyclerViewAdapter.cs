@@ -76,27 +76,36 @@ namespace Xmf2.Rx.Droid.ListElement
 		{
 			new Handler(Looper.MainLooper).Post(() =>
 			{
-				switch (e.Action)
+				try
 				{
-					case NotifyCollectionChangedAction.Add:
-						NotifyItemInserted(e.NewStartingIndex);
-						break;
-					case NotifyCollectionChangedAction.Move:
-						NotifyItemMoved(e.OldStartingIndex, e.NewStartingIndex);
-						break;
-					case NotifyCollectionChangedAction.Remove:
-						if (e.OldItems.Count > 1)
-						{
-							NotifyItemRangeRemoved(e.OldStartingIndex, e.OldItems.Count);
-						}
-						else
-						{
-							NotifyItemRemoved(e.OldStartingIndex);
-						}
-						break;
-					default:
-						NotifyDataSetChanged();
-						break;
+					switch (e.Action)
+					{
+						case NotifyCollectionChangedAction.Add:
+							NotifyItemInserted(e.NewStartingIndex);
+							break;
+						case NotifyCollectionChangedAction.Move:
+							NotifyItemMoved(e.OldStartingIndex, e.NewStartingIndex);
+							break;
+						case NotifyCollectionChangedAction.Remove:
+							if (e.OldItems.Count > 1)
+							{
+								NotifyItemRangeRemoved(e.OldStartingIndex, e.OldItems.Count);
+							}
+							else
+							{
+								NotifyItemRemoved(e.OldStartingIndex);
+							}
+							break;
+						default:
+							NotifyDataSetChanged();
+							break;
+					}
+				}
+				catch (Exception)
+				{
+					//Mostly occurs in default case when execute NotifyDataSetChanged();
+					//It was caused by calling manual Dispose on Adapter when setting new adapter to RecyclerView.
+					//Or Adapter instance was Disposed but not unhooked from Data Source events, and in event method was code working with context.
 				}
 			});
 		}
