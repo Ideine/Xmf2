@@ -41,6 +41,7 @@ namespace Xmf2.Rx.Errors
 			});
 		}
 
+
 		protected virtual AccessDataException ProcessException(Exception ex)
 		{
 			switch (ex)
@@ -62,6 +63,9 @@ namespace Xmf2.Rx.Errors
 
 				case Rest.OAuth2.RestException restException when HttpStatusCode.NotFound == restException.Response.StatusCode:
 					return new AccessDataException(AccessDataException.ErrorType.NotFound, ex);
+				
+				case Rest.OAuth2.RestException restException when HttpStatusCode.Forbidden == restException.Response.StatusCode:
+					return new AccessDataException(AccessDataException.ErrorType.Forbidden, ex);
 
 				default:
 					return new AccessDataException(AccessDataException.ErrorType.Unknown, ex);

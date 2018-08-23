@@ -11,7 +11,8 @@ namespace Xmf2.Commons.Exceptions
 			UnAuthorized = 2,
 			Timeout = 3,
 			InvalidAppVersion = 4,
-			NotFound = 5
+			NotFound = 5,
+			Forbidden = 6
 		}
 
 		public ErrorType Type { get; private set; }
@@ -35,6 +36,7 @@ namespace Xmf2.Commons.Exceptions
 				case ErrorType.UnAuthorized: return "Access Data Exception : Unauthorized";
 				case ErrorType.InvalidAppVersion: return "Access Data Exception : Invalid app version";
 				case ErrorType.NotFound: return "Access Data Exception : Not found";
+				case ErrorType.Forbidden: return "Access Data Exception : Forbidden";
 				default:
 					return "Access Data Exception : Unknown data access error";
 			}
