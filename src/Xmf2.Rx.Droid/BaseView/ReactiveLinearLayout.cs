@@ -80,4 +80,67 @@ namespace Xmf2.Rx.Droid.BaseView
 
 		protected virtual void OnViewModelSet() { }
 	}
+
+	public class ReactiveLinearLayoutWithViewModel : LinearLayout, IViewFor, ICanActivate
+	{
+		protected readonly XmfDisposable Disposable = new XmfDisposable();
+
+		#region Constructor
+
+		public ReactiveLinearLayoutWithViewModel(Context context) : base(context) { }
+		public ReactiveLinearLayoutWithViewModel(Context context, IAttributeSet attrs) : base(context, attrs) { }
+		public ReactiveLinearLayoutWithViewModel(Context context, IAttributeSet attrs, int defStyle) : base(context, attrs, defStyle) { }
+		protected ReactiveLinearLayoutWithViewModel(IntPtr javaReference, JniHandleOwnership transfer) : base(javaReference, transfer) { }
+
+		#endregion
+
+		#region Reactive UI
+
+		private object _viewModel;
+		public virtual object ViewModel
+		{
+			get => _viewModel;
+			set
+			{
+				if (!Equals(_viewModel, value))
+				{
+					_viewModel = value;
+				}
+
+				OnViewModelSet();
+
+				if (value != null)
+				{
+					this.Activate();
+				}
+			}
+		}
+
+		object IViewFor.ViewModel
+		{
+			get => ViewModel;
+			set => ViewModel = value;
+		}
+
+		protected override void Dispose(bool disposing)
+		{
+			if (disposing)
+			{
+				Disposable.Dispose();
+			}
+			base.Dispose(disposing);
+		}
+
+		private readonly CanActivateImplementation _activationImpl = new CanActivateImplementation();
+
+		public new IObservable<Unit> Activated => _activationImpl.Activated;
+		public IObservable<Unit> Deactivated => _activationImpl.Deactivated;
+
+		public void Activate() => _activationImpl.Activate();
+		public void Deactivate() => _activationImpl.Deactivate();
+
+		#endregion
+
+		protected virtual void OnViewModelSet() { }
+	}
 }
