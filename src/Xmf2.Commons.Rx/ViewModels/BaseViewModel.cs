@@ -52,25 +52,25 @@ namespace Xmf2.Commons.Rx.ViewModels
 
 		#region Wrap for error
 
-		protected Task WrapForError(IObservable<Unit> source, CustomErrorHandler errorHandler = null)
+		protected Task WrapForError(IObservable<Unit> source, CustomErrorHandler errorHandler = null, int timeoutSeconds = 90)
 		{
 			return ErrorHanler.Value
-							  .Execute(source.Timeout(TimeSpan.FromSeconds(90)), errorHandler)
-							  .Catch<Unit, Exception>(ex => Observable.Return(default(Unit)))
-							  .WaitForOneAsync();
+				.Execute(source.Timeout(TimeSpan.FromSeconds(timeoutSeconds)), errorHandler)
+				.Catch<Unit, Exception>(ex => Observable.Return(default(Unit)))
+				.WaitForOneAsync();
 		}
 
-		protected Task<TResult> WrapForError<TResult>(IObservable<TResult> source, CustomErrorHandler errorHandler = null)
+		protected Task<TResult> WrapForError<TResult>(IObservable<TResult> source, CustomErrorHandler errorHandler = null, int timeoutSeconds = 90)
 		{
 			return ErrorHanler.Value
-				              .Execute(source.Timeout(TimeSpan.FromSeconds(90)), errorHandler)
-							  .Catch<TResult, Exception>(ex => Observable.Return(default(TResult)))
-							  .WaitForOneAsync();
+				.Execute(source.Timeout(TimeSpan.FromSeconds(timeoutSeconds)), errorHandler)
+				.Catch<TResult, Exception>(ex => Observable.Return(default(TResult)))
+				.WaitForOneAsync();
 		}
 
-		protected Task WrapForError(Func<Task> action, CustomErrorHandler errorHandler = null) => WrapForError(Observable.FromAsync(action), errorHandler);
+		protected Task WrapForError(Func<Task> action, CustomErrorHandler errorHandler = null, int timeoutSeconds = 90) => WrapForError(Observable.FromAsync(action), errorHandler, timeoutSeconds);
 
-		protected Task<TResult> WrapForError<TResult>(Func<Task<TResult>> action, CustomErrorHandler errorHandler = null) => WrapForError(Observable.FromAsync(action), errorHandler);
+		protected Task<TResult> WrapForError<TResult>(Func<Task<TResult>> action, CustomErrorHandler errorHandler = null, int timeoutSeconds = 90) => WrapForError(Observable.FromAsync(action), errorHandler, timeoutSeconds);
 
 		#endregion
 
@@ -202,6 +202,7 @@ namespace Xmf2.Commons.Rx.ViewModels
 						{
 							return;
 						}
+
 						_isRunning = true;
 					}
 
