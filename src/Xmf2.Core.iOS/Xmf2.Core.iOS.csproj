@@ -40,15 +40,9 @@
   <ItemGroup>
     <Compile Include="Controls\DynamicCollectionView.cs" />
     <Compile Include="Controls\HorizontalConstraintCreator.cs" />
-    <Compile Include="Controls\IUIBackgroundHighlight.cs" />
     <Compile Include="Controls\NestedScrollView.cs" />
-    <Compile Include="Controls\UIActionHighlightButton.cs" />
-    <Compile Include="Controls\UIBackgroundHighlightButton.cs" />
-    <Compile Include="Controls\UIBackgroundHighlightSelectedButton.cs" />
-    <Compile Include="Controls\UIBaseHighlightSelectedButton.cs" />
     <Compile Include="Controls\UIBaseLinearLayout.cs" />
     <Compile Include="Controls\UILinearLayout.cs" />
-    <Compile Include="Controls\UIBaseHighlightButton.cs" />
     <Compile Include="Controls\UILoadingView.cs" />
     <Compile Include="Controls\UIPaddingLabel.cs" />
     <Compile Include="Controls\UIRightImageButton.cs" />
@@ -67,7 +61,6 @@
     <Compile Include="Helpers\DeviceHelper.cs" />
     <Compile Include="Layouts\BindingExtensions.cs" />
     <Compile Include="Layouts\CreatorExtensions.cs" />
-    <Compile Include="Layouts\CustomControlsCreatorExtensions.cs" />
     <Compile Include="Layouts\Layout.cs" />
     <Compile Include="Layouts\LayoutExtensions.cs" />
     <Compile Include="Layouts\ViewExtensions.cs" />
@@ -87,9 +80,9 @@
     <Compile Include="Extensions\NSAttributedStringExtensions.cs" />
     <Compile Include="Layouts\Anchors.cs" />
     <Compile Include="Services\NotificationAppDelegate.cs" />
-    <Compile Include="Controls\UIRoundCornerButton.cs" />
     <Compile Include="Controls\UIDashedView.cs" />
     <Compile Include="Controls\UIDashedControl.cs" />
+    <Compile Include="Controls\UIRoundCornerButton.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Xmf2.Core\Xmf2.Core.csproj">

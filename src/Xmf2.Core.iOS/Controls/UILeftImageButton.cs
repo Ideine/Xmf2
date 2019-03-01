@@ -1,9 +1,9 @@
-﻿using System;
-using CoreGraphics;
+﻿using CoreGraphics;
+using UIKit;
 
 namespace Xmf2.Core.iOS.Controls
 {
-	public class UILeftImageButton : UIBackgroundHighlightButton
+	public class UILeftImageButton : UIButton
 	{
 		public UILeftImageButton()
 		{

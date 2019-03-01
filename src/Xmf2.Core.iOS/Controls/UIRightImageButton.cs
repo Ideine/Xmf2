@@ -1,11 +1,10 @@
 ﻿using System;
 using CoreGraphics;
 using UIKit;
-using Xmf2.Core.iOS.Controls;
 
 namespace Xmf2.Commons.iOS.Controls
 {
-	public class UIRightImageButton : UIBackgroundHighlightButton
+	public class UIRightImageButton : UIButton
 	{
 		public override CGRect ContentRectForBounds(CGRect rect)
 		{

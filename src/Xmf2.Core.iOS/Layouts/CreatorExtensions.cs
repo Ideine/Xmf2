@@ -1347,63 +1347,6 @@ public static class CreatorExtensions
 
 	#endregion UITableView
 
-	#region UIActionHighlightButton
-
-	public static UIActionHighlightButton WithFadeFeedbackRedirect(this UIActionHighlightButton button, params UIView[] onViews)
-	{
-		button.ToHighlightedAnimation = _ =>
-		{
-			foreach (var view in onViews)
-			{
-				view.FadeTo58Percent();
-			}
-		};
-		button.FromHighlightedAnimation = _ =>
-		{
-			foreach (var view in onViews)
-			{
-				view.FadeTo100Percent();
-			}
-		};
-		return button;
-	}
-
-	public static UIActionHighlightButton WithFadeFeedbackOnSuperview(this UIActionHighlightButton button)
-	{
-		button.ToHighlightedAnimation = _ => button.Superview?.FadeTo58Percent();
-		button.FromHighlightedAnimation = _ => button.Superview?.FadeTo100Percent();
-		return button;
-	}
-
-	public static UIActionHighlightButton WitFeedbackOnSuperview(this UIActionHighlightButton button, UIColor bgColor, UIColor feedBackColor)
-	{
-		button.FromHighlightedAnimation = _ => button.Superview.WithBackgroundColor(bgColor);
-		button.ToHighlightedAnimation = _ => button.Superview.WithBackgroundColor(feedBackColor);
-		return button;
-	}
-
-	public static UIActionHighlightButton WithFeedbackOnSelf(this UIActionHighlightButton button, UIColor bgColor, UIColor feedBackColor)
-	{
-		return WithFeedBack(button, (clickbutton) =>
-		{
-			button.WithBackgroundColor(feedBackColor);
-		}, (clickbutton) =>
-		{
-			button.WithBackgroundColor(bgColor);
-		});
-	}
-
-	public static UIActionHighlightButton WithFeedBack(this UIActionHighlightButton button,
-		Action<UIActionHighlightButton> toHighlightedAnimation,
-		Action<UIActionHighlightButton> fromHighlightedAnimation)
-	{
-		button.ToHighlightedAnimation = toHighlightedAnimation;
-		button.FromHighlightedAnimation = fromHighlightedAnimation;
-		return button;
-	}
-
-	#endregion UIActionHighlightButton
-
 	#region UILinearLayout
 
 	public static UILinearLayout CreateVerticalLinearLayout(this object _)

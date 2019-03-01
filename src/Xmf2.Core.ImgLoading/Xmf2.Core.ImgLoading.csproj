@@ -5,9 +5,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Xmf2.Components\Xmf2.Core\Xmf2.Core.csproj" />
+    <PackageReference Include="Xamarin.FFImageLoading" Version="2.4.4.859" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Xamarin.FFImageLoading" Version="2.4.4.859" />
+    <ProjectReference Include="..\Xmf2.Core\Xmf2.Core.csproj" />
   </ItemGroup>
 </Project>

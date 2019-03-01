@@ -4,7 +4,7 @@ using UIKit;
 
 namespace Xmf2.Core.iOS.Controls
 {
-	public class UISwappedImageButton : UIBackgroundHighlightButton
+	public class UISwappedImageButton : UIButton
 	{
 		private static readonly CGAffineTransform _flipTransform = CGAffineTransform.MakeScale(-1.0f, 1.0f);
 
