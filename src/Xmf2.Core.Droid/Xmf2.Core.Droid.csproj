@@ -1,0 +1,102 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{73A2EAAF-6E38-4467-A933-03F577D2A0E3}</ProjectGuid>
+    <ProjectTypeGuids>{EFBA0AD7-5A72-4C68-AF49-83D382785DCF};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Xmf2.Core.Droid</RootNamespace>
+    <AssemblyName>Xmf2.Core.Droid</AssemblyName>
+    <FileAlignment>512</FileAlignment>
+    <AndroidResgenFile>Resources\Resource.Designer.cs</AndroidResgenFile>
+    <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
+    <TargetFrameworkVersion>v8.1</TargetFrameworkVersion>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Mono.Android" />
+    <Reference Include="mscorlib" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Net.Http" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Extensions\ConverterExtensions.cs" />
+    <Compile Include="Extensions\FragmentExtensions.cs" />
+    <Compile Include="Helpers\LoadingViewHelper.cs" />
+    <Compile Include="Helpers\ScaleTouchTransformer.cs" />
+    <Compile Include="Helpers\UIHelper.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Parallax\ParallaxScrollView.cs" />
+    <Compile Include="Parallax\ParallaxedView.cs" />
+    <Compile Include="Resources\Resource.Designer.cs" />
+    <Compile Include="Services\AppVersionService.cs" />
+    <Compile Include="Extensions\EventsExtensions.cs" />
+    <Compile Include="Extensions\ColorStateListHelper.cs" />
+    <Compile Include="Extensions\ViewExtensions.cs" />
+    <Compile Include="Permissions\PermissionContainer.cs" />
+    <Compile Include="Permissions\IPermissionsHandlingActivity.cs" />
+    <Compile Include="Services\LicenceReaderService.cs" />
+    <Compile Include="Helpers\ProgressWebChromeClient.cs" />
+    <Compile Include="Extensions\ActivityExtensions.cs" />
+    <Compile Include="Helpers\KeyboardHelper.cs" />
+    <Compile Include="Extensions\WrapDisposedException.cs" />
+    <Compile Include="Controls\RoundedFrameLayout.cs" />
+    <Compile Include="Services\UIDispatcher.cs" />
+    <Compile Include="Services\NativeHttpClientFactory.cs" />
+    <Compile Include="Helpers\GlobalLayoutHelper.cs" />
+    <Compile Include="Helpers\CollapseLevelScrollChangedHelper.cs" />
+    <Compile Include="Helpers\CollapseLevelEvent.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Xamarin.Android.Support.v4" Version="27.0.2" />
+    <PackageReference Include="Xamarin.Android.Support.v7.AppCompat" Version="27.0.2" />
+    <PackageReference Include="Plugin.CurrentActivity">
+      <Version>2.1.0.4</Version>
+    </PackageReference>
+    <PackageReference Include="Ideine.ModernHttpClient">
+      <Version>3.2.2</Version>
+    </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\values\attrs.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Xmf2.Core\Xmf2.Core.csproj">
+      <Project>{87A1C2DE-44B0-480F-A4EC-20C211C6C370}</Project>
+      <Name>Xmf2.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Xmf2.Components\Xmf2.Components.csproj">
+      <Project>{029A0034-C63A-4EA4-9342-BB1ED2C794DF}</Project>
+      <Name>Xmf2.Components</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\LoadingView.axml" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
+</Project>

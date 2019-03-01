@@ -1,0 +1,79 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{D4360632-8EB6-41ED-8D11-3C3B9FA38B12}</ProjectGuid>
+    <ProjectTypeGuids>{FEACFBD2-3405-455C-9665-78FE426C6842};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <RootNamespace>Xmf2.Components.iOS</RootNamespace>
+    <IPhoneResourcePrefix>Resources</IPhoneResourcePrefix>
+    <AssemblyName>Xmf2.Components.iOS</AssemblyName>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>full</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Core" />
+    <Reference Include="Xamarin.iOS" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="CollectionView\CollectionViewItemCell.cs" />
+    <Compile Include="CollectionView\CollectionViewItemSource.cs" />
+    <Compile Include="Interfaces\IComponentView.cs" />
+    <Compile Include="Interfaces\IViewPresenterService.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\ViewPresenterService.cs" />
+    <Compile Include="Views\BaseComponentView.cs" />
+    <Compile Include="Views\BaseViewController.cs" />
+    <Compile Include="TableView\TableViewItemSource.cs" />
+    <Compile Include="TableView\TableViewItemCell.cs" />
+    <Compile Include="Views\HandleFreeRotateNavigationController.cs" />
+    <Compile Include="Controls\TableListView.cs" />
+    <Compile Include="Controls\CollectionGridView.cs" />
+    <Compile Include="ChipCloud\ChipCloudView.cs" />
+    <Compile Include="Controls\ChipCloudComponentView.cs" />
+    <Compile Include="ChipCloud\ChipCloudItemSource.cs" />
+    <Compile Include="ChipCloud\LayoutProcessor.cs" />
+    <Compile Include="ChipCloud\Cells\ChipCloudItemCell.cs" />
+    <Compile Include="ChipCloud\IChipCloudItemSource.cs" />
+    <Compile Include="Controls\ListViewControl.cs" />
+    <Compile Include="Views\Multistates\ByCaseView.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Xmf2.Components\Xmf2.Components.csproj">
+      <Project>{029A0034-C63A-4EA4-9342-BB1ED2C794DF}</Project>
+      <Name>Xmf2.Components</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Xmf2.Core.iOS\Xmf2.Core.iOS.csproj">
+      <Project>{b7d44b51-49c8-40a1-a99d-ef34f8560448}</Project>
+      <Name>Xmf2.Core.iOS</Name>
+      <IsAppExtension>false</IsAppExtension>
+      <IsWatchApp>false</IsWatchApp>
+    </ProjectReference>
+    <ProjectReference Include="..\Xmf2.Core\Xmf2.Core.csproj">
+      <Project>{87A1C2DE-44B0-480F-A4EC-20C211C6C370}</Project>
+      <Name>Xmf2.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
+</Project>

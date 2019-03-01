@@ -1,0 +1,109 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{DA315AA6-2611-43C8-8237-FB62543EEE77}</ProjectGuid>
+    <ProjectTypeGuids>{EFBA0AD7-5A72-4C68-AF49-83D382785DCF};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Xmf2.Components.Droid</RootNamespace>
+    <AssemblyName>Xmf2.Components.Droid</AssemblyName>
+    <FileAlignment>512</FileAlignment>
+    <AndroidResgenFile>Resources\Resource.Designer.cs</AndroidResgenFile>
+    <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
+    <TargetFrameworkVersion>v8.1</TargetFrameworkVersion>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Mono.Android" />
+    <Reference Include="mscorlib" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Controls\ComponentStub.cs" />
+    <Compile Include="Fragments\BaseDialogFragment.cs" />
+    <Compile Include="Fragments\BaseFragment.cs" />
+    <Compile Include="Fragments\BaseFragmentActivity.cs" />
+    <Compile Include="Fragments\IBackFragment.cs" />
+    <Compile Include="Fragments\IFragmentActivity.cs" />
+    <Compile Include="Interfaces\IComponentView.cs" />
+    <Compile Include="Interfaces\ILayoutInflaterResolver.cs" />
+    <Compile Include="Interfaces\IViewPresenterService.cs" />
+    <Compile Include="LinearList\AndroidLinearListView.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\FragmentResolverService.cs" />
+    <Compile Include="Services\LayoutInflaterResolver.cs" />
+    <Compile Include="Services\ViewPresenterService.cs" />
+    <Compile Include="Views\BaseActivity.cs" />
+    <Compile Include="Views\BaseComponentView.cs" />
+    <Compile Include="LinearList\LinearListAdapter.cs" />
+    <Compile Include="LinearList\DiffListUtil.cs" />
+    <Compile Include="Events\ConfigurationChangedEvent.cs" />
+    <Compile Include="LinearList\LinearListView.cs" />
+    <Compile Include="Controls\ChipCloud\ChipCloud.cs" />
+    <Compile Include="Controls\ChipCloud\ChipCloudAdapter.cs" />
+    <Compile Include="Controls\ChipCloud\ChipCloudView.cs" />
+    <Compile Include="Controls\ChipCloud\FlowLayout.cs" />
+    <Compile Include="Controls\ChipCloud\LayoutProcessor.cs" />
+    <Compile Include="List\CommonAdapter.cs" />
+    <Compile Include="List\ParallaxRecyclerViewHelper.cs" />
+    <Compile Include="List\DiffList.cs" />
+    <Compile Include="List\CustomDiffDispatcher.cs" />
+    <Compile Include="List\CellViewHolder.cs" />
+    <Compile Include="List\IListView.cs" />
+    <Compile Include="List\StickyRecyclerHelper.cs" />
+    <Compile Include="List\StickyView.cs" />
+    <Compile Include="Views\Multistates\ByCaseView.cs" />
+    <Compile Include="Views\Multistates\DraftView.cs" />
+    <Compile Include="Components\GridComponentView.cs" />
+    <Compile Include="RecyclerList\CommonAdapter.cs" />
+    <Compile Include="RecyclerList\CellViewHolder.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Xmf2.Components\Xmf2.Components.csproj">
+      <Project>{029A0034-C63A-4EA4-9342-BB1ED2C794DF}</Project>
+      <Name>Xmf2.Components</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Xmf2.Core.Droid\Xmf2.Core.Droid.csproj">
+      <Project>{73a2eaaf-6e38-4467-a933-03f577d2a0e3}</Project>
+      <Name>Xmf2.Core.Droid</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Xmf2.Core\Xmf2.Core.csproj">
+      <Project>{87A1C2DE-44B0-480F-A4EC-20C211C6C370}</Project>
+      <Name>Xmf2.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Xamarin.Android.Support.v4" Version="27.0.2" />
+    <PackageReference Include="Xamarin.Android.Support.v7.AppCompat" Version="27.0.2" />
+    <PackageReference Include="Plugin.CurrentActivity">
+      <Version>2.1.0.4</Version>
+    </PackageReference>
+    <PackageReference Include="Xamarin.Android.Support.v7.RecyclerView">
+      <Version>27.0.2</Version>
+    </PackageReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
+</Project>
