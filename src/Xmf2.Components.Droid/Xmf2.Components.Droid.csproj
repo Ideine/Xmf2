@@ -77,9 +77,10 @@
     <Compile Include="List\StickyView.cs" />
     <Compile Include="Views\Multistates\ByCaseView.cs" />
     <Compile Include="Views\Multistates\DraftView.cs" />
-    <Compile Include="Components\GridComponentView.cs" />
     <Compile Include="RecyclerList\CommonAdapter.cs" />
     <Compile Include="RecyclerList\CellViewHolder.cs" />
+    <Compile Include="Navigations\NavigationPresenter.cs" />
+    <Compile Include="Navigations\NavigationRegistrationHandler.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Xmf2.Components\Xmf2.Components.csproj">
