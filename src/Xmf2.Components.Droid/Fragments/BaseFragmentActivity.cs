@@ -1,17 +1,16 @@
 ﻿using System;
-using System.Linq;
-using System.Threading.Tasks;
-using Android.Content.PM;
 using Android.OS;
 using Android.Runtime;
+using Android.Content.PM;
+using System.Threading.Tasks;
 using Android.Support.V4.App;
 using Android.Support.V7.App;
-using Xmf2.Components.Bootstrappers;
-using Xmf2.Components.Droid.Events;
-using Xmf2.Components.Droid.Services;
 using Xmf2.Components.Events;
-using Xmf2.Core.Droid.Permissions;
 using Xmf2.Core.Subscriptions;
+using Xmf2.Core.Droid.Permissions;
+using Xmf2.Components.Droid.Events;
+using Xmf2.Components.Bootstrappers;
+using Xmf2.Components.Droid.Navigations;
 using Fragment = Android.Support.V4.App.Fragment;
 
 namespace Xmf2.Components.Droid.Fragments
@@ -20,7 +19,7 @@ namespace Xmf2.Components.Droid.Fragments
 	{
 		protected Xmf2Disposable Disposables = new Xmf2Disposable();
 
-		protected abstract int FragmentContainerId { get; }
+		public abstract int FragmentContainerId { get; }
 
 		protected abstract int LayoutId { get; }
 
@@ -42,30 +41,11 @@ namespace Xmf2.Components.Droid.Fragments
 				fragManager => fragManager.BackStackChanged -= OnBackStackChanged
 			).DisposeEventWith(Disposables);
 
-			if (Intent?.Extras?.ContainsKey(FragmentResolverService.ENTRY_POINT) ?? false)
+			if (Intent?.Extras?.ContainsKey(NavigationPresenter.FRAGMENT_START_PARAMETER_CODE) ?? false)
 			{
-				var entry = Intent.Extras.GetString(FragmentResolverService.ENTRY_POINT);
-				var typefrag = BaseApplicationBootstrapper.StaticServices.Resolve<IFragmentResolverService>().GetType(entry);
-				RunOnUiThread(() =>
-				{
-					var frag = Activator.CreateInstance(typefrag) as Fragment;
-					this.ShowFragment(frag, FragmentContainerId, true);
-				});
-			}
-
-			if (Intent?.Extras?.ContainsKey(FragmentResolverService.LIST_ENTRY_POINT) ?? false)
-			{
-				var entryArray = Intent.Extras.GetStringArray(FragmentResolverService.LIST_ENTRY_POINT);
-				var typeArray = entryArray.Select(BaseApplicationBootstrapper.StaticServices.Resolve<IFragmentResolverService>().GetType).ToArray();
-
-				RunOnUiThread(() =>
-				{
-					foreach (var type in typeArray)
-					{
-						var frag = Activator.CreateInstance(type) as Fragment;
-						this.ShowFragment(frag, FragmentContainerId, true);
-					}
-				});
+				string navigationKey = Intent.Extras.GetString(NavigationPresenter.FRAGMENT_START_PARAMETER_CODE);
+				IDeferredNavigationAction deferredNavigationAction = NavigationParameterContainer.GetDeferredNavigationAction(navigationKey);
+				deferredNavigationAction.Execute(this);
 			}
 		}
 
@@ -86,12 +66,6 @@ namespace Xmf2.Components.Droid.Fragments
 			{
 				frag.BackPressed();
 			}
-		}
-
-		public virtual void ShowFragment<TFragment>(bool addToBackstack = true)
-			where TFragment : Fragment, new()
-		{
-			RunOnUiThread(() => this.ShowFragment(new TFragment(), FragmentContainerId, addToBackstack));
 		}
 
 		#region IPermissionHandlingActivity

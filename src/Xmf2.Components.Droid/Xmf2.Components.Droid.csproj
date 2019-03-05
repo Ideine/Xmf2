@@ -47,15 +47,11 @@
     <Compile Include="Fragments\BaseFragment.cs" />
     <Compile Include="Fragments\BaseFragmentActivity.cs" />
     <Compile Include="Fragments\IBackFragment.cs" />
-    <Compile Include="Fragments\IFragmentActivity.cs" />
     <Compile Include="Interfaces\IComponentView.cs" />
     <Compile Include="Interfaces\ILayoutInflaterResolver.cs" />
-    <Compile Include="Interfaces\IViewPresenterService.cs" />
     <Compile Include="LinearList\AndroidLinearListView.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\FragmentResolverService.cs" />
     <Compile Include="Services\LayoutInflaterResolver.cs" />
-    <Compile Include="Services\ViewPresenterService.cs" />
     <Compile Include="Views\BaseActivity.cs" />
     <Compile Include="Views\BaseComponentView.cs" />
     <Compile Include="LinearList\LinearListAdapter.cs" />
