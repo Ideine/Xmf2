@@ -56,7 +56,6 @@
     <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Services\AppVersionService.cs" />
     <Compile Include="Extensions\EventsExtensions.cs" />
-    <Compile Include="Extensions\ColorStateListHelper.cs" />
     <Compile Include="Extensions\ViewExtensions.cs" />
     <Compile Include="Permissions\PermissionContainer.cs" />
     <Compile Include="Permissions\IPermissionsHandlingActivity.cs" />
@@ -71,6 +70,11 @@
     <Compile Include="Helpers\GlobalLayoutHelper.cs" />
     <Compile Include="Helpers\CollapseLevelScrollChangedHelper.cs" />
     <Compile Include="Helpers\CollapseLevelEvent.cs" />
+    <Compile Include="Helpers\TouchViewListener.cs" />
+    <Compile Include="Extensions\FeedbackExtensions.cs" />
+    <Compile Include="Extensions\BackgroundExtensions.cs" />
+    <Compile Include="Extensions\TextExtensions.cs" />
+    <Compile Include="Dialogs\BaseDialog.cs" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Xamarin.Android.Support.v4" Version="27.0.2" />
