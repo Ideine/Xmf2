@@ -12,9 +12,6 @@ namespace Xmf2.Components.Services
 			Services = services;
 		}
 
-		public Lazy<TService> LazyResolver<TService>()
-		{
-			return new Lazy<TService>(Services.Resolve<TService>);
-		}
+		public Lazy<TService> LazyResolver<TService>() => Services.LazyResolver<TService>();
 	}
 }
