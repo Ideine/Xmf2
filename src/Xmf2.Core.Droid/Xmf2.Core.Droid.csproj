@@ -75,6 +75,7 @@
     <Compile Include="Extensions\BackgroundExtensions.cs" />
     <Compile Include="Extensions\TextExtensions.cs" />
     <Compile Include="Dialogs\BaseDialog.cs" />
+    <Compile Include="Helpers\ResizeViewHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Xamarin.Android.Support.v4" Version="27.0.2" />
