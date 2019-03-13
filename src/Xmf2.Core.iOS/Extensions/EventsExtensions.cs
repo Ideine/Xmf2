@@ -29,6 +29,14 @@ namespace Xmf2.Core.iOS.Extensions
 				autoSubscribe);
 		}
 
+		public static EventSubscriber<UITextField> TextEditingDidEnd(this UITextField input, EventHandler onEditingDidEnd, bool autoSubscribe = true)
+			=> new EventSubscriber<UITextField>(
+			   input,
+			   i => i.EditingDidEnd += onEditingDidEnd,
+			   i => i.EditingDidEnd -= onEditingDidEnd,
+			   autoSubscribe
+		   );
+
 		public static EventSubscriber<UIScrollView> ScrollChanged(this UIScrollView scrollView, EventHandler handler, bool autoSubscribe = true)
 		{
 			return new EventSubscriber<UIScrollView>(

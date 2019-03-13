@@ -8,7 +8,7 @@ namespace Xmf2.Core.iOS.Controls
 {
 	public class VisibilityToggleContainer : UIView
 	{
-		private readonly Xmf2Disposable _disposable = new Xmf2Disposable();
+		protected Xmf2Disposable Disposable { get; }
 
 		private UIEdgeInsets _insets = UIEdgeInsets.Zero;
 
@@ -42,10 +42,11 @@ namespace Xmf2.Core.iOS.Controls
 
 		public VisibilityToggleContainer()
 		{
-
+			Disposable = new Xmf2Disposable();
 		}
 		public VisibilityToggleContainer(UIView child)
 		{
+			Disposable = new Xmf2Disposable();
 			SetChild(child);
 		}
 
@@ -57,10 +58,10 @@ namespace Xmf2.Core.iOS.Controls
 			}
 			_child = child;
 			_child.TranslatesAutoresizingMaskIntoConstraints = false;
-			_topConstraint 	  = NSLayoutConstraint.Create(this, Top, 	Equal, _child, Top	 , 1, -_insets.Top).DisposeWith(_disposable);
-			_bottomConstraint = NSLayoutConstraint.Create(this, Bottom, Equal, _child, Bottom, 1,  _insets.Bottom).DisposeWith(_disposable);
-			_leftConstraint   = NSLayoutConstraint.Create(this, Left, 	Equal, _child, Left	 , 1, -_insets.Left).DisposeWith(_disposable);
-			_rightConstraint  = NSLayoutConstraint.Create(this, Right, 	Equal, _child, Right , 1,  _insets.Right).DisposeWith(_disposable);
+			_topConstraint 	  = NSLayoutConstraint.Create(this, Top, 	Equal, _child, Top	 , 1, -_insets.Top).DisposeWith(Disposable);
+			_bottomConstraint = NSLayoutConstraint.Create(this, Bottom, Equal, _child, Bottom, 1,  _insets.Bottom).DisposeWith(Disposable);
+			_leftConstraint   = NSLayoutConstraint.Create(this, Left, 	Equal, _child, Left	 , 1, -_insets.Left).DisposeWith(Disposable);
+			_rightConstraint  = NSLayoutConstraint.Create(this, Right, 	Equal, _child, Right , 1,  _insets.Right).DisposeWith(Disposable);
 
 			_topConstraint	 .SetIdentifier($"{nameof(VisibilityToggleContainer)}.{nameof(_topConstraint)}");
 			_bottomConstraint.SetIdentifier($"{nameof(VisibilityToggleContainer)}.{nameof(_bottomConstraint)}");
@@ -79,14 +80,14 @@ namespace Xmf2.Core.iOS.Controls
 		{
 			_emptyHeightConstraint?.Disable();
 			_emptyHeightConstraint = customHeightConstraint
-								  ?? NSLayoutConstraint.Create(this, Height, LessThanOrEqual, 1f, 0f).DisposeWith(_disposable).WithAutomaticIdentifier();
+								  ?? NSLayoutConstraint.Create(this, Height, LessThanOrEqual, 1f, 0f).DisposeWith(Disposable).WithAutomaticIdentifier();
 			return this;
 		}
 		public VisibilityToggleContainer WithEmptyWidthConstraint(NSLayoutConstraint customWidthConstraint = null)
 		{
 			_emptyWidthConstraint?.Disable();
 			_emptyWidthConstraint = customWidthConstraint
-								  ?? NSLayoutConstraint.Create(this, Width, LessThanOrEqual, 1f, 0f).DisposeWith(_disposable).WithAutomaticIdentifier();
+								  ?? NSLayoutConstraint.Create(this, Width, LessThanOrEqual, 1f, 0f).DisposeWith(Disposable).WithAutomaticIdentifier();
 			return this;
 		}
 		public VisibilityToggleContainer WithContentInsets(nfloat top, nfloat left, nfloat bottom, nfloat right)
@@ -144,7 +145,7 @@ namespace Xmf2.Core.iOS.Controls
 				_rightConstraint = null;
 				_emptyHeightConstraint = null;
 				_emptyWidthConstraint = null;
-				_disposable.Dispose();
+				Disposable.Dispose();
 			}
 			base.Dispose(disposing);
 		}
