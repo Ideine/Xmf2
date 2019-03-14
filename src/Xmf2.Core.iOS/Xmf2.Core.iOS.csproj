@@ -83,6 +83,7 @@
     <Compile Include="Controls\UIDashedView.cs" />
     <Compile Include="Controls\UIDashedControl.cs" />
     <Compile Include="Controls\UIRoundCornerButton.cs" />
+    <Compile Include="Controls\UIByCaseView.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Xmf2.Core\Xmf2.Core.csproj">

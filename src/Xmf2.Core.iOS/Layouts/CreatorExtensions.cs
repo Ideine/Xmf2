@@ -77,6 +77,37 @@ public static class CreatorExtensions
 		return button;
 	}
 
+	public static TUIButton WithTitle<TUIButton>(this TUIButton button,
+			string str,
+			UIFont font = null,
+			UIColor foregroundColor = null,
+			UIColor backgroundColor = null,
+			UIColor strokeColor = null,
+			NSParagraphStyle paragraphStyle = null,
+			NSLigatureType ligatures = NSLigatureType.Default,
+			float kerning = 0f,
+			NSUnderlineStyle underlineStyle = NSUnderlineStyle.None,
+			NSShadow shadow = null,
+			float strokeWidth = 0f,
+			NSUnderlineStyle strikethroughStyle = NSUnderlineStyle.None)
+		 where TUIButton : UIButton
+	{
+		return button.WithTitle(new NSMutableAttributedString(
+			str,
+			font,
+			foregroundColor,
+			backgroundColor,
+			strokeColor,
+			paragraphStyle,
+			ligatures,
+			kerning,
+			underlineStyle,
+			shadow,
+			strokeWidth,
+			strikethroughStyle
+		));
+	}
+
 	public static TUIButton WithTextColor<TUIButton>(this TUIButton button, uint color, UIControlState forState) where TUIButton : UIButton
 	{
 		button.SetTitleColor(color.ColorFromHex(), forState);
@@ -561,7 +592,38 @@ public static class CreatorExtensions
 		label.AttributedText = text;
 		return label;
 	}
-	
+
+	public static UILabel WithText(this UILabel label,
+			string str,
+			UIFont font = null,
+			UIColor foregroundColor = null,
+			UIColor backgroundColor = null,
+			UIColor strokeColor = null,
+			NSParagraphStyle paragraphStyle = null,
+			NSLigatureType ligatures = NSLigatureType.Default,
+			float kerning = 0f,
+			NSUnderlineStyle underlineStyle = NSUnderlineStyle.None,
+			NSShadow shadow = null,
+			float strokeWidth = 0f,
+			NSUnderlineStyle strikethroughStyle = NSUnderlineStyle.None)
+	{
+		label.AttributedText = new NSMutableAttributedString(
+			str,
+			font,
+			foregroundColor,
+			backgroundColor,
+			strokeColor,
+			paragraphStyle,
+			ligatures,
+			kerning,
+			underlineStyle,
+			shadow,
+			strokeWidth,
+			strikethroughStyle
+		);
+		return label;
+	}
+
 	public static UILabel WithTextColor(this UILabel label, int color)
 	{
 		return WithTextColor(label, color.ColorFromHex());
