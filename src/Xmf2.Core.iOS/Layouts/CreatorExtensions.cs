@@ -27,6 +27,13 @@ public static class CreatorExtensions
 	}
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static TUIButton WithAdjustsFontSizeToFit<TUIButton>(this TUIButton button, nfloat minimumScaleFactor) where TUIButton : UIButton
+	{
+		button.TitleLabel.WithAdjustsFontSizeToFit(minimumScaleFactor);
+		return button; 
+	}
+
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static TUIButton WithContentEdgeInset<TUIButton>(this TUIButton button, nfloat top, nfloat left, nfloat bottom, nfloat right) where TUIButton : UIButton
 	{
 		return button.WithContentEdgeInset(new UIEdgeInsets(top, left, bottom, right));

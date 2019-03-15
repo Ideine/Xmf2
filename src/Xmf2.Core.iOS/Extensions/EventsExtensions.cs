@@ -29,6 +29,14 @@ namespace Xmf2.Core.iOS.Extensions
 				autoSubscribe);
 		}
 
+		public static EventSubscriber<UITextField> TextEditingDidBegin(this UITextField input, EventHandler onEditingDidBegin, bool autoSubscribe = true)
+			=> new EventSubscriber<UITextField>(
+			   input,
+			   i => i.EditingDidBegin += onEditingDidBegin,
+			   i => i.EditingDidBegin -= onEditingDidBegin,
+			   autoSubscribe
+		   );
+
 		public static EventSubscriber<UITextField> TextEditingDidEnd(this UITextField input, EventHandler onEditingDidEnd, bool autoSubscribe = true)
 			=> new EventSubscriber<UITextField>(
 			   input,
