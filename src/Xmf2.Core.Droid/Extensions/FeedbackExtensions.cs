@@ -4,6 +4,8 @@ using Android.Graphics;
 using Xmf2.Core.Droid.Helpers;
 using Xmf2.Core.Subscriptions;
 using Android.Graphics.Drawables;
+using Android.Widget;
+using Android.Content.Res;
 
 namespace Xmf2.Core.Droid.Extensions
 {
@@ -74,15 +76,44 @@ namespace Xmf2.Core.Droid.Extensions
             view.Background = st;
         }
 
-        public static void SetBackgroundWithHighlight(this View view, Drawable background, Drawable highlight, Drawable disabled = null)
+        public static void SetBackgroundWithHighlight(this View view, Drawable background, Drawable highlight, Drawable selected = null, Drawable selectedHighlight = null, Drawable disabled = null)
         {
             var st = new StateListDrawable();
 
+            st.AddState(new int[] { Android.Resource.Attribute.StatePressed, Android.Resource.Attribute.StateSelected }, selectedHighlight);
             st.AddState(new int[] { Android.Resource.Attribute.StatePressed }, highlight);
+            st.AddState(new int[] { Android.Resource.Attribute.StateSelected }, selected);
             st.AddState(new int[] { -Android.Resource.Attribute.StateEnabled }, disabled);
             st.AddState(new int[] { }, background);
 
             view.Background = st;
+        }
+
+        public static void SetImageDrawableWithHighlight(this ImageView view, Drawable normal, Drawable selected = null, Drawable highlight = null, Drawable disabled = null)
+        {
+            var st = new StateListDrawable();
+
+            st.AddState(new int[] { Android.Resource.Attribute.StatePressed }, highlight);
+            st.AddState(new int[] { Android.Resource.Attribute.StateSelected }, selected);
+            st.AddState(new int[] { -Android.Resource.Attribute.StateEnabled }, disabled);
+            st.AddState(new int[] { }, normal);
+
+            view.SetImageDrawable(st);
+        }
+
+
+        public static void SetTextColors(this TextView textView, Color normal, Color selected)
+        {
+            int[][] states = new int[][]
+            {
+                new int[] { Android.Resource.Attribute.StateSelected },
+                new int[] { }
+            };
+            int[] colors = new int[] { selected, normal };
+
+            var st = new ColorStateList(states, colors);
+
+            textView.SetTextColor(st);
         }
 
         #endregion
