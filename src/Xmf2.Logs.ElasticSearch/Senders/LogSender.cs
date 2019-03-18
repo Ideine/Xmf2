@@ -23,7 +23,7 @@ namespace Xmf2.Logs.ElasticSearch.Senders
 		private readonly SemaphoreSlim _runMutex = new SemaphoreSlim(1);
 
 		private readonly ExponentialBackOffStrategy _backOffStrategy;
-		
+
 		public LogSender(HttpClient client, string url, ILogBufferStorage storage)
 		{
 			_client = client;
@@ -38,8 +38,8 @@ namespace Xmf2.Logs.ElasticSearch.Senders
 				_waitingContent.Append(storedContent);
 				_contentSemaphore.Release();
 			}
-			
-			_worker = new BackgroundWorker(RunAsync);
+
+			_worker = new BackgroundWorker(SendAnyPendingContentAsync);
 			_worker.Start();
 		}
 
@@ -53,14 +53,14 @@ namespace Xmf2.Logs.ElasticSearch.Senders
 				}
 				_waitingContent.AppendLine($"{{\"index\":{{\"_index\":\"{entry.Index}\", \"_type\":\"{entry.Type}\"}}}}")
 					.AppendLine(entry.Content);
-				
+
 				StoreBuffer(_waitingContent.ToString());
 			}
-			
+
 			_worker.Start();
 		}
 
-		private async Task RunAsync()
+		private async Task SendAnyPendingContentAsync()
 		{
 			while (true)
 			{
@@ -73,13 +73,17 @@ namespace Xmf2.Logs.ElasticSearch.Senders
 					{
 						contentToSend = _waitingContent.ToString();
 					}
-					
+
 					if (await Send(contentToSend))
 					{
 						using (await _stringBuilderMutex.LockAsync())
 						{
 							_waitingContent.Remove(0, contentToSend.Length);
 							StoreBuffer(_waitingContent.ToString());
+							if (_waitingContent.Length != 0)
+							{
+								_contentSemaphore.Release();
+							}
 						}
 						_backOffStrategy.Reset();
 					}
@@ -90,25 +94,35 @@ namespace Xmf2.Logs.ElasticSearch.Senders
 					}
 				}
 			}
-		// ReSharper disable once FunctionNeverReturns
+			// ReSharper disable once FunctionNeverReturns
 		}
 
 		private void StoreBuffer(string bufferContent)
 		{
 			_storage.Save(bufferContent);
 		}
-		
+
 		private async Task<bool> Send(string content)
 		{
 			try
 			{
-				HttpResponseMessage response = await _client.PostAsync(_url, new StringContent(content, Encoding.UTF8, "text/plain"));
-
-				return response.IsSuccessStatusCode;
+				using (var stringContent = new StringContent(content, Encoding.UTF8, "text/plain"))
+				using (HttpResponseMessage response = await _client.PostAsync(_url, stringContent))
+				{
+					bool deleteLogs = response.IsSuccessStatusCode
+								   || response.StatusCode == System.Net.HttpStatusCode.BadRequest;
+					//En cas de bad request la request sera toujours bad, donc on ne fera que boucler...
+					//... il serait bon de plutôt éliminer les traces qui sont incorrects, mais avec l'implementation actuelle ce n'est pas possible...
+					//... donc en attendant on clear les logs autrement on use toute la data du device et plus aucun log n'arrive sur kibana.
+					return deleteLogs;
+				}
 			}
-			catch (Exception)
+			catch (Exception ex)
 			{
+#if DEBUG
 				//ignore 
+				System.Diagnostics.Debug.Write(ex.ToString());
+#endif
 			}
 
 			return false;
