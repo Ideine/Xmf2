@@ -12,7 +12,7 @@ namespace Xmf2.Core.Errors
 	{
 		private const int STATUS_CODE_INVALID_APP_VERSION = 419;
 
-		public AccessDataException InterpretException(Exception ex)
+		public virtual AccessDataException InterpretException(Exception ex)
 		{
 			if (ex.GetType().FullName == "Java.Net.UnknownHostException"
 				|| ex.GetType().Name == "SSLException")
@@ -52,18 +52,25 @@ namespace Xmf2.Core.Errors
 			{
 				case AccessDataException accessDataException:
 					return accessDataException;
+
 				case RestException restEx when restEx.Response.StatusCode == HttpStatusCode.NotFound:
 					return new AccessDataException(AccessDataException.ErrorType.NotFound, ex);
+
 				case RestException restEx when restEx.Response.StatusCode == HttpStatusCode.Forbidden:
 					return new AccessDataException(AccessDataException.ErrorType.Forbidden, ex);
+
 				case RestException restEx when restEx.Response.StatusCode == HttpStatusCode.Unauthorized:
 					return new AccessDataException(AccessDataException.ErrorType.UnAuthorized, ex);
+
 				case RestException restEx when (int)restEx.Response.StatusCode == STATUS_CODE_INVALID_APP_VERSION:
 					return new AccessDataException(AccessDataException.ErrorType.InvalidAppVersion, restEx);
+
 				case OperationCanceledException canceledException when canceledException.CancellationToken.IsCancellationRequested:
 					return new AccessDataException(AccessDataException.ErrorType.Timeout);
+
 				case WebException webEx when webEx.Status == WebExceptionStatus.ConnectFailure:
 					return new AccessDataException(AccessDataException.ErrorType.NoInternetConnexion, ex);
+
 				default:
 					return new AccessDataException(AccessDataException.ErrorType.Unknown, ex);
 			}
