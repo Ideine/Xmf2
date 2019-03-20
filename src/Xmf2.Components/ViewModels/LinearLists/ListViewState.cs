@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Xmf2.Core.LinearLists
 {
-	public class ListViewState : IViewState
+	public class ListViewState : IListViewState
 	{
 		public IReadOnlyList<IEntityViewState> Items { get; }
 

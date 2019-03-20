@@ -9,7 +9,7 @@ using Xmf2.Core.Subscriptions;
 
 namespace Xmf2.Components.iOS.Controls
 {
-	public class TableListView<TComponentView> : BaseComponentView<ListViewState> where TComponentView : IComponentView
+	public class TableListView<TComponentView> : BaseComponentView<IListViewState> where TComponentView : IComponentView
 	{
 		protected UITableView ListView;
 
@@ -55,7 +55,7 @@ namespace Xmf2.Components.iOS.Controls
 			return ListView;
 		}
 
-		protected override void OnStateUpdate(ListViewState state)
+		protected override void OnStateUpdate(IListViewState state)
 		{
 			base.OnStateUpdate(state);
 			_source.ItemSource = state.Items;

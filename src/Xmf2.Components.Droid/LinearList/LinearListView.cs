@@ -11,12 +11,12 @@ using Xmf2.Components.Droid.Interfaces;
 
 namespace Xmf2.Components.Droid.LinearList
 {
-	public abstract class LinearListView<TCellComponent> : LinearListView<TCellComponent, ListViewState>
+	public abstract class LinearListView<TCellComponent> : LinearListView<TCellComponent, IListViewState>
 	{
 		protected LinearListView(IServiceLocator services) : base(services) { }
 	}
 
-	public abstract class LinearListView<TCellComponent, TViewState> : BaseComponentView<TViewState> where TViewState : ListViewState
+	public abstract class LinearListView<TCellComponent, TViewState> : BaseComponentView<TViewState> where TViewState : IListViewState
 	{
 		protected AndroidLinearListView LinearList;
 		protected LinearListAdapter Adapter;

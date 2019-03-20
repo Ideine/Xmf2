@@ -12,7 +12,7 @@ using CoreGraphics;
 
 namespace Xmf2.Components.iOS.Controls
 {
-	public abstract class CollectionGridView<TComponentView> : BaseComponentView<ListViewState> where TComponentView : IComponentView
+	public abstract class CollectionGridView<TComponentView> : BaseComponentView<IListViewState> where TComponentView : IComponentView
 	{
 		protected UICollectionView GridView;
 
@@ -109,7 +109,7 @@ namespace Xmf2.Components.iOS.Controls
 
 		protected override UIView RenderView() => GridView;
 
-		protected override void OnStateUpdate(ListViewState state)
+		protected override void OnStateUpdate(IListViewState state)
 		{
 			base.OnStateUpdate(state);
 			_source.ItemSource = state.Items;

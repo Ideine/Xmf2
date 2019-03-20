@@ -8,7 +8,7 @@ using Xmf2.Core.Subscriptions;
 
 namespace Xmf2.Components.Droid.Controls.ChipCloud
 {
-	public abstract class ChipCloudView<TCellComponent> : BaseComponentView<ListViewState> where TCellComponent : IComponentView
+	public abstract class ChipCloudView<TCellComponent> : BaseComponentView<IListViewState> where TCellComponent : IComponentView
 	{
 		protected ChipCloud ChipCloud;
 		protected ChipCloudAdapter Adapter;
@@ -30,7 +30,7 @@ namespace Xmf2.Components.Droid.Controls.ChipCloud
 			return ChipCloud;
 		}
 
-		protected override void OnStateUpdate(ListViewState state)
+		protected override void OnStateUpdate(IListViewState state)
 		{
 			base.OnStateUpdate(state);
 			Adapter.ItemSource = state.Items;

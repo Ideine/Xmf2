@@ -9,7 +9,7 @@ using Xmf2.Components.iOS.Interfaces;
 
 namespace Xmf2.Components.iOS.Controls
 {
-	public class ChipCloudComponentView<TComponentView> : BaseComponentView<ListViewState> where TComponentView : IComponentView
+	public class ChipCloudComponentView<TComponentView> : BaseComponentView<IListViewState> where TComponentView : IComponentView
 	{
 		protected ChipCloudView GroupView;
 
@@ -48,7 +48,7 @@ namespace Xmf2.Components.iOS.Controls
 			return GroupView;
 		}
 
-		protected override void OnStateUpdate(ListViewState state)
+		protected override void OnStateUpdate(IListViewState state)
 		{
 			base.OnStateUpdate(state);
 			_source.ItemSource = state.Items;
