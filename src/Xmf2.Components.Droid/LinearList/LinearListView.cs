@@ -1,13 +1,12 @@
 ﻿using System.Linq;
+using Android.Graphics;
 using Android.Views;
 using Android.Widget;
-using Android.Graphics;
-using Xmf2.Core.LinearLists;
+using Xmf2.Components.Droid.Interfaces;
+using Xmf2.Components.Droid.Views;
+using Xmf2.Components.Interfaces;
 using Xmf2.Core.Droid.Helpers;
 using Xmf2.Core.Subscriptions;
-using Xmf2.Components.Interfaces;
-using Xmf2.Components.Droid.Views;
-using Xmf2.Components.Droid.Interfaces;
 
 namespace Xmf2.Components.Droid.LinearList
 {
@@ -16,7 +15,7 @@ namespace Xmf2.Components.Droid.LinearList
 		protected LinearListView(IServiceLocator services) : base(services) { }
 	}
 
-	public abstract class LinearListView<TCellComponent, TViewState> : BaseComponentView<TViewState> where TViewState : IListViewState
+	public abstract class LinearListView<TCellComponent, TViewState> : BaseComponentView<TViewState> where TViewState : class, IListViewState
 	{
 		protected AndroidLinearListView LinearList;
 		protected LinearListAdapter Adapter;
