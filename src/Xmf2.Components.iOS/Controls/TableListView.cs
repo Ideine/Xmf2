@@ -4,7 +4,6 @@ using Xmf2.Components.Interfaces;
 using Xmf2.Components.iOS.Interfaces;
 using Xmf2.Components.iOS.TableView;
 using Xmf2.Components.iOS.Views;
-using Xmf2.Core.LinearLists;
 using Xmf2.Core.Subscriptions;
 
 namespace Xmf2.Components.iOS.Controls
