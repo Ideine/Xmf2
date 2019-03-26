@@ -55,7 +55,7 @@ public static class CustomAutoLayoutExtensions
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static UIView CenterAndLimitWidth(this UIView containerView, params UIView[] views)
 	{
-		return CenterAndFillWidth(containerView, 0f, views);
+		return CenterAndLimitWidth(containerView, 0f, views);
 	}
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -769,6 +769,12 @@ public static class CustomAutoLayoutExtensions
 	public static NSLayoutConstraint WithAutomaticIdentifier(this NSLayoutConstraint constraint, [CallerMemberName] string memberName = "", [CallerLineNumber] int sourceLineNumber = 0)
 	{
 		constraint.SetIdentifier($"{memberName}_line:{sourceLineNumber}");
+		return constraint;
+	}
+
+	public static NSLayoutConstraint WithIdentifier(this NSLayoutConstraint constraint, string identifier)
+	{
+		constraint.SetIdentifier(identifier);
 		return constraint;
 	}
 
