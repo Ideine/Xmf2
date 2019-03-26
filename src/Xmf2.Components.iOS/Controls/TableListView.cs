@@ -19,6 +19,12 @@ namespace Xmf2.Components.iOS.Controls
 
 		protected virtual UIColor BackgroundColor { get; } = UIColor.White;
 
+		public virtual UIEdgeInsets ContentInset
+		{
+			get => ListView.ContentInset;
+			set => ListView.ContentInset = value;
+		} 
+
 		public TableListView(IServiceLocator services, Func<IServiceLocator, IComponentView> factory) : base(services)
 		{
 			ListView = new UITableView
