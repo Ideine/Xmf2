@@ -5,15 +5,15 @@ namespace Xmf2.Core.Droid.Extensions
 {
 	public static class BackgroundExtensions
 	{
-		public static Drawable CreateDrawable(this object _, Color color, int? cornerRadiusInPx = 0, Color? strokeColor = null, int stokeWidthInPx = 0, int dashedWidthInPx = 0, int dashGap = 0, int? width = null, int? height = null)
+		public static Drawable CreateDrawable(this object _, Color color, int? cornerRadiusInPx = 0, Color? strokeColor = null, int stokeWidthInPx = 0, int dashedWidthInPx = 0, int dashGap = 0, int width = 0, int height = 0)
 		{
 			var bg = new GradientDrawable();
 			bg.SetShape(ShapeType.Rectangle);
 			bg.SetOrientation(GradientDrawable.Orientation.LeftRight);
 			bg.SetColors(new int[] { color, color });
-			if (width.HasValue && height.HasValue)
+			if (width != 0 || height != 0)
 			{
-				bg.SetSize(width.Value, height.Value);
+				bg.SetSize(width, height);
 			}
 
 			if (cornerRadiusInPx.HasValue)
