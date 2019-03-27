@@ -15,7 +15,11 @@ namespace Xmf2.Components.iOS.Controls
 		private TableViewItemSource<TableViewItemCell> _source;
 		private Func<IServiceLocator, IComponentView> _factory;
 
-		protected virtual float EstimatedRowItemHeight { get; }
+		public virtual nfloat EstimatedRowItemHeight
+		{
+			get => ListView.EstimatedRowHeight;
+			set => ListView.EstimatedRowHeight = value;
+		}
 
 		protected virtual UIColor BackgroundColor { get; } = UIColor.White;
 
@@ -31,7 +35,6 @@ namespace Xmf2.Components.iOS.Controls
 			{
 				SeparatorStyle = UITableViewCellSeparatorStyle.None,
 				AllowsSelection = false,
-				EstimatedRowHeight = EstimatedRowItemHeight,
 				ContentInset = UIEdgeInsets.Zero,
 				BackgroundColor = BackgroundColor,
 				Bounces = true,
