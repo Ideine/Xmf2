@@ -19,5 +19,14 @@ namespace Xmf2.Components.Droid.RecyclerList
 				RecyclerView.SetLayoutManager(lm);
 			}
 		}
+
+		protected override void OnDesignView()
+		{
+			base.OnDesignView();
+			SetSeparatorDecorator();
+		}
+
+		protected virtual void SetSeparatorDecorator() { }
+
 	}
 }
