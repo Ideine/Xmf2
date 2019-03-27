@@ -30,10 +30,7 @@ namespace Xmf2.Components.Droid.RecyclerList
 		protected override void OnDesignView()
 		{
 			base.OnDesignView();
-			SetDecorators();
 		}
-
-		protected virtual void SetDecorators() { }
 
 		protected RecyclerView.ItemDecoration CreateDrawableSeparator(Context context, Drawable drawable)
 		{
