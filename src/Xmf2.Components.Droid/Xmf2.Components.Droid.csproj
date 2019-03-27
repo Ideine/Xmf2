@@ -77,6 +77,9 @@
     <Compile Include="RecyclerList\CellViewHolder.cs" />
     <Compile Include="Navigations\NavigationPresenter.cs" />
     <Compile Include="Navigations\NavigationRegistrationHandler.cs" />
+    <Compile Include="RecyclerList\RecyclerGridView.cs" />
+    <Compile Include="RecyclerList\RecyclerItemsView.cs" />
+    <Compile Include="RecyclerList\RecyclerListView.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Xmf2.Components\Xmf2.Components.csproj">
