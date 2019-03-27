@@ -1,15 +1,15 @@
 ﻿using System;
+using Android.Views;
+using Android.Content;
+using Android.Graphics;
+using Android.Content.Res;
+using Android.Support.V4.View;
 using Xmf2.Core.Subscriptions;
 using Android.Support.V7.Widget;
 using Xmf2.Components.Interfaces;
-using Xmf2.Components.Droid.Interfaces;
-using Android.Content;
 using Android.Graphics.Drawables;
-using Android.Content.Res;
 using Android.Support.V4.Content;
-using Android.Graphics;
-using Android.Views;
-using Android.Support.V4.View;
+using Xmf2.Components.Droid.Interfaces;
 
 namespace Xmf2.Components.Droid.RecyclerList
 {
@@ -25,11 +25,6 @@ namespace Xmf2.Components.Droid.RecyclerList
 			{
 				RecyclerView.SetLayoutManager(lm);
 			}
-		}
-
-		protected override void OnDesignView()
-		{
-			base.OnDesignView();
 		}
 
 		protected RecyclerView.ItemDecoration CreateDrawableSeparator(Context context, Drawable drawable)
