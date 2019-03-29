@@ -179,7 +179,7 @@ public static class CreatorExtensions
 		return button;
 	}
 
-	public static TUIButton WithImage<TUIButton>(this TUIButton button, string image, UIControlState state) where TUIButton : UIButton
+	public static TUIButton WithImage<TUIButton>(this TUIButton button, string image, UIControlState state, UIImageRenderingMode imageRenderingMode = UIImageRenderingMode.Automatic) where TUIButton : UIButton
 	{
 		if (String.IsNullOrEmpty(image))
 		{
@@ -187,7 +187,7 @@ public static class CreatorExtensions
 		}
 		else
 		{
-			button.SetImage(new UIImage(image), state);
+			button.SetImage(new UIImage(image).ImageWithRenderingMode(imageRenderingMode), state);
 		}
 
 		return button;
