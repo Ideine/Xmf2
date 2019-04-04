@@ -6,7 +6,7 @@ namespace Xmf2.Core.iOS.Extensions
 {
 	public static class EventsExtensions
 	{
-		public static EventSubscriber<UIControl> TouchUpInsideSubscription(this UIControl button, EventHandler handler, bool autoSubscribe = true)
+		public static EventSubscriber<UIControl> OnClick(this UIControl button, EventHandler handler, bool autoSubscribe = true)
 		{
 			return new EventSubscriber<UIControl>(
 				button,
@@ -15,9 +15,9 @@ namespace Xmf2.Core.iOS.Extensions
 				autoSubscribe);
 		}
 
-		public static EventSubscriber<UIControl> TouchUpInsideSubscription(this UIControl button, Action handler, bool autoSubscribe = true)
+		public static EventSubscriber<UIControl> OnClick(this UIControl button, Action handler, bool autoSubscribe = true)
 		{
-			return TouchUpInsideSubscription(button, (object sender, EventArgs e) => handler(), autoSubscribe);
+			return OnClick(button, (object sender, EventArgs e) => handler(), autoSubscribe);
 		}
 
 		public static EventSubscriber<UITextField> TextChanged(this UITextField input, EventHandler handler, bool autoSubscribe = true)

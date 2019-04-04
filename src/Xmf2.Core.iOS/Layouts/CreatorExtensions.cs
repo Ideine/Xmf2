@@ -253,34 +253,6 @@ public static class CreatorExtensions
 		return button;
 	}
 
-	/// <summary>
-	/// Obsolète, use <see cref="EventsExtensions.TouchUpInsideSubscription(UIButton, EventHandler, bool)
-	/// </summary>
-	[Obsolete("Use EventsExtensions.TouchUpInsideSubscription")]
-	public static TUIButton OnClick<TUIButton>(this TUIButton button, Action action) where TUIButton : UIButton
-	{
-		button.TouchUpInside += (sender, e) => action?.Invoke();
-		return button;
-	}
-
-	/// <summary>
-	/// Obsolète, use <see cref="EventsExtensions.TouchUpInsideSubscription(UIButton, EventHandler, bool)
-	/// </summary>
-	[Obsolete("Use EventsExtensions.TouchUpInsideSubscription")]
-	public static TUIButton OnClick<TUIButton>(this TUIButton button, Action<TUIButton, EventArgs> action) where TUIButton : UIButton
-	{
-		button.TouchUpInside += (sender, e) => action?.Invoke((TUIButton)sender, e);
-		return button;
-	}
-
-	public static TUIButton OnClick<TUIButton>(this TUIButton button, Action action, out Action unregisterAction) where TUIButton : UIButton
-	{
-		EventHandler onTouchUpInside = (sender, e) => action?.Invoke();
-		button.TouchUpInside += onTouchUpInside;
-		unregisterAction = () => { button.TouchUpInside -= onTouchUpInside; };
-		return button;
-	}
-
 	public static TUIButton WithBackgroundColor<TUIButton>(this TUIButton button, int backgroundColor, UIControlState forState) where TUIButton : UIButton
 	{
 		return button.WithBackgroundColor(backgroundColor.ColorFromHex(), forState);
