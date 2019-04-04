@@ -85,6 +85,7 @@
     <Compile Include="Controls\UIRoundCornerButton.cs" />
     <Compile Include="Controls\UIByCaseView.cs" />
     <Compile Include="Controls\UIColumnView.cs" />
+    <Compile Include="Controls\UIDisposableView.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Xmf2.Core\Xmf2.Core.csproj">
