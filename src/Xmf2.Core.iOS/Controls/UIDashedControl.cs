@@ -1,4 +1,5 @@
-﻿using CoreAnimation;
+﻿using System;
+using CoreAnimation;
 using CoreGraphics;
 using Foundation;
 using ObjCRuntime;
@@ -31,6 +32,12 @@ namespace Xmf2.Core.iOS.Controls
 		public UIDashedControl WithDotColor(CGColor color)
 		{
 			this.Layer.StrokeColor = color;
+			return this;
+		}
+
+		public UIDashedControl WithLineWidth(nfloat width)
+		{
+			Layer.LineWidth = width;
 			return this;
 		}
 	}
