@@ -55,5 +55,11 @@ namespace Xmf2.Core.Errors
 			                      .FirstOrDefault(e => e is RestException) as RestException;
 			return restException != null;
 		}
+
+		public static bool IsExceptionInInner<TException>(Exception fromEx) where TException : Exception
+		{
+			return fromEx.Traverse(bySelector: e => e.InnerException)
+								  .Any(e => e is TException);
+		}
 	}
 }
