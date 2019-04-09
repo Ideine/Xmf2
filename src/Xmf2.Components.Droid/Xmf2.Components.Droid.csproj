@@ -75,7 +75,6 @@
     <Compile Include="Views\Multistates\DraftView.cs" />
     <Compile Include="RecyclerList\CommonAdapter.cs" />
     <Compile Include="RecyclerList\CellViewHolder.cs" />
-    <Compile Include="Navigations\NavigationPresenter.cs" />
     <Compile Include="Navigations\NavigationRegistrationHandler.cs" />
     <Compile Include="RecyclerList\RecyclerGridView.cs" />
     <Compile Include="RecyclerList\RecyclerItemsView.cs" />
