@@ -58,8 +58,6 @@
     <Compile Include="ChipCloud\IChipCloudItemSource.cs" />
     <Compile Include="Controls\ListViewControl.cs" />
     <Compile Include="Views\Multistates\ByCaseView.cs" />
-    <Compile Include="Navigations\NavigationPresenter.cs" />
-    <Compile Include="Navigations\NavigationRegistrationHandler.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Xmf2.Components\Xmf2.Components.csproj">
