@@ -41,8 +41,8 @@
     <Compile Include="CollectionView\CollectionViewItemSource.cs" />
     <Compile Include="Interfaces\IComponentView.cs" />
     <Compile Include="Interfaces\IViewPresenterService.cs" />
+    <Compile Include="Navigations\NavigationRegistrationHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\ViewPresenterService.cs" />
     <Compile Include="Views\BaseComponentView.cs" />
     <Compile Include="Views\BaseViewController.cs" />
     <Compile Include="TableView\TableViewItemSource.cs" />
@@ -60,6 +60,14 @@
     <Compile Include="Views\Multistates\ByCaseView.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Xmf2.NavigationGraph\src\Xmf2.NavigationGraph.Core\Xmf2.NavigationGraph.Core.csproj">
+      <Project>{8bea6c56-1e30-4c8d-81c3-43a4bb1319b7}</Project>
+      <Name>Xmf2.NavigationGraph.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Xmf2.NavigationGraph\src\Xmf2.NavigationGraph.iOS\Xmf2.NavigationGraph.iOS.csproj">
+      <Project>{6f01ccbc-0e74-427f-8f60-8e19dc4476a0}</Project>
+      <Name>Xmf2.NavigationGraph.iOS</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Xmf2.Components\Xmf2.Components.csproj">
       <Project>{029A0034-C63A-4EA4-9342-BB1ED2C794DF}</Project>
       <Name>Xmf2.Components</Name>

@@ -3,27 +3,22 @@ using Android.OS;
 using Android.Runtime;
 using Android.Content.PM;
 using System.Threading.Tasks;
-using Android.Support.V4.App;
-using Android.Support.V7.App;
 using Xmf2.Components.Events;
 using Xmf2.Core.Subscriptions;
 using Xmf2.Core.Droid.Permissions;
 using Xmf2.Components.Droid.Events;
 using Xmf2.Components.Bootstrappers;
-using Xmf2.Components.Droid.Navigations;
-using Fragment = Android.Support.V4.App.Fragment;
+using Xmf2.Components.Interfaces;
 
 namespace Xmf2.Components.Droid.Fragments
 {
-	public abstract class BaseFragmentActivity : AppCompatActivity, IFragmentActivity, IPermissionHandlingActivity
+	public abstract class BaseFragmentActivity<TViewModel> : NavigationGraph.Droid.Bases.BaseFragmentActivity<TViewModel>, IPermissionHandlingActivity
+		where TViewModel : IComponentViewModel
 	{
 		protected Xmf2Disposable Disposables = new Xmf2Disposable();
 
-		public abstract int FragmentContainerId { get; }
-
 		protected abstract int LayoutId { get; }
 
-		protected Fragment CurrentFragment { get; private set; }
 
 		protected BaseFragmentActivity(IntPtr javaReference, JniHandleOwnership transfer) : base(javaReference, transfer) { }
 
@@ -34,19 +29,6 @@ namespace Xmf2.Components.Droid.Fragments
 			base.OnCreate(savedInstanceState);
 
 			SetContentView(LayoutId);
-
-			new EventSubscriber<FragmentManager>(
-				SupportFragmentManager,
-				fragManager => fragManager.BackStackChanged += OnBackStackChanged,
-				fragManager => fragManager.BackStackChanged -= OnBackStackChanged
-			).DisposeEventWith(Disposables);
-
-			if (Intent?.Extras?.ContainsKey(NavigationPresenter.FRAGMENT_START_PARAMETER_CODE) ?? false)
-			{
-				string navigationKey = Intent.Extras.GetString(NavigationPresenter.FRAGMENT_START_PARAMETER_CODE);
-				IDeferredNavigationAction deferredNavigationAction = NavigationParameterContainer.GetDeferredNavigationAction(navigationKey);
-				deferredNavigationAction.Execute(this);
-			}
 		}
 
 		public override void OnConfigurationChanged(Android.Content.Res.Configuration newConfig)
@@ -55,14 +37,10 @@ namespace Xmf2.Components.Droid.Fragments
 			BaseApplicationBootstrapper.StaticServices.Resolve<IGlobalEventBus>().Publish(new ConfigurationChangedEvent(newConfig: newConfig));
 		}
 
-		protected virtual void OnBackStackChanged(object sender, EventArgs eventArgs)
-		{
-			CurrentFragment = SupportFragmentManager.GetTopFragment();
-		}
-
 		public override void OnBackPressed()
 		{
-			if (CurrentFragment is IBackFragment frag)
+			var currentFrag = SupportFragmentManager.GetTopFragment();
+			if (currentFrag is IBackFragment frag)
 			{
 				frag.BackPressed();
 			}
@@ -87,7 +65,6 @@ namespace Xmf2.Components.Droid.Fragments
 			{
 				Disposables.Dispose();
 				Disposables = null;
-				CurrentFragment = null;
 			}
 
 			base.Dispose(disposing);

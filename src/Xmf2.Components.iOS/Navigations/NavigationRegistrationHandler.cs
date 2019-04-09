@@ -1,11 +1,11 @@
-using Xmf2.Components.Services;
 using Xmf2.Components.Interfaces;
 using Xmf2.Components.Navigations;
-using Xmf2.NavigationGraph.Droid.Interfaces;
+using Xmf2.Components.Services;
+using Xmf2.NavigationGraph.iOS.Interfaces;
 
-namespace Xmf2.Components.Droid.Navigations
+namespace Xmf2.Components.iOS.Navigations
 {
-	public abstract class NavigationRegistrationHandler<TCoreHandler, TViewModel> : BaseServiceContainer
+	public class NavigationRegistrationHandler<TCoreHandler, TViewModel> : BaseServiceContainer
 		where TCoreHandler : BaseNavigationService<TViewModel>
 		where TViewModel : IComponentViewModel
 	{
