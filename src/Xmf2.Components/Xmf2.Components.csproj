@@ -5,5 +5,6 @@
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\Xmf2.Core\Xmf2.Core.csproj" />
+    <ProjectReference Include="..\..\..\Xmf2.NavigationGraph\src\Xmf2.NavigationGraph.Core\Xmf2.NavigationGraph.Core.csproj" />
   </ItemGroup>
 </Project>

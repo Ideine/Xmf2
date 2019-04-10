@@ -81,6 +81,14 @@
     <Compile Include="RecyclerList\RecyclerListView.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Xmf2.NavigationGraph\src\Xmf2.NavigationGraph.Core\Xmf2.NavigationGraph.Core.csproj">
+      <Project>{8bea6c56-1e30-4c8d-81c3-43a4bb1319b7}</Project>
+      <Name>Xmf2.NavigationGraph.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Xmf2.NavigationGraph\src\Xmf2.NavigationGraph.Droid\Xmf2.NavigationGraph.Droid.csproj">
+      <Project>{0482135d-405d-4f90-8542-09c3e64a1aa2}</Project>
+      <Name>Xmf2.NavigationGraph.Droid</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Xmf2.Components\Xmf2.Components.csproj">
       <Project>{029A0034-C63A-4EA4-9342-BB1ED2C794DF}</Project>
       <Name>Xmf2.Components</Name>

@@ -1,8 +1,9 @@
 ﻿using System;
+using Xmf2.NavigationGraph.Core.Interfaces;
 
 namespace Xmf2.Components.Interfaces
 {
-	public interface IComponentViewModel : IDisposable
+	public interface IComponentViewModel : IViewModel
 	{
 		IViewState ViewState();
 

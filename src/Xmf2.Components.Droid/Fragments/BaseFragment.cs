@@ -1,38 +1,51 @@
 ﻿using System;
 using Android.OS;
 using Android.Runtime;
-using Android.Support.V4.App;
 using Android.Views;
+using Xmf2.Components.Bootstrappers;
 using Xmf2.Components.Droid.Interfaces;
-using Xmf2.Components.Droid.Views;
 using Xmf2.Components.Events;
 using Xmf2.Components.Interfaces;
 using Xmf2.Core.Subscriptions;
+using Xmf2.NavigationGraph.Core.Interfaces;
 
 namespace Xmf2.Components.Droid.Fragments
 {
-	public abstract class BaseFragment<TComponentViewModel, TComponentView> : Fragment, IBackFragment, IViewFor
+	public abstract class BaseFragment<TComponentViewModel, TComponentView> : NavigationGraph.Droid.Bases.BaseFragment<TComponentViewModel>, IBackFragment
 		where TComponentViewModel : class, IComponentViewModel
 		where TComponentView : class, IComponentView
 	{
 		protected TComponentView Component { get; private set; }
-		private TComponentViewModel _viewModel;
+
+		protected override TComponentViewModel ViewModel
+		{
+			get => base.ViewModel;
+			set
+			{
+				base.ViewModel = value;
+				if (value != null)
+				{
+					Init();
+				}
+			}
+		}
+
+		protected override IViewModelLocatorService<TComponentViewModel> ViewModelLocatorService => BaseApplicationBootstrapper.StaticServices.Resolve<IViewModelLocatorService<TComponentViewModel>>();
 
 		private EventSubscriber _stateChangedSubscriber;
-		protected Xmf2Disposable Disposables;
+		protected Xmf2Disposable Disposables = new Xmf2Disposable();
 
-		protected IServiceLocator Services => _viewModel.Services;
-
-		public Type ViewModelType => typeof(TComponentViewModel);
+		protected IServiceLocator Services => ViewModel.Services;
 
 		protected BaseFragment(IntPtr javaReference, JniHandleOwnership transfer) : base(javaReference, transfer) { }
 
-		public BaseFragment(TComponentViewModel viewModel, Func<IServiceLocator, TComponentView> factory)
-		{
-			Disposables = new Xmf2Disposable();
+		protected BaseFragment() { }
 
-			_viewModel = viewModel;
-			Component = factory(Services).DisposeComponentWith(Disposables);
+		protected abstract Func<IServiceLocator, TComponentView> Factory { get; }
+
+		private void Init()
+		{
+			Component = Factory(Services).DisposeComponentWith(Disposables);
 
 			_stateChangedSubscriber = new EventSubscriber(
 				() => ApplicationState.StateChanged += UpdateState,
@@ -43,7 +56,7 @@ namespace Xmf2.Components.Droid.Fragments
 
 		private void UpdateState()
 		{
-			var state = _viewModel?.ViewState();
+			var state = ViewModel?.ViewState();
 			if (state != null)
 			{
 				Activity.RunOnUiThread(() => Component?.SetState(state));
@@ -65,19 +78,19 @@ namespace Xmf2.Components.Droid.Fragments
 		public override void OnViewCreated(View view, Bundle savedInstanceState)
 		{
 			base.OnViewCreated(view, savedInstanceState);
-			_viewModel.Lifecycle.Initialize();
+			ViewModel.Lifecycle.Initialize();
 		}
 
 		public override void OnStart()
 		{
 			base.OnStart();
-			_viewModel.Lifecycle.Start();
+			ViewModel.Lifecycle.Start();
 		}
 
 		public override void OnResume()
 		{
 			base.OnResume();
-			_viewModel.Lifecycle.Resume();
+			ViewModel.Lifecycle.Resume();
 			_stateChangedSubscriber.Subscribe();
 			UpdateState();
 		}
@@ -85,14 +98,14 @@ namespace Xmf2.Components.Droid.Fragments
 		public override void OnPause()
 		{
 			base.OnPause();
-			_viewModel.Lifecycle.Pause();
+			ViewModel.Lifecycle.Pause();
 			_stateChangedSubscriber.Unsubscribe();
 		}
 
 		public override void OnStop()
 		{
 			base.OnStop();
-			_viewModel.Lifecycle.Stop();
+			ViewModel.Lifecycle.Stop();
 		}
 
 		public override void OnDestroy()
@@ -108,7 +121,7 @@ namespace Xmf2.Components.Droid.Fragments
 			if (disposing)
 			{
 				Component = null;
-				_viewModel = null;
+				ViewModel = null;
 				_stateChangedSubscriber = null;
 				Disposables.Dispose();
 				Disposables = null;
