@@ -15,6 +15,8 @@ namespace Xmf2.Core.iOS.Helpers
 		private UILoadingView _loadingView;
 		private bool _isBusy;
 
+		private bool _loadingIconUp;
+
 		public virtual bool IsBusy
 		{
 			get => _isBusy;
@@ -52,8 +54,13 @@ namespace Xmf2.Core.iOS.Helpers
 					return;
 				}
 				
-				_loadingView = new UILoadingView(_parent).DisposeViewWith(_disposable);
+				_loadingView = new UILoadingView(_parent, _loadingIconUp).DisposeViewWith(_disposable);
 			}
+		}
+
+		public void WithLoadingIconUp()
+		{
+			_loadingIconUp = true;
 		}
 
 		#region Dispose

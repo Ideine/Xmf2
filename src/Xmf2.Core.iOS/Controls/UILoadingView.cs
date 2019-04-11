@@ -11,15 +11,14 @@ namespace Xmf2.Core.iOS.Controls
 		private UIActivityIndicatorView _progressView;
 
 		private NSLayoutConstraint[] _constraints; 
-		
-		public UILoadingView(UIView parentView)
+
+		public UILoadingView(UIView parentView, bool loadingIconUp = false)
 		{
 			_parentView = parentView;
 			_progressView = new UIActivityIndicatorView(UIActivityIndicatorViewStyle.WhiteLarge);
 			AddSubviews(_progressView);
 
-			this.CenterVertically(_progressView)
-				.CenterHorizontally(_progressView);
+			LoadingIconUp(loadingIconUp);
 
 			BackgroundColor = UIColor.Black.ColorWithAlpha(0.5f);
 			TranslatesAutoresizingMaskIntoConstraints = false;
@@ -31,6 +30,20 @@ namespace Xmf2.Core.iOS.Controls
 				NSLayoutConstraint.Create(this, Width, Equal, parentView, Width, 1, 0).WithAutomaticIdentifier(),
 				NSLayoutConstraint.Create(this, Height, Equal, parentView, Height, 1, 0).WithAutomaticIdentifier(),
 			};
+		}
+
+		private void LoadingIconUp(bool loadingIconUp)
+		{
+			if (loadingIconUp)
+			{
+				this.AnchorTop(_progressView, 20f)
+					.CenterHorizontally(_progressView);
+			}
+			else
+			{
+				this.CenterVertically(_progressView)
+				.CenterHorizontally(_progressView);
+			}
 		}
 
 		public void UpdateViewState(bool isBusy)
