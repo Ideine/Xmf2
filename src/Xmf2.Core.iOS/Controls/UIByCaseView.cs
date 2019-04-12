@@ -47,7 +47,7 @@ namespace Xmf2.Core.iOS.Controls
 			if (newInfo != _currentInfo)
 			{
 				this.EnsureRemove(_currentInfo?.GetContraintsFor(parentView: this));
-				this.EnsureRemove(_currentInfo?.GetView());
+				this.EnsureRemove(this.Subviews);
 				if (_aggressiveViewDispose)
 				{
 					_currentInfo?.DisposeConstraints();
