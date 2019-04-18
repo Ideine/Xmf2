@@ -53,6 +53,7 @@ namespace Xmf2.Components.Droid.Views.Multistates
 
 				_currentInfo = newInfo;
 				_currentCase = newCase;
+				_currentCaseOnceSet = true;
 			}
 			newInfo.GetComponent().SetState(state.State);
 		}
