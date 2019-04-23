@@ -6,7 +6,7 @@
 		{
 			return new NotSupportedException(GetNotSupportedMessage(enumValue));
 		}
-		public static InvalidOperationException GetNotInvalidOperationException(this Enum enumValue)
+		public static InvalidOperationException GetInvalidOperationException(this Enum enumValue)
 		{
 			return new InvalidOperationException(GetInvalidOperationMessage(enumValue));
 		}
