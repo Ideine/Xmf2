@@ -60,6 +60,7 @@ namespace Xmf2.Components.iOS.Views.Multistates
 				_container.AddConstraints(newInfo.GetOrCreateConstraints(parentView: _container));
 				_currentInfo = newInfo;
 				_currentCase = newCase;
+				_currentCaseOnceSet = true;
 			}
 			newInfo.GetComponent().SetState(state.State);
 		}
