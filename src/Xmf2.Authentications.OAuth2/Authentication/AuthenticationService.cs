@@ -88,11 +88,10 @@ namespace Xmf2.Authentications.OAuth2.Authentication
 			}
 		}
 
-		public Task Logout()
+		public async Task Logout()
 		{
-			_client.Logout();
+			await _client.Logout();
 			_storageService.Delete();
-			return Task.CompletedTask;
 		}
 	}
 }

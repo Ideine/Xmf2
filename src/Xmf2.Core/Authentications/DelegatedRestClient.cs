@@ -100,6 +100,6 @@ namespace Xmf2.Core.Authentications
 		public IDictionary<string, IEncoding> EncodingHandlers => _authenticatedRestClientImplementation.EncodingHandlers;
 
 		public IRestClient ParentClient { get; set; }
-		public virtual void Logout() => _authenticatedRestClientImplementation.Logout();
+		public virtual Task Logout() => _authenticatedRestClientImplementation.Logout();
 	}
 }

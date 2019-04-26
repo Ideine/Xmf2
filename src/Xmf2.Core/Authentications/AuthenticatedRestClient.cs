@@ -12,7 +12,7 @@ namespace Xmf2.Core.Authentications
 	{
 		IRestClient ParentClient { get; set; }
 
-		void Logout();
+		Task Logout();
 	}
 
 	public class AuthenticatedRestClient : RestClientBase, IAuthenticatedRestClient
@@ -68,9 +68,10 @@ namespace Xmf2.Core.Authentications
 
 		public IRestClient ParentClient { get; set; }
 
-		public virtual void Logout()
+		public virtual Task Logout()
 		{
 			Authenticator = null;
+			return Task.CompletedTask;
 		}
 	}
 }

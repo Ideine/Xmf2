@@ -15,11 +15,17 @@ namespace Xmf2.Authentications.OAuth2
 
 		public string RefreshUrl { get; protected set; }
 
+		public Method LogoutMethod { get; protected set; } = Method.DELETE;
+
+		public string LogoutUrl { get; protected set; }
+
 		public abstract OAuth2AuthResult HandleAuthResult(IRestResponse response);
 
 		public abstract void PopulateLoginRequest(IRestRequest request, string login, string password);
 
 		public abstract void PopulateRefreshRequest(IRestRequest request, string refreshToken);
+
+		public abstract void PopulateLogoutRequest(IRestRequest request);
 	}
 
 	public abstract class OAuth2ConfigurationBase<TAuthRequestResponse> : OAuth2ConfigurationBase

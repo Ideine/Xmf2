@@ -75,8 +75,13 @@ namespace Xmf2.Authentications.OAuth2
 			}
 		}
 
-		public override void Logout()
+		public override async Task Logout()
 		{
+			if (Configuration == null)
+			{
+				throw new InvalidOperationException("Configuration has not been set before calling login method");
+			}
+
 			if (_authenticator != null)
 			{
 				_authenticator.Access = null;
@@ -84,7 +89,7 @@ namespace Xmf2.Authentications.OAuth2
 
 			_authenticator = null;
 
-			base.Logout();
+			await base.Logout();
 		}
 
 		public void SetAuthenticationTokens(OAuth2AuthResult token)
