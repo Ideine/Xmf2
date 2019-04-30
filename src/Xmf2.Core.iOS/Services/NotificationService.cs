@@ -21,22 +21,29 @@ namespace Xmf2.Core.iOS.Services
 			}
 			else
 			{
-				UIApplication.SharedApplication.InvokeOnMainThread(() =>
-				{
-#pragma warning disable XI0003 // C'est ok car on utilise cette API déprécié que si c'est nécessaire.
-					var settings = UIUserNotificationSettings.GetSettingsForTypes(UIUserNotificationType.Alert | UIUserNotificationType.Badge | UIUserNotificationType.Sound, null);
-					UIApplication.SharedApplication.RegisterUserNotificationSettings(settings);
-#pragma warning restore XI0003
-				});
+				RegisterUserNotificationSettings();
 			}
 		}
-
-		private static void CompletionHandler(bool granted, NSError err)
+		private void CompletionHandler(bool granted, NSError err)
 		{
+			if (granted)
+			{
+				RegisterUserNotificationSettings();
+			}
+			//TODO: rediriger ces erreurs vers un véritable Error handler, pour qu'elle terminent éventuellement sur kibana.
+			//#wi:7965
 			if (err != null)
 			{
 				System.Diagnostics.Debug.WriteLine($"LocalNotificationError: Code={err.Code} / Description={err.Description} / FailureReason={err.LocalizedFailureReason}");
 			}
+		}
+
+		private void RegisterUserNotificationSettings()
+		{
+			UIApplication.SharedApplication.InvokeOnMainThread(() =>
+			{
+				UIApplication.SharedApplication.RegisterUserNotificationSettings(UIUserNotificationSettings.GetSettingsForTypes(UIUserNotificationType.Alert | UIUserNotificationType.Badge | UIUserNotificationType.Sound, null));
+			});
 		}
 	}
 }
