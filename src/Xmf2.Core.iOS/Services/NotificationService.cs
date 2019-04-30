@@ -23,8 +23,10 @@ namespace Xmf2.Core.iOS.Services
 			{
 				UIApplication.SharedApplication.InvokeOnMainThread(() =>
 				{
+#pragma warning disable XI0003 // C'est ok car on utilise cette API déprécié que si c'est nécessaire.
 					var settings = UIUserNotificationSettings.GetSettingsForTypes(UIUserNotificationType.Alert | UIUserNotificationType.Badge | UIUserNotificationType.Sound, null);
 					UIApplication.SharedApplication.RegisterUserNotificationSettings(settings);
+#pragma warning restore XI0003
 				});
 			}
 		}

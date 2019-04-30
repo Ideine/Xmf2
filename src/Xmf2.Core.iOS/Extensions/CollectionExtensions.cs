@@ -15,5 +15,19 @@ namespace Xmf2.Core.iOS.Extensions
 			value = default;
 			return false;
 		}
+
+		public static bool TryGet<T>(this NSDictionary source, string key, out T value) where T : class
+		{
+			using (var nsKey = new NSString(key))
+			{
+				if (source.ContainsKey(nsKey) && source[nsKey] is T result)
+				{
+					value = result;
+					return true;
+				}
+			}
+			value = default;
+			return false;
+		}
 	}
 }
