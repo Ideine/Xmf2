@@ -79,13 +79,15 @@
     <Compile Include="Controls\UIOvalView.cs" />
     <Compile Include="Extensions\NSAttributedStringExtensions.cs" />
     <Compile Include="Layouts\Anchors.cs" />
-    <Compile Include="Services\NotificationAppDelegate.cs" />
     <Compile Include="Controls\UIDashedView.cs" />
     <Compile Include="Controls\UIDashedControl.cs" />
     <Compile Include="Controls\UIRoundCornerButton.cs" />
     <Compile Include="Controls\UIByCaseView.cs" />
     <Compile Include="Controls\UIColumnView.cs" />
     <Compile Include="Controls\UIDisposableView.cs" />
+    <Compile Include="Services\Notifications\NotificationAppDelegate.cs" />
+    <Compile Include="Services\Notifications\NotificationCenterDelegate.cs" />
+    <Compile Include="Services\Notifications\JsonNotificationWriter.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Xmf2.Core\Xmf2.Core.csproj">
