@@ -7,56 +7,45 @@ using Xmf2.Core.Services;
 namespace Xmf2.Core.Droid.Services
 {
 	public class UIDispatcher : IUIDispatcher
-	//{
-	//	private readonly Handler _handler;
-
-	//	public UIDispatcher()
-	//	{
-	//		_handler = new Handler(Looper.MainLooper);
-	//	}
-
-	//	public void OnMainThread(Action action)
-	//	{
-	//		_handler.Post(action);
-	//	}
-	//}
-	private readonly Handler _handler;
-
-	public UIDispatcher()
 	{
-		_handler = new Handler(Looper.MainLooper);
-	}
+		private readonly Handler _handler;
 
-	public void OnMainThread(Action action)
-	{
-		_handler.Post(action);
-	}
-
-	public bool IsOnMainThread() => Looper.MyLooper() == Looper.MainLooper;
-
-	public async Task<T> EnqueueOnMainThread<T>(Func<Task<T>> func, CancellationToken cancellationToken = default(CancellationToken))
-	{
-		if (IsOnMainThread())
+		public UIDispatcher()
 		{
-			cancellationToken.ThrowIfCancellationRequested();
-			return await func();
+			_handler = new Handler(Looper.MainLooper);
 		}
-		else
+
+		public void OnMainThread(Action action)
 		{
-			var taskCompletionSource = new TaskCompletionSource<T>();
-			_handler.Post(async () =>
+			_handler.Post(action);
+		}
+		
+		public bool IsOnMainThread() => Looper.MyLooper() == Looper.MainLooper;
+
+		public async Task<T> EnqueueOnMainThread<T>(Func<Task<T>> func, CancellationToken cancellationToken = default(CancellationToken))
+		{
+			if (IsOnMainThread())
 			{
-				try
+				cancellationToken.ThrowIfCancellationRequested();
+				return await func();
+			}
+			else
+			{
+				var taskCompletionSource = new TaskCompletionSource<T>();
+				_handler.Post(async () =>
 				{
-					cancellationToken.ThrowIfCancellationRequested();
-					taskCompletionSource.SetResult(await func());
-				}
-				catch (Exception ex)
-				{
-					taskCompletionSource.SetException(ex);
-				}
-			});
-			return await taskCompletionSource.Task;
+					try
+					{
+						cancellationToken.ThrowIfCancellationRequested();
+						taskCompletionSource.SetResult(await func());
+					}
+					catch (Exception ex)
+					{
+						taskCompletionSource.SetException(ex);
+					}
+				});
+				return await taskCompletionSource.Task;
+			}
 		}
 	}
 }
