@@ -29,7 +29,7 @@ namespace Xmf2.Core.iOS.Services
 			{
 				throw new ObjectDisposedException(nameof(JsonNotificationWriter));
 			}
-			return _disposedValue.ToString();
+			return _textWriter.ToString();
 		}
 
 		protected virtual string GetDebuggerDisplay()
