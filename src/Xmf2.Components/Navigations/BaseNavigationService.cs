@@ -14,16 +14,23 @@ namespace Xmf2.Components.Navigations
 		protected delegate TViewModel ViewModelFactory(IServiceLocator s);
 
 		protected INavigationService<TViewModel> NavigationService { get; }
+		private Func<IEventBus> _eventBusFactory;
 
 		protected BaseNavigationService(IServiceLocator services) : base(services)
 		{
 			NavigationService = services.Resolve<INavigationService<TViewModel>>();
 		}
 
-		protected TViewModel CreateViewModel(string scopeId, ViewModelFactory factory)
+		public virtual BaseNavigationService<TViewModel> WithEventBusFactory(Func<IEventBus> eventBusFactory)
+		{
+			_eventBusFactory = eventBusFactory;
+			return this;
+		}
+
+		protected virtual TViewModel CreateViewModel(string scopeId, ViewModelFactory factory)
 		{
 			IServiceLocator locator = Services.Scope(scopeId);
-			locator.RegisterSingleton<IEventBus, EventBus>();
+			locator.RegisterSingleton(_eventBusFactory?.Invoke() ?? new EventBus());
 			return factory(locator);
 		}
 

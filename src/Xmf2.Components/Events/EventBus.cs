@@ -29,7 +29,7 @@ namespace Xmf2.Components.Events
 			return token;
 		}
 
-		public void Publish<TEvent>(TEvent evt) where TEvent : IEvent
+		public virtual void Publish<TEvent>(TEvent evt) where TEvent : IEvent
 		{
 			if (evt == null)
 			{
