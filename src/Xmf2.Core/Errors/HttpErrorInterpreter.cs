@@ -11,6 +11,7 @@ namespace Xmf2.Core.Errors
 	public class HttpErrorInterpreter : IHttpErrorInterpreter
 	{
 		private const int STATUS_CODE_INVALID_APP_VERSION = 419;
+		private const int STATUS_CODE_UPGRADE_REQUIRED = 426;
 
 		public virtual AccessDataException InterpretException(Exception ex)
 		{
@@ -62,7 +63,8 @@ namespace Xmf2.Core.Errors
 				case RestException restEx when restEx.Response.StatusCode == HttpStatusCode.Unauthorized:
 					return new AccessDataException(AccessDataException.ErrorType.UnAuthorized, ex);
 
-				case RestException restEx when (int)restEx.Response.StatusCode == STATUS_CODE_INVALID_APP_VERSION:
+				case RestException restEx when (int)restEx.Response.StatusCode == STATUS_CODE_INVALID_APP_VERSION
+											|| (int)restEx.Response.StatusCode == STATUS_CODE_UPGRADE_REQUIRED:
 					return new AccessDataException(AccessDataException.ErrorType.InvalidAppVersion, restEx);
 
 				case OperationCanceledException canceledException when canceledException.CancellationToken.IsCancellationRequested:
