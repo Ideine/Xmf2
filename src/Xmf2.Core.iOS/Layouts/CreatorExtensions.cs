@@ -492,8 +492,21 @@ public static class CreatorExtensions
 			BouncesZoom = false,
 			ShowsVerticalScrollIndicator = true,
 			ShowsHorizontalScrollIndicator = false
-		}.WithContentInsetAdjustementBehavior(contentInsetAdjustmentBehavior)
-		.WithDraftBackground(UIColor.Gray);
+		}.WithContentInsetAdjustementBehavior(contentInsetAdjustmentBehavior);
+	}
+
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static UIFilledScrollView CreateFilledVerticalScroll(this object _)
+	{
+		return new UIFilledScrollView()
+		{
+			AlwaysBounceHorizontal = false,
+			AlwaysBounceVertical = true,
+			Bounces = true,
+			BouncesZoom = false,
+			ShowsVerticalScrollIndicator = true,
+			ShowsHorizontalScrollIndicator = false
+		}.WithContentInsetAdjustementBehavior(UIScrollViewContentInsetAdjustmentBehavior.Never);
 	}
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]

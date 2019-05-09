@@ -88,6 +88,7 @@
     <Compile Include="Services\Notifications\NotificationAppDelegate.cs" />
     <Compile Include="Services\Notifications\NotificationCenterDelegate.cs" />
     <Compile Include="Services\Notifications\JsonNotificationWriter.cs" />
+    <Compile Include="Controls\UIFilledScrollView.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Xmf2.Core\Xmf2.Core.csproj">

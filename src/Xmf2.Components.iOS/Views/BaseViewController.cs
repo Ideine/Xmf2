@@ -62,18 +62,9 @@ namespace Xmf2.Components.iOS.Views
 			if (!_layoutDone)
 			{
 				_layoutDone = true;
-
-				View.Add(Component.View);
-				if (DeviceHelper.HaveVirtualButton())
-				{
-					View.AnchorTop(Component.View)
-						.SafeAreaLayoutGuide.BottomAnchor.ConstraintEqualTo(Component.View.BottomAnchor).Active = true;
-				}
-				else
-				{
-					View.CenterAndFillHeight(Component.View);
-				}
-				View.CenterAndFillWidth(Component.View);
+				View.WithSubviews(Component.View)
+					.CenterAndFillHeight(Component.View)
+					.CenterAndFillWidth(Component.View);
 			}
 
 			UpdateState();
@@ -101,13 +92,13 @@ namespace Xmf2.Components.iOS.Views
 
 		protected override void Dispose(bool disposing)
 		{
-			base.Dispose(disposing);
 			if (disposing)
 			{
 				Component = null;
 				_componentViewModel = null;
 				_stateChangedSubscriber = null;
 			}
+			base.Dispose(disposing);
 		}
 	}
 
@@ -137,12 +128,12 @@ namespace Xmf2.Components.iOS.Views
 
 		protected override void Dispose(bool disposing)
 		{
-			base.Dispose(disposing);
 			if (disposing)
 			{
-				Disposables.Dispose();
+				Disposables?.Dispose();
 				Disposables = null;
 			}
+			base.Dispose(disposing);
 		}
 
 

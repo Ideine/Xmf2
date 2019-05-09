@@ -522,6 +522,7 @@ public static class CustomAutoLayoutExtensions
 		return scroll;
 	}
 
+	[Obsolete("Use UIFilledScrollView instead")]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static UIScrollView VerticalScrollFilledContentConstraint(this UIScrollView scroll, UIView content, float horizontalMargin)
 	{
