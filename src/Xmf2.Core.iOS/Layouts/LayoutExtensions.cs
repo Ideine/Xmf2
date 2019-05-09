@@ -259,7 +259,7 @@ public static class CustomAutoLayoutExtensions
 	public static UIView AnchorBottomUpToSafeArea(this UIView containerView, UIView view, nfloat margin)
 	{
 		return UIDevice.CurrentDevice.CheckSystemVersion(11, 0)
-			? containerView.WithConstraint(view.BottomAnchor.ConstraintEqualTo(containerView.SafeAreaLayoutGuide.BottomAnchor).WithIdentifier(nameof(AnchorBottomUpToSafeArea)))
+			? containerView.WithConstraint(view.BottomAnchor.ConstraintEqualTo(containerView.SafeAreaLayoutGuide.BottomAnchor, -margin).WithIdentifier(nameof(AnchorBottomUpToSafeArea)))
 			: containerView.WithConstraint(containerView, Bottom, Equal, view, Bottom, 1f, margin, identifier: nameof(AnchorBottomUpToSafeArea));
 	}
 
