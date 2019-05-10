@@ -5,7 +5,7 @@ using Xmf2.Components.Bootstrappers;
 
 namespace Xmf2.Notification.Droid
 {
-	[Service, IntentFilter(new[] {"com.google.firebase.INSTANCE_ID_EVENT"})]
+	[Service, IntentFilter(new[] { "com.google.firebase.INSTANCE_ID_EVENT" })]
 	public class MyFirebaseInstanceIdService : FirebaseInstanceIdService
 	{
 		public override void OnTokenRefresh()
@@ -16,7 +16,9 @@ namespace Xmf2.Notification.Droid
 
 		private INotificationService GetNotificationService()
 		{
-			return BaseApplicationBootstrapper.StaticServices.Resolve<INotificationService>();
+			INotificationService notificationService;
+			BaseApplicationBootstrapper.StaticServices.TryResolve<INotificationService>(out notificationService);
+			return notificationService;
 		}
 	}
 }
