@@ -10,7 +10,7 @@ namespace Xmf2.Core.iOS.Controls
 		private UIView _parentView;
 		private UIActivityIndicatorView _progressView;
 
-		private NSLayoutConstraint[] _constraints; 
+		private NSLayoutConstraint[] _constraints;
 
 		public UILoadingView(UIView parentView, bool loadingIconUp = false)
 		{
@@ -45,7 +45,7 @@ namespace Xmf2.Core.iOS.Controls
 				.CenterHorizontally(_progressView);
 			}
 		}
-
+		
 		public void UpdateViewState(bool isBusy)
 		{
 			if (isBusy)
@@ -68,6 +68,12 @@ namespace Xmf2.Core.iOS.Controls
 			}
 		}
 
+
+		public UILoadingView WithActivityIndicatorViewStyle(UIActivityIndicatorViewStyle style)
+		{
+			_progressView.ActivityIndicatorViewStyle = style;
+			return this;
+		}
 		protected override void Dispose(bool disposing)
 		{
 			if (disposing)
@@ -77,7 +83,7 @@ namespace Xmf2.Core.iOS.Controls
 				_constraints = null;
 			}
 			base.Dispose(disposing);
-			
+
 		}
 	}
 }
