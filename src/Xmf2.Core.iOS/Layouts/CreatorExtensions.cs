@@ -466,10 +466,39 @@ public static class CreatorExtensions
 		}.WithContentInsetAdjustementBehavior(UIScrollViewContentInsetAdjustmentBehavior.Never);
 	}
 
+	[Obsolete("Use CreateSafeVerticalScroll() wich supports safe areas")]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static UIScrollView CreateVerticalScroll(this object _)
 	{
 		return new UIScrollView()
+		{
+			AlwaysBounceHorizontal = false,
+			AlwaysBounceVertical = true,
+			Bounces = true,
+			BouncesZoom = false,
+			ShowsVerticalScrollIndicator = true,
+			ShowsHorizontalScrollIndicator = false
+		}.WithContentInsetAdjustementBehavior(UIScrollViewContentInsetAdjustmentBehavior.Never);
+	}
+
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static UIScrollView CreateSafeVerticalScroll(this object _, UIScrollViewContentInsetAdjustmentBehavior contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentBehavior.Automatic)
+	{
+		return new UIScrollView()
+		{
+			AlwaysBounceHorizontal = false,
+			AlwaysBounceVertical = true,
+			Bounces = true,
+			BouncesZoom = false,
+			ShowsVerticalScrollIndicator = true,
+			ShowsHorizontalScrollIndicator = false
+		}.WithContentInsetAdjustementBehavior(contentInsetAdjustmentBehavior);
+	}
+
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static UIFilledScrollView CreateFilledVerticalScroll(this object _)
+	{
+		return new UIFilledScrollView()
 		{
 			AlwaysBounceHorizontal = false,
 			AlwaysBounceVertical = true,

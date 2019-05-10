@@ -32,6 +32,7 @@ namespace Xmf2.Authentications.OAuth2
 	{
 		//https://fr.wikipedia.org/wiki/Liste_des_codes_HTTP
 		protected const int HTTP_STATUS_CODE_RETRY_WITH = 449;
+		protected const int HTTP_STATUS_CODE_UPGRADE_REQUIRED = 426;
 
 		public override OAuth2AuthResult HandleAuthResult(IRestResponse response)
 		{
@@ -61,6 +62,7 @@ namespace Xmf2.Authentications.OAuth2
 						ErrorMessage = response.Content,
 					};
 				case (HttpStatusCode)HTTP_STATUS_CODE_RETRY_WITH:
+				case (HttpStatusCode)HTTP_STATUS_CODE_UPGRADE_REQUIRED:
 					return new OAuth2AuthResult
 					{
 						IsSuccess = false,

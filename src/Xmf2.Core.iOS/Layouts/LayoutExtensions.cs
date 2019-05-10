@@ -253,6 +253,17 @@ public static class CustomAutoLayoutExtensions
 	}
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static UIView AnchorBottomUpToSafeArea(this UIView containerView, UIView view, float margin = 0f) => containerView.AnchorBottomUpToSafeArea(view, (nfloat)margin);
+
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static UIView AnchorBottomUpToSafeArea(this UIView containerView, UIView view, nfloat margin)
+	{
+		return UIDevice.CurrentDevice.CheckSystemVersion(11, 0)
+			? containerView.WithConstraint(view.BottomAnchor.ConstraintEqualTo(containerView.SafeAreaLayoutGuide.BottomAnchor, -margin).WithIdentifier(nameof(AnchorBottomUpToSafeArea)))
+			: containerView.WithConstraint(containerView, Bottom, Equal, view, Bottom, 1f, margin, identifier: nameof(AnchorBottomUpToSafeArea));
+	}
+
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static UIView AnchorRight(this UIView containerView, UIView view, float margin = 0) => containerView.AnchorRight(view, (nfloat)margin);
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -503,23 +514,24 @@ public static class CustomAutoLayoutExtensions
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static UIScrollView VerticalScrollContentConstraint(this UIScrollView scroll, UIView content, float horizontalMargin)
 	{
-		scroll.WithConstraint(scroll, Left, Equal, content, Left, 1, -horizontalMargin / 2f, identifier: $"{nameof(VerticalScrollContentConstraint)}-Left")
-			.WithConstraint(scroll, Right, Equal, content, Right, 1f, horizontalMargin / 2f, identifier: $"{nameof(VerticalScrollContentConstraint)}-Right")
-			.WithConstraint(scroll, Top, Equal, content, Top, 1f, 0f, identifier: $"{nameof(VerticalScrollContentConstraint)}-Top")
-			.WithConstraint(scroll, Bottom, Equal, content, Bottom, 1f, 0f, identifier: $"{nameof(VerticalScrollContentConstraint)}-Bottom")
-			.WithConstraint(scroll, CenterX, Equal, content, CenterX, 1f, 0f, identifier: $"{nameof(VerticalScrollContentConstraint)}-CenterX");
+		scroll.WithConstraint(scroll, Left		, Equal, content, Left		, 1, -horizontalMargin / 2f, identifier: $"{nameof(VerticalScrollContentConstraint)}-Left")
+			  .WithConstraint(scroll, Right		, Equal, content, Right		, 1f, horizontalMargin / 2f, identifier: $"{nameof(VerticalScrollContentConstraint)}-Right")
+			  .WithConstraint(scroll, Top		, Equal, content, Top		, 1f, 0f, identifier: $"{nameof(VerticalScrollContentConstraint)}-Top")
+			  .WithConstraint(scroll, Bottom	, Equal, content, Bottom	, 1f, 0f, identifier: $"{nameof(VerticalScrollContentConstraint)}-Bottom")
+			  .WithConstraint(scroll, CenterX	, Equal, content, CenterX	, 1f, 0f, identifier: $"{nameof(VerticalScrollContentConstraint)}-CenterX");
 		return scroll;
 	}
 
+	[Obsolete("Use UIFilledScrollView instead")]
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static UIScrollView VerticalScrollFilledContentConstraint(this UIScrollView scroll, UIView content, float horizontalMargin)
 	{
-		scroll.WithConstraint(scroll, Left, Equal, content, Left, 1, -horizontalMargin / 2f, identifier: $"{nameof(VerticalScrollFilledContentConstraint)}-Left")
-			.WithConstraint(scroll, Right, Equal, content, Right, 1f, horizontalMargin / 2f, identifier: $"{nameof(VerticalScrollFilledContentConstraint)}-Right")
-			.WithConstraint(scroll, Top, Equal, content, Top, 1f, 0f, identifier: $"{nameof(VerticalScrollFilledContentConstraint)}-Top")
-			.WithConstraint(scroll, Bottom, Equal, content, Bottom, 1f, 0f, identifier: $"{nameof(VerticalScrollFilledContentConstraint)}-Bottom")
-			.WithConstraint(scroll, Height, LessThanOrEqual, content, Height, 1f, 0f, identifier: $"{nameof(VerticalScrollFilledContentConstraint)}-Height")
-			.WithConstraint(scroll, CenterX, Equal, content, CenterX, 1f, 0f, identifier: $"{nameof(VerticalScrollFilledContentConstraint)}-CenterX");
+		scroll	.WithConstraint(scroll, Left	, Equal			 	, content, Left,	1, -horizontalMargin / 2f, identifier: $"{nameof(VerticalScrollFilledContentConstraint)}-Left")
+				.WithConstraint(scroll, Right	, Equal			 	, content, Right,	1f, horizontalMargin / 2f, identifier: $"{nameof(VerticalScrollFilledContentConstraint)}-Right")
+				.WithConstraint(scroll, Top		, Equal				, content, Top,		1f, 0f, identifier: $"{nameof(VerticalScrollFilledContentConstraint)}-Top")
+				.WithConstraint(scroll, Bottom	, Equal				, content, Bottom,	1f, 0f, identifier: $"{nameof(VerticalScrollFilledContentConstraint)}-Bottom")
+				.WithConstraint(scroll, Height	, LessThanOrEqual	, content, Height,	1f, 0f, identifier: $"{nameof(VerticalScrollFilledContentConstraint)}-Height")
+				.WithConstraint(scroll, CenterX	, Equal			 	, content, CenterX,	1f, 0f, identifier: $"{nameof(VerticalScrollFilledContentConstraint)}-CenterX");
 		return scroll;
 	}
 

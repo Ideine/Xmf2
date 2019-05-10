@@ -3,6 +3,7 @@ using UIKit;
 using Xmf2.Core.Helpers;
 using Xmf2.Core.iOS.Controls;
 using Xmf2.Core.Subscriptions;
+using Xmf2.Core.iOS.Extensions;
 
 namespace Xmf2.Core.iOS.Helpers
 {
@@ -16,6 +17,9 @@ namespace Xmf2.Core.iOS.Helpers
 		private bool _isBusy;
 
 		private bool _loadingIconUp;
+		private UIActivityIndicatorViewStyle _style;
+		private UIColor _backgroundColor;
+		private UIView _parent;
 
 		public virtual bool IsBusy
 		{
@@ -30,9 +34,7 @@ namespace Xmf2.Core.iOS.Helpers
 				}
 			}
 		}
-
-		private UIView _parent;
-
+		
 		public LoadingViewHelper(UIView parent)
 		{
 			_parent = parent;
@@ -42,25 +44,46 @@ namespace Xmf2.Core.iOS.Helpers
 
 		private void CreateLoadingViewIfNeeded()
 		{
-			if (_loadingView != null)
+			if (_loadingView is null)
 			{
-				return;
-			}
-
-			lock (_mutex)
-			{
-				if (_loadingView != null)
+				lock (_mutex)
 				{
-					return;
+					if (_loadingView is null)
+					{
+						_loadingView = new UILoadingView(_parent, _loadingIconUp)
+							.DisposeViewWith(_disposable)
+							.WithActivityIndicatorViewStyle(_style);
+						if (_backgroundColor != null)
+						{
+							_loadingView.WithBackgroundColor(_backgroundColor);
+						}
+					}
 				}
-				
-				_loadingView = new UILoadingView(_parent, _loadingIconUp).DisposeViewWith(_disposable);
 			}
 		}
 
-		public void WithLoadingIconUp()
+		public LoadingViewHelper WithLoadingIconUp()
 		{
 			_loadingIconUp = true;
+			return this;
+		}
+		public LoadingViewHelper WithActivityIndicatorViewStyle(UIActivityIndicatorViewStyle style)
+		{
+			_style = style;
+			_loadingView?.WithActivityIndicatorViewStyle(_style);
+			return this;
+		}
+		public LoadingViewHelper WithBackgroundColor(uint color)
+		{
+			_backgroundColor = color.ColorFromHex();
+			_loadingView?.WithBackgroundColor(_backgroundColor);
+			return this;
+		}
+		public LoadingViewHelper WithBackgroundColor(UIColor color)
+		{
+			_backgroundColor = color;
+			_loadingView?.WithBackgroundColor(_backgroundColor);
+			return this;
 		}
 
 		#region Dispose
@@ -70,7 +93,6 @@ namespace Xmf2.Core.iOS.Helpers
 			if (disposing)
 			{
 				_disposable.Dispose();
-
 				_parent = null;
 				_throttling = null;
 			}
