@@ -8,7 +8,7 @@ using Xmf2.Components.Bootstrappers;
 
 namespace Xmf2.Notification.Droid
 {
-	[Service, IntentFilter(new[] {"com.google.firebase.MESSAGING_EVENT"})]
+	[Service, IntentFilter(new[] { "com.google.firebase.MESSAGING_EVENT" })]
 	public class MyFirebaseListenerService : FirebaseMessagingService
 	{
 		public override void OnMessageReceived(RemoteMessage message)
@@ -79,9 +79,9 @@ namespace Xmf2.Notification.Droid
 		private void InitializeSetup(Context applicationContext)
 		{
 			var query = from assembly in AppDomain.CurrentDomain.GetAssemblies()
-				from type in assembly.GetTypes()
-				where typeof(INotificationSetup).IsAssignableFrom(type)
-				select type;
+						from type in assembly.GetTypes()
+						where typeof(INotificationSetup).IsAssignableFrom(type) && type != typeof(INotificationSetup)
+						select type;
 
 			Type setupType = query.FirstOrDefault();
 
