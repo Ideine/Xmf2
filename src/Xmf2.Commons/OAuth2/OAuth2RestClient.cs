@@ -78,7 +78,7 @@ namespace Xmf2.Rest.OAuth2
 					}
 					else
 					{
-						content = JsonConvert.SerializeObject(body.Value);
+						content = body.Value.SerializeObjectWithoutNull();
 					}
 				}
 				else
