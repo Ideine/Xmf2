@@ -52,6 +52,11 @@ namespace Xmf2.Commons.Rx.ViewModels
 
 		#region Wrap for error
 
+		protected Task WrapForError(Action source, CustomErrorHandler errorHandler = null, int timeoutSeconds = 90)
+		{
+			return WrapForError(Observable.Start(source), errorHandler, timeoutSeconds);
+		}
+
 		protected Task WrapForError(IObservable<Unit> source, CustomErrorHandler errorHandler = null, int timeoutSeconds = 90)
 		{
 			return ErrorHanler.Value
