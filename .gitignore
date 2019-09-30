@@ -171,3 +171,6 @@ Fichiers APK
 *.apk
 
 Resource.designer.cs
+*.nuget.props
+*.nuget.dgspec.json
+*.lock.json
