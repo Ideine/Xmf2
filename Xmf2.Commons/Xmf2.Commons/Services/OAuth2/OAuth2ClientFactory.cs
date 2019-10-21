@@ -1,7 +1,7 @@
 ﻿using System;
-using Ideine.Rest.OAuth2;
 using RestSharp.Portable;
 using Xmf2.Commons.Logs;
+using Xmf2.Rest.OAuth2;
 
 namespace Xmf2.Commons.Services.OAuth2
 {

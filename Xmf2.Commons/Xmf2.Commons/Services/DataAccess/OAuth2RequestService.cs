@@ -1,8 +1,8 @@
 using System.Threading;
 using System.Threading.Tasks;
-using Ideine.Rest.OAuth2;
 using RestSharp.Portable;
 using Xmf2.Commons.ErrorManagers;
+using Xmf2.Rest.OAuth2;
 
 namespace Xmf2.Commons.Services
 {

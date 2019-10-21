@@ -69,17 +69,8 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <Reference Include="System.Runtime.InteropServices.RuntimeInformation">
-      <HintPath>..\packages\System.Runtime.InteropServices.RuntimeInformation.4.3.0\lib\netstandard1.1\System.Runtime.InteropServices.RuntimeInformation.dll</HintPath>
-    </Reference>
-    <Reference Include="Ideine.Rest">
-      <HintPath>..\packages\Ideine.Rest.1.0.0\lib\netstandard1.1\Ideine.Rest.dll</HintPath>
-    </Reference>
     <Reference Include="FubarCoder.RestSharp.Portable.Core">
       <HintPath>..\packages\FubarCoder.RestSharp.Portable.Core.4.0.8\lib\portable45-net45+win8+wp8+wpa81\FubarCoder.RestSharp.Portable.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Newtonsoft.Json.10.0.2\lib\portable-net45+win8+wpa81+wp8\Newtonsoft.Json.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -87,6 +78,12 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\Xmf2.Rest\Xmf2.Rest.csproj">
+      <Project>{33FBCB55-FDDA-4F7F-9CA1-87D4DF2788E8}</Project>
+      <Name>Xmf2.Rest</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -1,13 +1,13 @@
-﻿using Ideine.Rest.OAuth2;
-using RestSharp.Portable;
+﻿using RestSharp.Portable;
 using Xmf2.Commons.Services.OAuth2.Models;
+using Xmf2.Rest.OAuth2;
 
 namespace Xmf2.Commons.Services.OAuth2
 {
 	public class OAuth2BodyConfiguration : OAuth2ConfigurationBase<AuthenticationResponse>
 	{
-		private string _clientId;
-		private string _clientSecret;
+		private readonly string _clientId;
+		private readonly string _clientSecret;
 
 		public OAuth2BodyConfiguration(string clientId, string clientSecret)
 		{
