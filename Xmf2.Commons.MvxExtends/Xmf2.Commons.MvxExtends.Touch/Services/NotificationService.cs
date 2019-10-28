@@ -1,5 +1,4 @@
-﻿using System;
-using Foundation;
+﻿using Foundation;
 using MvvmCross.iOS.Platform;
 using MvvmCross.Platform;
 using MvvmCross.Platform.Platform;
@@ -8,7 +7,7 @@ using Xmf2.Commons.MvxExtends.Services;
 
 namespace Xmf2.Commons.MvxExtends.Touch.Services
 {
-	public class NotificationService : BaseNotificationService
+    public class NotificationService : BaseNotificationService
 	{
 		public NotificationService(IKeyValueStorageService settingsService, INotificationDataService notificationDataService) : base(settingsService, notificationDataService)
 		{
