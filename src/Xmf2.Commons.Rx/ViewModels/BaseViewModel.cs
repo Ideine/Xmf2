@@ -16,8 +16,8 @@ namespace Xmf2.Commons.Rx.ViewModels
 {
 	public abstract class BaseViewModel : ReactiveObject, ISupportsActivation
 	{
-		public const int DEFAULT_TIMEOUT = 300;
-	
+		private const int DEFAULT_TIMEOUT = 60;
+
 		protected Lazy<IErrorHandler> ErrorHandler { get; } = new Lazy<IErrorHandler>(Locator.Current.GetService<IErrorHandler>);
 
 		private readonly Subject<bool> _isInitializing = new Subject<bool>();

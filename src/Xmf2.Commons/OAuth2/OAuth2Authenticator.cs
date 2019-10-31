@@ -32,7 +32,7 @@ namespace Xmf2.Rest.OAuth2
 
 		public bool CanHandleChallenge(IHttpClient client, IHttpRequestMessage request, ICredentials credentials, IHttpResponseMessage response)
 		{
-			return Access != null && response.StatusCode == HttpStatusCode.Unauthorized;
+			return Access != null && response.StatusCode == HttpStatusCode.Unauthorized && !request.Headers.Contains(NO_AUTH_HEADER);
 		}
 
 		public async Task PreAuthenticate(IRestClient client, IRestRequest request, ICredentials credentials)

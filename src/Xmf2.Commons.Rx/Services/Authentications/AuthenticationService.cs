@@ -31,7 +31,6 @@ namespace Xmf2.Commons.Rx.Services.Authentications
 			_client.OnAuthSuccess += OnClientAuthenticationSuccess;
 			_client.OnAuthError += OnClientAuthenticationError;
 
-
 			if (_storageService.Has().Result)
 			{
 				var authDetails = _storageService.Get().Result;
@@ -68,17 +67,17 @@ namespace Xmf2.Commons.Rx.Services.Authentications
 		public IObservable<bool> LoginWithCredentials(string login, string password, CancellationToken ct)
 		{
 			return _errorManager.ExecuteAsync(() => _client.Login(login, password, ct))
-								.Select(loginResult =>
-			{
-				CacheEngine.InvalidateScope(CacheEngine.SCOPE_USER);
-
-				if (loginResult.IsSuccess)
+				.Select(loginResult =>
 				{
-					OnLogged();
-				}
+					CacheEngine.InvalidateScope(CacheEngine.SCOPE_USER);
 
-				return loginResult.IsSuccess;
-			});
+					if (loginResult.IsSuccess)
+					{
+						OnLogged();
+					}
+
+					return loginResult.IsSuccess;
+				});
 		}
 
 		public IObservable<bool> LoginWithRefreshToken()
@@ -133,14 +132,8 @@ namespace Xmf2.Commons.Rx.Services.Authentications
 			return TaskHelper.CompletedTask;
 		}
 
-		protected virtual void OnLogged()
-		{
+		protected virtual void OnLogged() { }
 
-		}
-
-		protected virtual void OnLogout()
-		{
-
-		}
+		protected virtual void OnLogout() { }
 	}
 }
