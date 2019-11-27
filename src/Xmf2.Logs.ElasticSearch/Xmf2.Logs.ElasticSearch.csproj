@@ -6,7 +6,6 @@
     <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Xmf2.Core\Xmf2.Core.csproj" />
     <ProjectReference Include="..\Xmf2.Commons\Xmf2.Commons.csproj" />
   </ItemGroup>
 </Project>

@@ -11,6 +11,10 @@ namespace UIKit
 
 		public static UITextField TextField(this UISearchBar searchBar)
 		{
+			if (UIDevice.CurrentDevice.CheckSystemVersion(13, 0))
+			{
+				return searchBar.SearchTextField as UITextField;
+			}
 			return searchBar.ValueForKey(_searchField) as UITextField;
 		}
 
