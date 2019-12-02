@@ -6,7 +6,6 @@
     </PackageTargetFallback>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="HockeySDK.Xamarin" Version="5.0.0" />
     <PackageReference Include="reactiveui" Version="7.4.0" />
     <PackageReference Include="System.Net.Requests" Version="4.3.0" />
     <PackageReference Include="System.ValueTuple" Version="4.4.0" />
