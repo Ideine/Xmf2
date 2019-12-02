@@ -1,10 +1,9 @@
 ﻿using System;
-using Android.App;
-using System.Threading.Tasks;
+using Firebase;
 using Android.Content;
 using Android.Gms.Common;
-using Xmf2.Commons.Services;
-using Firebase;
+using Xmf2.Core.Services;
+using System.Threading.Tasks;
 
 namespace Xmf2.Notification.Droid
 {
