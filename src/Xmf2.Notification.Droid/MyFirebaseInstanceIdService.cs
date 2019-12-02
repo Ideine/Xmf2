@@ -1,7 +1,8 @@
 ﻿using Android.App;
 using Firebase.Iid;
 using Splat;
-using Xmf2.Commons.Services;
+using Xmf2.Core.Services;
+
 
 namespace Xmf2.Notification.Droid
 {
