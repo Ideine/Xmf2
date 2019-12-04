@@ -501,7 +501,7 @@ namespace Xmf2.Commons.iOS.Controls
 		{
 			//TODO: review scrollbar detection
 			return view.Description.Contains("UIScrollViewScrollIndicator")
-				|| (	view is UIImageView
+				|| (view is UIImageView
 					&& view.Frame.Location == CGPoint.Empty
 					&& view.Frame.Width <= 2.5f
 					&& view.Frame.Height <= 2.5f);
