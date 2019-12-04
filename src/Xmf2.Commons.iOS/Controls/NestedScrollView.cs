@@ -497,18 +497,14 @@ namespace Xmf2.Commons.iOS.Controls
 			view.AddObserver(this, SELECTOR_BOUNDS_SIZE, NSKeyValueObservingOptions.Old, Handle);
 		}
 
-		private bool IsAddedByOsScrollbar(UIView view) //TODO: review scrollbar detection
+		private bool IsAddedByOsScrollbar(UIView view)
 		{
-			if (view is UIImageView)
-			{
-				return view.Frame.Location == CGPoint.Empty
-				&& (view.Frame.Width <= 2.5f)
-				&& (view.Frame.Height <= 2.5f);
-			}
-			else
-			{
-				return false;
-			}
+			//TODO: review scrollbar detection
+			return view.Description.Contains("UIScrollViewScrollIndicator")
+				|| (view is UIImageView
+					&& view.Frame.Location == CGPoint.Empty
+					&& view.Frame.Width <= 2.5f
+					&& view.Frame.Height <= 2.5f);
 		}
 
 		public void AddStickableView(UIView stickableView)
