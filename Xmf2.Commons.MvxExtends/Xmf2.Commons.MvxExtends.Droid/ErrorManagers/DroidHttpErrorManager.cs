@@ -18,7 +18,7 @@ namespace Xmf2.Commons.MvxExtends.Droid.ErrorManagers
 {
     public class DroidHttpErrorManager : BaseHttpErrorManager
     {
-        Policy _droidHttpHandlePolicy;
+		IAsyncPolicy _droidHttpHandlePolicy;
 
         public DroidHttpErrorManager()
         {
@@ -39,7 +39,7 @@ namespace Xmf2.Commons.MvxExtends.Droid.ErrorManagers
                     .RetryAsync(3, (Action<Exception, int>)LogRetryException);
         }
 
-        protected override Policy GetHttpHandlePolicy()
+        protected override IAsyncPolicy GetHttpHandlePolicy()
         {
             return _droidHttpHandlePolicy;
         }

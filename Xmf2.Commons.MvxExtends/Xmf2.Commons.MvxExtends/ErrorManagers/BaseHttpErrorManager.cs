@@ -13,10 +13,10 @@ namespace Xmf2.Commons.MvxExtends.ErrorManagers
 {
     public class BaseHttpErrorManager : IHttpErrorManager
     {
-        Policy _httpHandlePolicy;
-        ILogger _logger;
+		private readonly IAsyncPolicy _httpHandlePolicy;
+		private readonly ILogger _logger;
 
-        public BaseHttpErrorManager()
+		public BaseHttpErrorManager()
         {
             _httpHandlePolicy = Policy
                     .Handle<System.Net.WebException>(webEx =>
@@ -64,7 +64,7 @@ namespace Xmf2.Commons.MvxExtends.ErrorManagers
             }
         }
 
-        protected virtual Policy GetHttpHandlePolicy()
+        protected virtual IAsyncPolicy GetHttpHandlePolicy()
         {
             return _httpHandlePolicy;
         }

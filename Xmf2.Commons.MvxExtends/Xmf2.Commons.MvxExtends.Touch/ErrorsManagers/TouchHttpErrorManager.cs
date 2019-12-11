@@ -8,7 +8,7 @@ namespace Xmf2.Commons.MvxExtends.Touch.ErrorManagers
 {
 	public class TouchHttpErrorManager: BaseHttpErrorManager
 	{
-		Policy _touchHttpHandlePolicy;
+		IAsyncPolicy _touchHttpHandlePolicy;
 
 		public TouchHttpErrorManager ()
 		{
@@ -29,7 +29,7 @@ namespace Xmf2.Commons.MvxExtends.Touch.ErrorManagers
 				.RetryAsync (3, (Action<Exception, int>)LogRetryException);
 		}
 
-		protected override Policy GetHttpHandlePolicy ()
+		protected override IAsyncPolicy GetHttpHandlePolicy ()
 		{
 			return _touchHttpHandlePolicy;
 		}
