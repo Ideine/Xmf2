@@ -249,12 +249,7 @@ namespace Xmf2.Core.iOS.Services
 
 		private static string TokenToString(NSData deviceToken)
 		{
-			string deviceTokenString = deviceToken.Description;
-			deviceTokenString = deviceTokenString.Trim('<', '>');
-			deviceTokenString = deviceTokenString.Replace(" ", "");
-			deviceTokenString = deviceTokenString.ToUpper();
-
-			return deviceTokenString;
+			return string.Join(string.Empty, deviceToken.Select(x => x.ToString("x2")));
 		}
 
 		private static NSObject[] ToNSObjects(NSArray array)
