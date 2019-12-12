@@ -55,5 +55,10 @@ namespace Xmf2.Commons.Extensions
 			}
 			return !source.Any(predicate);
 		}
+
+		public static IEnumerable<TOutput> SelectManySafe<TInput, TOutput>(this IEnumerable<TInput> source, Func<TInput, IEnumerable<TOutput>> func)
+		{
+			return source.SelectMany(x => func(x) ?? new List<TOutput>(0));
+		}
 	}
 }
