@@ -157,7 +157,10 @@ namespace Xmf2.Rest.HttpClient
                     var data = request.GetBodyContent(parameter);
                     var parameterName = parameter.Name ?? data.Headers.ContentType.MediaType;
                     if (string.IsNullOrEmpty(parameterName))
-                        throw new InvalidOperationException("You must specify a name for a body parameter.");
+                    {
+	                    throw new InvalidOperationException("You must specify a name for a body parameter.");
+                    }
+
                     multipartContent.Add(data, parameterName);
                 }
             }

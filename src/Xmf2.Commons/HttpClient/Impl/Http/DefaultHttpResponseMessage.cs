@@ -79,7 +79,9 @@ namespace Xmf2.Rest.HttpClient.Impl.Http
 		public void EnsureSuccessStatusCode()
         {
             if (ResponseMessage == null)
-                throw new HttpRequestException(ReasonPhrase);
+            {
+	            throw new HttpRequestException(ReasonPhrase);
+            }
 
             ResponseMessage?.EnsureSuccessStatusCode();
         }
