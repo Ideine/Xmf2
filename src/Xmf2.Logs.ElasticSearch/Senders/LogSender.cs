@@ -23,7 +23,7 @@ namespace Xmf2.Logs.ElasticSearch.Senders
 		private readonly SemaphoreSlim _runMutex = new SemaphoreSlim(1);
 
 		private readonly ExponentialBackOffStrategy _backOffStrategy;
-		
+
 		public LogSender(HttpClient client, string url, ILogBufferStorage storage)
 		{
 			_client = client;
@@ -38,7 +38,7 @@ namespace Xmf2.Logs.ElasticSearch.Senders
 				_waitingContent.Append(storedContent);
 				_contentSemaphore.Release();
 			}
-			
+
 			_worker = new BackgroundWorker(RunAsync);
 			_worker.Start();
 		}
@@ -53,10 +53,10 @@ namespace Xmf2.Logs.ElasticSearch.Senders
 				}
 				_waitingContent.AppendLine($"{{\"index\":{{\"_index\":\"{entry.Index}\", \"_type\":\"{entry.Type}\"}}}}")
 					.AppendLine(entry.Content);
-				
+
 				StoreBuffer(_waitingContent.ToString());
 			}
-			
+
 			_worker.Start();
 		}
 
@@ -73,7 +73,7 @@ namespace Xmf2.Logs.ElasticSearch.Senders
 					{
 						contentToSend = _waitingContent.ToString();
 					}
-					
+
 					if (await Send(contentToSend))
 					{
 						using (await _stringBuilderMutex.LockAsync())
@@ -90,19 +90,31 @@ namespace Xmf2.Logs.ElasticSearch.Senders
 					}
 				}
 			}
-		// ReSharper disable once FunctionNeverReturns
+			// ReSharper disable once FunctionNeverReturns
 		}
 
 		private void StoreBuffer(string bufferContent)
 		{
 			_storage.Save(bufferContent);
 		}
-		
+
 		private async Task<bool> Send(string content)
 		{
+			if (!content.EndsWith("\n"))
+			{
+				content += '\n';
+			}
+
 			try
 			{
 				HttpResponseMessage response = await _client.PostAsync(_url, new StringContent(content, Encoding.UTF8, "text/plain"));
+#if DEBUG
+				if (!response.IsSuccessStatusCode)
+				{
+					var responseContent = await response.Content.ReadAsStringAsync();
+					Console.WriteLine(responseContent);
+				}
+#endif
 
 				return response.IsSuccessStatusCode;
 			}
