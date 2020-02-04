@@ -6,6 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using RestSharp.Portable;
+using Xmf2.Commons.Exceptions;
 using Xmf2.Rest.HttpClient.Impl;
 using RestClientExtensions = Xmf2.Rest.HttpClient.RestClientExtensions;
 
@@ -177,7 +178,7 @@ namespace Xmf2.Rest.OAuth2
 				authenticator.Access = result;
 				Authenticator = OAuth2Authenticator = authenticator;
 			}
-			else if(result.ErrorReason == AuthErrorReason.InvalidCredentials)
+			else if (result.ErrorReason == AuthErrorReason.InvalidCredentials || result.ErrorReason == AuthErrorReason.InvalidToken)
 			{
 				Logout();
 			}
@@ -190,8 +191,8 @@ namespace Xmf2.Rest.OAuth2
 	    {
 		    Authenticator = null;
 		    OAuth2Authenticator = null;
-	    }
-		
+		}
+
 		public override async Task<IRestResponse<T>> Execute<T>(IRestRequest request, CancellationToken ct)
 		{
 			using (IHttpResponseMessage response = await ExecuteRequest(request, ct).ConfigureAwait(false))
