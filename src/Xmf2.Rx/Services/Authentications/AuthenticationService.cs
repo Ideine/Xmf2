@@ -57,6 +57,10 @@ namespace Xmf2.Rx.Services.Authentications
 			{
 				throw new InvalidAppVersionException();
 			}
+			else if (e.ErrorReason == AuthErrorReason.InvalidToken)
+			{
+				throw new AccessDataException(AccessDataException.ErrorType.UnAuthorized);
+			}
 		}
 
 		public IObservable<bool> LoginWithCredentials(string login, string password)

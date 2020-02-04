@@ -28,12 +28,12 @@ namespace Xmf2.Rest.OAuth2
 	{
 		public override OAuth2AuthResult HandleAuthResult(IRestResponse response)
 		{
+			string content = response.Content;
+			TAuthRequestResponse responseResult = JsonConvert.DeserializeObject<TAuthRequestResponse>(content);
+
+			OAuth2AuthResult result = HandleAuthResult(responseResult);
 			if (response.IsSuccess)
 			{
-				string content = response.Content;
-				TAuthRequestResponse responseResult = JsonConvert.DeserializeObject<TAuthRequestResponse>(content);
-
-				OAuth2AuthResult result = HandleAuthResult(responseResult);
 				result.IsSuccess = true;
 				return result;
 			}
@@ -44,7 +44,7 @@ namespace Xmf2.Rest.OAuth2
 					return new OAuth2AuthResult
 					{
 						IsSuccess = false,
-						ErrorReason = AuthErrorReason.InvalidCredentials,
+						ErrorReason = result.ErrorMessage == "Invalid token" ? AuthErrorReason.InvalidToken : AuthErrorReason.InvalidCredentials, //API à modifier pour avoir un error_code plus precis lors d'un token invalid 
 						ErrorMessage = response.Content,
 					};
 				case HttpStatusCode.BadRequest:
