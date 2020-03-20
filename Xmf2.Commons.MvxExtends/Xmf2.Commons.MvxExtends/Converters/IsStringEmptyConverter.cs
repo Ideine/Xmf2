@@ -1,13 +1,9 @@
-﻿using MvvmCross.Platform.Converters;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
+using MvvmCross.Platform.Converters;
 
 namespace Xmf2.Commons.MvxExtends.Converters
 {
-    public class IsStringEmptyConverter : MvxValueConverter<string, bool>
+	public class IsStringEmptyConverter : MvxValueConverter<string, bool>
     {
         protected override bool Convert(string value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {

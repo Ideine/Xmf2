@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq;
 
 namespace Xmf2.Commons.Extensions
 {
-    public static class StringExtensions
+	public static class StringExtensions
     {
         public static bool IsEmpty(this string str)
         {

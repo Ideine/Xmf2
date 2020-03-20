@@ -29,14 +29,13 @@
     <ConsolePause>false</ConsolePause>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Polly, Version=4.3.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\packages\Polly.4.3.0\lib\dotnet\Polly.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="Xamarin.iOS" />
+    <Reference Include="Polly">
+      <HintPath>..\..\..\..\packages\Polly.4.3.0\lib\dotnet\Polly.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\" />
@@ -60,88 +59,13 @@
       <Name>Xmf2.Commons</Name>
     </ProjectReference>
   </ItemGroup>
-  <Choose>
-    <When Condition=" $([System.Text.RegularExpressions.Regex]::IsMatch('$(SolutionName)', '.+nuget')) ">
-      <PropertyGroup>
-        <CustomBuildInfoMessage>BuildSystem: Building from nuget packages</CustomBuildInfoMessage>
-      </PropertyGroup>
-      <ItemGroup>
-        <Reference Include="MvvmCross.Binding, Version=4.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-          <HintPath>..\..\..\..\packages\MvvmCross.Binding.4.3.0\lib\Xamarin.iOS10\MvvmCross.Binding.dll</HintPath>
-          <Private>True</Private>
-        </Reference>
-        <Reference Include="MvvmCross.Binding.iOS, Version=4.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-          <HintPath>..\..\..\..\packages\MvvmCross.Binding.4.3.0\lib\Xamarin.iOS10\MvvmCross.Binding.iOS.dll</HintPath>
-          <Private>True</Private>
-        </Reference>
-        <Reference Include="MvvmCross.Core, Version=4.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-          <HintPath>..\..\..\..\packages\MvvmCross.Core.4.3.0\lib\Xamarin.iOS10\MvvmCross.Core.dll</HintPath>
-          <Private>True</Private>
-        </Reference>
-        <Reference Include="MvvmCross.iOS, Version=4.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-          <HintPath>..\..\..\..\packages\MvvmCross.Core.4.3.0\lib\Xamarin.iOS10\MvvmCross.iOS.dll</HintPath>
-          <Private>True</Private>
-        </Reference>
-        <Reference Include="MvvmCross.Localization, Version=4.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-          <HintPath>..\..\..\..\packages\MvvmCross.Binding.4.3.0\lib\Xamarin.iOS10\MvvmCross.Localization.dll</HintPath>
-          <Private>True</Private>
-        </Reference>
-        <Reference Include="MvvmCross.Platform, Version=4.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-          <HintPath>..\..\..\..\packages\MvvmCross.Platform.4.3.0\lib\Xamarin.iOS10\MvvmCross.Platform.dll</HintPath>
-          <Private>True</Private>
-        </Reference>
-        <Reference Include="MvvmCross.Platform.iOS, Version=4.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-          <HintPath>..\..\..\..\packages\MvvmCross.Platform.4.3.0\lib\Xamarin.iOS10\MvvmCross.Platform.iOS.dll</HintPath>
-          <Private>True</Private>
-        </Reference>
-      </ItemGroup>
-    </When>
-    <Otherwise>
-      <PropertyGroup>
-        <CustomBuildInfoMessage>BuildSystem: Building from project references</CustomBuildInfoMessage>
-      </PropertyGroup>
-      <ItemGroup>
-        <ProjectReference Include="..\..\..\MvvmCross\MvvmCross\Binding\iOS\MvvmCross.Binding.iOS.csproj">
-          <Project>{913b13b5-7b2c-4dda-becb-dadc827ed895}</Project>
-          <Name>MvvmCross.Binding.iOS</Name>
-          <IsAppExtension>false</IsAppExtension>
-          <IsWatchApp>false</IsWatchApp>
-        </ProjectReference>
-        <ProjectReference Include="..\..\..\MvvmCross\MvvmCross\Core\Binding\MvvmCross.Binding.csproj">
-          <Project>{64dcd397-9019-41e8-a928-e5f5c5df185b}</Project>
-          <Name>MvvmCross.Binding</Name>
-        </ProjectReference>
-        <ProjectReference Include="..\..\..\MvvmCross\MvvmCross\Core\Core\MvvmCross.Core.csproj">
-          <Project>{b6e27475-e7d0-448c-a5cc-5097dca1e2dd}</Project>
-          <Name>MvvmCross.Core</Name>
-        </ProjectReference>
-        <ProjectReference Include="..\..\..\MvvmCross\MvvmCross\Core\Localization\MvvmCross.Localization.csproj">
-          <Project>{d89351c1-d48f-4ad0-a0b9-353a93425ab7}</Project>
-          <Name>MvvmCross.Localization</Name>
-        </ProjectReference>
-        <ProjectReference Include="..\..\..\MvvmCross\MvvmCross\iOS\iOS\MvvmCross.iOS.csproj">
-          <Project>{e042edd9-e89d-4928-bf4d-27f0fc29ceda}</Project>
-          <Name>MvvmCross.iOS</Name>
-          <IsAppExtension>false</IsAppExtension>
-          <IsWatchApp>false</IsWatchApp>
-        </ProjectReference>
-        <ProjectReference Include="..\..\..\MvvmCross\MvvmCross\Platform\iOS\MvvmCross.Platform.iOS.csproj">
-          <Project>{bbbcd850-e7cb-4b6c-86d9-ce01f2b1c81c}</Project>
-          <Name>MvvmCross.Platform.iOS</Name>
-          <IsAppExtension>false</IsAppExtension>
-          <IsWatchApp>false</IsWatchApp>
-        </ProjectReference>
-        <ProjectReference Include="..\..\..\MvvmCross\MvvmCross\Platform\Platform\MvvmCross.Platform.csproj">
-          <Project>{cff6f25a-3c3b-44ee-a54c-2ed4aaff3adb}</Project>
-          <Name>MvvmCross.Platform</Name>
-        </ProjectReference>
-      </ItemGroup>
-    </Otherwise>
-  </Choose>
-  <Target Name="CustomBuildInfo" BeforeTargets="BeforeBuild">
+  <ItemGroup>
+    <PackageReference Include="MvvmCross" Version="5.7.0" />
+    <PackageReference Include="MvvmCross.Core" Version="5.7.0" />
+    <PackageReference Include="MvvmCross.Binding" Version="5.7.0" />
+    <PackageReference Include="MvvmCross.Platform" Version="5.7.0" />
+  </ItemGroup>
+ <Target Name="CustomBuildInfo" BeforeTargets="BeforeBuild">
     <Message Text="$(CustomBuildInfoMessage)" Importance="high" />
   </Target>
-  <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
 </Project>

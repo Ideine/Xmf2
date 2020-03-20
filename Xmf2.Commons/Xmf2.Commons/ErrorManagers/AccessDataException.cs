@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Xmf2.Commons.ErrorManagers
 {
-    public class AccessDataException : ManagedException
+	public class AccessDataException : ManagedException
     {
         public enum ErrorType
         {

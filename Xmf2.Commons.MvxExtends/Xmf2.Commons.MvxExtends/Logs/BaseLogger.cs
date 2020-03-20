@@ -1,14 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using MvvmCross.Platform;
 using MvvmCross.Platform.Platform;
 
 namespace Xmf2.Commons.MvxExtends.Logs
 {
-    public class BaseLogger : ILogger
+	public class BaseLogger : ILogger
     {
         public virtual void Log(LogLevel level, Exception e = null, string message = null)
         {

@@ -1,25 +1,18 @@
-﻿using MvvmCross.Platform.Converters;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
+using MvvmCross.Platform.Converters;
 
 namespace Xmf2.Commons.MvxExtends.Converters
 {
-    public class IfNotNullConverter : IMvxValueConverter
-    {
-        public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
-        {
-            if (value != null)
-                return parameter;
-            else
-                return null;
-        }
+	public class IfNotNullConverter : IMvxValueConverter
+	{
+		public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+		{
+			return value != null ? parameter : null;
+		}
 
-        public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
-        {
-            throw new NotImplementedException();
-        }
-    }
+		public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+		{
+			throw new NotImplementedException();
+		}
+	}
 }

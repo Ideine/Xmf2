@@ -1,16 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Polly;
+using System;
 using MvvmCross.Platform;
-using Polly;
+using System.Threading.Tasks;
 using Xmf2.Commons.ErrorManagers;
 using Xmf2.Commons.MvxExtends.Logs;
 
 namespace Xmf2.Commons.MvxExtends.ErrorManagers
 {
-    public class BaseHttpErrorManager : IHttpErrorManager
+	public class BaseHttpErrorManager : IHttpErrorManager
     {
         Policy _httpHandlePolicy;
         ILogger _logger;
