@@ -41,6 +41,18 @@ namespace Xmf2.Commons.MvxExtends.ViewModels
 			this.RaisePropertyChanged(property);
 		}
 
+		#region Lifecycle
+
+		public virtual void OnEnter() { }
+
+		public virtual void OnPause() { }
+
+		public virtual void OnResume() { }
+
+		public virtual void OnStop() { }
+
+		#endregion
+
 		#region ExecAsync
 
 		AsyncLock _operationInProgressLock = new AsyncLock();

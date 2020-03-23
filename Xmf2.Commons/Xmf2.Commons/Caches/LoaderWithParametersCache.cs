@@ -1,13 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace Xmf2.Commons.Caches
 {
-    public abstract class LoaderParameters
+	public abstract class LoaderParameters
     {
         public abstract bool ParametersAreTheSameAs(LoaderParameters thoseOnes);
     }

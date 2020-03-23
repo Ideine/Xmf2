@@ -1,132 +1,114 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using Android.App;
-using Android.Content;
-using Android.OS;
-using Android.Runtime;
-using Android.Views;
-using Android.Support.V7.Widget;
 using Android.Util;
-using Xmf2.Commons.MvxExtends.Interactions;
+using Android.Views;
+using Android.Content;
+using Android.Runtime;
+using Android.Support.V7.Widget;
 using MvvmCross.Core.ViewModels;
+using Xmf2.Commons.MvxExtends.Interactions;
 
 namespace Xmf2.Commons.MvxExtends.DroidAppCompat.Views
 {
-    [Register("xmf2.commons.mvxextends.droidappcompat.views.PopupMenuLauncher")]
-    public class PopupMenuLauncher : View
-    {
-        PopupMenu _menu;
-        PopupMenuRequest _currentRequest;
+	[Register("xmf2.commons.mvxextends.droidappcompat.views.PopupMenuLauncher")]
+	public class PopupMenuLauncher : View
+	{
+		PopupMenu _menu;
+		PopupMenuRequest _currentRequest;
 
-        protected PopupMenuLauncher(IntPtr javaReference, JniHandleOwnership transfer)
-            : base(javaReference, transfer)
-        {
-        }
+		//* Constructors
+		public PopupMenuLauncher(Context context) : base(context) { }
+		public PopupMenuLauncher(Context context, IAttributeSet attrs) : base(context, attrs) { }
+		public PopupMenuLauncher(Context context, IAttributeSet attrs, int defStyle) : base(context, attrs, defStyle) { }
+		protected PopupMenuLauncher(IntPtr javaReference, JniHandleOwnership transfer) : base(javaReference, transfer) { }
 
-        public PopupMenuLauncher(Context context)
-            : base(context)
-        {
-        }
+		private IDisposable _subscription;
+		private IMvxInteraction<PopupMenuRequest> _popupMenuInteraction;
+		public IMvxInteraction<PopupMenuRequest> PopupMenuInteraction
+		{
+			get { return _popupMenuInteraction; }
+			set
+			{
+				if (_subscription != null)
+				{
+					_subscription.Dispose();
+					_subscription = null;
+				}
+				_popupMenuInteraction = value;
+				if (_popupMenuInteraction != null)
+				{
+					_subscription = _popupMenuInteraction.WeakSubscribe(OpenPopupMenu);
+				}
+			}
+		}
 
-        public PopupMenuLauncher(Context context, IAttributeSet attrs)
-            : base(context, attrs)
-        {
-        }
+		private void OpenPopupMenu(PopupMenuRequest request)
+		{
+			this.CleanAll();
 
-        public PopupMenuLauncher(Context context, IAttributeSet attrs, int defStyle)
-            : base(context, attrs, defStyle)
-        {
-        }
+			_currentRequest = request;
 
-        private IDisposable _subscription;
-        private IMvxInteraction<PopupMenuRequest> _popupMenuInteraction;
-        public IMvxInteraction<PopupMenuRequest> PopupMenuInteraction
-        {
-            get { return _popupMenuInteraction; }
-            set
-            {
-                if (_subscription != null)
-                {
-                    _subscription.Dispose();
-                    _subscription = null;
-                }
-                _popupMenuInteraction = value;
-                if (_popupMenuInteraction != null)
-                {
-                    _subscription = _popupMenuInteraction.WeakSubscribe(OpenPopupMenu);
-                }
-            }
-        }
+			_menu = new PopupMenu(this.Context, this);
 
-        private void OpenPopupMenu(PopupMenuRequest request)
-        {
-            this.CleanAll();
+			int menuId = Menu.First + 1;
+			foreach (var item in request.LstPopupItem)
+			{
+				_menu.Menu.Add(0, menuId, item.Order, item.Title);
+				menuId++;
+			}
 
-            _currentRequest = request;
+			_menu.MenuItemClick += MenuItemClick;
+			_menu.DismissEvent += MenuDismissEvent;
 
-            _menu = new PopupMenu(this.Context, this);
+			_menu.Show();
+		}
 
-            int menuId = Menu.First + 1;
-            foreach (var item in request.LstPopupItem)
-            {
-                _menu.Menu.Add(0, menuId, item.Order, item.Title);
-                menuId++;
-            }
+		void MenuItemClick(object sender, PopupMenu.MenuItemClickEventArgs e)
+		{
+			if (_currentRequest != null && e.Item != null)
+			{
+				_currentRequest.Execute(e.Item.Order);
+			}
 
-            _menu.MenuItemClick += MenuItemClick;
-            _menu.DismissEvent += MenuDismissEvent;
+			this.CleanAll();
+		}
 
-            _menu.Show();
-        }
+		void MenuDismissEvent(object sender, PopupMenu.DismissEventArgs e)
+		{
+			if (_currentRequest != null)
+			{
+				_currentRequest.ExecuteCancel();
+			}
+			this.CleanAll();
+		}
 
-        void MenuItemClick(object sender, PopupMenu.MenuItemClickEventArgs e)
-        {
-            if (_currentRequest != null && e.Item != null)
-            {
-                _currentRequest.Execute(e.Item.Order);
-            }
+		private void CleanAll()
+		{
+			if (_menu != null)
+			{
+				try
+				{
+					_menu.MenuItemClick -= MenuItemClick;
+					_menu.DismissEvent -= MenuDismissEvent;
+				}
+				catch { }
+				_menu = null;
+			}
 
-            this.CleanAll();
-        }
+			if (_currentRequest != null)
+			{
+				_currentRequest.Clean();
+				_currentRequest = null;
+			}
+		}
 
-        void MenuDismissEvent(object sender, PopupMenu.DismissEventArgs e)
-        {
-            if (_currentRequest != null)
-                _currentRequest.ExecuteCancel();
-            this.CleanAll();
-        }
+		protected override void Dispose(bool isDisposing)
+		{
+			if (isDisposing)
+			{
+				this.CleanAll();
+			}
 
-        private void CleanAll()
-        {
-            if (_menu != null)
-            {
-                try
-                {
-                    _menu.MenuItemClick -= MenuItemClick;
-                    _menu.DismissEvent -= MenuDismissEvent;
-                }
-                catch { }
-                _menu = null;
-            }
-
-            if (_currentRequest != null)
-            {
-                _currentRequest.Clean();
-                _currentRequest = null;
-            }
-        }
-
-        protected override void Dispose(bool isDisposing)
-        {
-            if (isDisposing)
-            {
-                this.CleanAll();
-            }
-
-            base.Dispose(isDisposing);
-        }
-    }
+			base.Dispose(isDisposing);
+		}
+	}
 }

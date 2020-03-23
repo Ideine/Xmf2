@@ -1,22 +1,12 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Text;
-
-using Android.App;
-using Android.Content;
-using Android.OS;
-using Android.Runtime;
-using Android.Views;
-using Android.Widget;
 using Polly;
+using System;
+using System.Net;
 using Xmf2.Commons.ErrorManagers;
 using Xmf2.Commons.MvxExtends.ErrorManagers;
 
 namespace Xmf2.Commons.MvxExtends.Droid.ErrorManagers
 {
-    public class DroidHttpErrorManager : BaseHttpErrorManager
+	public class DroidHttpErrorManager : BaseHttpErrorManager
     {
         Policy _droidHttpHandlePolicy;
 
