@@ -55,6 +55,10 @@
       <Project>{7D6A560F-5947-4ABA-AF63-902E40ACDA2B}</Project>
       <Name>Xmf2.Commons.MvxExtends</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Xmf2.Commons\Xmf2.Commons\Xmf2.Commons.csproj">
+      <Project>{6F547CA0-07E5-4D09-AF1C-E26AEF8BC45A}</Project>
+      <Name>Xmf2.Commons</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="MvvmCross.Core" Version="5.7.0" />
