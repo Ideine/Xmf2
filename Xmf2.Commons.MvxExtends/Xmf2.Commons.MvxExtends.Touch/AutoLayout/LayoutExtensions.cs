@@ -243,11 +243,12 @@ public static class CustomAutoLayoutExtensions
 
 	public static UIScrollView VerticalScrollContentConstraint(this UIScrollView scroll, UIView content)
 	{
-		scroll.ConstrainLayout(() => scroll.Left() == content.Left()
-		                             && scroll.Right() == content.Right()
-		                             && scroll.Top() == content.Top()
-		                             && scroll.Bottom() == content.Bottom()
-		                             && scroll.CenterX() == content.CenterX());
+		scroll.AnchorLeft(content)
+			.AnchorRight(content)
+			.AnchorTop(content)
+			.AnchorBottom(content)
+			.AlignOnCenterX(scroll, content);
+
 		return scroll;
 	}
 
@@ -263,6 +264,18 @@ public static class CustomAutoLayoutExtensions
 	#endregion
 
 	#region new
+
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static UIView IncloseFromRight(this UIView constrainedView, UIView view, float margin = 0f)
+	{
+		return constrainedView.WithConstraint(constrainedView, Right, GreaterThanOrEqual, view, Right, 1f, margin, nameof(IncloseFromRight));
+	}
+
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static UIView IncloseFromLeft(this UIView containerView, UIView view, float margin = 0f)
+	{
+		return containerView.WithConstraint(containerView, Left, LessThanOrEqual, view, Left, 1f, -margin, nameof(IncloseFromLeft));
+	}
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static UIView WithRatio(this UIView view, float referenceWidth, float referenceHeight)
