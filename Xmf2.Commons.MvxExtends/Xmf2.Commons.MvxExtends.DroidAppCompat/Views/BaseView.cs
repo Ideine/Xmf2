@@ -1,4 +1,5 @@
 using System;
+using Xmf2.Commons.Subscriptions;
 using Xmf2.Commons.MvxExtends.ViewModels;
 using MvvmCross.Droid.Support.V7.AppCompat;
 
@@ -6,6 +7,8 @@ namespace Xmf2.Commons.MvxExtends.DroidAppCompat.Views
 {
 	public abstract class BaseView<TViewModel, TParameter> : MvxAppCompatActivity<TViewModel> where TViewModel : BaseViewModel<TParameter> where TParameter : class
 	{
+		protected Xmf2Disposable Disposable = new Xmf2Disposable();
+
 		public BaseView() : base() { }
 
 		protected BaseView(IntPtr javaReference, Android.Runtime.JniHandleOwnership transfer) : base(javaReference, transfer) { }
@@ -47,13 +50,13 @@ namespace Xmf2.Commons.MvxExtends.DroidAppCompat.Views
 
 		#region Dispose
 
-		private bool disposed = false;
+		private bool _disposed = false;
 
 		protected override void Dispose(bool disposing)
 		{
 			try
 			{
-				if (!disposed)
+				if (!_disposed)
 				{
 					if (disposing)
 					{
@@ -63,7 +66,7 @@ namespace Xmf2.Commons.MvxExtends.DroidAppCompat.Views
 					// Release unmanaged resources.
 					this.DisposeUnmanagedObjects();
 
-					disposed = true;
+					_disposed = true;
 
 					base.Dispose(disposing);
 				}
@@ -82,6 +85,8 @@ namespace Xmf2.Commons.MvxExtends.DroidAppCompat.Views
 			{
 				this.ViewModel.Dispose();
 			}
+			Disposable?.Dispose();
+			Disposable = null;
 		}
 
 		protected virtual void DisposeUnmanagedObjects() { }
