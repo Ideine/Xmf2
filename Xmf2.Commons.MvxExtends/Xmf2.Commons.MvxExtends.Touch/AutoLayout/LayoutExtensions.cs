@@ -37,7 +37,7 @@ public static class CustomAutoLayoutExtensions
 			.WithConstraint(view, Width, Equal, containerView, Width, 1f, -margin);
 	}
 
-	public static void VerticalFlow(this UIView containerView, params UIView[] views)
+	public static UIView VerticalFlow(this UIView containerView, params UIView[] views)
 	{
 		if (views == null)
 		{
@@ -56,6 +56,8 @@ public static class CustomAutoLayoutExtensions
 		{
 			containerView.VerticalSpace(views[i - 1], views[i]);
 		}
+
+		return containerView;
 	}
 
 	public static UIView ViewsEqualWidth(this UIView containerView, params UIView[] views)
@@ -223,9 +225,9 @@ public static class CustomAutoLayoutExtensions
 	public static UIView Same(this UIView view, UIView reference, UIView dest)
 	{
 		view.ConstrainLayout(() => reference.CenterY() == dest.CenterY()
-		                           && reference.CenterX() == dest.CenterX()
-		                           && reference.Height() == dest.Height()
-		                           && reference.Width() == dest.Width());
+								   && reference.CenterX() == dest.CenterX()
+								   && reference.Height() == dest.Height()
+								   && reference.Width() == dest.Width());
 		return view;
 	}
 
