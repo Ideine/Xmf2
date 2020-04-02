@@ -91,6 +91,7 @@
     <Compile Include="Services\iOSUIDispatcher.cs" />
     <Compile Include="Services\OpenWebUrlService.cs" />
     <Compile Include="Controls\UIBaseHighlightSelectedButton.cs" />
+    <Compile Include="Helpers\WKNavigationDelegateWithBusy.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Xmf2.Commons\Xmf2.Commons.csproj">

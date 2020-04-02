@@ -99,6 +99,7 @@ namespace Xmf2.Commons.Services.Licences
         {
             noticesHtmlBuilder.Append("<!DOCTYPE html><html><head>")
                 .Append("<style type=\"text/css\">").Append(_style).Append("</style>")
+                .Append("<meta name=\"viewport\" content=\"initial-scale=1.0\" />")
                 .Append("</head><body>");
         }
 
