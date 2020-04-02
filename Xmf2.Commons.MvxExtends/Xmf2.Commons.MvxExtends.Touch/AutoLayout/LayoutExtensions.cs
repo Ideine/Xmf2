@@ -268,6 +268,37 @@ public static class CustomAutoLayoutExtensions
 	#region new
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static UIView CenterAndFillHeight(this UIView containerView, float margin, params UIView[] views)
+	{
+		if (views == null)
+		{
+			throw new ArgumentNullException(nameof(views));
+		}
+
+		foreach (UIView view in views)
+		{
+			containerView.CenterAndFillHeight(view, margin);
+		}
+
+		return containerView;
+	}
+
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static UIView CenterAndFillHeight(this UIView containerView, UIView view, float margin = 0f)
+	{
+		containerView.WithConstraint(view, CenterY, Equal, containerView, CenterY, 1f, 0f, $"{nameof(CenterAndFillHeight)}-CenterY")
+			.WithConstraint(containerView, Height, Equal, view, Height, 1f, margin, $"{nameof(CenterAndFillHeight)}-Height");
+		return containerView;
+	}
+
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static UIView CenterAndLimitHeight(this UIView containerView, UIView view, float margin = 0)
+	{
+		return containerView.WithConstraint(view, CenterY, Equal, containerView, CenterY, 1f, 0f, $"{nameof(CenterAndLimitHeight)}-CenterY")
+			.WithConstraint(view, Height, LessThanOrEqual, containerView, Height, 1f, -margin, $"{nameof(CenterAndLimitHeight)}-Height");
+	}
+
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static UIView IncloseFromRight(this UIView constrainedView, UIView view, float margin = 0f)
 	{
 		return constrainedView.WithConstraint(constrainedView, Right, GreaterThanOrEqual, view, Right, 1f, margin, nameof(IncloseFromRight));
@@ -277,6 +308,12 @@ public static class CustomAutoLayoutExtensions
 	public static UIView IncloseFromLeft(this UIView containerView, UIView view, float margin = 0f)
 	{
 		return containerView.WithConstraint(containerView, Left, LessThanOrEqual, view, Left, 1f, -margin, nameof(IncloseFromLeft));
+	}
+
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static UIView IncloseFromTop(this UIView containerView, UIView view, float margin = 0f)
+	{
+		return containerView.WithConstraint(containerView, Top, LessThanOrEqual, view, Top, 1f, -margin, nameof(IncloseFromTop));
 	}
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
