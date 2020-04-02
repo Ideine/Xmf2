@@ -53,6 +53,7 @@
     <Compile Include="Targets\TextViewTextColorTargetBinding.cs" />
     <Compile Include="Views\BaseView.cs" />
     <Compile Include="Views\CircleImageView.cs" />
+    <Compile Include="Exceptions\WrapDisposedException.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Xmf2.Commons.MvxExtends\Xmf2.Commons.MvxExtends.csproj">
