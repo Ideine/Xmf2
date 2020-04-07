@@ -284,6 +284,12 @@ public static class CustomAutoLayoutExtensions
 	}
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static UIView CenterAndFillHeight(this UIView containerView, params UIView[] views)
+	{
+		return containerView.CenterAndFillHeight(0, views);
+	}
+
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static UIView CenterAndFillHeight(this UIView containerView, UIView view, float margin = 0f)
 	{
 		containerView.WithConstraint(view, CenterY, Equal, containerView, CenterY, 1f, 0f, $"{nameof(CenterAndFillHeight)}-CenterY")
@@ -314,6 +320,12 @@ public static class CustomAutoLayoutExtensions
 	public static UIView IncloseFromTop(this UIView containerView, UIView view, float margin = 0f)
 	{
 		return containerView.WithConstraint(containerView, Top, LessThanOrEqual, view, Top, 1f, -margin, nameof(IncloseFromTop));
+	}
+
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static UIView IncloseFromBottom(this UIView containerView, UIView view, float margin = 0f)
+	{
+		return containerView.WithConstraint(containerView, Bottom, GreaterThanOrEqual, view, Bottom, 1f, margin, nameof(IncloseFromBottom));
 	}
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
