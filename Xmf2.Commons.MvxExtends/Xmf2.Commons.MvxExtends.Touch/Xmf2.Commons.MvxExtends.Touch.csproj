@@ -41,8 +41,6 @@
     <Compile Include="ErrorsManagers\TouchHttpErrorManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewsAdapter\TableView\MvxDeselectRowTableViewSource.cs" />
-    <Compile Include="AutoLayout\Layout.cs" />
-    <Compile Include="AutoLayout\LayoutExtensions.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <ItemGroup>
