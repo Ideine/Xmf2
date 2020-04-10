@@ -1,9 +1,9 @@
 ﻿using System;
-using Android.Views;
 using Android.Runtime;
+using Android.Views;
 using Xmf2.Components.Events;
 
-namespace Xmf2.Core.Droid.Helpers
+namespace Xmf2.Components.Droid.Helpers
 {
 	public class CollapseLevelScrollChangedHelper : Java.Lang.Object, ViewTreeObserver.IOnScrollChangedListener, ViewTreeObserver.IOnGlobalLayoutListener
 	{

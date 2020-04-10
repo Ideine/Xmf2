@@ -88,9 +88,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
-    <PackageReference Include="Xmf2.iOS.Extensions">
-      <Version>1.0.3</Version>
-    </PackageReference>
+    <PackageReference Include="Xmf2.iOS.Extensions" Version="1.0.3"/>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
 </Project>

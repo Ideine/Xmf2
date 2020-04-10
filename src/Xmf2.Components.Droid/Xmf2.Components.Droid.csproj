@@ -47,6 +47,8 @@
     <Compile Include="Fragments\BaseFragment.cs" />
     <Compile Include="Fragments\BaseFragmentActivity.cs" />
     <Compile Include="Fragments\IBackFragment.cs" />
+    <Compile Include="Helpers\CollapseLevelEvent.cs" />
+    <Compile Include="Helpers\CollapseLevelScrollChangedHelper.cs" />
     <Compile Include="Interfaces\IComponentView.cs" />
     <Compile Include="Interfaces\ILayoutInflaterResolver.cs" />
     <Compile Include="LinearList\AndroidLinearListView.cs" />

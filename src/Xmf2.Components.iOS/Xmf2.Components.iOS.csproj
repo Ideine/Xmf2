@@ -35,19 +35,6 @@
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="Xamarin.iOS" />
-    <Reference Include="Xmf2.DisposableExtensions">
-      <HintPath>..\..\..\..\packages\Xmf2.DisposableExtensions.1.0.0\lib\netstandard2.0\Xmf2.DisposableExtensions.dll</HintPath>
-    </Reference>
-    <Reference Include="Xmf2.iOS.Extensions, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\..\..\..\packages\Xmf2.iOS.Extensions.1.0.3\lib\xamarinios10\Xmf2.iOS.Extensions.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Xmf2.NavigationGraph.Core">
-      <HintPath>..\..\..\..\packages\Xmf2.NavigationGraph.1.0.0\lib\xamarinios10\Xmf2.NavigationGraph.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="Xmf2.NavigationGraph.iOS">
-      <HintPath>..\..\..\..\packages\Xmf2.NavigationGraph.1.0.0\lib\xamarinios10\Xmf2.NavigationGraph.iOS.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CollectionView\CollectionViewItemCell.cs" />
@@ -73,23 +60,21 @@
     <Compile Include="Views\Multistates\ByCaseView.cs" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Xmf2.NavigationGraph" Version="1.0.0" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\Xmf2.Components\Xmf2.Components.csproj">
-      <Project>{F7DB4CF5-A47C-4178-B776-D8857468DD47}</Project>
+      <Project>{f7db4cf5-a47c-4178-b776-d8857468dd47}</Project>
       <Name>Xmf2.Components</Name>
     </ProjectReference>
     <ProjectReference Include="..\Xmf2.Core.iOS\Xmf2.Core.iOS.csproj">
       <Project>{b7d44b51-49c8-40a1-a99d-ef34f8560448}</Project>
       <Name>Xmf2.Core.iOS</Name>
-      <IsAppExtension>false</IsAppExtension>
-      <IsWatchApp>false</IsWatchApp>
     </ProjectReference>
     <ProjectReference Include="..\Xmf2.Core\Xmf2.Core.csproj">
-      <Project>{BE2AF116-1987-4275-A709-4ED4AD331B05}</Project>
+      <Project>{be2af116-1987-4275-a709-4ed4ad331b05}</Project>
       <Name>Xmf2.Core</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
 </Project>

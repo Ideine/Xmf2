@@ -68,8 +68,6 @@
     <Compile Include="Services\UIDispatcher.cs" />
     <Compile Include="Services\NativeHttpClientFactory.cs" />
     <Compile Include="Helpers\GlobalLayoutHelper.cs" />
-    <Compile Include="Helpers\CollapseLevelScrollChangedHelper.cs" />
-    <Compile Include="Helpers\CollapseLevelEvent.cs" />
     <Compile Include="Helpers\TouchViewListener.cs" />
     <Compile Include="Extensions\FeedbackExtensions.cs" />
     <Compile Include="Extensions\BackgroundExtensions.cs" />
@@ -80,28 +78,18 @@
   <ItemGroup>
     <PackageReference Include="Xamarin.Android.Support.v4" Version="27.0.2.1" />
     <PackageReference Include="Xamarin.Android.Support.v7.AppCompat" Version="27.0.2.1" />
-    <PackageReference Include="Plugin.CurrentActivity">
-      <Version>2.1.0.4</Version>
-    </PackageReference>
-    <PackageReference Include="Ideine.ModernHttpClient">
-      <Version>3.2.2</Version>
-    </PackageReference>
+    <PackageReference Include="Plugin.CurrentActivity" Version="2.1.0.4" />
+    <PackageReference Include="Ideine.ModernHttpClient" Version="3.2.2" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\values\attrs.xml" />
-  </ItemGroup>
+		<AndroidResource Include="Resources\layout\LoadingView.axml" />
+	</ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Xmf2.Core\Xmf2.Core.csproj">
       <Project>{BE2AF116-1987-4275-A709-4ED4AD331B05}</Project>
       <Name>Xmf2.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Xmf2.Components\Xmf2.Components.csproj">
-      <Project>{F7DB4CF5-A47C-4178-B776-D8857468DD47}</Project>
-      <Name>Xmf2.Components</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\layout\LoadingView.axml" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
 </Project>

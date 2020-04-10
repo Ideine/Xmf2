@@ -1,6 +1,6 @@
 ﻿using Xmf2.Components.Events;
 
-namespace Xmf2.Core.Droid.Helpers
+namespace Xmf2.Components.Droid.Helpers
 {
 	public class CollapseLevelEvent : IEvent
 	{
