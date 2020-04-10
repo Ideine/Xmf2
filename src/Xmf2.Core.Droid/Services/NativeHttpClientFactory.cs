@@ -1,5 +1,4 @@
-﻿using System;
-using System.Net.Http;
+﻿using System.Net.Http;
 using ModernHttpClient;
 using Xmf2.Core.Services;
 using Xmf2.Rest.HttpClient.Impl;

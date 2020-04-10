@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Linq;
+using Foundation;
 using UIKit;
 
-namespace Foundation
+namespace Xmf2.Core.iOS.Extensions
 {
 	public static class NSAttributedStringExtensions
 	{

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Xmf2.Components.Interfaces;
 
 namespace Xmf2.Components.Helpers

@@ -1,6 +1,4 @@
-﻿using UIKit;
-
-namespace Xmf2.Core.iOS.Extensions
+﻿namespace Xmf2.Core.iOS.Extensions
 {
 	public static class UIColorExtension
 	{

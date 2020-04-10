@@ -17,7 +17,7 @@ namespace Xmf2.Core.iOS.Controls
 		private TCaseEnum _currentCase;
 		private ViewInfo _currentInfo;
 		private readonly Dictionary<TCaseEnum, ViewInfo> _byCaseInfo;
-		private bool _aggressiveViewDispose = false;
+		private bool _aggressiveViewDispose;
 
 		public UIByCaseView(Dictionary<TCaseEnum, Func<UIView>> viewFactoryByCase)
 		{
@@ -26,19 +26,23 @@ namespace Xmf2.Core.iOS.Controls
 
 			_byCaseInfo = viewFactoryByCase.ToDictionary(
 				keySelector: kvp => kvp.Key,
-				elementSelector: kvp => new ViewInfo { NewViewFactory = kvp.Value }.DisposeWith(_disposable),
+				elementSelector: kvp => new ViewInfo
+				{
+					NewViewFactory = kvp.Value
+				}.DisposeWith(_disposable),
 				comparer: viewFactoryByCase.Comparer
 			);
 		}
 
 		public UIByCaseView<TCaseEnum> WithCase(TCaseEnum caseValue)
 		{
-			if (   !_currentCaseOnceSet
-				|| !_byCaseInfo.Comparer.Equals(_currentCase, caseValue))
+			if (!_currentCaseOnceSet
+			    || !_byCaseInfo.Comparer.Equals(_currentCase, caseValue))
 			{
 				_currentCase = caseValue;
-				this.SetNeedsUpdateConstraints();//<-- request os to call method UpdateConstraints at the most appropriate moment.
+				SetNeedsUpdateConstraints(); //<-- request os to call method UpdateConstraints at the most appropriate moment.
 			}
+
 			return this;
 		}
 
@@ -50,7 +54,7 @@ namespace Xmf2.Core.iOS.Controls
 			if (newInfo != _currentInfo)
 			{
 				this.EnsureRemove(_currentInfo?.GetContraintsFor(parentView: this));
-				this.EnsureRemove(this.Subviews);
+				this.EnsureRemove(Subviews);
 				if (_aggressiveViewDispose)
 				{
 					_currentInfo?.DisposeConstraints();
@@ -59,8 +63,8 @@ namespace Xmf2.Core.iOS.Controls
 
 				var newView = newInfo.GetView();
 				newView.TranslatesAutoresizingMaskIntoConstraints = false;
-				this.AddSubview(newView);
-				this.AddConstraints(newInfo.GetContraintsFor(parentView: this));
+				AddSubview(newView);
+				AddConstraints(newInfo.GetContraintsFor(parentView: this));
 				_currentInfo = newInfo;
 			}
 		}
@@ -78,6 +82,7 @@ namespace Xmf2.Core.iOS.Controls
 				_currentCase = default;
 				_disposable.Dispose();
 			}
+
 			base.Dispose(disposing);
 		}
 
@@ -87,7 +92,7 @@ namespace Xmf2.Core.iOS.Controls
 			private UIView _view;
 			private NSLayoutConstraint[] _viewConstraints;
 
-			internal UIView GetView() => this._view ?? (_view = NewViewFactory());
+			internal UIView GetView() => _view ?? (_view = NewViewFactory());
 
 			internal NSLayoutConstraint[] GetContraintsFor(UIView parentView)
 			{
@@ -95,12 +100,10 @@ namespace Xmf2.Core.iOS.Controls
 				{
 					_viewConstraints = new NSLayoutConstraint[]
 					{
-						NSLayoutConstraint.Create(parentView, NSLayoutAttribute.CenterX , NSLayoutRelation.Equal, this.GetView(), NSLayoutAttribute.CenterX, 1f, 0f).WithAutomaticIdentifier(),
-						NSLayoutConstraint.Create(parentView, NSLayoutAttribute.CenterY , NSLayoutRelation.Equal, this.GetView(), NSLayoutAttribute.CenterY, 1f, 0f).WithAutomaticIdentifier(),
-						NSLayoutConstraint.Create(parentView, NSLayoutAttribute.Width   , NSLayoutRelation.Equal, this.GetView(), NSLayoutAttribute.Width  , 1f, 0f).WithAutomaticIdentifier(),
-						NSLayoutConstraint.Create(parentView, NSLayoutAttribute.Height  , NSLayoutRelation.Equal, this.GetView(), NSLayoutAttribute.Height , 1f, 0f).WithAutomaticIdentifier(),
+						NSLayoutConstraint.Create(parentView, NSLayoutAttribute.CenterX, NSLayoutRelation.Equal, GetView(), NSLayoutAttribute.CenterX, 1f, 0f).WithAutomaticIdentifier(), NSLayoutConstraint.Create(parentView, NSLayoutAttribute.CenterY, NSLayoutRelation.Equal, GetView(), NSLayoutAttribute.CenterY, 1f, 0f).WithAutomaticIdentifier(), NSLayoutConstraint.Create(parentView, NSLayoutAttribute.Width, NSLayoutRelation.Equal, GetView(), NSLayoutAttribute.Width, 1f, 0f).WithAutomaticIdentifier(), NSLayoutConstraint.Create(parentView, NSLayoutAttribute.Height, NSLayoutRelation.Equal, GetView(), NSLayoutAttribute.Height, 1f, 0f).WithAutomaticIdentifier(),
 					};
 				}
+
 				return _viewConstraints;
 			}
 
@@ -109,22 +112,26 @@ namespace Xmf2.Core.iOS.Controls
 				_view?.Dispose();
 				_view = null;
 			}
+
 			internal void DisposeConstraints()
 			{
 				if (_viewConstraints is null)
 				{
 					return;
 				}
-				for (int i = 0; i < _viewConstraints.Length; i++)
+
+				for (int i = 0 ; i < _viewConstraints.Length ; i++)
 				{
 					_viewConstraints[i].Dispose();
 				}
+
 				_viewConstraints = null;
 			}
 
 			#region IDisposable Support
 
-			private bool _disposedValue = false;
+			private bool _disposedValue;
+
 			protected virtual void Dispose(bool disposing)
 			{
 				if (!_disposedValue)
@@ -135,9 +142,11 @@ namespace Xmf2.Core.iOS.Controls
 						DisposeView();
 						DisposeConstraints();
 					}
+
 					_disposedValue = true;
 				}
 			}
+
 			public void Dispose() => Dispose(true);
 
 			#endregion IDisposable Support

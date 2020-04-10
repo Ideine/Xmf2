@@ -1,5 +1,4 @@
-﻿using System;
-using CoreGraphics;
+﻿using CoreGraphics;
 using UIKit;
 
 namespace Xmf2.Core.iOS.Controls.Layers

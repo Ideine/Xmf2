@@ -9,7 +9,7 @@ namespace Xmf2.Core.iOS.Controls
 {
 	public class UIFilledScrollView : UIScrollView
 	{
-		private bool _constraintsSet = false;
+		private bool _constraintsSet;
 		private UIView _child;
 		private NSLayoutConstraint _leftConstraint;
 		private NSLayoutConstraint _rightConstraint;
@@ -20,7 +20,7 @@ namespace Xmf2.Core.iOS.Controls
 
 		public UIFilledScrollView()
 		{
-			this.TranslatesAutoresizingMaskIntoConstraints = false;
+			TranslatesAutoresizingMaskIntoConstraints = false;
 		}
 
 		public override void SafeAreaInsetsDidChange()
@@ -28,7 +28,7 @@ namespace Xmf2.Core.iOS.Controls
 #pragma warning disable XI0002 //pas de warning sur le call de la base, car cette méthode ne sera de toute façon appelée que si on ...
 			//...est sur la plateforme qui le supporte.
 			base.SafeAreaInsetsDidChange();
-			this.SetNeedsUpdateConstraints();
+			SetNeedsUpdateConstraints();
 #pragma warning restore XI0002
 		}
 
@@ -37,7 +37,7 @@ namespace Xmf2.Core.iOS.Controls
 			base.UpdateConstraints();
 			if (_child != null)
 			{
-				var safeAreaInsets = UIDevice.CurrentDevice.CheckSystemVersion(11, 0)	? this.SafeAreaInsets
+				var safeAreaInsets = UIDevice.CurrentDevice.CheckSystemVersion(11, 0)	? SafeAreaInsets
 																						: UIEdgeInsets.Zero;
 				if (!_constraintsSet)
 				{
@@ -76,7 +76,7 @@ namespace Xmf2.Core.iOS.Controls
 		}
 
 		[Obsolete("Use WithContent instead", error: true)]
-		public void WithSubviews(params UIView[] _discarded) { }
+		public void WithSubviews(params UIView[] discarded) { }
 
 		public UIFilledScrollView WithContent(UIView child)
 		{
@@ -86,7 +86,7 @@ namespace Xmf2.Core.iOS.Controls
 			}
 			_child = child;
 			_child.TranslatesAutoresizingMaskIntoConstraints = false;
-			this.AddSubview(_child);
+			AddSubview(_child);
 			return this;
 		}
 

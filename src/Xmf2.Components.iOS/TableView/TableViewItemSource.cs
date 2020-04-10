@@ -109,8 +109,6 @@ namespace Xmf2.Components.iOS.TableView
 			{
 				var childState = ItemSource[i];
 
-				Type childType = childState.GetType();
-
 				if (_componentViewsByState.TryGetValue(childState.Id, out IComponentView childView))
 				{
 					childView.SetState(childState);

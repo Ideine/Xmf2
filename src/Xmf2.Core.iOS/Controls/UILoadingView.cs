@@ -57,11 +57,11 @@ namespace Xmf2.Core.iOS.Controls
 				_parentView.Add(this);
 				_parentView.AddConstraints(_constraints);
 				_progressView.StartAnimating();
-				UIView.Animate(0.05, () => Alpha = 1, ActionHelper.NoOp);
+				Animate(0.05, () => Alpha = 1, ActionHelper.NoOp);
 			}
 			else
 			{
-				UIView.Animate(0.05, () => Alpha = 0, () =>
+				Animate(0.05, () => Alpha = 0, () =>
 				{
 					_parentView.RemoveConstraints(_constraints);
 					RemoveFromSuperview();

@@ -1,5 +1,4 @@
-﻿using System;
-using Android.Content.Res;
+﻿using Android.Content.Res;
 using Xmf2.Components.Events;
 
 namespace Xmf2.Components.Droid.Events

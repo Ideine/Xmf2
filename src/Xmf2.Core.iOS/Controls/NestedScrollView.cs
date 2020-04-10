@@ -46,11 +46,7 @@ namespace Xmf2.Core.iOS.Controls
 
 			AddConstraints(new[]
 			{
-				NSLayoutConstraint.Create(this, Left,    Equal, _contentView, Left, 1f, 0).WithAutomaticIdentifier(),
-				NSLayoutConstraint.Create(this, Right,   Equal, _contentView, Right, 1f, 0).WithAutomaticIdentifier(),
-				NSLayoutConstraint.Create(this, Top,     Equal, _contentView, Top, 1f, 0).WithAutomaticIdentifier(),
-				NSLayoutConstraint.Create(this, Bottom,  Equal, _contentView, Bottom, 1f, 0).WithAutomaticIdentifier(),
-				NSLayoutConstraint.Create(this, CenterX, Equal, _contentView, CenterX, 1f, 0).WithAutomaticIdentifier(),
+				NSLayoutConstraint.Create(this, Left, Equal, _contentView, Left, 1f, 0).WithAutomaticIdentifier(), NSLayoutConstraint.Create(this, Right, Equal, _contentView, Right, 1f, 0).WithAutomaticIdentifier(), NSLayoutConstraint.Create(this, Top, Equal, _contentView, Top, 1f, 0).WithAutomaticIdentifier(), NSLayoutConstraint.Create(this, Bottom, Equal, _contentView, Bottom, 1f, 0).WithAutomaticIdentifier(), NSLayoutConstraint.Create(this, CenterX, Equal, _contentView, CenterX, 1f, 0).WithAutomaticIdentifier(),
 			});
 		}
 
@@ -66,7 +62,7 @@ namespace Xmf2.Core.iOS.Controls
 				base.AddSubview(view);
 				return;
 			}
-			else if(view is UIRefreshControl)
+			else if (view is UIRefreshControl)
 			{
 				base.AddSubview(view);
 				return;
@@ -74,7 +70,7 @@ namespace Xmf2.Core.iOS.Controls
 			else
 			{
 				UIScrollView scrollViewChild = view.Subviews.OfType<UIScrollView>().FirstOrDefault();
-				if(scrollViewChild != null)
+				if (scrollViewChild != null)
 				{
 					scrollViewChild.AddObserver(this, SELECTOR_CONTENT_SIZE, NSKeyValueObservingOptions.Old, Handle);
 					view = new ScrollItemWrapper(view, scrollViewChild, this);
@@ -83,14 +79,17 @@ namespace Xmf2.Core.iOS.Controls
 
 			_subviewsInLayoutOrder.Add(view);
 			_contentView.AddSubview(view);
-			
+
 			view.AddObserver(this, SELECTOR_BOUNDS_SIZE, NSKeyValueObservingOptions.Old, Handle);
 		}
 
 		public void AddStickableView(UIView stickableView)
 		{
-			UIView placeholderView = new UIView() { BackgroundColor = UIColor.Clear };
-			
+			UIView placeholderView = new UIView()
+			{
+				BackgroundColor = UIColor.Clear
+			};
+
 			base.AddSubview(stickableView);
 			AddSubview(placeholderView);
 
@@ -99,9 +98,7 @@ namespace Xmf2.Core.iOS.Controls
 			var unstickedViewYPosition = NSLayoutConstraint.Create(stickableView, CenterY, Equal, placeholderView, CenterY, 1f, 0f).WithAutomaticIdentifier();
 			AddConstraints(new[]
 			{
-				NSLayoutConstraint.Create(stickableView, Height, Equal, placeholderView, Height, 1f, 0).WithAutomaticIdentifier(),
-				NSLayoutConstraint.Create(this, Width,  Equal, stickableView, Width, 1f, 0).WithAutomaticIdentifier(),
-				NSLayoutConstraint.Create(this, CenterX,Equal, stickableView, CenterX, 1f, 0).WithAutomaticIdentifier()
+				NSLayoutConstraint.Create(stickableView, Height, Equal, placeholderView, Height, 1f, 0).WithAutomaticIdentifier(), NSLayoutConstraint.Create(this, Width, Equal, stickableView, Width, 1f, 0).WithAutomaticIdentifier(), NSLayoutConstraint.Create(this, CenterX, Equal, stickableView, CenterX, 1f, 0).WithAutomaticIdentifier()
 			});
 			var stickyViewData = new StickyViewData()
 			{
@@ -121,17 +118,18 @@ namespace Xmf2.Core.iOS.Controls
 
 		public virtual NestedScrollView WithSubviews(params (UIView view, bool stickable)[] views)
 		{
-			foreach (var v in views)
+			foreach ((UIView view, bool stickable) in views)
 			{
-				if (v.stickable)
+				if (stickable)
 				{
-					this.AddStickableView(v.view);
+					AddStickableView(view);
 				}
 				else
 				{
-					this.AddSubview(v.view);
+					AddSubview(view);
 				}
 			}
+
 			return this;
 		}
 
@@ -162,7 +160,7 @@ namespace Xmf2.Core.iOS.Controls
 			nfloat visibleHeight = Frame.Height;
 			bool hasChanged = false;
 
-			for (int i = 0; i < _subviewsInLayoutOrder.Count; i++)
+			for (int i = 0 ; i < _subviewsInLayoutOrder.Count ; i++)
 			{
 				if (_subviewsInLayoutOrder[i] is ScrollItemWrapper subview)
 				{
@@ -210,6 +208,7 @@ namespace Xmf2.Core.iOS.Controls
 
 				_contentView.Dispose();
 			}
+
 			base.Dispose(disposing);
 		}
 
@@ -247,21 +246,14 @@ namespace Xmf2.Core.iOS.Controls
 
 				_innerView.AddObserver(this, SELECTOR_CONTENT_SIZE, NSKeyValueObservingOptions.Old, Handle);
 
-				foreach(UIView v in _boundsRegisteredViews)
+				foreach (UIView v in _boundsRegisteredViews)
 				{
 					v.AddObserver(this, SELECTOR_BOUNDS_SIZE, NSKeyValueObservingOptions.Old, Handle);
 				}
 
 				NSLayoutConstraint[] innerConstraints =
 				{
-					NSLayoutConstraint.Create(this, Width,   Equal, innerView, Width, 1f, 0).WithAutomaticIdentifier(),
-					NSLayoutConstraint.Create(this, CenterX, Equal, innerView, CenterX, 1f, 0).WithAutomaticIdentifier(),
-					_innerTopConstraint = NSLayoutConstraint.Create(innerView, Top, Equal, this, Top, 1f, 0).WithAutomaticIdentifier(),
-					_innerHeightConstraint = NSLayoutConstraint.Create(innerView, Height, Equal, 1f, 10).WithAutomaticIdentifier(),
-					NSLayoutConstraint.Create(this, Width,   Equal, child, Width, 1f, 0).WithAutomaticIdentifier(),
-					NSLayoutConstraint.Create(this, CenterX, Equal, child, CenterX, 1f, 0).WithAutomaticIdentifier(),
-					_innerChildTopConstraint = NSLayoutConstraint.Create(child, Top, Equal, this, Top, 1f, 0).WithAutomaticIdentifier(),
-					_innerChildHeightConstraint = NSLayoutConstraint.Create(child, Height, Equal, 1f, 10).WithAutomaticIdentifier()
+					NSLayoutConstraint.Create(this, Width, Equal, innerView, Width, 1f, 0).WithAutomaticIdentifier(), NSLayoutConstraint.Create(this, CenterX, Equal, innerView, CenterX, 1f, 0).WithAutomaticIdentifier(), _innerTopConstraint = NSLayoutConstraint.Create(innerView, Top, Equal, this, Top, 1f, 0).WithAutomaticIdentifier(), _innerHeightConstraint = NSLayoutConstraint.Create(innerView, Height, Equal, 1f, 10).WithAutomaticIdentifier(), NSLayoutConstraint.Create(this, Width, Equal, child, Width, 1f, 0).WithAutomaticIdentifier(), NSLayoutConstraint.Create(this, CenterX, Equal, child, CenterX, 1f, 0).WithAutomaticIdentifier(), _innerChildTopConstraint = NSLayoutConstraint.Create(child, Top, Equal, this, Top, 1f, 0).WithAutomaticIdentifier(), _innerChildHeightConstraint = NSLayoutConstraint.Create(child, Height, Equal, 1f, 10).WithAutomaticIdentifier()
 				};
 
 				NSLayoutConstraint[] constraintsToRemove = child.Constraints.Where(x => x.FirstItem == innerView || x.SecondItem == innerView).ToArray();
@@ -286,10 +278,7 @@ namespace Xmf2.Core.iOS.Controls
 
 				NSLayoutConstraint[] innerConstraints =
 				{
-					NSLayoutConstraint.Create(this, Width,   Equal, innerView, Width, 1f, 0).WithAutomaticIdentifier(),
-					NSLayoutConstraint.Create(this, CenterX, Equal, innerView, CenterX, 1f, 0).WithAutomaticIdentifier(),
-					_innerTopConstraint = NSLayoutConstraint.Create(innerView, Top, Equal, this, Top, 1f, 0).WithAutomaticIdentifier(),
-					_innerHeightConstraint = NSLayoutConstraint.Create(innerView, Height, Equal, 1f, 10).WithAutomaticIdentifier(),
+					NSLayoutConstraint.Create(this, Width, Equal, innerView, Width, 1f, 0).WithAutomaticIdentifier(), NSLayoutConstraint.Create(this, CenterX, Equal, innerView, CenterX, 1f, 0).WithAutomaticIdentifier(), _innerTopConstraint = NSLayoutConstraint.Create(innerView, Top, Equal, this, Top, 1f, 0).WithAutomaticIdentifier(), _innerHeightConstraint = NSLayoutConstraint.Create(innerView, Height, Equal, 1f, 10).WithAutomaticIdentifier(),
 				};
 
 				AddConstraints(innerConstraints);
@@ -298,17 +287,18 @@ namespace Xmf2.Core.iOS.Controls
 			private nfloat GetContentHeight()
 			{
 				nfloat result = _innerView.ContentSize.Height;
-				if(_boundsRegisteredViews != null)
+				if (_boundsRegisteredViews != null)
 				{
-					foreach(UIView v in _boundsRegisteredViews)
+					foreach (UIView v in _boundsRegisteredViews)
 					{
 						nfloat height = v.Bounds.Height;
-						if(result < height)
+						if (result < height)
 						{
 							result = height;
 						}
 					}
 				}
+
 				return result;
 			}
 
@@ -366,7 +356,7 @@ namespace Xmf2.Core.iOS.Controls
 				{
 					constraintsChanged = true;
 					_innerTopConstraint.Constant = top;
-					if(_innerChildTopConstraint != null)
+					if (_innerChildTopConstraint != null)
 					{
 						_innerChildTopConstraint.Constant = top;
 					}
@@ -397,14 +387,14 @@ namespace Xmf2.Core.iOS.Controls
 				{
 					_innerView.RemoveObserver(_observer, SELECTOR_CONTENT_SIZE, _observer.Handle);
 					_observer = null;
-					
+
 					_innerView.RemoveObserver(this, SELECTOR_CONTENT_SIZE, Handle);
 					_innerView.Dispose();
 					_innerView = null;
 
-					if(_boundsRegisteredViews != null)
+					if (_boundsRegisteredViews != null)
 					{
-						foreach(UIView v in _boundsRegisteredViews)
+						foreach (UIView v in _boundsRegisteredViews)
 						{
 							v.RemoveObserver(this, SELECTOR_BOUNDS_SIZE, Handle);
 						}
@@ -427,6 +417,7 @@ namespace Xmf2.Core.iOS.Controls
 					_innerChildTopConstraint = null;
 					_innerChildHeightConstraint = null;
 				}
+
 				base.Dispose(disposing);
 			}
 		}
@@ -437,6 +428,7 @@ namespace Xmf2.Core.iOS.Controls
 			public UIView LinearLayoutPlaceholder { get; set; }
 			public NSLayoutConstraint StickedViewYPosition { get; set; }
 			public NSLayoutConstraint UnstickedViewYPosition { get; set; }
+
 			public void SetSticked(bool isSticked)
 			{
 				if (isSticked)

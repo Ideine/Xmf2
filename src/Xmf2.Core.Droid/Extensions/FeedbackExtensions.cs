@@ -50,7 +50,7 @@ namespace Xmf2.Core.Droid.Extensions
 
         #endregion
 
-        #region Background highlight 
+        #region Background highlight
 
         public static T WithFadeHighlight<T>(this T view, Xmf2Disposable disposer) where T : View
         {
@@ -70,7 +70,7 @@ namespace Xmf2.Core.Droid.Extensions
         {
             var st = new StateListDrawable();
 
-            st.AddState(new int[] { Android.Resource.Attribute.StatePressed }, new ColorDrawable(highlightColor).DisposeWith(disposer));
+            st.AddState(new[] { Android.Resource.Attribute.StatePressed }, new ColorDrawable(highlightColor).DisposeWith(disposer));
             st.AddState(new int[] { }, new ColorDrawable(backgroundColor).DisposeWith(disposer));
 
             view.Background = st;
@@ -80,10 +80,10 @@ namespace Xmf2.Core.Droid.Extensions
         {
             var st = new StateListDrawable();
 
-            st.AddState(new int[] { Android.Resource.Attribute.StatePressed, Android.Resource.Attribute.StateSelected }, selectedHighlight);
-            st.AddState(new int[] { Android.Resource.Attribute.StatePressed }, highlight);
-            st.AddState(new int[] { Android.Resource.Attribute.StateSelected }, selected);
-            st.AddState(new int[] { -Android.Resource.Attribute.StateEnabled }, disabled);
+            st.AddState(new[] { Android.Resource.Attribute.StatePressed, Android.Resource.Attribute.StateSelected }, selectedHighlight);
+            st.AddState(new[] { Android.Resource.Attribute.StatePressed }, highlight);
+            st.AddState(new[] { Android.Resource.Attribute.StateSelected }, selected);
+            st.AddState(new[] { -Android.Resource.Attribute.StateEnabled }, disabled);
             st.AddState(new int[] { }, background);
 
             view.Background = st;
@@ -93,9 +93,9 @@ namespace Xmf2.Core.Droid.Extensions
         {
             var st = new StateListDrawable();
 
-            st.AddState(new int[] { Android.Resource.Attribute.StatePressed }, highlight);
-            st.AddState(new int[] { Android.Resource.Attribute.StateSelected }, selected);
-            st.AddState(new int[] { -Android.Resource.Attribute.StateEnabled }, disabled);
+            st.AddState(new[] { Android.Resource.Attribute.StatePressed }, highlight);
+            st.AddState(new[] { Android.Resource.Attribute.StateSelected }, selected);
+            st.AddState(new[] { -Android.Resource.Attribute.StateEnabled }, disabled);
             st.AddState(new int[] { }, normal);
 
             view.SetImageDrawable(st);
@@ -104,9 +104,9 @@ namespace Xmf2.Core.Droid.Extensions
 
         public static void SetTextColors(this TextView textView, Color normal, Color selected)
         {
-            int[][] states = new int[][]
+            int[][] states = new[]
             {
-                new int[] { Android.Resource.Attribute.StateSelected },
+                new[] { Android.Resource.Attribute.StateSelected },
                 new int[] { }
             };
             int[] colors = new int[] { selected, normal };

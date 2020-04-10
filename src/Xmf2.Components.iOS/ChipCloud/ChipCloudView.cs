@@ -1,5 +1,4 @@
-﻿using System;
-using UIKit;
+﻿using UIKit;
 using CoreGraphics;
 using Xmf2.Core.Subscriptions;
 using System.Collections.Generic;

@@ -45,7 +45,7 @@ namespace Xmf2.Core.iOS.Controls
 
 		private void UpdateConstraintCreator(LayoutOrientation orientation)
 		{
-			this.ConstraintCreator = GetConstraintCreator(orientation);
+			ConstraintCreator = GetConstraintCreator(orientation);
 		}
 	}
 }

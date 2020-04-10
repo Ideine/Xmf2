@@ -1,5 +1,4 @@
-﻿using System;
-using Android.Content;
+﻿using Android.Content;
 using Android.Content.PM;
 using Xmf2.Core.Services;
 

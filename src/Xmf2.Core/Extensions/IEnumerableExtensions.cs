@@ -60,9 +60,15 @@ namespace System.Linq
 			IEqualityComparer<TCompared> comparer)
 		{
 			if (first == null)
+			{
 				throw new ArgumentNullException("first");
+			}
+
 			if (second == null)
+			{
 				throw new ArgumentNullException("second");
+			}
+
 			return ExceptIterator<TFirst, TSecond, TCompared>(first, second, firstSelect, secondSelect, comparer);
 		}
 
@@ -75,8 +81,12 @@ namespace System.Linq
 		{
 			HashSet<TCompared> set = new HashSet<TCompared>(second.Select(secondSelect), comparer);
 			foreach (TFirst tSource1 in first)
+			{
 				if (set.Add(firstSelect(tSource1)))
+				{
 					yield return tSource1;
+				}
+			}
 		}
 
 		public static bool IsNullOrEmpty<T>(this IEnumerable<T> source) => source is null || source.None();

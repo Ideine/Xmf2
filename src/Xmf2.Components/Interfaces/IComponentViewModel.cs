@@ -1,5 +1,4 @@
-﻿using System;
-using Xmf2.NavigationGraph.Core.Interfaces;
+﻿using Xmf2.NavigationGraph.Core.Interfaces;
 
 namespace Xmf2.Components.Interfaces
 {

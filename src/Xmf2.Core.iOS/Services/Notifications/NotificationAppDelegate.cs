@@ -4,11 +4,10 @@ using System.Linq;
 using Foundation;
 using UIKit;
 using UserNotifications;
-using Xmf2.Core.iOS.Extensions;
 using Xmf2.Core.Services;
 using Xmf2.iOS.Extensions.Extensions;
 
-namespace Xmf2.Core.iOS.Services
+namespace Xmf2.Core.iOS.Services.Notifications
 {
 	public abstract class NotificationAppDelegate : UIApplicationDelegate
 	{
@@ -42,7 +41,7 @@ namespace Xmf2.Core.iOS.Services
 		}
 
 		/// <summary>
-		/// Appelé quen l'app est
+		/// Appelé quand l'app est
 		/// Informe l'appli qu'une notif est arrivé
 		/// Apparemment c'est aussi lancé quand on clic sur une notif !!!
 		/// </summary>

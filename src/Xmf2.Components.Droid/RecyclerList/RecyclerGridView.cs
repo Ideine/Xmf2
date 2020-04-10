@@ -19,13 +19,11 @@ namespace Xmf2.Components.Droid.RecyclerList
 		protected virtual int RightSpacing => 0;
 		protected virtual int BottomSpacing => 0;
 
-		private Func<IServiceLocator, IComponentView> _factory;
-
 		public RecyclerGridView(IServiceLocator services, Func<IServiceLocator, IComponentView> factory) : base(services, factory) { }
 
 		protected override void SetLayoutManager()
 		{
-			using (var lm = new GridLayoutManager(Context, 1, GridLayoutManager.Vertical, reverseLayout: false).DisposeWith(Disposables))
+			using (var lm = new GridLayoutManager(Context, 1, LinearLayoutManager.Vertical, reverseLayout: false).DisposeWith(Disposables))
 			{
 				lm.SpanCount = Columns;
 				RecyclerView.SetLayoutManager(lm);

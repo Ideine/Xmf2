@@ -1,5 +1,4 @@
-﻿using System;
-using UIKit;
+﻿using UIKit;
 using CoreGraphics;
 using Xmf2.iOS.Extensions.Constraints;
 
@@ -14,8 +13,6 @@ namespace Xmf2.Components.iOS.ChipCloud.Cells
 		public float Width => ItemSize.HasValue ? (float)ItemSize.Value.Width : 0;
 
 		public bool HasItemSize => ItemSize.HasValue && ItemSize.Value.Width != 0 && ItemSize.Value.Height != 0;
-
-		public ChipCloudItemCell() { }
 
 		public void SetContent(UIView contentView)
 		{

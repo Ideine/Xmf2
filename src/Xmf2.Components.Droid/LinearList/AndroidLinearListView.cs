@@ -15,7 +15,7 @@ namespace Xmf2.Components.Droid.LinearList
 		protected Xmf2Disposable Disposable = new Xmf2Disposable();
 
 		private LinearListAdapter _adapter;
-		private EventSubscriber<LinearListAdapter> _subscriber = null;
+		private EventSubscriber<LinearListAdapter> _subscriber;
 
 		public LinearListAdapter Adapter
 		{

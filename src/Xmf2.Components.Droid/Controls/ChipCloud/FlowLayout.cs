@@ -31,7 +31,7 @@ namespace Xmf2.Components.Droid.Controls.ChipCloud
 
 		#endregion
 
-		void Initialize()
+		private void Initialize()
 		{
 			_layoutProcessor = new LayoutProcessor(this);
 		}
@@ -71,7 +71,7 @@ namespace Xmf2.Components.Droid.Controls.ChipCloud
 				{
 					child.Measure(MeasureSpec.MakeMeasureSpec(width, MeasureSpecMode.AtMost), childHeightMeasureSpec);
 					int childW = child.MeasuredWidth;
-					lineHeight = System.Math.Max(lineHeight, child.MeasuredHeight + VerticalSpacing);
+					lineHeight = Math.Max(lineHeight, child.MeasuredHeight + VerticalSpacing);
 
 					if (xPos + childW > width)
 					{
@@ -82,7 +82,7 @@ namespace Xmf2.Components.Droid.Controls.ChipCloud
 					xPos += childW + MinimumHorizontalSpacing;
 				}
 			}
-			this._lineHeight = lineHeight;
+			_lineHeight = lineHeight;
 
 			if (MeasureSpec.GetMode(heightMeasureSpec) == MeasureSpecMode.Unspecified ||
 			   (MeasureSpec.GetMode(heightMeasureSpec) == MeasureSpecMode.AtMost && yPos + lineHeight < height))

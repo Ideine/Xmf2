@@ -15,7 +15,7 @@ namespace Xmf2.Components.Droid.Controls.ChipCloud
 		protected Xmf2Disposable Disposable = new Xmf2Disposable();
 
 		private ChipCloudAdapter _adapter;
-		private EventSubscriber<ChipCloudAdapter> _subscriber = null;
+		private EventSubscriber<ChipCloudAdapter> _subscriber;
 
 		public ChipCloudAdapter Adapter
 		{

@@ -2,7 +2,6 @@
 using Android.Widget;
 using Xmf2.Components.Interfaces;
 using Xmf2.Components.ViewModels;
-using Xmf2.Components.Droid.Views;
 
 namespace Xmf2.Components.Droid.Views.Multistates
 {

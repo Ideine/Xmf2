@@ -13,8 +13,8 @@ namespace Xmf2.Components.Views
 		protected IServiceLocator Services { get; }
 		protected Xmf2Disposable Disposables { get; }
 
-		protected IEventBus EventBus => _eventBus ?? (_eventBus = Services.Resolve<IEventBus>());
-		protected IGlobalEventBus GlobalEventBus => _globalEventBus ?? (_globalEventBus = Services.Resolve<IGlobalEventBus>());
+		protected IEventBus EventBus => _eventBus ??= Services.Resolve<IEventBus>();
+		protected IGlobalEventBus GlobalEventBus => _globalEventBus ??= Services.Resolve<IGlobalEventBus>();
 		protected TViewState CurrentState { get; private set; }
 
 		protected BaseCoreComponentView(IServiceLocator services)
@@ -38,7 +38,7 @@ namespace Xmf2.Components.Views
 				return;
 			}
 
-			throw new ArgumentException($"expected state type for {this.GetType().Name} to be {typeof(TViewState)}, got {state.GetType()}", nameof(state));
+			throw new ArgumentException($"expected state type for {GetType().Name} to be {typeof(TViewState)}, got {state.GetType()}", nameof(state));
 		}
 
 		protected virtual void OnStateUpdate(TViewState state) { }

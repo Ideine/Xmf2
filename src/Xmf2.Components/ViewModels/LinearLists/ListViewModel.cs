@@ -57,7 +57,7 @@ namespace Xmf2.Core.LinearLists
 
 		void IListViewModel.SetItemSource(IEnumerable<IEntity> itemModelList)
 		{
-			this.SetItemSource((IEnumerable<TItem>)itemModelList);
+			SetItemSource((IEnumerable<TItem>)itemModelList);
 		}
 	}
 }

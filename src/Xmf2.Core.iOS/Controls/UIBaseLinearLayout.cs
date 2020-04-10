@@ -39,7 +39,7 @@ namespace Xmf2.Core.iOS.Controls
 			set
 			{
 				_constraintCreator = value;
-				this.ResetConstraints();
+				ResetConstraints();
 			}
 		}
 
@@ -52,9 +52,9 @@ namespace Xmf2.Core.iOS.Controls
 
 		public override void AddSubview(UIView view)
 		{
-			var previousViews = this._views.ToArray();
+			var previousViews = _views.ToArray();
 
-			this.AddSubviewInternal(view);
+			AddSubviewInternal(view);
 
 			if (ConstraintCreator == null)
 			{
@@ -62,9 +62,9 @@ namespace Xmf2.Core.iOS.Controls
 			}
 			if (previousViews.None())
 			{
-				this.AnchorStartConstraint(view);
-				this.FillSizeConstraint(view);
-				this.AnchorEndConstraint(view);
+				AnchorStartConstraint(view);
+				FillSizeConstraint(view);
+				AnchorEndConstraint(view);
 			}
 			else
 			{
@@ -74,16 +74,16 @@ namespace Xmf2.Core.iOS.Controls
 					_separatorViews.Add(separator);
 					base.AddSubview(separator);
 
-					this.SpaceConstraint(previousViews.Last(), separator, view);
-					this.FillSizeSeparatorConstraint(separator);
+					SpaceConstraint(previousViews.Last(), separator, view);
+					FillSizeSeparatorConstraint(separator);
 				}
 				else
 				{
-					this.SpaceConstraint(previousViews.Last(), view);
+					SpaceConstraint(previousViews.Last(), view);
 				}
-				this.RemoveEndConstraint();
-				this.FillSizeConstraint(view);
-				this.AnchorEndConstraint(view);
+				RemoveEndConstraint();
+				FillSizeConstraint(view);
+				AnchorEndConstraint(view);
 			}
 		}
 
@@ -102,16 +102,16 @@ namespace Xmf2.Core.iOS.Controls
 			}
 
 			var previousViews = _views.ToArray();
-			this.AddSubviewsInternal(viewsToAdd);
+			AddSubviewsInternal(viewsToAdd);
 			if (ConstraintCreator != null)
 			{
 				if (previousViews.None())
 				{
-					this.SetConstraints(viewsToAdd);
+					SetConstraints(viewsToAdd);
 				}
 				else
 				{
-					this.RemoveEndConstraint();
+					RemoveEndConstraint();
 					var previousView = previousViews.Last();
 					for (int i = 0; i < viewsToAdd.Length; i++)
 					{
@@ -130,20 +130,20 @@ namespace Xmf2.Core.iOS.Controls
 							{
 								separator = _separatorViews[previousViews.Length + i];
 							}
-							this.SpaceConstraint(previousView, separator, view);
-							this.FillSizeConstraint(view);
-							this.FillSizeSeparatorConstraint(separator);
+							SpaceConstraint(previousView, separator, view);
+							FillSizeConstraint(view);
+							FillSizeSeparatorConstraint(separator);
 							previousView = view;
 						}
 						else
 						{
-							this.SpaceConstraint(previousView, view);
-							this.FillSizeConstraint(view);
+							SpaceConstraint(previousView, view);
+							FillSizeConstraint(view);
 							previousView = view;
 						}
 					}
 
-					this.AnchorEndConstraint(viewsToAdd.Last());
+					AnchorEndConstraint(viewsToAdd.Last());
 				}
 			}
 		}
@@ -154,7 +154,7 @@ namespace Xmf2.Core.iOS.Controls
 		/// </remarks>
 		public UIBaseLinearLayout WithSubviews(params UIView[] viewsToAdd)
 		{
-			this.AddSubviews(viewsToAdd);
+			AddSubviews(viewsToAdd);
 			return this;
 		}
 
@@ -174,7 +174,7 @@ namespace Xmf2.Core.iOS.Controls
 				}
 				foreach (var v in toAdd)
 				{
-					this.AddSubviewInternal(v);
+					AddSubviewInternal(v);
 				}
 				SetConstraints(_views);
 			}
@@ -187,8 +187,8 @@ namespace Xmf2.Core.iOS.Controls
 
 		public void ResetConstraints()
 		{
-			this.ClearConstraints();
-			this.SetConstraints(_views);
+			ClearConstraints();
+			SetConstraints(_views);
 		}
 
 		private void SetConstraints(IEnumerable<UIView> views)
@@ -199,8 +199,8 @@ namespace Xmf2.Core.iOS.Controls
 			}
 
 			UIView firstView = views.First();
-			this.AnchorStartConstraint(firstView);
-			this.FillSizeConstraint(firstView);
+			AnchorStartConstraint(firstView);
+			FillSizeConstraint(firstView);
 
 			UIView previousView = firstView;
 			if (_withSeparators)
@@ -222,9 +222,9 @@ namespace Xmf2.Core.iOS.Controls
 						separator = _separatorViews[i - 1];
 					}
 
-					this.SpaceConstraint(previousView, separator, view);
-					this.FillSizeConstraint(view);
-					this.FillSizeSeparatorConstraint(separator);
+					SpaceConstraint(previousView, separator, view);
+					FillSizeConstraint(view);
+					FillSizeSeparatorConstraint(separator);
 					previousView = view;
 				}
 			}
@@ -232,12 +232,12 @@ namespace Xmf2.Core.iOS.Controls
 			{
 				foreach (var view in views.Skip(1))
 				{
-					this.SpaceConstraint(previousView, view);
-					this.FillSizeConstraint(view);
+					SpaceConstraint(previousView, view);
+					FillSizeConstraint(view);
 					previousView = view;
 				}
 			}
-			this.AnchorEndConstraint(lastView: previousView);
+			AnchorEndConstraint(lastView: previousView);
 		}
 
 		public void Clear()
@@ -259,10 +259,10 @@ namespace Xmf2.Core.iOS.Controls
 
 		private void ClearConstraints()
 		{
-			this.RemoveStartConstraint();
-			this.RemoveEndConstraint();
-			this.RemoveFillingSizeConstraint();
-			this.RemoveSpacingConstraints();
+			RemoveStartConstraint();
+			RemoveEndConstraint();
+			RemoveFillingSizeConstraint();
+			RemoveSpacingConstraints();
 		}
 
 		private void AddSubviewInternal(UIView view)
@@ -297,14 +297,14 @@ namespace Xmf2.Core.iOS.Controls
 		{
 			var constraint = ConstraintCreator.Space(previousCell, nextCell);
 			_spacingConstraints.Add(constraint);
-			this.AddConstraints(constraint);
+			AddConstraints(constraint);
 		}
 
 		private void SpaceConstraint(UIView previousCell, UIView separator, UIView nextCell)
 		{
 			var constraints = ConstraintCreator.Space(previousCell, separator, nextCell);
 			_spacingConstraints.Add(constraints);
-			this.AddConstraints(constraints);
+			AddConstraints(constraints);
 		}
 
 		private void FillSizeConstraint(UIView view)
@@ -329,7 +329,7 @@ namespace Xmf2.Core.iOS.Controls
 			}
 			firstView.TranslatesAutoresizingMaskIntoConstraints = false;
 			_startConstraint = ConstraintCreator.AnchorStart(container: this, cell: firstView);
-			this.AddConstraint(_startConstraint);
+			AddConstraint(_startConstraint);
 		}
 
 		private void AnchorEndConstraint(UIView lastView)
@@ -340,14 +340,14 @@ namespace Xmf2.Core.iOS.Controls
 			}
 			lastView.TranslatesAutoresizingMaskIntoConstraints = false;
 			_endConstraint = ConstraintCreator.AnchorEnd(cell: lastView, container: this);
-			this.AddConstraint(_endConstraint);
+			AddConstraint(_endConstraint);
 		}
 
 		private void RemoveSpacingConstraints()
 		{
 			foreach (var constraints in _spacingConstraints)
 			{
-				this.RemoveConstraints(constraints);
+				RemoveConstraints(constraints);
 				foreach (var constraint in constraints)
 				{
 					constraint.Dispose();
@@ -360,7 +360,7 @@ namespace Xmf2.Core.iOS.Controls
 		{
 			if (_startConstraint != null)
 			{
-				this.RemoveConstraint(_startConstraint);
+				RemoveConstraint(_startConstraint);
 				_startConstraint.Dispose();
 				_startConstraint = null;
 			}
@@ -370,7 +370,7 @@ namespace Xmf2.Core.iOS.Controls
 		{
 			if (_endConstraint != null)
 			{
-				this.RemoveConstraint(_endConstraint);
+				RemoveConstraint(_endConstraint);
 				_endConstraint.Dispose();
 				_endConstraint = null;
 			}
@@ -380,7 +380,7 @@ namespace Xmf2.Core.iOS.Controls
 		{
 			foreach (var constraints in _fillSizeConstraints)
 			{
-				this.RemoveConstraints(constraints);
+				RemoveConstraints(constraints);
 				foreach (var constraint in constraints)
 				{
 					constraint.Dispose();

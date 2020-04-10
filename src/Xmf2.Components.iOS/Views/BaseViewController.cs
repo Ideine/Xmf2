@@ -116,7 +116,7 @@ namespace Xmf2.Components.iOS.Views
 		public override void ViewWillAppear(bool animated)
 		{
 			base.ViewWillAppear(animated);
-			this.ForceToSupportedOrientation();
+			ForceToSupportedOrientation();
 		}
 
 		public override void ViewDidLoad()
@@ -151,7 +151,7 @@ namespace Xmf2.Components.iOS.Views
 		public override bool ShouldAutorotateToInterfaceOrientation(UIInterfaceOrientation toInterfaceOrientation)
 		{
 			// Return true for supported orientations
-			return (toInterfaceOrientation == UIInterfaceOrientation.Portrait);
+			return toInterfaceOrientation == UIInterfaceOrientation.Portrait;
 		}
 
 		public override bool ShouldAutorotate() => true;
@@ -160,11 +160,11 @@ namespace Xmf2.Components.iOS.Views
 		{
 			var currentOrientation = UIDevice.CurrentDevice.Orientation;
 			var supportedOrientations = GetDeviceOrientationFromMasks(GetSupportedInterfaceOrientations()).ToArray();
-			var isCurrentOrientationSupported = (supportedOrientations.Any(o => o == currentOrientation));
+			var isCurrentOrientationSupported = supportedOrientations.Any(o => o == currentOrientation);
 			if (!isCurrentOrientationSupported)
 			{
-				var preferedOrientation = this.PreferredInterfaceOrientationForPresentation();
-				UIDevice.CurrentDevice.SetValueForKey(new NSNumber((ulong)preferedOrientation), new Foundation.NSString("orientation"));
+				var preferedOrientation = PreferredInterfaceOrientationForPresentation();
+				UIDevice.CurrentDevice.SetValueForKey(new NSNumber((ulong)preferedOrientation), new NSString("orientation"));
 			}
 		}
 
@@ -179,7 +179,7 @@ namespace Xmf2.Components.iOS.Views
 			};
 			foreach (var availableFlag in flagList)
 			{
-				var actualFlag = (orientationMask & availableFlag);
+				var actualFlag = orientationMask & availableFlag;
 				if (actualFlag > 0)
 				{
 					switch (actualFlag)

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using CoreGraphics;
 using UIKit;
@@ -71,7 +70,7 @@ namespace Xmf2.Core.iOS.Helpers
 		private static void CenterView(this UIScrollView scrollView, UIView viewToCenter, nfloat keyboardHeight = default(nfloat), bool adjustContentInsets = true, bool animated = false)
 		{
 			nfloat topInset = scrollView.ContentInset.Top;
-			
+
 			if (adjustContentInsets)
 			{
 				scrollView.ContentInset = new UIEdgeInsets(0, 0, keyboardHeight, 0);
@@ -91,7 +90,7 @@ namespace Xmf2.Core.iOS.Helpers
 			}
 		}
 
-		private static void MakeViewVisible(this UIScrollView scrollView, UIView viewToCenter, nfloat keyboardHeight = default(nfloat), bool adjustContentInsets = true, bool animated = false)
+		private static void MakeViewVisible(this UIScrollView scrollView, UIView viewToCenter, nfloat keyboardHeight = default, bool adjustContentInsets = true, bool animated = false)
 		{
 			if (adjustContentInsets)
 			{

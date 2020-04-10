@@ -11,7 +11,6 @@ namespace Xmf2.Components.Droid.List
 		private Xmf2Disposable _disposable = new Xmf2Disposable();
 
 		private View _bindedView;
-		private GlobalLayoutHelper _layoutHelper;
 
 		protected StickyView(IntPtr javaReference, JniHandleOwnership transfer) : base(javaReference, transfer) { }
 
@@ -19,12 +18,12 @@ namespace Xmf2.Components.Droid.List
 		{
 			_bindedView = bindedView;
 
-			_layoutHelper = new GlobalLayoutHelper(_bindedView, OnGlobalLayout).DisposeWith(_disposable);
+			GlobalLayoutHelper layoutHelper = new GlobalLayoutHelper(_bindedView, OnGlobalLayout).DisposeWith(_disposable);
 
 			new EventSubscriber<View>(
 				_bindedView,
-				view => view.ViewTreeObserver.AddOnGlobalLayoutListener(_layoutHelper),
-				view => view.ViewTreeObserver.RemoveOnGlobalLayoutListener(_layoutHelper)
+				view => view.ViewTreeObserver.AddOnGlobalLayoutListener(layoutHelper),
+				view => view.ViewTreeObserver.RemoveOnGlobalLayoutListener(layoutHelper)
 			).DisposeWith(_disposable);
 		}
 

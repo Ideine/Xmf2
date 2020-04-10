@@ -29,14 +29,14 @@ namespace Xmf2.Components.Droid.RecyclerList
 
 		protected RecyclerView.ItemDecoration CreateDrawableSeparator(Context context, Drawable drawable)
 		{
-			return new DividerItemDecoration(context, Orientation, drawable);
+			return new DividerItemDecoration(Orientation, drawable);
 		}
 
 		#region Separator
 
 		public class DividerItemDecoration : RecyclerView.ItemDecoration
 		{
-			private int[] ATTRS => new int[] { Android.Resource.Attribute.ListDivider };
+			private int[] ATTRS => new[] { Android.Resource.Attribute.ListDivider };
 
 			public const int HORIZONTAL_LIST = LinearLayoutManager.Horizontal;
 
@@ -60,7 +60,7 @@ namespace Xmf2.Components.Droid.RecyclerList
 				SetOrientation(orientation);
 			}
 
-			public DividerItemDecoration(Context context, int orientation, Drawable drawable)
+			public DividerItemDecoration(int orientation, Drawable drawable)
 			{
 				_divider = drawable;
 				SetOrientation(orientation);

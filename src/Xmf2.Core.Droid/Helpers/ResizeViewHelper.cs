@@ -30,8 +30,7 @@ namespace Xmf2.Core.Droid.Helpers
                 {
                     _rootView.GetWindowVisibleDisplayFrame(r);
 
-                    int screenHeight = _rootView.Height;
-                    float keyboardHeight = (float)(_rootView.Height - r.Bottom);
+                    float keyboardHeight = _rootView.Height - r.Bottom;
                     OnKeyboardVisibilityChanged(r.Bottom, keyboardHeight, keyboardHeight > 0);
                 }
                 catch (Exception ex)

@@ -1,5 +1,4 @@
-﻿using System;
-using Android.Views;
+﻿using Android.Views;
 
 namespace Xmf2.Core.Droid.Extensions
 {

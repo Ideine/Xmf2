@@ -2,7 +2,7 @@
 using Foundation;
 using UserNotifications;
 
-namespace Xmf2.Core.iOS.Services
+namespace Xmf2.Core.iOS.Services.Notifications
 {
 	internal class NotificationCenterDelegate : UNUserNotificationCenterDelegate
 	{

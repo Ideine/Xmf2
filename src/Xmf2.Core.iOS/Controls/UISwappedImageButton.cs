@@ -59,22 +59,15 @@ namespace Xmf2.Core.iOS.Controls
 			return new UIEdgeInsets(inset.Top, inset.Right, inset.Bottom, inset.Left);
 		}
 
-		private static UIControlContentHorizontalAlignment SwapHorizontally(UIControlContentHorizontalAlignment hAlignement)
+		private static UIControlContentHorizontalAlignment SwapHorizontally(UIControlContentHorizontalAlignment hAlignement) => hAlignement switch
 		{
-			switch (hAlignement)
-			{
-				case UIControlContentHorizontalAlignment.Left: return UIControlContentHorizontalAlignment.Right;
-				case UIControlContentHorizontalAlignment.Right: return UIControlContentHorizontalAlignment.Left;
-
-				case UIControlContentHorizontalAlignment.Leading:
-				case UIControlContentHorizontalAlignment.Trailing:
-					throw new NotImplementedException(); //TODO: Implémenter ces cas.
-
-				default:
-				case UIControlContentHorizontalAlignment.Center:
-				case UIControlContentHorizontalAlignment.Fill:
-					return hAlignement;
-			}
-		}
+			UIControlContentHorizontalAlignment.Left => UIControlContentHorizontalAlignment.Right,
+			UIControlContentHorizontalAlignment.Right => UIControlContentHorizontalAlignment.Left,
+			UIControlContentHorizontalAlignment.Leading => throw new NotImplementedException() //TODO: Implémenter ces cas.
+			,
+			UIControlContentHorizontalAlignment.Trailing => throw new NotImplementedException() //TODO: Implémenter ces cas.
+			,
+			_ => hAlignement
+		};
 	}
 }

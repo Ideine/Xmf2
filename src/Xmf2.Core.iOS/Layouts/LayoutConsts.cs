@@ -1,5 +1,4 @@
-﻿using System;
-namespace Xmf2.Core.iOS.Layouts
+﻿namespace Xmf2.Core.iOS.Layouts
 {
 	/// <summary>
 	/// Ensemble de constantes garanties par Apple.

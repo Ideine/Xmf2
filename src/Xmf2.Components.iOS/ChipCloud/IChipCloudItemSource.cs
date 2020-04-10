@@ -1,6 +1,4 @@
-﻿using System;
-using CoreGraphics;
-using Xmf2.Components.iOS.ChipCloud.Cells;
+﻿using Xmf2.Components.iOS.ChipCloud.Cells;
 
 namespace Xmf2.Components.iOS.ChipCloud
 {

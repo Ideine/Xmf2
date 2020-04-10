@@ -1,6 +1,5 @@
 ﻿using System;
 using UIKit;
-using Xmf2.Core.LinearLists;
 using Xmf2.Core.Subscriptions;
 using Xmf2.Components.iOS.Views;
 using Xmf2.Components.Interfaces;

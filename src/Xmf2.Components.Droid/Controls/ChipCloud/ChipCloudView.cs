@@ -3,7 +3,6 @@ using Android.Views;
 using Xmf2.Components.Droid.Interfaces;
 using Xmf2.Components.Droid.Views;
 using Xmf2.Components.Interfaces;
-using Xmf2.Core.LinearLists;
 using Xmf2.Core.Subscriptions;
 
 namespace Xmf2.Components.Droid.Controls.ChipCloud

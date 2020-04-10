@@ -70,26 +70,28 @@ namespace Xmf2.Core.iOS.Helpers
 		/// <param name="notification">The notification.</param>
 		private void OnKeyboardNotification(NSNotification notification)
 		{
-			if (!_controller.IsViewLoaded) return;
+			if (_controller.IsViewLoaded)
+			{
+				//Check if the keyboard is becoming visible
+				var visible = notification.Name == UIKeyboard.WillShowNotification;
 
-			//Check if the keyboard is becoming visible
-			var visible = notification.Name == UIKeyboard.WillShowNotification;
+				//Start an animation, using values from the keyboard
+				UIView.BeginAnimations("AnimateForKeyboard");
+				UIView.SetAnimationBeginsFromCurrentState(true);
+				UIView.SetAnimationDuration(UIKeyboard.AnimationDurationFromNotification(notification));
+				UIView.SetAnimationCurve((UIViewAnimationCurve)UIKeyboard.AnimationCurveFromNotification(notification));
 
-			//Start an animation, using values from the keyboard
-			UIView.BeginAnimations("AnimateForKeyboard");
-			UIView.SetAnimationBeginsFromCurrentState(true);
-			UIView.SetAnimationDuration(UIKeyboard.AnimationDurationFromNotification(notification));
-			UIView.SetAnimationCurve((UIViewAnimationCurve) UIKeyboard.AnimationCurveFromNotification(notification));
+				//Pass the notification, calculating keyboard height, etc.
+				var keyboardFrame = visible
+					? UIKeyboard.FrameEndFromNotification(notification)
+					: UIKeyboard.FrameBeginFromNotification(notification);
 
-			//Pass the notification, calculating keyboard height, etc.
-			var keyboardFrame = visible
-				? UIKeyboard.FrameEndFromNotification(notification)
-				: UIKeyboard.FrameBeginFromNotification(notification);
+				OnKeyboardChanged(visible, keyboardFrame);
 
-			OnKeyboardChanged(visible, keyboardFrame);
+				//Commit the animation
+				UIView.CommitAnimations();
+			}
 
-			//Commit the animation
-			UIView.CommitAnimations();
 		}
 
 		/// <summary>

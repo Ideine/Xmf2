@@ -5,7 +5,7 @@ using Foundation;
 using Newtonsoft.Json;
 using Xmf2.Core.Subscriptions;
 
-namespace Xmf2.Core.iOS.Services
+namespace Xmf2.Core.iOS.Services.Notifications
 {
 	[DebuggerDisplay("{GetDebuggerDisplay()}")]
 	public class JsonNotificationWriter : IDisposable

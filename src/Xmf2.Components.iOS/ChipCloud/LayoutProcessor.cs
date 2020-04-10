@@ -1,5 +1,4 @@
-﻿using System;
-using UIKit;
+﻿using UIKit;
 using System.Linq;
 using System.Collections.Generic;
 using Xmf2.Core.Subscriptions;
@@ -24,7 +23,6 @@ namespace Xmf2.Components.iOS.ChipCloud
 				Clear();
 
 				Dictionary<int, List<ChipCloudItemCell>> itemsInRow = GetItemInRows(containerWidth, views, hMargin);
-				int nbRow = itemsInRow.Keys.Count;
 
 				foreach (var row in itemsInRow)
 				{
@@ -90,24 +88,24 @@ namespace Xmf2.Components.iOS.ChipCloud
 			Dictionary<int, List<ChipCloudItemCell>> itemGrouped = new Dictionary<int, List<ChipCloudItemCell>>();
 			int currentRow = 0;
 			float currentWidth = 0;
-			List<ChipCloudItemCell> _currentListInRow = new List<ChipCloudItemCell>();
+			List<ChipCloudItemCell> currentListInRow = new List<ChipCloudItemCell>();
 
 			foreach (var currentView in views)
 			{
 				if (currentWidth + currentView.Width > containerWidth)
 				{
-					//on ajoute la liste courante 
-					itemGrouped.Add(currentRow, _currentListInRow);
+					//on ajoute la liste courante
+					itemGrouped.Add(currentRow, currentListInRow);
 
 					//on passe à la ligne suivante
 					currentRow++;
-					_currentListInRow = new List<ChipCloudItemCell>();
+					currentListInRow = new List<ChipCloudItemCell>();
 					currentWidth = 0;
 				}
-				_currentListInRow.Add(currentView);
-				currentWidth += (float)currentView.Width + hMargin;
+				currentListInRow.Add(currentView);
+				currentWidth += currentView.Width + hMargin;
 			}
-			itemGrouped.Add(currentRow, _currentListInRow);
+			itemGrouped.Add(currentRow, currentListInRow);
 			return itemGrouped;
 		}
 

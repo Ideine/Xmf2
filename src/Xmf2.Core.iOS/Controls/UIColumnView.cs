@@ -20,11 +20,11 @@ namespace Xmf2.Core.iOS.Controls
 
 		public void SetSubviews(UIView[] subviews)
 		{
-			if (SubviewsAreDifferent(subviews, this.Subviews))
+			if (SubviewsAreDifferent(subviews, Subviews))
 			{
-				this.EnsureRemove(this.Subviews);
-				this.AddSubviews(subviews);
-				this.SetNeedsUpdateConstraints();
+				this.EnsureRemove(Subviews);
+				AddSubviews(subviews);
+				SetNeedsUpdateConstraints();
 			}
 		}
 
@@ -32,7 +32,7 @@ namespace Xmf2.Core.iOS.Controls
 		{
 			base.UpdateConstraints();
 
-			var subviews = this.Subviews.ToArray();
+			var subviews = Subviews.ToArray();
 
 			this.EnsureRemove(_subviewConstraints.SelectMany(o => o.AllConstraints()));
 			_subviewConstraints.Clear();

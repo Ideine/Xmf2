@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Android.Content.PM;
 
 namespace Xmf2.Core.Droid.Permissions

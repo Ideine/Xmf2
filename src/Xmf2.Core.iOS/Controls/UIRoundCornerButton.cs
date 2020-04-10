@@ -1,6 +1,6 @@
 ﻿using UIKit;
 
-namespace Xmf2.Commons.iOS.Controls
+namespace Xmf2.Core.iOS.Controls
 {
 	public class UIRoundCornerButton : UIButton
 	{

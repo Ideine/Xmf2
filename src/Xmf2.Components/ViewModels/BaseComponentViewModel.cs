@@ -17,15 +17,15 @@ namespace Xmf2.Components.ViewModels
 	{
 		private IEventBus _eventBus;
 		private IGlobalEventBus _globalEventBus;
-		private bool _disposed = false;
+		private bool _disposed;
 
 		IServiceLocator IComponentViewModel.Services => Services;
 		public ILifecycleManager Lifecycle { get; }
 
 		protected Xmf2Disposable Disposables { get; }
 		protected IBusy Busy { get; }
-		protected IEventBus EventBus => _eventBus ?? (_eventBus = Services.Resolve<IEventBus>());
-		protected IGlobalEventBus GlobalEventBus => _globalEventBus ?? (_globalEventBus = Services.Resolve<IGlobalEventBus>());
+		protected IEventBus EventBus => _eventBus ??= Services.Resolve<IEventBus>();
+		protected IGlobalEventBus GlobalEventBus => _globalEventBus ??= Services.Resolve<IGlobalEventBus>();
 
 		protected BaseComponentViewModel(IServiceLocator services) : base(services)
 		{
@@ -76,21 +76,28 @@ namespace Xmf2.Components.ViewModels
 		{
 			ExecIfChanged(value, newValue, updateAction, EqualityComparer<T>.Default);
 		}
+
 		protected void ExecIfChanged<T>(T value, T newValue, Action updateAction, IEqualityComparer<T> comparer)
 		{
 			if (comparer.Equals(value, newValue))
+			{
 				return;
+			}
+
 			Exec(updateAction);
 		}
+
 		protected void ExecIfChanged<T>(T value, T newValue, Action<T> updateAction)
 		{
 			ExecIfChanged(value, newValue, updateAction, EqualityComparer<T>.Default);
 		}
+
 		protected void ExecIfChanged<T>(T value, T newValue, Action<T> updateAction, IEqualityComparer<T> comparer)
 		{
-			if (comparer.Equals(value, newValue))
-				return;
-			Exec(() => updateAction(newValue));
+			if (!comparer.Equals(value, newValue))
+			{
+				Exec(() => updateAction(newValue));
+			}
 		}
 
 		/// <summary>
@@ -150,7 +157,7 @@ namespace Xmf2.Components.ViewModels
 		#region ILifecycle
 
 		/// <summary>
-		/// Method is called prior to any navigation and should be used to 
+		/// Method is called prior to any navigation and should be used to
 		/// load data needed when view is displayed.
 		/// </summary>
 		/// <returns>Awaitable task</returns>

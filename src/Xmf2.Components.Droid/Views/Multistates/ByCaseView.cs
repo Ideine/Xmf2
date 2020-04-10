@@ -15,7 +15,7 @@ namespace Xmf2.Components.Droid.Views.Multistates
 		private ViewGroup _container;
 		private FrameLayout.LayoutParams _childLayoutParams;
 
-		private bool _currentCaseOnceSet = false;
+		private bool _currentCaseOnceSet;
 		private TCaseEnum _currentCase;
 		private ComponentInfo _currentInfo;
 		private Dictionary<TCaseEnum, ComponentInfo> _byCaseInfo;
@@ -30,7 +30,7 @@ namespace Xmf2.Components.Droid.Views.Multistates
 				comparer: componentFactoryByCase.Comparer
 			);
 
-			_childLayoutParams = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MatchParent, FrameLayout.LayoutParams.WrapContent).DisposeWith(Disposables);
+			_childLayoutParams = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MatchParent, ViewGroup.LayoutParams.WrapContent).DisposeWith(Disposables);
 		}
 
 		protected override View RenderView()
@@ -80,7 +80,7 @@ namespace Xmf2.Components.Droid.Views.Multistates
 			base.Dispose(disposing);
 		}
 
-		#region nested 
+		#region nested
 
 		public class ComponentInfo : IDisposable
 		{

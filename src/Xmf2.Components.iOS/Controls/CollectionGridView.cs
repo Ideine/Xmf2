@@ -1,13 +1,11 @@
 ﻿using System;
 using UIKit;
-using Xmf2.Core.LinearLists;
 using Xmf2.Core.Subscriptions;
 using Xmf2.Components.iOS.Views;
 using Xmf2.Components.Interfaces;
 using Xmf2.Components.iOS.Interfaces;
 using Xmf2.Components.iOS.CollectionView;
 using Foundation;
-using Xmf2.Core.iOS.Controls;
 using CoreGraphics;
 using Xmf2.iOS.Extensions.Controls;
 
@@ -18,7 +16,6 @@ namespace Xmf2.Components.iOS.Controls
 		protected UICollectionView GridView;
 
 		private CollectionViewItemSource<CollectionViewItemCell> _source;
-		private UICollectionViewFlowLayout _layout;
 
 		protected virtual UIColor BackgroundColor { get; } = UIColor.White;
 
@@ -39,26 +36,26 @@ namespace Xmf2.Components.iOS.Controls
 		public CollectionGridView(IServiceLocator services) : base(services)
 		{
 			var totalWidthForCells = GetCollectionViewFrame().Width
-									   - TotalRowSpacing
-									   - SectionInset.Left
-									   - SectionInset.Right;
+			                         - TotalRowSpacing
+			                         - SectionInset.Left
+			                         - SectionInset.Right;
 			float cellWidth = (float)Math.Floor(totalWidthForCells / NbColumns);
 
-			_layout = CreateCollectionViewFlowLayout().DisposeViewWith(Disposables);
+			UICollectionViewFlowLayout layout = CreateCollectionViewFlowLayout().DisposeViewWith(Disposables);
 
 			var itemSize = GetCellSize(forWidth: cellWidth);
 			if (itemSize != null)
 			{
-				_layout.ItemSize = itemSize.Value;
-				_layout.MinimumInteritemSpacing = 0f;//cette taille sera induite par la largeur de l'item size.
+				layout.ItemSize = itemSize.Value;
+				layout.MinimumInteritemSpacing = 0f;//cette taille sera induite par la largeur de l'item size.
 			}
 			else
 			{
-				_layout.EstimatedItemSize = new CGSize(cellWidth, EstimatedCellHeight);
-				_layout.MinimumInteritemSpacing = MinimumColumnSpacing;
+				layout.EstimatedItemSize = new CGSize(cellWidth, EstimatedCellHeight);
+				layout.MinimumInteritemSpacing = MinimumColumnSpacing;
 			}
 
-			GridView = new DynamicCollectionView(GetCollectionViewFrame(), _layout)
+			GridView = new DynamicCollectionView(GetCollectionViewFrame(), layout)
 			{
 				Bounces = true,
 				ScrollEnabled = true,
@@ -141,11 +138,6 @@ namespace Xmf2.Components.iOS.Controls
 				}
 				_lastFrame = newBounds;
 				return true;
-			}
-
-			public override bool ShouldInvalidateLayout(UICollectionViewLayoutAttributes preferredAttributes, UICollectionViewLayoutAttributes originalAttributes)
-			{
-				return base.ShouldInvalidateLayout(preferredAttributes, originalAttributes);
 			}
 
 			private static bool AreTheSame(CGRect frame1, CGRect frame2)

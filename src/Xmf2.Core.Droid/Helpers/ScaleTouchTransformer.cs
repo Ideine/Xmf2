@@ -1,7 +1,6 @@
 ﻿using System;
 using Android.Runtime;
 using Android.Views;
-using Android.Widget;
 
 namespace Xmf2.Core.Droid.Helpers
 {
