@@ -1,6 +1,7 @@
 ﻿using System;
 using UIKit;
 using CoreGraphics;
+using Xmf2.iOS.Extensions.Constraints;
 
 namespace Xmf2.Components.iOS.ChipCloud.Cells
 {

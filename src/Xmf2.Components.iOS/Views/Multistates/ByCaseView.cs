@@ -5,7 +5,10 @@ using UIKit;
 using Xmf2.Components.Interfaces;
 using Xmf2.Components.iOS.Interfaces;
 using Xmf2.Components.ViewModels.Multistates;
+using Xmf2.Core.iOS.Extensions;
 using Xmf2.Core.Subscriptions;
+using Xmf2.iOS.Extensions.Constraints;
+using Xmf2.iOS.Extensions.Extensions;
 
 namespace Xmf2.Components.iOS.Views.Multistates
 {

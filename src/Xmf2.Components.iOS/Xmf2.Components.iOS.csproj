@@ -38,6 +38,10 @@
     <Reference Include="Xmf2.DisposableExtensions">
       <HintPath>..\..\..\..\packages\Xmf2.DisposableExtensions.1.0.0\lib\netstandard2.0\Xmf2.DisposableExtensions.dll</HintPath>
     </Reference>
+    <Reference Include="Xmf2.iOS.Extensions, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\..\..\..\packages\Xmf2.iOS.Extensions.1.0.3\lib\xamarinios10\Xmf2.iOS.Extensions.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Xmf2.NavigationGraph.Core">
       <HintPath>..\..\..\..\packages\Xmf2.NavigationGraph.1.0.0\lib\xamarinios10\Xmf2.NavigationGraph.Core.dll</HintPath>
     </Reference>

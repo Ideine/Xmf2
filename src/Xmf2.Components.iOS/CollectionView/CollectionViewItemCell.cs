@@ -2,6 +2,7 @@
 using CoreGraphics;
 using Foundation;
 using UIKit;
+using Xmf2.iOS.Extensions.Constraints;
 
 namespace Xmf2.Components.iOS.CollectionView
 {

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Collections.Generic;
 using Xmf2.Core.Subscriptions;
 using Xmf2.Components.iOS.ChipCloud.Cells;
+using Xmf2.iOS.Extensions.Constraints;
 
 namespace Xmf2.Components.iOS.ChipCloud
 {

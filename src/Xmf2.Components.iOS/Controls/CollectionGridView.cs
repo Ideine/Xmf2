@@ -9,6 +9,7 @@ using Xmf2.Components.iOS.CollectionView;
 using Foundation;
 using Xmf2.Core.iOS.Controls;
 using CoreGraphics;
+using Xmf2.iOS.Extensions.Controls;
 
 namespace Xmf2.Components.iOS.Controls
 {
