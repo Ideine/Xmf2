@@ -59,7 +59,6 @@
     <Compile Include="Extensions\ViewExtensions.cs" />
     <Compile Include="Permissions\PermissionContainer.cs" />
     <Compile Include="Permissions\IPermissionsHandlingActivity.cs" />
-    <Compile Include="Services\LicenceReaderService.cs" />
     <Compile Include="Helpers\ProgressWebChromeClient.cs" />
     <Compile Include="Extensions\ActivityExtensions.cs" />
     <Compile Include="Helpers\KeyboardHelper.cs" />
