@@ -1,4 +1,5 @@
 ﻿using UIKit;
+using Xmf2.Core.iOS.Extensions;
 
 namespace Xmf2.Core.iOS.Controls
 {

@@ -1,4 +1,5 @@
 ﻿using UIKit;
+using Xmf2.Core.iOS.Extensions;
 using static Xmf2.Core.iOS.Controls.UIBaseLinearLayout;
 
 namespace Xmf2.Core.iOS.Controls

@@ -2,7 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using UIKit;
+using Xmf2.Core.iOS.Extensions;
 using Xmf2.Core.Subscriptions;
+using Xmf2.iOS.Extensions.Constraints;
+using Xmf2.iOS.Extensions.Extensions;
 
 namespace Xmf2.Core.iOS.Controls
 {
@@ -10,16 +13,16 @@ namespace Xmf2.Core.iOS.Controls
 	{
 		private readonly Xmf2Disposable _disposable;
 
-		private bool _currentCaseOnceSet = false;
+		private readonly bool _currentCaseOnceSet = false;
 		private TCaseEnum _currentCase;
 		private ViewInfo _currentInfo;
-		private Dictionary<TCaseEnum, ViewInfo> _byCaseInfo;
+		private readonly Dictionary<TCaseEnum, ViewInfo> _byCaseInfo;
 		private bool _aggressiveViewDispose = false;
 
 		public UIByCaseView(Dictionary<TCaseEnum, Func<UIView>> viewFactoryByCase)
 		{
 			_disposable = new Xmf2Disposable();
-			_currentCase = default(TCaseEnum);
+			_currentCase = default;
 
 			_byCaseInfo = viewFactoryByCase.ToDictionary(
 				keySelector: kvp => kvp.Key,
@@ -72,7 +75,7 @@ namespace Xmf2.Core.iOS.Controls
 		{
 			if (disposing)
 			{
-				_currentCase = default(TCaseEnum);
+				_currentCase = default;
 				_disposable.Dispose();
 			}
 			base.Dispose(disposing);

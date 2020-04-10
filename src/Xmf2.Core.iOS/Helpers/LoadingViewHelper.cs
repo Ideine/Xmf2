@@ -4,6 +4,7 @@ using Xmf2.Core.Helpers;
 using Xmf2.Core.iOS.Controls;
 using Xmf2.Core.Subscriptions;
 using Xmf2.Core.iOS.Extensions;
+using Xmf2.iOS.Extensions.Extensions;
 
 namespace Xmf2.Core.iOS.Helpers
 {

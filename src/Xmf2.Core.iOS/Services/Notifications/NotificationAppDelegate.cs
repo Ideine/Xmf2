@@ -6,6 +6,7 @@ using UIKit;
 using UserNotifications;
 using Xmf2.Core.iOS.Extensions;
 using Xmf2.Core.Services;
+using Xmf2.iOS.Extensions.Extensions;
 
 namespace Xmf2.Core.iOS.Services
 {

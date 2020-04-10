@@ -1,5 +1,7 @@
 ﻿using UIKit;
 using Xmf2.Core.Helpers;
+using Xmf2.Core.iOS.Extensions;
+using Xmf2.iOS.Extensions.Constraints;
 using static UIKit.NSLayoutAttribute;
 using static UIKit.NSLayoutRelation;
 
@@ -81,6 +83,7 @@ namespace Xmf2.Core.iOS.Controls
 				_progressView.Dispose();
 				_progressView = null;
 				_constraints = null;
+				_parentView = null;
 			}
 			base.Dispose(disposing);
 

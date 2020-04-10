@@ -6,7 +6,7 @@ using Xmf2.Core.iOS.Extensions;
 using Xmf2.Core.Subscriptions;
 
 namespace Xmf2.Core.iOS.Helpers
-{
+{//TODO: VJU reprendre Idelink
 	public class ScrollIndicatorHelper : IDisposable
 	{
 		private readonly Xmf2Disposable _disposable = new Xmf2Disposable();

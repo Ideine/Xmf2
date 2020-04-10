@@ -61,7 +61,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Xmf2.Core.ImgLoading\Xmf2.Core.ImgLoading.csproj">
-      <Project>{6BF5B0DD-5984-477B-B04C-601EC41CBB9E}</Project>
+      <Project>{1C1D77CD-E28E-43DE-BD01-7C668913C9A9}</Project>
       <Name>Xmf2.Core.ImgLoading</Name>
     </ProjectReference>
   </ItemGroup>

@@ -92,11 +92,11 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Xmf2.Core\Xmf2.Core.csproj">
-      <Project>{87A1C2DE-44B0-480F-A4EC-20C211C6C370}</Project>
+      <Project>{BE2AF116-1987-4275-A709-4ED4AD331B05}</Project>
       <Name>Xmf2.Core</Name>
     </ProjectReference>
     <ProjectReference Include="..\Xmf2.Components\Xmf2.Components.csproj">
-      <Project>{029A0034-C63A-4EA4-9342-BB1ED2C794DF}</Project>
+      <Project>{F7DB4CF5-A47C-4178-B776-D8857468DD47}</Project>
       <Name>Xmf2.Components</Name>
     </ProjectReference>
   </ItemGroup>

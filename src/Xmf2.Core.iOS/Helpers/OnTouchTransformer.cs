@@ -1,7 +1,9 @@
 ﻿using System;
 using CoreGraphics;
 using UIKit;
+using Xmf2.Core.iOS.Extensions;
 using Xmf2.Core.Subscriptions;
+using Xmf2.iOS.Extensions.Extensions;
 
 namespace Xmf2.Core.iOS.Helpers
 {
@@ -56,8 +58,8 @@ namespace Xmf2.Core.iOS.Helpers
 		public static EventSubscriber<UIControl> FadeOnTouch(this UIControl control, UIView updatedView, bool animate = true)
 		{
 			return control.UpdateOnTouch(updatedView,
-				toTouchedState: v => v.FadeTo58Percent(),
-				fromTouchedState: v => v.FadeTo100Percent(),
+				toTouchedState: v => v.FadeTo(0.58f),
+				fromTouchedState: v => v.FadeTo(1f),
 				animate: animate
 			);
 		}
