@@ -11,11 +11,13 @@ namespace Xmf2.Core.Droid.Extensions
 		{
 			if (Build.VERSION.SdkInt >= BuildVersionCodes.N)
 			{
-				textView.TextFormatted = Html.FromHtml(htmlText, Html.FromHtmlModeCompact);
+				textView.TextFormatted = Html.FromHtml(htmlText, FromHtmlOptions.ModeCompact);
 			}
 			else
 			{
+#pragma warning disable 618
 				textView.TextFormatted = Html.FromHtml(htmlText);
+#pragma warning restore 618
 			}
 			if (linkifyText)
 			{

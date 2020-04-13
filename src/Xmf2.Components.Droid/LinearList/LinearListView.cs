@@ -43,13 +43,11 @@ namespace Xmf2.Components.Droid.LinearList
 
 		protected override void OnStateUpdate(TViewState state)
 		{
-			if (CurrentState != null && state.Items.SequenceEqual(CurrentState.Items))
+			if (CurrentState == null || !state.Items.SequenceEqual(CurrentState.Items))
 			{
-				return;
+				base.OnStateUpdate(state);
+				Adapter.ItemSource = state.Items;
 			}
-
-			base.OnStateUpdate(state);
-			Adapter.ItemSource = state.Items;
 		}
 
 		protected override void Dispose(bool disposing)
@@ -67,16 +65,18 @@ namespace Xmf2.Components.Droid.LinearList
 			int eightDp = UIHelper.DpToPx(Context, 8);
 			int sixteenDp = UIHelper.DpToPx(Context, 16);
 
-			FrameLayout layout = new FrameLayout(Context);
-			ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MatchParent, ViewGroup.LayoutParams.WrapContent);
+			var layout = new FrameLayout(Context);
+			var layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MatchParent, ViewGroup.LayoutParams.WrapContent);
 			layout.LayoutParameters = layoutParams;
 			layout.SetBackgroundColor(Color.Transparent);
 			layout.SetPadding(0, eightDp, 0, eightDp);
 
-			View separator = new View(Context);
-			ViewGroup.MarginLayoutParams separatorLayoutParams = new ViewGroup.MarginLayoutParams(ViewGroup.LayoutParams.MatchParent, UIHelper.DpToPx(Context, 1));
-			separatorLayoutParams.MarginStart = sixteenDp;
-			separatorLayoutParams.MarginEnd = eightDp;
+			var separator = new View(Context);
+			var separatorLayoutParams = new ViewGroup.MarginLayoutParams(ViewGroup.LayoutParams.MatchParent, UIHelper.DpToPx(Context, 1))
+			{
+				MarginStart = sixteenDp,
+				MarginEnd = eightDp
+			};
 			separator.LayoutParameters = separatorLayoutParams;
 			separator.SetBackgroundColor(Color.Black);
 

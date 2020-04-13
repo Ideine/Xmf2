@@ -1,6 +1,10 @@
 ﻿using System;
 using Android.Runtime;
+#if __ANDROID_29__
+using AndroidX.RecyclerView.Widget;
+#else
 using Android.Support.V7.Util;
+#endif
 using Xmf2.Components.Interfaces;
 
 namespace Xmf2.Components.Droid.List

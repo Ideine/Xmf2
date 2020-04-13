@@ -1,14 +1,18 @@
 ﻿using System;
 using System.Linq;
 using Android.Views;
-using Xmf2.Core.LinearLists;
 using Xmf2.Core.Subscriptions;
+#if __ANDROID_29__
+using AndroidX.RecyclerView.Widget;
+#else
 using Android.Support.V7.Widget;
+#endif
 using Xmf2.Components.Interfaces;
 using Xmf2.Components.Droid.Views;
 using Xmf2.Components.Droid.Interfaces;
+using Xmf2.Components.ViewModels.LinearLists;
 
-namespace Xmf2.Components.Droid.RecyclerList
+namespace Xmf2.Components.Droid.List
 {
 	public abstract class RecyclerItemsView : BaseComponentView<ListViewState>
 	{
@@ -37,7 +41,7 @@ namespace Xmf2.Components.Droid.RecyclerList
 
 		protected virtual CommonAdapter CreateAdapter()
 		{
-			return new CommonAdapter(id => _factory(Services)).DisposeWith(Disposables);
+			return new CommonAdapter(typeof(IEntityViewState), id => _factory(Services)).DisposeWith(Disposables);
 		}
 
 		protected virtual void OnDesignView() { }
@@ -48,6 +52,7 @@ namespace Xmf2.Components.Droid.RecyclerList
 			{
 				return;
 			}
+
 			base.OnStateUpdate(state);
 			_adapter.ItemSource = state.Items;
 		}
@@ -56,9 +61,11 @@ namespace Xmf2.Components.Droid.RecyclerList
 		{
 			if (disposing)
 			{
+				_factory = null;
 				RecyclerView = null;
 				_adapter = null;
 			}
+
 			base.Dispose(disposing);
 		}
 	}

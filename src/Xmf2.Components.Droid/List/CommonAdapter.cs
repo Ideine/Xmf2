@@ -2,8 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using Android.Runtime;
+#if __ANDROID_29__
+using AndroidX.RecyclerView.Widget;
+#else
 using Android.Support.V7.Util;
 using Android.Support.V7.Widget;
+#endif
 using Android.Views;
 using Xmf2.Components.Droid.Interfaces;
 using Xmf2.Components.Interfaces;
@@ -42,7 +46,7 @@ namespace Xmf2.Components.Droid.List
 			{
 				using (var callback = new DiffList(_itemSource?.ToArray() ?? new IEntityViewState[0], value?.ToArray() ?? new IEntityViewState[0]))
 				{
-					using (var result = DiffUtil.CalculateDiff(callback))
+					using (DiffUtil.DiffResult result = DiffUtil.CalculateDiff(callback))
 					{
 						_itemSource = value;
 
@@ -65,10 +69,15 @@ namespace Xmf2.Components.Droid.List
 
 		public CommonAdapter(Type type, Func<string, IComponentView> componentCreator)
 		{
-			_stateList = new List<Type> { type };
+			_stateList = new List<Type>
+			{
+				type
+			};
 			_componentCreatorMap = new Dictionary<Type, Func<string, IComponentView>>()
 			{
-				{type, componentCreator}
+				{
+					type, componentCreator
+				}
 			};
 		}
 
@@ -77,16 +86,16 @@ namespace Xmf2.Components.Droid.List
 			switch (holder)
 			{
 				case HeaderViewHolder headerViewHolder:
-					var headerComponent = headerViewHolder.Component;
-					if (_headerStates.TryGetValue(headerComponent, out var headerState))
+					IComponentView headerComponent = headerViewHolder.Component;
+					if (_headerStates.TryGetValue(headerComponent, out IViewState headerState))
 					{
 						headerComponent.SetState(headerState);
 					}
 
 					break;
 				case FooterViewHolder footerViewHolder:
-					var footerComponent = footerViewHolder.Component;
-					if (_footerStates.TryGetValue(footerComponent, out var footerState))
+					IComponentView footerComponent = footerViewHolder.Component;
+					if (_footerStates.TryGetValue(footerComponent, out IViewState footerState))
 					{
 						footerComponent.SetState(footerState);
 					}
@@ -107,33 +116,33 @@ namespace Xmf2.Components.Droid.List
 		{
 			if (viewType >= FOOTER_START_TYPE_INDEX)
 			{
-				var footerPosition = viewType - FOOTER_START_TYPE_INDEX;
-				var footer = _footerList[footerPosition];
+				int footerPosition = viewType - FOOTER_START_TYPE_INDEX;
+				IComponentView footer = _footerList[footerPosition];
 
 				return new FooterViewHolder(footer, footer.View(parent)).DisposeViewWith(_disposable);
 			}
 
 			if (viewType >= HEADER_START_TYPE_INDEX)
 			{
-				var headerPosition = viewType - HEADER_START_TYPE_INDEX;
-				var header = _headerList[headerPosition];
-				if (_stickyDictionary.TryGetValue(header, out var stickyView))
+				int headerPosition = viewType - HEADER_START_TYPE_INDEX;
+				IComponentView header = _headerList[headerPosition];
+				if (_stickyDictionary.TryGetValue(header, out View stickyView))
 				{
 					return new StickyViewHolder(stickyView).DisposeViewWith(_disposable);
 				}
 				else
 				{
-					var headerView = header.View(parent).DisposeViewWith(_disposable);
-					var viewHolder = new HeaderViewHolder(header, headerView).DisposeViewWith(_disposable);
+					View headerView = header.View(parent).DisposeViewWith(_disposable);
+					HeaderViewHolder viewHolder = new HeaderViewHolder(header, headerView).DisposeViewWith(_disposable);
 
-					if (_headersHeight.TryGetValue(header, out var height) && height.HasValue)
+					if (_headersHeight.TryGetValue(header, out int? height) && height.HasValue)
 					{
-						var param = headerView.LayoutParameters;
+						ViewGroup.LayoutParams param = headerView.LayoutParameters;
 						param.Height = height.Value;
 						headerView.LayoutParameters = param;
 					}
 
-					if (_parallaxDictionary.TryGetValue(header, out var helper))
+					if (_parallaxDictionary.TryGetValue(header, out ParallaxRecyclerViewHelper helper))
 					{
 						helper.AddParallaxView(headerView);
 					}
@@ -142,8 +151,8 @@ namespace Xmf2.Components.Droid.List
 				}
 			}
 
-			var index = viewType - CELL_TYPE;
-			var type = _stateList[index];
+			int index = viewType - CELL_TYPE;
+			Type type = _stateList[index];
 			IComponentView component = _componentCreatorMap[type](Guid.NewGuid().ToString()).DisposeViewWith(_disposable);
 			return new CellViewHolder(component, component.View(parent)).DisposeViewWith(_disposable);
 		}
@@ -159,8 +168,9 @@ namespace Xmf2.Components.Droid.List
 			{
 				return FOOTER_START_TYPE_INDEX + GetFooterPositionInFooterList(position);
 			}
-			var cellPosition = position - _headerList.Count;
-			var index = _stateList.IndexOf(ItemSource[cellPosition].GetType());
+
+			int cellPosition = position - _headerList.Count;
+			int index = _stateList.IndexOf(ItemSource[cellPosition].GetType());
 			return CELL_TYPE + index;
 		}
 
@@ -178,6 +188,7 @@ namespace Xmf2.Components.Droid.List
 				{
 					_headersHeight[header] = height;
 				}
+
 				if (index.HasValue)
 				{
 					_headerList.Insert(index.Value, header);
@@ -188,6 +199,7 @@ namespace Xmf2.Components.Droid.List
 					_headerList.Add(header);
 					NotifyDataSetChanged();
 				}
+
 				return true;
 			}
 		}
@@ -205,6 +217,7 @@ namespace Xmf2.Components.Droid.List
 				{
 					_headersHeight[header] = height;
 				}
+
 				_parallaxDictionary[header] = helper;
 				NotifyDataSetChanged();
 				return true;
@@ -246,10 +259,10 @@ namespace Xmf2.Components.Droid.List
 
 		public bool TryRemoveHeader(IComponentView header)
 		{
-			var index = _headerList.IndexOf(header);
+			int index = _headerList.IndexOf(header);
 			if (index != -1)
 			{
-				var res = _headerList.Remove(header);
+				bool res = _headerList.Remove(header);
 
 				if (res)
 				{
@@ -270,16 +283,17 @@ namespace Xmf2.Components.Droid.List
 
 		public bool TryRemoveFooter(IComponentView footer)
 		{
-			var index = _footerList.IndexOf(footer);
+			int index = _footerList.IndexOf(footer);
 			if (index != 1)
 			{
 				index = GetFooterPositionInItemList(index);
-				var res = _footerList.Remove(footer);
+				bool res = _footerList.Remove(footer);
 				if (res)
 				{
 					_footerStates.Remove(footer);
 					NotifyItemRemoved(index);
 				}
+
 				return res;
 			}
 			else
@@ -350,7 +364,7 @@ namespace Xmf2.Components.Droid.List
 		/// <returns>position in footer list</returns>
 		private int GetFooterPositionInFooterList(int position)
 		{
-			var cellCount = ItemCount;
+			int cellCount = ItemCount;
 			cellCount -= _headerList.Count;
 			cellCount -= _footerList.Count;
 
@@ -368,7 +382,7 @@ namespace Xmf2.Components.Droid.List
 		{
 			get
 			{
-				var count = ItemSource?.Count ?? 0;
+				int count = ItemSource?.Count ?? 0;
 
 				count += _headerList.Count;
 				count += _footerList.Count;

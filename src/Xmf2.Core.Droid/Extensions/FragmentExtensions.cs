@@ -1,5 +1,10 @@
-﻿using Android.Support.V4.App;
+﻿#if __ANDROID_29__
+using AndroidX.AppCompat.App;
+using AndroidX.Fragment.App;
+#else
+using Android.Support.V4.App;
 using Android.Support.V7.App;
+#endif
 
 // ReSharper disable once CheckNamespace
 public static class FragmentExtensions
@@ -11,14 +16,7 @@ public static class FragmentExtensions
 
 	public static Fragment GetTopFragment(this FragmentManager fm)
 	{
-		if (fm.Fragments.Count <= 0)
-		{
-			return null;
-		}
-		else
-		{
-			return fm.Fragments[fm.Fragments.Count - 1];
-		}
+		return fm.Fragments.Count <= 0 ? null : fm.Fragments[^1];
 	}
 
 	public static TFragmentType FindFragmentByTag<TFragmentType>(this FragmentManager fm, string tag)

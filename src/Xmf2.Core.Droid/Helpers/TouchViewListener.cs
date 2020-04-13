@@ -8,10 +8,10 @@ namespace Xmf2.Core.Droid.Helpers
 	{
 		public TView View { get; private set; }
 
-		private Action<TView> _fromHighligth;
+		private Action<TView> _fromHighlight;
 		private Action<TView> _toHighlight;
 
-		public TouchViewListener(IntPtr handle, JniHandleOwnership transer) : base(handle, transer) { }
+		public TouchViewListener(IntPtr handle, JniHandleOwnership transfer) : base(handle, transfer) { }
 
 		public TouchViewListener(TView view)
 		{
@@ -21,7 +21,7 @@ namespace Xmf2.Core.Droid.Helpers
 
 		public TouchViewListener<TView> WithTouchHighlight(Action<TView> fromHighlight, Action<TView> toHighlight)
 		{
-			_fromHighligth = fromHighlight;
+			_fromHighlight = fromHighlight;
 			_toHighlight = toHighlight;
 
 			return this;
@@ -42,7 +42,7 @@ namespace Xmf2.Core.Droid.Helpers
 			return false;
 		}
 
-		protected void OnUp(View view) => _fromHighligth?.Invoke((TView)view);
+		protected void OnUp(View view) => _fromHighlight?.Invoke((TView)view);
 
 		protected void OnDown(View view) => _toHighlight?.Invoke((TView)view);
 
@@ -56,7 +56,7 @@ namespace Xmf2.Core.Droid.Helpers
 					View.SetOnTouchListener(null);
 					View = null;
 				}
-				_fromHighligth = null;
+				_fromHighlight = null;
 				_toHighlight = null;
 			}
 			base.Dispose(disposing);

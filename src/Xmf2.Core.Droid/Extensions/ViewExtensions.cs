@@ -6,22 +6,23 @@ namespace Xmf2.Core.Droid.Extensions
 	{
 		public static T GetFirstDescendantOfType<T>(this ViewGroup root) where T : View
 		{
-			for (var i = 0; i < root.ChildCount; i++)
+			for (int i = 0 ; i < root.ChildCount ; i++)
 			{
-				var view = root.GetChildAt(i);
-				if (view is T)
+				View view = root.GetChildAt(i);
+				if (view is T typedView)
 				{
-					return (T)view;
+					return typedView;
 				}
-				if (view is ViewGroup rootChild)
+				else if (view is ViewGroup rootChild)
 				{
-					var descendant = GetFirstDescendantOfType<T>(rootChild);
+					T descendant = GetFirstDescendantOfType<T>(rootChild);
 					if (descendant != null)
 					{
 						return descendant;
 					}
 				}
 			}
+
 			return null;
 		}
 	}

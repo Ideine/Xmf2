@@ -6,7 +6,7 @@ using Android.Runtime;
 
 namespace Xmf2.Core.Droid.Helpers
 {
-    public class ResizeViewHelper : Java.Lang.Object, ViewTreeObserver.IOnGlobalLayoutListener, IDisposable
+    public class ResizeViewHelper : Java.Lang.Object, ViewTreeObserver.IOnGlobalLayoutListener
     {
         private View _rootView;
         private View _target;
@@ -62,6 +62,7 @@ namespace Xmf2.Core.Droid.Helpers
 
                 _rootView?.Dispose();
                 _rootView = null;
+                _target = null;
                 _onKeyBoardVisibilityChanged = null;
             }
             base.Dispose(disposing);

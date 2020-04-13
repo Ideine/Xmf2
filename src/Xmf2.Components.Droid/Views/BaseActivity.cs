@@ -3,7 +3,11 @@ using System.Threading.Tasks;
 using Android.Content.PM;
 using Android.OS;
 using Android.Runtime;
+#if __ANDROID_29__
+using AndroidX.AppCompat.App;
+#else
 using Android.Support.V7.App;
+#endif
 using Android.Views;
 using Xmf2.Components.Droid.Interfaces;
 using Xmf2.Components.Interfaces;
@@ -123,6 +127,7 @@ namespace Xmf2.Components.Droid.Views
 				_disposables.Dispose();
 				_disposables = null;
 			}
+
 			base.Dispose(disposing);
 		}
 

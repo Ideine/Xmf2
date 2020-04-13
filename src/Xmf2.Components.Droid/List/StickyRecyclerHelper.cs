@@ -1,6 +1,10 @@
 ﻿using System;
 using Android.Runtime;
+#if __ANDROID_29__
+using AndroidX.RecyclerView.Widget;
+#else
 using Android.Support.V7.Widget;
+#endif
 using Android.Views;
 using Xmf2.Core.Droid.Helpers;
 using Xmf2.Core.Subscriptions;
@@ -88,6 +92,7 @@ namespace Xmf2.Components.Droid.List
 				_componentView = null;
 				_recyclerView = null;
 			}
+
 			base.Dispose(disposing);
 		}
 	}

@@ -9,7 +9,7 @@ namespace Xmf2.Core.Droid.Helpers
 		private int _currentProgress;
 		private LoadingViewHelper _loadingView;
 
-		protected ProgressWebChromeClient(IntPtr handle, JniHandleOwnership transer) : base(handle, transer) { }
+		protected ProgressWebChromeClient(IntPtr handle, JniHandleOwnership transfer) : base(handle, transfer) { }
 
 		public ProgressWebChromeClient(LoadingViewHelper loadingView)
 		{

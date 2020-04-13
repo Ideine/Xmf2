@@ -6,22 +6,22 @@ using Xmf2.Core.Subscriptions;
 
 namespace Xmf2.Components.Droid.List
 {
-	public class StickyView: View
+	public class StickyView : View
 	{
 		private Xmf2Disposable _disposable = new Xmf2Disposable();
 
-		private View _bindedView;
+		private View _boundView;
 
 		protected StickyView(IntPtr javaReference, JniHandleOwnership transfer) : base(javaReference, transfer) { }
 
-		public StickyView(View bindedView) : base(bindedView.Context)
+		public StickyView(View boundView) : base(boundView.Context)
 		{
-			_bindedView = bindedView;
+			_boundView = boundView;
 
-			GlobalLayoutHelper layoutHelper = new GlobalLayoutHelper(_bindedView, OnGlobalLayout).DisposeWith(_disposable);
+			GlobalLayoutHelper layoutHelper = new GlobalLayoutHelper(_boundView, OnGlobalLayout).DisposeWith(_disposable);
 
 			new EventSubscriber<View>(
-				_bindedView,
+				_boundView,
 				view => view.ViewTreeObserver.AddOnGlobalLayoutListener(layoutHelper),
 				view => view.ViewTreeObserver.RemoveOnGlobalLayoutListener(layoutHelper)
 			).DisposeWith(_disposable);
@@ -29,10 +29,10 @@ namespace Xmf2.Components.Droid.List
 
 		public void OnGlobalLayout()
 		{
-			var param = LayoutParameters;
-			if (param != null && _bindedView != null && param.Height != _bindedView.Height)
+			ViewGroup.LayoutParams param = LayoutParameters;
+			if (param != null && _boundView != null && param.Height != _boundView.Height)
 			{
-				param.Height = _bindedView.Height;
+				param.Height = _boundView.Height;
 				LayoutParameters = param;
 			}
 		}
@@ -44,7 +44,7 @@ namespace Xmf2.Components.Droid.List
 				_disposable.Dispose();
 				_disposable = null;
 
-				_bindedView = null;
+				_boundView = null;
 			}
 
 			base.Dispose(disposing);

@@ -1,6 +1,10 @@
 ﻿using System;
 using Android.Runtime;
+#if __ANDROID_29__
+using AndroidX.RecyclerView.Widget;
+#else
 using Android.Support.V7.Widget;
+#endif
 using Android.Views;
 using Xmf2.Core.Droid.Parallax;
 using Xmf2.Core.Subscriptions;
@@ -11,7 +15,7 @@ namespace Xmf2.Components.Droid.List
 	{
 		private readonly Xmf2Disposable _disposable = new Xmf2Disposable();
 
-		private float _parallaxFactor;
+		private readonly float _parallaxFactor;
 		private View _view;
 		private ParallaxedView _parallaxedView;
 

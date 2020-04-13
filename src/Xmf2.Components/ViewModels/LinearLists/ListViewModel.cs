@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using Xmf2.Components.Interfaces;
-using Xmf2.Components.ViewModels;
 
-namespace Xmf2.Core.LinearLists
+namespace Xmf2.Components.ViewModels.LinearLists
 {
 	public interface IListViewModel
 	{

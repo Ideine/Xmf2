@@ -1,5 +1,9 @@
-﻿using Android.Support.V7.Util;
+﻿#if __ANDROID_29__
+using AndroidX.RecyclerView.Widget;
+#else
+using Android.Support.V7.Util;
 using Android.Support.V7.Widget;
+#endif
 
 namespace Xmf2.Components.Droid.List
 {

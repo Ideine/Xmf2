@@ -1,9 +1,9 @@
-﻿using Xmf2.Components.Interfaces;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Xmf2.Components.Interfaces;
 
-namespace Xmf2.Core.LinearLists
+namespace Xmf2.Components.ViewModels.LinearLists
 {
-	public class ListViewState : IListViewState// TODO, mco, rien a faire dans l'espace de nom Linear.
+	public class ListViewState : IListViewState
 	{
 		public IReadOnlyList<IEntityViewState> Items { get; }
 

@@ -1,12 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Android.Content;
 using Android.Runtime;
 using Android.Util;
+using Android.Views;
 using Android.Widget;
 using Xmf2.Core.Subscriptions;
-using System.Collections.Generic;
-using System.Linq;
-using Android.Views;
 
 namespace Xmf2.Components.Droid.LinearList
 {
@@ -32,22 +32,13 @@ namespace Xmf2.Components.Droid.LinearList
 					_subscriber?.Dispose();
 					_subscriber = null;
 
-					if (value is IAdapterWithSeparator)
-					{
-						_subscriber = new EventSubscriber<LinearListAdapter>(
-							value,
-							v => v.ItemSourceChanged += ItemSourceWithSeparatorChanged,
-							v => v.ItemSourceChanged -= ItemSourceWithSeparatorChanged
-						).DisposeWith(Disposable);
-					}
-					else
-					{
-						_subscriber = new EventSubscriber<LinearListAdapter>(
-							value,
-							v => v.ItemSourceChanged += ItemSourceChanged,
-							v => v.ItemSourceChanged -= ItemSourceChanged
-						).DisposeWith(Disposable);
-					}
+					LinearListAdapter.ListChanged changedAction = value is IAdapterWithSeparator ? (LinearListAdapter.ListChanged)ItemSourceWithSeparatorChanged : ItemSourceChanged;
+
+					_subscriber = new EventSubscriber<LinearListAdapter>(
+						value,
+						v => v.ItemSourceChanged += changedAction,
+						v => v.ItemSourceChanged -= changedAction
+					).DisposeWith(Disposable);
 
 					_adapter = value;
 				}
