@@ -77,14 +77,14 @@
     <Compile Include="List\RecyclerListView.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Xmf2.Components\Xmf2.Components.csproj"/>
-    <ProjectReference Include="..\Xmf2.Core.Droid\Xmf2.Core.Droid.csproj"/>
-    <ProjectReference Include="..\Xmf2.Core\Xmf2.Core.csproj"/>
+    <ProjectReference Include="..\Xmf2.Components\Xmf2.Components.csproj" />
+    <ProjectReference Include="..\Xmf2.Core.Droid\Xmf2.Core.Droid.csproj" />
+    <ProjectReference Include="..\Xmf2.Core\Xmf2.Core.csproj" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Xamarin.AndroidX.RecyclerView" Version="1.1.0" Condition="'$(TargetFramework)' == 'MonoAndroid10.0'" />
     <PackageReference Include="Xamarin.Android.Support.v7.RecyclerView" Version="27.0.2.1" Condition="'$(TargetFramework)' != 'MonoAndroid10.0'" />
-    <PackageReference Include="Xmf2.NavigationGraph" Version="1.1.0-pre2" />
+    <PackageReference Include="Xmf2.NavigationGraph" Version="1.1.0" />
 	</ItemGroup>
   <ItemGroup>
     <None Remove="obj\**" />
