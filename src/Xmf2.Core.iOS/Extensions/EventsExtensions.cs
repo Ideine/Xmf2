@@ -6,6 +6,15 @@ namespace Xmf2.Core.iOS.Extensions
 {
 	public static class EventsExtensions
 	{
+		public static EventSubscriber<UIButton> TouchUpInsideSubscription(this UIButton button, EventHandler handler, bool autoSubscribe = true)
+		{
+			return new EventSubscriber<UIButton>(
+				button,
+				b => b.TouchUpInside += handler,
+				b => b.TouchUpInside -= handler,
+				autoSubscribe);
+		}
+
 		public static EventSubscriber<UIControl> OnClick(this UIControl button, EventHandler handler, bool autoSubscribe = true)
 		{
 			return new EventSubscriber<UIControl>(
