@@ -40,6 +40,7 @@
     <Reference Include="System.Net.Http" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controls\ClickableSpanWithAction.cs" />
     <Compile Include="Extensions\ConverterExtensions.cs" />
     <Compile Include="Extensions\FragmentExtensions.cs" />
     <Compile Include="Helpers\LoadingViewHelper.cs" />
