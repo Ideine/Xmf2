@@ -38,12 +38,7 @@ namespace Xmf2.Components.ViewModels
 		{
 			lock (ApplicationState.Mutex)
 			{
-				if (_disposed)
-				{
-					return null;
-				}
-
-				return NewState();
+				return _disposed ? null : NewState();
 			}
 		}
 
@@ -79,12 +74,10 @@ namespace Xmf2.Components.ViewModels
 
 		protected void ExecIfChanged<T>(T value, T newValue, Action updateAction, IEqualityComparer<T> comparer)
 		{
-			if (comparer.Equals(value, newValue))
+			if (!comparer.Equals(value, newValue))
 			{
-				return;
+				Exec(updateAction);
 			}
-
-			Exec(updateAction);
 		}
 
 		protected void ExecIfChanged<T>(T value, T newValue, Action<T> updateAction)
@@ -142,11 +135,9 @@ namespace Xmf2.Components.ViewModels
 
 		protected async Task ExecAsyncWithoutErrorHandler(Func<IViewModelOperation, IViewModelOperation> creator)
 		{
-			using (IViewModelOperation result = creator(new DefaultViewModelOperation(Busy)))
-			{
-				await result.Start();
-				RaiseStateChanged();
-			}
+			using IViewModelOperation result = creator(new DefaultViewModelOperation(Busy));
+			await result.Start();
+			RaiseStateChanged();
 		}
 
 		protected Task ExecAsync(Func<Task> execution, CustomErrorHandler errorHandler = null)
