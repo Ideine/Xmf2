@@ -17,7 +17,7 @@ namespace Xmf2.Components.Droid.Views
 		protected Context Context => _parent?.Context;
 
 		private LayoutInflater _inflater;
-		private LayoutInflater Inflater => _inflater ?? (_inflater = Services.Resolve<ILayoutInflaterResolver>().Inflater().DisposeLayoutHolderWith(Disposables));
+		private LayoutInflater Inflater => _inflater ??= Services.Resolve<ILayoutInflaterResolver>().Inflater().DisposeLayoutHolderWith(Disposables);
 
 		protected BaseComponentView(IServiceLocator services) : base(services) { }
 
@@ -37,7 +37,7 @@ namespace Xmf2.Components.Droid.Views
 		protected abstract View RenderView();
 
 		/// <summary>
-		/// Don't need to DisposeView at the end, already done ! 
+		/// Don't need to DisposeView at the end, already done !
 		/// </summary>
 		protected View Inflate(int layoutId)
 		{
