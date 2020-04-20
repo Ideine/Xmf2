@@ -6,27 +6,20 @@ namespace Xmf2.Core.iOS.Extensions
 {
 	public static class EventsExtensions
 	{
-		public static EventSubscriber<UIButton> TouchUpInsideSubscription(this UIButton button, EventHandler handler, bool autoSubscribe = true)
+		public static EventSubscriber<TControl> TouchUpInsideSubscription<TControl>(this TControl button, EventHandler handler, bool autoSubscribe = true)
+			where TControl : UIControl
 		{
-			return new EventSubscriber<UIButton>(
+			return new EventSubscriber<TControl>(
 				button,
 				b => b.TouchUpInside += handler,
 				b => b.TouchUpInside -= handler,
 				autoSubscribe);
 		}
 
-		public static EventSubscriber<UIControl> OnClick(this UIControl button, EventHandler handler, bool autoSubscribe = true)
+		public static EventSubscriber<TControl> TouchUpInsideSubscription<TControl>(this TControl button, Action handler, bool autoSubscribe = true)
+			where TControl : UIControl
 		{
-			return new EventSubscriber<UIControl>(
-				button,
-				b => b.TouchUpInside += handler,
-				b => b.TouchUpInside -= handler,
-				autoSubscribe);
-		}
-
-		public static EventSubscriber<UIControl> OnClick(this UIControl button, Action handler, bool autoSubscribe = true)
-		{
-			return OnClick(button, (object sender, EventArgs e) => handler(), autoSubscribe);
+			return TouchUpInsideSubscription(button, (sender, e) => handler(), autoSubscribe);
 		}
 
 		public static EventSubscriber<UITextField> TextChanged(this UITextField input, EventHandler handler, bool autoSubscribe = true)
@@ -40,19 +33,19 @@ namespace Xmf2.Core.iOS.Extensions
 
 		public static EventSubscriber<UITextField> TextEditingDidBegin(this UITextField input, EventHandler onEditingDidBegin, bool autoSubscribe = true)
 			=> new EventSubscriber<UITextField>(
-			   input,
-			   i => i.EditingDidBegin += onEditingDidBegin,
-			   i => i.EditingDidBegin -= onEditingDidBegin,
-			   autoSubscribe
-		   );
+				input,
+				i => i.EditingDidBegin += onEditingDidBegin,
+				i => i.EditingDidBegin -= onEditingDidBegin,
+				autoSubscribe
+			);
 
 		public static EventSubscriber<UITextField> TextEditingDidEnd(this UITextField input, EventHandler onEditingDidEnd, bool autoSubscribe = true)
 			=> new EventSubscriber<UITextField>(
-			   input,
-			   i => i.EditingDidEnd += onEditingDidEnd,
-			   i => i.EditingDidEnd -= onEditingDidEnd,
-			   autoSubscribe
-		   );
+				input,
+				i => i.EditingDidEnd += onEditingDidEnd,
+				i => i.EditingDidEnd -= onEditingDidEnd,
+				autoSubscribe
+			);
 
 		public static EventSubscriber<UIScrollView> ScrollChanged(this UIScrollView scrollView, EventHandler handler, bool autoSubscribe = true)
 		{
