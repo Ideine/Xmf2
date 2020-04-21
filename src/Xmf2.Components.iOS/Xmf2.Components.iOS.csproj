@@ -60,7 +60,7 @@
     <Compile Include="Views\Multistates\ByCaseView.cs" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Xmf2.iOS.Extensions" Version="1.0.3" />
+    <PackageReference Include="Xmf2.iOS.Extensions" Version="1.0.4" />
     <PackageReference Include="Xmf2.NavigationGraph" Version="1.1.0" />
   </ItemGroup>
   <ItemGroup>
