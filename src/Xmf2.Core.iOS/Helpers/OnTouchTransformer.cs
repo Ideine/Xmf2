@@ -69,8 +69,9 @@ namespace Xmf2.Core.iOS.Helpers
 
 		public static EventSubscriber<UIControl> ScaleOnTouch(this UIControl control, float ratio = DEFAULT_SCALE_DOWN_RATIO, UIView scaledView = null, bool animate = true)
 		{
-			var scaleDownTransform = (scaledView ?? control).GetScaleTransform(ratio);
-			return control.AffineTransformOnTouch(scaleDownTransform, scaledView, animate);
+			var transformView = scaledView ?? control;
+			var scaleDownTransform = transformView.GetScaleTransform(ratio);
+			return control.AffineTransformOnTouch(scaleDownTransform, transformView, animate);
 		}
 
 		public static EventSubscriber<UIControl> UpdateOnTouch<TView>(this UIControl control, TView updatedView, Action<TView> toTouchedState, Action<TView> fromTouchedState, bool animate = true)
@@ -132,7 +133,7 @@ namespace Xmf2.Core.iOS.Helpers
 			return control;
 		}
 
-		public static TControl WithScaleOnTouch<TControl>(this TControl control, Xmf2Disposable disposer, UIView scaledView, float ratio = DEFAULT_SCALE_DOWN_RATIO, bool animate = true) where TControl : UIControl
+		public static TControl WithScaleOnTouch<TControl>(this TControl control, Xmf2Disposable disposer, UIView scaledView = null, float ratio = DEFAULT_SCALE_DOWN_RATIO, bool animate = true) where TControl : UIControl
 		{
 			control.ScaleOnTouch(ratio, scaledView, animate).DisposeWith(disposer);
 			return control;
