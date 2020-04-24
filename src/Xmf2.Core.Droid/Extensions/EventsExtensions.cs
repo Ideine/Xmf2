@@ -36,5 +36,14 @@ namespace Xmf2.Core.Droid.Extensions
                 btn => btn.SetOnTouchListener(null)
             ).DisposeEventWith(disposable);
         }
+
+        public static void SetUnderlineTransformer(this View view, Xmf2Disposable disposable)
+        {
+            new EventSubscriber<View>(
+            view,
+                btn => btn.SetOnTouchListener(new UnderlineTouchListener().DisposeWith(disposable)),
+                btn => btn.SetOnTouchListener(null)
+            ).DisposeEventWith(disposable);
+        }
     }
 }
