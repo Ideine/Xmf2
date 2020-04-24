@@ -2,11 +2,7 @@
 using Android.Content;
 using Android.Graphics;
 using Android.OS;
-#if __ANDROID_29__
 using AndroidX.Core.Content;
-#else
-using Android.Support.V4.Content;
-#endif
 using Android.Views;
 using Android.Widget;
 
@@ -81,11 +77,11 @@ namespace Xmf2.Core.Droid.Helpers
 
 			if (view.Indeterminate)
 			{
-				view.IndeterminateDrawable.SetColorFilter(color, PorterDuff.Mode.SrcIn);
+				view.IndeterminateDrawable.SetColorFilter(new PorterDuffColorFilter(color, PorterDuff.Mode.SrcIn));
 			}
 			else
 			{
-				view.ProgressDrawable.SetColorFilter(color, PorterDuff.Mode.SrcIn);
+				view.ProgressDrawable.SetColorFilter(new PorterDuffColorFilter(color, PorterDuff.Mode.SrcIn));
 			}
 		}
 

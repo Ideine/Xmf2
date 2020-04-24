@@ -5,11 +5,7 @@ using Android.Graphics;
 using Android.OS;
 using Android.Views;
 using Android.Widget;
-#if __ANDROID_29__
 using AndroidX.Core.Content;
-#else
-using Android.Support.V4.Content;
-#endif
 using Plugin.CurrentActivity;
 using Xmf2.Core.Helpers;
 using Xmf2.Core.Subscriptions;

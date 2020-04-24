@@ -3,15 +3,8 @@ using Android.Content;
 using Android.Content.Res;
 using Android.Graphics;
 using Android.Graphics.Drawables;
-#if __ANDROID_29__
 using AndroidX.Core.Content;
-using AndroidX.Core.View;
 using AndroidX.RecyclerView.Widget;
-#else
-using Android.Support.V4.Content;
-using Android.Support.V4.View;
-using Android.Support.V7.Widget;
-#endif
 using Android.Views;
 
 namespace Xmf2.Core.Droid.Controls
@@ -85,7 +78,7 @@ namespace Xmf2.Core.Droid.Controls
 			{
 				View child = parent.GetChildAt(i);
 				var param = (RecyclerView.LayoutParams)child.LayoutParameters;
-				int top = (int)(child.Bottom + param.BottomMargin + Math.Round(ViewCompat.GetTranslationX(child)));
+				int top = (int)(child.Bottom + param.BottomMargin + Math.Round(child.TranslationX));
 				int bottom = top + _divider.IntrinsicHeight;
 				_divider.SetBounds(left, top, right, bottom);
 				_divider.Draw(c);
@@ -101,7 +94,7 @@ namespace Xmf2.Core.Droid.Controls
 			{
 				View child = parent.GetChildAt(i);
 				var param = (RecyclerView.LayoutParams)child.LayoutParameters;
-				int left = (int)(child.Right + param.RightMargin + Math.Round(ViewCompat.GetTranslationX(child)));
+				int left = (int)(child.Right + param.RightMargin + Math.Round(child.TranslationX));
 				int right = left + _divider.IntrinsicHeight;
 				_divider.SetBounds(left, top, right, bottom);
 				_divider.Draw(c);

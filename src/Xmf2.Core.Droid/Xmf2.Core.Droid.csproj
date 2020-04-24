@@ -1,34 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Project Sdk="MSBuild.Sdk.Extras/2.0.54">
-	<PropertyGroup>
-		<AppDesignerFolder>Properties</AppDesignerFolder>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectTypeGuids>{EFBA0AD7-5A72-4C68-AF49-83D382785DCF};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <TemplateGuid>{9ef11e43-1701-4396-8835-8392d57abb70}</TemplateGuid>
+    <ProjectGuid>{A2458925-9686-437F-BCEB-A68D999D4F7A}</ProjectGuid>
+    <RootNamespace>Xmf2.Core.Droid</RootNamespace>
+    <AssemblyName>Xmf2.Core.Droid</AssemblyName>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
 		<AndroidResgenFile>Resources\Resource.Designer.cs</AndroidResgenFile>
-		<TargetFrameworks>
-			MonoAndroid81;
-			MonoAndroid90;
-			MonoAndroid10.0;
-		</TargetFrameworks>
-		<OutputType>Library</OutputType>
-		<EnableDefaultCompileItems>false</EnableDefaultCompileItems>
-	</PropertyGroup>
+    <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
+    <TargetFrameworkVersion>v10.0</TargetFrameworkVersion>
+		<AndroidUseAapt2>true</AndroidUseAapt2>
+  </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
+    <DebugType>portable</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <AndroidSupportedAbis>armeabi-v7a;x86;arm64-v8a;x86_64</AndroidSupportedAbis>
+<LangVersion>latest</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
+    <DebugType>portable</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <AndroidSupportedAbis>armeabi-v7a;x86;arm64-v8a;x86_64</AndroidSupportedAbis>
+<LangVersion>latest</LangVersion>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Mono.Android" />
@@ -70,26 +76,26 @@
     <Compile Include="Helpers\ResizeViewHelper.cs" />
     <Compile Include="Controls\DividerItemDecoration.cs" />
     <Compile Include="Controls\GridSpacingDecoration.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Plugin.CurrentActivity" Version="2.1.0.4" />
     <PackageReference Include="Ideine.ModernHttpClient" Version="3.2.2" />
-    <PackageReference Include="Xamarin.AndroidX.AppCompat" Version="1.1.0" Condition="'$(TargetFramework)' == 'MonoAndroid10.0'" />
-    <PackageReference Include="Xamarin.AndroidX.RecyclerView" Version="1.1.0" Condition="'$(TargetFramework)' == 'MonoAndroid10.0'" />   
-		<PackageReference Include="Xamarin.Android.Support.v4" Version="27.0.2.1" Condition="'$(TargetFramework)' != 'MonoAndroid10.0'" />
-    <PackageReference Include="Xamarin.Android.Support.v7.AppCompat" Version="27.0.2.1" Condition="'$(TargetFramework)' != 'MonoAndroid10.0'" />
-    <PackageReference Include="Xamarin.Android.Support.v7.RecyclerView" Version="27.0.2.1" Condition="'$(TargetFramework)' != 'MonoAndroid10.0'" />
+    <PackageReference Include="Xamarin.AndroidX.AppCompat" Version="1.1.0" />
+    <PackageReference Include="Xamarin.AndroidX.RecyclerView" Version="1.1.0" />  
 	</ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\values\attrs.xml" />
 		<AndroidResource Include="Resources\layout\LoadingView.axml" />
 	</ItemGroup>
-  <ItemGroup>
+	<ItemGroup>
     <ProjectReference Include="..\Xmf2.Core\Xmf2.Core.csproj">
+      <Project>{BE2AF116-1987-4275-A709-4ED4AD331B05}</Project>
+      <Name>Xmf2.Core</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <None Remove="obj\**" />
-    <None Remove="proguard.txt" />
-  </ItemGroup>
+	<ItemGroup>
+	  <Folder Include="Properties\" />
+	</ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
 </Project>
