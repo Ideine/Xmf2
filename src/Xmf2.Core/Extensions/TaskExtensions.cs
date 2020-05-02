@@ -31,7 +31,5 @@ namespace Xmf2.Core.Extensions
 				}
 			}
 		}
-
-		public static Task<TResult> AsTask<TResult>(this TResult result) => Task.FromResult(result);
 	}
 }

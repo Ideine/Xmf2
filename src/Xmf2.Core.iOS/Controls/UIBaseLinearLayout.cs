@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UIKit;
+using Xmf2.Common.Collections;
 
 namespace Xmf2.Core.iOS.Controls
 {
@@ -91,7 +92,7 @@ namespace Xmf2.Core.iOS.Controls
 
 		/// <remarks>
 		/// On ne peut pas overrider <see cref="UIView.AddSubviews(UIView[])"/>,
-		/// mais il reste préférable de le redéfinir car cette méthode provoque plusieurs appels de 
+		/// mais il reste préférable de le redéfinir car cette méthode provoque plusieurs appels de
 		/// <see cref="AddSubview(UIView)"/> ce qui est contreperformant.
 		/// </remarks>
 		public new void AddSubviews(params UIView[] viewsToAdd)
