@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Xmf2.Core.Exceptions;
 using Xmf2.Core.HttpClient;
 using System.Linq;
+using Xmf2.Common.Collections;
 
 namespace Xmf2.Core.Errors
 {
@@ -45,7 +46,7 @@ namespace Xmf2.Core.Errors
 			}
 			else
 			{
-				errorCode = default(HttpStatusCode);
+				errorCode = default;
 				return false;
 			}
 		}

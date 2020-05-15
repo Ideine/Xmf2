@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Foundation;
 using UIKit;
+using Xmf2.Common.Collections;
 using Xmf2.Components.iOS.Interfaces;
 using Xmf2.Components.Interfaces;
 using Xmf2.Components.Helpers;
@@ -96,7 +97,7 @@ namespace Xmf2.Components.iOS.CollectionView
 			{
 				_collectionView = null;
 				_componentViewCreator = null;
-				
+
 				foreach (IComponentView view in _componentViews.Values.ToArray())
 				{
 					view.Dispose();

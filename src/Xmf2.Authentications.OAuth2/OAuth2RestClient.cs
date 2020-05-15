@@ -2,6 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using RestSharp.Portable;
+using Xmf2.Common.Extensions;
 using Xmf2.Core.Authentications;
 using Xmf2.Core.Extensions;
 using Xmf2.Core.Services;
