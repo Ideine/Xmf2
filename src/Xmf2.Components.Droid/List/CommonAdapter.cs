@@ -2,12 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Android.Runtime;
-#if __ANDROID_29__
 using AndroidX.RecyclerView.Widget;
-#else
-using Android.Support.V7.Util;
-using Android.Support.V7.Widget;
-#endif
 using Android.Views;
 using Xmf2.Components.Droid.Interfaces;
 using Xmf2.Components.Interfaces;

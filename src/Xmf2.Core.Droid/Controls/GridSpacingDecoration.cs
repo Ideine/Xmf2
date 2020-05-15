@@ -1,9 +1,5 @@
 ﻿using Android.Graphics;
-#if __ANDROID_29__
 using AndroidX.RecyclerView.Widget;
-#else
-using Android.Support.V7.Widget;
-#endif
 using Android.Views;
 
 namespace Xmf2.Core.Droid.Controls

@@ -2,11 +2,7 @@
 using System.Linq;
 using Android.Views;
 using Xmf2.Core.Subscriptions;
-#if __ANDROID_29__
 using AndroidX.RecyclerView.Widget;
-#else
-using Android.Support.V7.Widget;
-#endif
 using Xmf2.Components.Interfaces;
 using Xmf2.Components.Droid.Views;
 using Xmf2.Components.Droid.Interfaces;

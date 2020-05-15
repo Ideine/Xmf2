@@ -3,11 +3,7 @@ using Android.Content;
 using Android.Graphics.Drawables;
 using Xmf2.Components.Droid.Interfaces;
 using Xmf2.Components.Interfaces;
-#if __ANDROID_29__
 using AndroidX.RecyclerView.Widget;
-#else
-using Android.Support.V7.Widget;
-#endif
 
 namespace Xmf2.Components.Droid.List
 {

@@ -1,11 +1,7 @@
 ﻿using System;
 using Android.Content;
 using Android.Graphics;
-#if __ANDROID_29__
 using AndroidX.AppCompat.App;
-#else
-using Android.Support.V7.App;
-#endif
 using Plugin.CurrentActivity;
 using Xmf2.Core.Subscriptions;
 

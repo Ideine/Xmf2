@@ -1,11 +1,7 @@
 ﻿using System;
 using Xmf2.Core.Droid.Helpers;
 using Xmf2.Core.Subscriptions;
-#if __ANDROID_29__
 using AndroidX.RecyclerView.Widget;
-#else
-using Android.Support.V7.Widget;
-#endif
 using Xmf2.Components.Interfaces;
 using Xmf2.Components.Droid.Interfaces;
 using Xmf2.Core.Droid.Controls;
