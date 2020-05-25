@@ -93,10 +93,15 @@ namespace Xmf2.Authentications.OAuth2
 			await base.Logout();
 		}
 
+		protected virtual OAuth2Authenticator CreateAuthenticator()
+		{
+			return new OAuth2Authenticator();
+		}
+
 		public void SetAuthenticationTokens(OAuth2AuthResult token)
 		{
 			_tokens = token;
-			OAuth2Authenticator authenticator = _authenticator ?? new OAuth2Authenticator();
+			OAuth2Authenticator authenticator = _authenticator ?? CreateAuthenticator();
 			authenticator.Access = token;
 			Authenticator = _authenticator = authenticator;
 		}

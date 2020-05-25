@@ -6,7 +6,7 @@ using Xmf2.Core.Authentications;
 
 namespace Xmf2.Authentications.OAuth2
 {
-	internal class OAuth2Authenticator : TokenAuthenticator
+	public class OAuth2Authenticator : TokenAuthenticator
 	{
 		private OAuth2AuthResult _access;
 		protected override string TokenType { get; } = "Bearer";
