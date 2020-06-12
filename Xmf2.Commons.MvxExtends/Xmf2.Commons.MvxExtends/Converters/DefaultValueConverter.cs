@@ -8,11 +8,16 @@ namespace Xmf2.Commons.MvxExtends.Converters
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
             if (value == null)
-                return parameter;
+            {
+	            return parameter;
+            }
+
             if (value is string)
             {
                 if (string.IsNullOrEmpty((string)value))
-                    return parameter;
+                {
+	                return parameter;
+                }
             }
             return value;
         }

@@ -84,7 +84,9 @@ namespace Xmf2.Commons.MvxExtends.ViewModels
 
 					currentCancellationToken = new CancellationTokenSource(millisecondsDelay);
 					if (isUserAction)
+					{
 						_operationInProgressCTS = currentCancellationToken;
+					}
 				}
 
 				var actionToLaunch = action;
@@ -112,7 +114,10 @@ namespace Xmf2.Commons.MvxExtends.ViewModels
 				if (currentCancellationToken != null)
 				{
 					if (_operationInProgressCTS == currentCancellationToken)
+					{
 						_operationInProgressCTS = null;
+					}
+
 					currentCancellationToken.Dispose();
 				}
 			}
@@ -128,8 +133,8 @@ namespace Xmf2.Commons.MvxExtends.ViewModels
 		private bool _isBusy;
 		public bool IsBusy
 		{
-			get { return _isBusy; }
-			private set { this.SetProperty(ref _isBusy, value, () => this.IsBusy); }
+			get => _isBusy;
+			private set => this.SetProperty(ref _isBusy, value, () => this.IsBusy);
 		}
 
 		public void MoreBusy()
@@ -148,9 +153,13 @@ namespace Xmf2.Commons.MvxExtends.ViewModels
 				_busyCount--;
 
 				if (_busyCount < 0)
+				{
 					throw new InvalidOperationException("LessBusy called without MoreBusy. BusyCount < 0");
+				}
 				else if (_busyCount == 0)
+				{
 					this.IsBusy = false;
+				}
 			}
 		}
 

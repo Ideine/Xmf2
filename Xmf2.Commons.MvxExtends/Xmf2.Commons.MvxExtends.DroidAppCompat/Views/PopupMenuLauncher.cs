@@ -12,8 +12,8 @@ namespace Xmf2.Commons.MvxExtends.DroidAppCompat.Views
 	[Register("xmf2.commons.mvxextends.droidappcompat.views.PopupMenuLauncher")]
 	public class PopupMenuLauncher : View
 	{
-		PopupMenu _menu;
-		PopupMenuRequest _currentRequest;
+		private PopupMenu _menu;
+		private PopupMenuRequest _currentRequest;
 
 		//* Constructors
 		public PopupMenuLauncher(Context context) : base(context) { }
@@ -25,7 +25,7 @@ namespace Xmf2.Commons.MvxExtends.DroidAppCompat.Views
 		private IMvxInteraction<PopupMenuRequest> _popupMenuInteraction;
 		public IMvxInteraction<PopupMenuRequest> PopupMenuInteraction
 		{
-			get { return _popupMenuInteraction; }
+			get => _popupMenuInteraction;
 			set
 			{
 				if (_subscription != null)
@@ -62,7 +62,7 @@ namespace Xmf2.Commons.MvxExtends.DroidAppCompat.Views
 			_menu.Show();
 		}
 
-		void MenuItemClick(object sender, PopupMenu.MenuItemClickEventArgs e)
+		private void MenuItemClick(object sender, PopupMenu.MenuItemClickEventArgs e)
 		{
 			if (_currentRequest != null && e.Item != null)
 			{
@@ -72,12 +72,9 @@ namespace Xmf2.Commons.MvxExtends.DroidAppCompat.Views
 			this.CleanAll();
 		}
 
-		void MenuDismissEvent(object sender, PopupMenu.DismissEventArgs e)
+		private void MenuDismissEvent(object sender, PopupMenu.DismissEventArgs e)
 		{
-			if (_currentRequest != null)
-			{
-				_currentRequest.ExecuteCancel();
-			}
+			_currentRequest?.ExecuteCancel();
 			this.CleanAll();
 		}
 

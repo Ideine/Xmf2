@@ -20,7 +20,10 @@ namespace Xmf2.Commons.MvxExtends.Helpers
             foreach (var name in Enum.GetNames(enumType))
             {
                 var enumMemberAttribute = ((EnumMemberAttribute[])enumType.GetField(name).GetCustomAttributes(typeof(EnumMemberAttribute), true)).Single();
-                if (enumMemberAttribute.Value == str) return (T)Enum.Parse(enumType, name);
+                if (enumMemberAttribute.Value == str)
+                {
+	                return (T)Enum.Parse(enumType, name);
+                }
             }
             //throw exception or whatever handling you want or
             throw new ArgumentException();

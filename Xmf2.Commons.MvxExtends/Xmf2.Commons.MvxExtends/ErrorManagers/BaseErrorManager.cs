@@ -31,7 +31,9 @@ namespace Xmf2.Commons.MvxExtends.ErrorManagers
             bool dialogInProgress = InternalTreatError(e, promptErrorMessageToUser, callbackAction);
 
             if (!dialogInProgress)
-                callbackAction.Invoke();
+            {
+	            callbackAction.Invoke();
+            }
 
             return tcs.Task;
         }
@@ -70,7 +72,9 @@ namespace Xmf2.Commons.MvxExtends.ErrorManagers
             this.LogException(e);
 
             if (promptErrorMessageToUser)
-                return this.ShowMessageForException(e, callbackAction);
+            {
+	            return this.ShowMessageForException(e, callbackAction);
+            }
 
             return false;
         }

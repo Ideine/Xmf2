@@ -39,7 +39,9 @@ namespace Xmf2.Commons.Caches
         public async Task<T> Get(CancellationToken ct, bool withInvalidation = false)
         {
             if (withInvalidation)
-                this.Invalidate();
+            {
+	            this.Invalidate();
+            }
 
             Task<T> currentLoadTask = null;
             lock (_lockObject)

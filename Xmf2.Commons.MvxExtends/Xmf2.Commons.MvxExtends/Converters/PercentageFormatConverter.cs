@@ -7,7 +7,7 @@ namespace Xmf2.Commons.MvxExtends.Converters
 	{
 		protected override string Convert(int value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
 		{
-			return value < 0 ? string.Empty : string.Format("{0}%", value);
+			return value < 0 ? string.Empty : $"{value}%";
 		}
 	}
 }

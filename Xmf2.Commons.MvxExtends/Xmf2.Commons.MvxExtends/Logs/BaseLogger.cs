@@ -45,7 +45,9 @@ namespace Xmf2.Commons.MvxExtends.Logs
 		{
 			StringBuilder builder = new StringBuilder();
 			if (!string.IsNullOrWhiteSpace(message))
+			{
 				builder.AppendLine(message);
+			}
 
 			var ex = e;
 			while (ex != null)

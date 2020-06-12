@@ -14,8 +14,8 @@ namespace Xmf2.Commons.MvxExtends.DroidAppCompat.Target
 	{
 		private IDisposable _subscription;
 
-		PopupMenu _menu;
-		PopupMenuRequest _currentRequest;
+		private PopupMenu _menu;
+		private PopupMenuRequest _currentRequest;
 
 		public override Type TargetType => typeof(IMvxInteraction<PopupMenuRequest>);
 
@@ -30,20 +30,21 @@ namespace Xmf2.Commons.MvxExtends.DroidAppCompat.Target
 			}
 
 			if (value == null)
+			{
 				return;
+			}
 
 			var view = (View)target;
 			var interaction = value as IMvxInteraction<PopupMenuRequest>;
 			if (interaction == null)
 			{
 				MvxBindingTrace.Trace(MvxTraceLevel.Warning, "Value '{0}' could not be parsed as a valid IMvxInteraction<PopupMenuRequest>", value);
-
 			}
 			else
 			{
 				_subscription = interaction.WeakSubscribe(OpenPopupMenu);
 			}
-		}		
+		}
 
 		private void OpenPopupMenu(object sender, MvxValueEventArgs<PopupMenuRequest> request)
 		{
@@ -72,7 +73,7 @@ namespace Xmf2.Commons.MvxExtends.DroidAppCompat.Target
 			_menu.Show();
 		}
 
-		void MenuItemClick(object sender, PopupMenu.MenuItemClickEventArgs e)
+		private void MenuItemClick(object sender, PopupMenu.MenuItemClickEventArgs e)
 		{
 			if (_currentRequest != null && e.Item != null)
 			{
@@ -82,10 +83,9 @@ namespace Xmf2.Commons.MvxExtends.DroidAppCompat.Target
 			this.CleanAll();
 		}
 
-		void MenuDismissEvent(object sender, PopupMenu.DismissEventArgs e)
+		private void MenuDismissEvent(object sender, PopupMenu.DismissEventArgs e)
 		{
-			if (_currentRequest != null)
-				_currentRequest.ExecuteCancel();
+			_currentRequest?.ExecuteCancel();
 			this.CleanAll();
 		}
 
@@ -99,6 +99,7 @@ namespace Xmf2.Commons.MvxExtends.DroidAppCompat.Target
 					_menu.DismissEvent -= MenuDismissEvent;
 				}
 				catch { }
+
 				_menu = null;
 			}
 
@@ -121,6 +122,7 @@ namespace Xmf2.Commons.MvxExtends.DroidAppCompat.Target
 					_subscription = null;
 				}
 			}
+
 			base.Dispose(isDisposing);
 		}
 	}
