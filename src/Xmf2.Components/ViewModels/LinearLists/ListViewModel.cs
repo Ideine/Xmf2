@@ -24,7 +24,7 @@ namespace Xmf2.Components.ViewModels.LinearLists
 			_viewModels = new List<TCellViewModel>();
 		}
 
-		public virtual void SetItemSource(IEnumerable<TItem> itemModelList)
+		public virtual void SetItemSource(IReadOnlyList<TItem> itemModelList)
 		{
 			_viewModels.ForEach(x => x.Dispose());
 			_viewModels.Clear();
@@ -34,11 +34,19 @@ namespace Xmf2.Components.ViewModels.LinearLists
 				return;
 			}
 
-			_viewModels.AddRange(itemModelList.Select(itemModel =>
+			var finalCount = _viewModels.Count + itemModelList.Count;
+
+			_viewModels.AddRange(itemModelList.Select((itemModel, index) =>
 			{
 				TCellViewModel viewModel = Factory(itemModel);
+				AdditionalItemBinds(itemModel, viewModel, index, finalCount);
 				return viewModel;
 			}));
+		}
+
+		protected virtual void AdditionalItemBinds(TItem itemModel, TCellViewModel itemViewModel, int position, int count)
+		{
+			//May be overriden.
 		}
 
 		protected override IViewState NewState()
@@ -56,7 +64,7 @@ namespace Xmf2.Components.ViewModels.LinearLists
 
 		void IListViewModel.SetItemSource(IEnumerable<IEntity> itemModelList)
 		{
-			SetItemSource((IEnumerable<TItem>)itemModelList);
+			SetItemSource(itemModelList.Cast<TItem>().ToList());
 		}
 	}
 }
