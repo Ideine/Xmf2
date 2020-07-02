@@ -16,13 +16,13 @@ namespace Xmf2.Components.Droid.List
 		private readonly Xmf2Disposable _disposable = new Xmf2Disposable();
 
 		private List<Type> _stateList;
-		private Dictionary<Type, Func<string, IComponentView>> _componentCreatorMap;
+		protected Dictionary<Type, Func<string, IComponentView>> ComponentCreatorMap { get; private set; }
 
 		public const int CELL_TYPE = 0x2a;
 		public const int HEADER_START_TYPE_INDEX = 1000;
 		public const int FOOTER_START_TYPE_INDEX = 2000;
 
-		private List<IComponentView> _headerList = new List<IComponentView>();
+		protected List<IComponentView> HeaderList { get; private set; } = new List<IComponentView>();
 		private Dictionary<IComponentView, int?> _headersHeight = new Dictionary<IComponentView, int?>();
 		private Dictionary<IComponentView, IViewState> _headerStates = new Dictionary<IComponentView, IViewState>();
 
@@ -39,18 +39,12 @@ namespace Xmf2.Components.Droid.List
 			get => _itemSource;
 			set
 			{
-				using (var callback = new DiffList(_itemSource?.ToArray() ?? new IEntityViewState[0], value?.ToArray() ?? new IEntityViewState[0]))
-				{
-					using (DiffUtil.DiffResult result = DiffUtil.CalculateDiff(callback))
-					{
-						_itemSource = value;
+				using var callback = new DiffList(_itemSource?.ToArray() ?? new IEntityViewState[0], value?.ToArray() ?? new IEntityViewState[0]);
+				using DiffUtil.DiffResult result = DiffUtil.CalculateDiff(callback);
+				_itemSource = value;
 
-						using (var dispatcherCallback = new CustomDiffDispatcher(_headerList.Count, this))
-						{
-							result.DispatchUpdatesTo(dispatcherCallback);
-						}
-					}
-				}
+				using var dispatcherCallback = new CustomDiffDispatcher(HeaderList.Count, this);
+				result.DispatchUpdatesTo(dispatcherCallback);
 			}
 		}
 
@@ -59,7 +53,7 @@ namespace Xmf2.Components.Droid.List
 		public CommonAdapter(List<Type> stateList, Dictionary<Type, Func<string, IComponentView>> componentCreatorMap)
 		{
 			_stateList = stateList;
-			_componentCreatorMap = componentCreatorMap;
+			ComponentCreatorMap = componentCreatorMap;
 		}
 
 		public CommonAdapter(Type type, Func<string, IComponentView> componentCreator)
@@ -68,7 +62,7 @@ namespace Xmf2.Components.Droid.List
 			{
 				type
 			};
-			_componentCreatorMap = new Dictionary<Type, Func<string, IComponentView>>()
+			ComponentCreatorMap = new Dictionary<Type, Func<string, IComponentView>>
 			{
 				{
 					type, componentCreator
@@ -97,7 +91,7 @@ namespace Xmf2.Components.Droid.List
 
 					break;
 				case CellViewHolder cellViewHolder:
-					int pos = position - _headerList.Count;
+					int pos = position - HeaderList.Count;
 					if (pos < ItemSource.Count)
 					{
 						cellViewHolder.SetState(ItemSource[pos]);
@@ -120,7 +114,7 @@ namespace Xmf2.Components.Droid.List
 			if (viewType >= HEADER_START_TYPE_INDEX)
 			{
 				int headerPosition = viewType - HEADER_START_TYPE_INDEX;
-				IComponentView header = _headerList[headerPosition];
+				IComponentView header = HeaderList[headerPosition];
 				if (_stickyDictionary.TryGetValue(header, out View stickyView))
 				{
 					return new StickyViewHolder(stickyView).DisposeViewWith(_disposable);
@@ -148,13 +142,13 @@ namespace Xmf2.Components.Droid.List
 
 			int index = viewType - CELL_TYPE;
 			Type type = _stateList[index];
-			IComponentView component = _componentCreatorMap[type](Guid.NewGuid().ToString()).DisposeViewWith(_disposable);
+			IComponentView component = ComponentCreatorMap[type](Guid.NewGuid().ToString()).DisposeViewWith(_disposable);
 			return new CellViewHolder(component, component.View(parent)).DisposeViewWith(_disposable);
 		}
 
 		public override int GetItemViewType(int position)
 		{
-			if (position < _headerList.Count)
+			if (position < HeaderList.Count)
 			{
 				return HEADER_START_TYPE_INDEX + GetHeaderPositionInHeaderList(position);
 			}
@@ -164,7 +158,7 @@ namespace Xmf2.Components.Droid.List
 				return FOOTER_START_TYPE_INDEX + GetFooterPositionInFooterList(position);
 			}
 
-			int cellPosition = position - _headerList.Count;
+			int cellPosition = position - HeaderList.Count;
 			int index = _stateList.IndexOf(ItemSource[cellPosition].GetType());
 			return CELL_TYPE + index;
 		}
@@ -173,7 +167,7 @@ namespace Xmf2.Components.Droid.List
 
 		public bool TryAddHeader(IComponentView header, int? height = null, int? index = null)
 		{
-			if (_headerList.Contains(header))
+			if (HeaderList.Contains(header))
 			{
 				return false;
 			}
@@ -186,12 +180,12 @@ namespace Xmf2.Components.Droid.List
 
 				if (index.HasValue)
 				{
-					_headerList.Insert(index.Value, header);
+					HeaderList.Insert(index.Value, header);
 					NotifyItemInserted(index.Value);
 				}
 				else
 				{
-					_headerList.Add(header);
+					HeaderList.Add(header);
 					NotifyDataSetChanged();
 				}
 
@@ -201,13 +195,13 @@ namespace Xmf2.Components.Droid.List
 
 		public bool TryAddParallaxHeader(IComponentView header, ParallaxRecyclerViewHelper helper, int? height = null)
 		{
-			if (_headerList.Contains(header))
+			if (HeaderList.Contains(header))
 			{
 				return false;
 			}
 			else
 			{
-				_headerList.Add(header);
+				HeaderList.Add(header);
 				if (height.HasValue)
 				{
 					_headersHeight[header] = height;
@@ -221,13 +215,13 @@ namespace Xmf2.Components.Droid.List
 
 		public bool TryAddStickyHeader(IComponentView component, View stickyView)
 		{
-			if (_headerList.Contains(component))
+			if (HeaderList.Contains(component))
 			{
 				return false;
 			}
 			else
 			{
-				_headerList.Add(component);
+				HeaderList.Add(component);
 				_stickyDictionary.Add(component, stickyView);
 				NotifyDataSetChanged();
 				return true;
@@ -254,10 +248,10 @@ namespace Xmf2.Components.Droid.List
 
 		public bool TryRemoveHeader(IComponentView header)
 		{
-			int index = _headerList.IndexOf(header);
+			int index = HeaderList.IndexOf(header);
 			if (index != -1)
 			{
-				bool res = _headerList.Remove(header);
+				bool res = HeaderList.Remove(header);
 
 				if (res)
 				{
@@ -303,7 +297,7 @@ namespace Xmf2.Components.Droid.List
 
 		public bool TryUpdateHeader(IComponentView component, IViewState viewState)
 		{
-			if (!_headerList.Contains(component))
+			if (!HeaderList.Contains(component))
 			{
 				return false;
 			}
@@ -360,10 +354,10 @@ namespace Xmf2.Components.Droid.List
 		private int GetFooterPositionInFooterList(int position)
 		{
 			int cellCount = ItemCount;
-			cellCount -= _headerList.Count;
+			cellCount -= HeaderList.Count;
 			cellCount -= _footerList.Count;
 
-			return position - (cellCount + _headerList.Count);
+			return position - (cellCount + HeaderList.Count);
 		}
 
 		private int GetFooterPositionInItemList(int position)
@@ -379,7 +373,7 @@ namespace Xmf2.Components.Droid.List
 			{
 				int count = ItemSource?.Count ?? 0;
 
-				count += _headerList.Count;
+				count += HeaderList.Count;
 				count += _footerList.Count;
 
 				return count;
@@ -391,12 +385,12 @@ namespace Xmf2.Components.Droid.List
 			if (disposing)
 			{
 				_stateList = null;
-				_componentCreatorMap = null;
+				ComponentCreatorMap = null;
 
 				_parallaxDictionary = null;
 				_headersHeight = null;
 				_stickyDictionary = null;
-				_headerList = null;
+				HeaderList = null;
 				_headerStates = null;
 				_footerList = null;
 				_footerStates = null;
