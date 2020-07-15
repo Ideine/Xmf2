@@ -11,7 +11,7 @@ namespace Xmf2.Core.Droid.Extensions
 		{
 			if (Build.VERSION.SdkInt >= BuildVersionCodes.N)
 			{
-				textView.TextFormatted = Html.FromHtml(htmlText, Html.FromHtmlModeCompact);
+				textView.TextFormatted = Html.FromHtml(htmlText, FromHtmlOptions.ModeCompact);
 			}
 			else
 			{
