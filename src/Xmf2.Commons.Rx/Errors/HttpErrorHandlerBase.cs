@@ -26,7 +26,9 @@ namespace Xmf2.Commons.Rx.Errors
 			"Socket closed",
 			"A task was canceled",
 			"Bad file descriptor",
-			"Invalid argument"
+			"Invalid argument",
+			"Software caused connection abort",
+			"Failed to connect"
 		};
 
 		public HttpErrorHandlerBase(ILogger logger)
