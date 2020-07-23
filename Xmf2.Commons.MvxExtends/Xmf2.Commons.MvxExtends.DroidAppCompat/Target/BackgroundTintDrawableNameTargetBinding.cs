@@ -1,61 +1,39 @@
-using System;
+using Android.Content.Res;
 using Android.Views;
-using Android.Widget;
-using Android.Runtime;
-using MvvmCross.Binding;
 using Android.Support.V4.View;
-using MvvmCross.Platform.Platform;
-using MvvmCross.Binding.Droid.Target;
+using MvvmCross.Platforms.Android.Binding.Target;
 
 namespace Xmf2.Commons.MvxExtends.DroidAppCompat.Target
 {
-	public class BackgroundTintDrawableNameTargetBinding : MvxAndroidTargetBinding
+	public class BackgroundTintDrawableNameTargetBinding : MvxAndroidTargetBinding<View, string>
 	{
-		public override Type TargetType => typeof(string);
-
 		public BackgroundTintDrawableNameTargetBinding(View view) : base(view) { }
 
-		protected override void SetValueImpl(object target, object value)
+		protected override void SetValueImpl(View target, string value)
 		{
 			if (value == null)
 			{
 				return;
 			}
 
-			if (!(value is string))
-			{
-				MvxBindingTrace.Trace(MvxTraceLevel.Warning, "Value '{0}' could not be parsed as a valid string identifier", value);
-				return;
-			}
-
-			var resources = AndroidGlobals.ApplicationContext.Resources;
-			var id = resources.GetIdentifier((string)value, "drawable", AndroidGlobals.ApplicationContext.PackageName);
+			Resources resources = AndroidGlobals.ApplicationContext.Resources;
+			int id = resources.GetIdentifier(value, "drawable", AndroidGlobals.ApplicationContext.PackageName);
 			if (id == 0)
 			{
-				MvxBindingTrace.Trace(MvxTraceLevel.Warning, "Value '{0}' was not a known drawable name", value);
+				System.Diagnostics.Debug.WriteLine($"Value '{value}' was not a known drawable name");
 				return;
 			}
 
-			var colorList = AndroidGlobals.ApplicationContext.Resources.GetColorStateList(id);
+			ColorStateList colorList = AndroidGlobals.ApplicationContext.GetColorStateList(id);
 
-			ITintableBackgroundView tintableBackgroundView = null;
-			try
+			if (target is ITintableBackgroundView tintableTarget)
 			{
-				tintableBackgroundView = ((View)target).JavaCast<ITintableBackgroundView>();
-			}
-			catch { }
-
-			if (tintableBackgroundView != null)
-			{
-				tintableBackgroundView.SupportBackgroundTintList = colorList;
+				tintableTarget.SupportBackgroundTintList = colorList;
 			}
 			else
 			{
-				((Button)target).BackgroundTintList = colorList;
-
+				target.BackgroundTintList = colorList;
 			}
 		}
-
-
 	}
 }

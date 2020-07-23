@@ -1,6 +1,5 @@
-﻿using MvvmCross.Core.Platform;
-using MvvmCross.Core.ViewModels;
-
+﻿using MvvmCross.Core;
+using MvvmCross.ViewModels;
 
 namespace Xmf2.Commons.MvxExtends.Extensions
 {

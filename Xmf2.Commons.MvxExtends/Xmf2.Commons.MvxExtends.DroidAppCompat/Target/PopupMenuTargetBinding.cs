@@ -1,27 +1,23 @@
 using System;
 using Android.Views;
 using Android.Widget;
-using MvvmCross.Binding;
-using MvvmCross.Platform.Core;
-using MvvmCross.Core.ViewModels;
-using MvvmCross.Platform.Platform;
-using MvvmCross.Binding.Droid.Target;
+using MvvmCross.Base;
+using MvvmCross.Platforms.Android.Binding.Target;
+using MvvmCross.ViewModels;
 using Xmf2.Commons.MvxExtends.Interactions;
 
 namespace Xmf2.Commons.MvxExtends.DroidAppCompat.Target
 {
-	public class PopupMenuTargetBinding : MvxAndroidTargetBinding
+	public class PopupMenuTargetBinding : MvxAndroidTargetBinding<View, IMvxInteraction<PopupMenuRequest>>
 	{
 		private IDisposable _subscription;
 
 		private PopupMenu _menu;
 		private PopupMenuRequest _currentRequest;
 
-		public override Type TargetType => typeof(IMvxInteraction<PopupMenuRequest>);
-
 		public PopupMenuTargetBinding(View view) : base(view) { }
 
-		protected override void SetValueImpl(object target, object value)
+		protected override void SetValueImpl(View target, IMvxInteraction<PopupMenuRequest> value)
 		{
 			if (_subscription != null)
 			{
@@ -29,48 +25,35 @@ namespace Xmf2.Commons.MvxExtends.DroidAppCompat.Target
 				_subscription = null;
 			}
 
-			if (value == null)
+			if (value != null)
 			{
-				return;
-			}
-
-			var view = (View)target;
-			var interaction = value as IMvxInteraction<PopupMenuRequest>;
-			if (interaction == null)
-			{
-				MvxBindingTrace.Trace(MvxTraceLevel.Warning, "Value '{0}' could not be parsed as a valid IMvxInteraction<PopupMenuRequest>", value);
-			}
-			else
-			{
-				_subscription = interaction.WeakSubscribe(OpenPopupMenu);
+				_subscription = value.WeakSubscribe(OpenPopupMenu);
 			}
 		}
 
 		private void OpenPopupMenu(object sender, MvxValueEventArgs<PopupMenuRequest> request)
 		{
-			this.CleanAll();
+			CleanAll();
 
 			_currentRequest = request.Value;
 
-			var view = base.Target as View;
-			if (view == null)
+			View view = Target;
+			if (view != null)
 			{
-				return;
+				_menu = new PopupMenu(view.Context, view);
+
+				int menuId = Menu.First + 1;
+				foreach (PopupMenuRequest.Item item in _currentRequest.LstPopupItem)
+				{
+					_menu.Menu.Add(0, menuId, item.Order, item.Title);
+					menuId++;
+				}
+
+				_menu.MenuItemClick += MenuItemClick;
+				_menu.DismissEvent += MenuDismissEvent;
+
+				_menu.Show();
 			}
-
-			_menu = new PopupMenu(view.Context, view);
-
-			int menuId = Menu.First + 1;
-			foreach (var item in _currentRequest.LstPopupItem)
-			{
-				_menu.Menu.Add(0, menuId, item.Order, item.Title);
-				menuId++;
-			}
-
-			_menu.MenuItemClick += MenuItemClick;
-			_menu.DismissEvent += MenuDismissEvent;
-
-			_menu.Show();
 		}
 
 		private void MenuItemClick(object sender, PopupMenu.MenuItemClickEventArgs e)
@@ -80,13 +63,13 @@ namespace Xmf2.Commons.MvxExtends.DroidAppCompat.Target
 				_currentRequest.Execute(e.Item.Order);
 			}
 
-			this.CleanAll();
+			CleanAll();
 		}
 
 		private void MenuDismissEvent(object sender, PopupMenu.DismissEventArgs e)
 		{
 			_currentRequest?.ExecuteCancel();
-			this.CleanAll();
+			CleanAll();
 		}
 
 		private void CleanAll()
@@ -114,7 +97,7 @@ namespace Xmf2.Commons.MvxExtends.DroidAppCompat.Target
 		{
 			if (isDisposing)
 			{
-				this.CleanAll();
+				CleanAll();
 
 				if (_subscription != null)
 				{

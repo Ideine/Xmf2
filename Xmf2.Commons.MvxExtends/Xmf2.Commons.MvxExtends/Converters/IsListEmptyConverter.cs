@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections;
-using MvvmCross.Platform.Converters;
+using MvvmCross.Converters;
 
 namespace Xmf2.Commons.MvxExtends.Converters
 {

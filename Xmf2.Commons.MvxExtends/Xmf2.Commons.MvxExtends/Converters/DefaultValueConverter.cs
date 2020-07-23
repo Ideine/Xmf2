@@ -1,5 +1,5 @@
 ﻿using System;
-using MvvmCross.Platform.Converters;
+using MvvmCross.Converters;
 
 namespace Xmf2.Commons.MvxExtends.Converters
 {
@@ -7,19 +7,12 @@ namespace Xmf2.Commons.MvxExtends.Converters
     {
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
-            if (value == null)
-            {
-	            return parameter;
-            }
-
-            if (value is string)
-            {
-                if (string.IsNullOrEmpty((string)value))
-                {
-	                return parameter;
-                }
-            }
-            return value;
+	        return value switch
+	        {
+		        null => parameter,
+		        string str when string.IsNullOrEmpty(str) => parameter,
+		        _ => value
+	        };
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)

@@ -9,7 +9,7 @@ namespace Xmf2.Commons.MvxExtends.DroidAppCompat.Views
 	{
 		protected Xmf2Disposable Disposable = new Xmf2Disposable();
 
-		public BaseView() : base() { }
+		public BaseView() { }
 
 		protected BaseView(IntPtr javaReference, Android.Runtime.JniHandleOwnership transfer) : base(javaReference, transfer) { }
 
@@ -29,7 +29,6 @@ namespace Xmf2.Commons.MvxExtends.DroidAppCompat.Views
 
 		protected override void OnPause()
 		{
-
 			ViewModel.OnPause();
 			base.OnPause();
 		}
@@ -45,7 +44,7 @@ namespace Xmf2.Commons.MvxExtends.DroidAppCompat.Views
 		protected override void OnDestroy()
 		{
 			base.OnDestroy();
-			this.DisposeManagedObjects();
+			DisposeManagedObjects();
 		}
 
 		#region Dispose
@@ -61,10 +60,11 @@ namespace Xmf2.Commons.MvxExtends.DroidAppCompat.Views
 					if (disposing)
 					{
 						// Manual release of managed resources.
-						this.DisposeManagedObjects();
+						DisposeManagedObjects();
 					}
+
 					// Release unmanaged resources.
-					this.DisposeUnmanagedObjects();
+					DisposeUnmanagedObjects();
 
 					_disposed = true;
 
@@ -81,10 +81,7 @@ namespace Xmf2.Commons.MvxExtends.DroidAppCompat.Views
 
 		protected virtual void DisposeManagedObjects()
 		{
-			if (this.ViewModel != null)
-			{
-				this.ViewModel.Dispose();
-			}
+			ViewModel?.Dispose();
 			Disposable?.Dispose();
 			Disposable = null;
 		}

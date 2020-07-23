@@ -1,7 +1,7 @@
 using System;
 using Android.Graphics;
 using Android.Graphics.Drawables;
-using MvvmCross.Platform.Converters;
+using MvvmCross.Converters;
 
 namespace Xmf2.Commons.MvxExtends.Droid.Converters
 {

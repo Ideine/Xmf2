@@ -54,10 +54,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="MvvmCross" Version="5.7.0" />
-    <PackageReference Include="MvvmCross.Core" Version="5.7.0" />
-    <PackageReference Include="MvvmCross.Binding" Version="5.7.0" />
-    <PackageReference Include="MvvmCross.Platform" Version="5.7.0" />
+    <PackageReference Include="MvvmCross" Version="6.4.2" />
   </ItemGroup>
   <Target Name="CustomBuildInfo" BeforeTargets="BeforeBuild">
     <Message Text="$(CustomBuildInfoMessage)" Importance="high" />

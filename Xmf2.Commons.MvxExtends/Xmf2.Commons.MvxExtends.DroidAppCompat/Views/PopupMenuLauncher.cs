@@ -4,7 +4,7 @@ using Android.Views;
 using Android.Content;
 using Android.Runtime;
 using Android.Support.V7.Widget;
-using MvvmCross.Core.ViewModels;
+using MvvmCross.ViewModels;
 using Xmf2.Commons.MvxExtends.Interactions;
 
 namespace Xmf2.Commons.MvxExtends.DroidAppCompat.Views
@@ -43,11 +43,11 @@ namespace Xmf2.Commons.MvxExtends.DroidAppCompat.Views
 
 		private void OpenPopupMenu(PopupMenuRequest request)
 		{
-			this.CleanAll();
+			CleanAll();
 
 			_currentRequest = request;
 
-			_menu = new PopupMenu(this.Context, this);
+			_menu = new PopupMenu(Context, this);
 
 			int menuId = Menu.First + 1;
 			foreach (var item in request.LstPopupItem)
@@ -69,13 +69,13 @@ namespace Xmf2.Commons.MvxExtends.DroidAppCompat.Views
 				_currentRequest.Execute(e.Item.Order);
 			}
 
-			this.CleanAll();
+			CleanAll();
 		}
 
 		private void MenuDismissEvent(object sender, PopupMenu.DismissEventArgs e)
 		{
 			_currentRequest?.ExecuteCancel();
-			this.CleanAll();
+			CleanAll();
 		}
 
 		private void CleanAll()
@@ -102,7 +102,7 @@ namespace Xmf2.Commons.MvxExtends.DroidAppCompat.Views
 		{
 			if (isDisposing)
 			{
-				this.CleanAll();
+				CleanAll();
 			}
 
 			base.Dispose(isDisposing);

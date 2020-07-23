@@ -3,6 +3,7 @@ using System.Linq;
 using System.Windows.Input;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using MvvmCross.Commands;
 
 namespace Xmf2.Commons.MvxExtends.Interactions
 {
@@ -12,14 +13,14 @@ namespace Xmf2.Commons.MvxExtends.Interactions
 		{
 			public Item(string title, int order, ICommand command)
 			{
-				this.Title = title;
-				this.Order = order;
-				this.Command = new WeakReference<ICommand>(command);
+				Title = title;
+				Order = order;
+				Command = new WeakReference<ICommand>(command);
 			}
 
 			public Item(string title, int order, ICommand command, object commandParameter) : this(title, order, command)
 			{
-				this.CommentParameter = new WeakReference(commandParameter);
+				CommentParameter = new WeakReference(commandParameter);
 			}
 
 			public string Title { get; private set; }
@@ -29,29 +30,28 @@ namespace Xmf2.Commons.MvxExtends.Interactions
 
 			public void Clean()
 			{
-				this.Command = null;
+				Command = null;
 			}
 
 			public void Execute()
 			{
-				ICommand command;
-				if (!this.Command.TryGetTarget(out command))
+				if (!Command.TryGetTarget(out ICommand command))
 				{
 					return;
 				}
 
-				MvxAsyncCommand asyncCommand = command as MvxAsyncCommand;
-				if (asyncCommand != null)
+				if (command is MvxAsyncCommand asyncCommand)
 				{
 					Task.Run(() => asyncCommand.ExecuteAsync());
 				}
 				else
 				{
 					object commandParameter = null;
-					if (this.CommentParameter != null && this.CommentParameter.IsAlive)
+					if (CommentParameter != null && CommentParameter.IsAlive)
 					{
-						commandParameter = this.CommentParameter.Target;
+						commandParameter = CommentParameter.Target;
 					}
+
 					command.Execute(commandParameter);
 				}
 			}
@@ -59,7 +59,7 @@ namespace Xmf2.Commons.MvxExtends.Interactions
 
 		public PopupMenuRequest()
 		{
-			this.LstPopupItem = new List<Item>();
+			LstPopupItem = new List<Item>();
 		}
 
 		public List<Item> LstPopupItem { get; private set; }
@@ -67,41 +67,34 @@ namespace Xmf2.Commons.MvxExtends.Interactions
 
 		public void Clean()
 		{
-			foreach (var item in this.LstPopupItem)
+			foreach (Item item in LstPopupItem)
 			{
 				item.Clean();
 			}
-			this.LstPopupItem.Clear();
-			this.CancelCommand = null;
+
+			LstPopupItem.Clear();
+			CancelCommand = null;
 		}
 
 		public void Execute(int order)
 		{
-			if (this.LstPopupItem != null)
-			{
-				var item = this.LstPopupItem.FirstOrDefault(itemTmp => itemTmp.Order == order);
-				if (item != null)
-				{
-					item.Execute();
-				}
-			}
+			Item item = LstPopupItem?.FirstOrDefault(itemTmp => itemTmp.Order == order);
+			item?.Execute();
 		}
 
 		public void SetCancelCommand(ICommand cancelCommand)
 		{
-			this.CancelCommand = new WeakReference<ICommand>(cancelCommand);
+			CancelCommand = new WeakReference<ICommand>(cancelCommand);
 		}
 
 		public void ExecuteCancel()
 		{
-			ICommand command;
-			if (this.CancelCommand == null || !this.CancelCommand.TryGetTarget(out command))
+			if (CancelCommand == null || !CancelCommand.TryGetTarget(out ICommand command))
 			{
 				return;
 			}
 
-			MvxAsyncCommand asyncCommand = command as MvxAsyncCommand;
-			if (asyncCommand != null)
+			if (command is MvxAsyncCommand asyncCommand)
 			{
 				Task.Run(() => asyncCommand.ExecuteAsync());
 			}

@@ -1,16 +1,13 @@
 ﻿using Polly;
 using System;
-using MvvmCross.Platform;
 using System.Threading.Tasks;
 using Xmf2.Commons.ErrorManagers;
-using Xmf2.Commons.MvxExtends.Logs;
 
 namespace Xmf2.Commons.MvxExtends.ErrorManagers
 {
 	public class BaseHttpErrorManager : IHttpErrorManager
 	{
 		private readonly IAsyncPolicy _httpHandlePolicy;
-		private readonly ILogger _logger;
 
 		public BaseHttpErrorManager()
 		{
@@ -23,8 +20,6 @@ namespace Xmf2.Commons.MvxExtends.ErrorManagers
 					ex.Message.IndexOf("Bad file descriptor", StringComparison.OrdinalIgnoreCase) != -1
 					|| ex.Message.IndexOf("Invalid argument", StringComparison.OrdinalIgnoreCase) != -1)
 				.RetryAsync(3, LogRetryException);
-
-			Mvx.TryResolve(out _logger);
 		}
 
 		public virtual async Task<TResult> ExecuteAsync<TResult>(Func<Task<TResult>> action)
@@ -38,7 +33,7 @@ namespace Xmf2.Commons.MvxExtends.ErrorManagers
 			}
 			catch (Exception e)
 			{
-				var ade = TreatException(e);
+				AccessDataException ade = TreatException(e);
 				LogAccessDataException(ade);
 				throw ade;
 			}
@@ -54,7 +49,7 @@ namespace Xmf2.Commons.MvxExtends.ErrorManagers
 			}
 			catch (Exception e)
 			{
-				var ade = TreatException(e);
+				AccessDataException ade = TreatException(e);
 				LogAccessDataException(ade);
 				throw ade;
 			}
@@ -85,18 +80,18 @@ namespace Xmf2.Commons.MvxExtends.ErrorManagers
 
 		protected virtual void LogRetryException(Exception e, int retryCount)
 		{
-			_logger?.LogWarning(e, $"HTTP retry attempt {retryCount}.");
+			System.Diagnostics.Debug.WriteLine(e, $"HTTP retry attempt {retryCount}.");
 		}
 
 		protected virtual void LogAccessDataException(AccessDataException ade)
 		{
-			_logger?.LogError(ade);
+			System.Diagnostics.Debug.WriteLine(ade);
 			ade.IsLogged = true;
 		}
 
 		protected bool TrueInAnyInnerException(Exception e, Func<Exception, bool> testForEachInnerException)
 		{
-			var currentException = e;
+			Exception currentException = e;
 			while (currentException != null)
 			{
 				if (testForEachInnerException(currentException))
@@ -113,7 +108,7 @@ namespace Xmf2.Commons.MvxExtends.ErrorManagers
 		protected bool TrueInAnyInnerException<TException>(Exception e, Func<TException, bool> testForEachInnerException)
 			where TException : Exception
 		{
-			var currentException = e;
+			Exception currentException = e;
 			while (currentException != null)
 			{
 				if (currentException is TException typedException && testForEachInnerException(typedException))

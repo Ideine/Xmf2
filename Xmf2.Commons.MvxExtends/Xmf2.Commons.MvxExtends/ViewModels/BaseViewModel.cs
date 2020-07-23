@@ -1,16 +1,25 @@
 ﻿using System;
-using Nito.AsyncEx;
+using System.Diagnostics;
 using System.Threading;
-using MvvmCross.Platform;
 using System.Threading.Tasks;
-using System.Linq.Expressions;
-using MvvmCross.Core.ViewModels;
+using MvvmCross;
+using MvvmCross.Navigation;
+using MvvmCross.ViewModels;
+using Xmf2.Common.Extensions;
 using Xmf2.Commons.ErrorManagers;
 
 namespace Xmf2.Commons.MvxExtends.ViewModels
 {
-	public abstract class BaseViewModel<TParmeter> : MvxViewModel<TParmeter> where TParmeter : class
+	public abstract class BaseViewModel<TParameter> : MvxViewModel<TParameter> where TParameter : class
 	{
+		private readonly Lazy<IMvxNavigationService> _navigationService;
+		protected IMvxNavigationService NavigationService => _navigationService.Value;
+
+		protected BaseViewModel()
+		{
+			_navigationService = new Lazy<IMvxNavigationService>(() => Mvx.IoCProvider.Resolve<IMvxNavigationService>());
+		}
+
 		/// <summary>
 		/// Gets the service.
 		/// </summary>
@@ -18,28 +27,29 @@ namespace Xmf2.Commons.MvxExtends.ViewModels
 		/// <returns>An instance of the service.</returns>
 		public TService GetService<TService>() where TService : class
 		{
-			return Mvx.Resolve<TService>();
+			return Mvx.IoCProvider.Resolve<TService>();
 		}
 
-		/// <summary>
-		/// Checks if a property already matches a desired value.  Sets the property and
-		/// notifies listeners only when necessary.
-		/// </summary>
-		/// <typeparam name="T">Type of the property.</typeparam>
-		/// <param name="backingStore">Reference to a property with both getter and setter.</param>
-		/// <param name="value">Desired value for the property.</param>
-		/// <param name="property">The property.</param>
-		protected void SetProperty<T>(ref T backingStore, T value, Expression<Func<T>> property)
+		#region Navigation
+
+		protected Task<bool> ShowViewModel<TViewModel>() where TViewModel : IMvxViewModel
 		{
-			if (Equals(backingStore, value))
-			{
-				return;
-			}
-
-			backingStore = value;
-
-			this.RaisePropertyChanged(property);
+			return _navigationService.Value.Navigate<TViewModel>();
 		}
+
+		protected Task<bool> ShowViewModel<TViewModel, TTargetParameter>(TTargetParameter parameter)
+			where TViewModel : IMvxViewModel<TTargetParameter>
+		{
+			return _navigationService.Value.Navigate<TViewModel, TTargetParameter>(parameter);
+		}
+
+		protected Task<bool> Close<TViewModel>(TViewModel viewModel)
+			where TViewModel : IMvxViewModel
+		{
+			return _navigationService.Value.Close(viewModel);
+		}
+
+		#endregion
 
 		#region Lifecycle
 
@@ -55,8 +65,8 @@ namespace Xmf2.Commons.MvxExtends.ViewModels
 
 		#region ExecAsync
 
-		AsyncLock _operationInProgressLock = new AsyncLock();
-		CancellationTokenSource _operationInProgressCTS;
+		private readonly SemaphoreSlim _operationInProgressLock = new SemaphoreSlim(1, 1);
+		private CancellationTokenSource _operationInProgressCts;
 
 		protected virtual int GetOperationInProgressDefaultDelay()
 		{
@@ -65,7 +75,7 @@ namespace Xmf2.Commons.MvxExtends.ViewModels
 
 		public Task<bool> ExecAsync(Func<CancellationTokenSource, Task> action, bool withBusy = true, bool isUserAction = true, bool promptErrorMessageToUser = true, Action<Exception> afterErrorCallBack = null)
 		{
-			return this.ExecAsync(action, this.GetOperationInProgressDefaultDelay(), withBusy, isUserAction, promptErrorMessageToUser, afterErrorCallBack);
+			return ExecAsync(action, GetOperationInProgressDefaultDelay(), withBusy, isUserAction, promptErrorMessageToUser, afterErrorCallBack);
 		}
 
 		public async Task<bool> ExecAsync(Func<CancellationTokenSource, Task> action, int millisecondsDelay, bool withBusy, bool isUserAction, bool promptErrorMessageToUser, Action<Exception> afterErrorCallBack)
@@ -74,27 +84,27 @@ namespace Xmf2.Commons.MvxExtends.ViewModels
 
 			try
 			{
-				using (var release = await _operationInProgressLock.LockAsync().ConfigureAwait(false))
+				using (await _operationInProgressLock.LockAsync())
 				{
-					if (isUserAction && _operationInProgressCTS != null)
+					if (isUserAction && _operationInProgressCts != null)
 					{
-						Mvx.Warning("Operation already in progress. ExecAsync canceled");
+						Debug.WriteLine("Operation already in progress. ExecAsync canceled");
 						return false;
 					}
 
 					currentCancellationToken = new CancellationTokenSource(millisecondsDelay);
 					if (isUserAction)
 					{
-						_operationInProgressCTS = currentCancellationToken;
+						_operationInProgressCts = currentCancellationToken;
 					}
 				}
 
-				var actionToLaunch = action;
+				Func<CancellationTokenSource, Task> actionToLaunch = action;
 				if (withBusy)
 				{
-					actionToLaunch = (cts) =>
+					actionToLaunch = cts =>
 					{
-						return this.ExecWithBusyAsync(async () => await action(cts).ConfigureAwait(false));
+						return ExecWithBusyAsync(async () => await action(cts).ConfigureAwait(false));
 					};
 				}
 
@@ -104,7 +114,7 @@ namespace Xmf2.Commons.MvxExtends.ViewModels
 			}
 			catch (Exception e)
 			{
-				var errorMgr = this.GetService<IErrorManager>();
+				IErrorManager errorMgr = GetService<IErrorManager>();
 				await errorMgr.TreatErrorAsync(e, promptErrorMessageToUser).ConfigureAwait(false);
 				afterErrorCallBack?.Invoke(e);
 				return false;
@@ -113,9 +123,9 @@ namespace Xmf2.Commons.MvxExtends.ViewModels
 			{
 				if (currentCancellationToken != null)
 				{
-					if (_operationInProgressCTS == currentCancellationToken)
+					if (_operationInProgressCts == currentCancellationToken)
 					{
-						_operationInProgressCTS = null;
+						_operationInProgressCts = null;
 					}
 
 					currentCancellationToken.Dispose();
@@ -128,13 +138,14 @@ namespace Xmf2.Commons.MvxExtends.ViewModels
 		#region Gestion IsBusy
 
 		private int _busyCount = 0;
-		private object _busyLock = new object();
+		private readonly object _busyLock = new object();
 
 		private bool _isBusy;
+
 		public bool IsBusy
 		{
 			get => _isBusy;
-			private set => this.SetProperty(ref _isBusy, value, () => this.IsBusy);
+			private set => SetProperty(ref _isBusy, value);
 		}
 
 		public void MoreBusy()
@@ -142,7 +153,7 @@ namespace Xmf2.Commons.MvxExtends.ViewModels
 			lock (_busyLock)
 			{
 				_busyCount++;
-				this.IsBusy = true;
+				IsBusy = true;
 			}
 		}
 
@@ -158,7 +169,7 @@ namespace Xmf2.Commons.MvxExtends.ViewModels
 				}
 				else if (_busyCount == 0)
 				{
-					this.IsBusy = false;
+					IsBusy = false;
 				}
 			}
 		}
@@ -167,12 +178,12 @@ namespace Xmf2.Commons.MvxExtends.ViewModels
 		{
 			try
 			{
-				this.MoreBusy();
+				MoreBusy();
 				action();
 			}
 			finally
 			{
-				this.LessBusy();
+				LessBusy();
 			}
 		}
 
@@ -180,12 +191,12 @@ namespace Xmf2.Commons.MvxExtends.ViewModels
 		{
 			try
 			{
-				this.MoreBusy();
+				MoreBusy();
 				return func();
 			}
 			finally
 			{
-				this.LessBusy();
+				LessBusy();
 			}
 		}
 
@@ -193,12 +204,12 @@ namespace Xmf2.Commons.MvxExtends.ViewModels
 		{
 			try
 			{
-				this.MoreBusy();
+				MoreBusy();
 				await action().ConfigureAwait(false);
 			}
 			finally
 			{
-				this.LessBusy();
+				LessBusy();
 			}
 		}
 
@@ -206,12 +217,12 @@ namespace Xmf2.Commons.MvxExtends.ViewModels
 		{
 			try
 			{
-				this.MoreBusy();
+				MoreBusy();
 				return await action().ConfigureAwait(false);
 			}
 			finally
 			{
-				this.LessBusy();
+				LessBusy();
 			}
 		}
 
@@ -226,6 +237,7 @@ namespace Xmf2.Commons.MvxExtends.ViewModels
 			Dispose(true);
 			GC.SuppressFinalize(this);
 		}
+
 		protected virtual void Dispose(bool disposing)
 		{
 			try
@@ -235,10 +247,11 @@ namespace Xmf2.Commons.MvxExtends.ViewModels
 					if (disposing)
 					{
 						// Manual release of managed resources.
-						this.DisposeManagedObjects();
+						DisposeManagedObjects();
 					}
+
 					// Release unmanaged resources.
-					this.DisposeUnmanagedObjects();
+					DisposeUnmanagedObjects();
 
 					disposed = true;
 				}

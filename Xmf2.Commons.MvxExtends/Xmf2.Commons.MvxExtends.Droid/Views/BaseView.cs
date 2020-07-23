@@ -1,4 +1,4 @@
-using MvvmCross.Droid.Views;
+using MvvmCross.Platforms.Android.Views;
 using Xmf2.Commons.MvxExtends.ViewModels;
 
 namespace Xmf2.Commons.MvxExtends.Droid.Views
@@ -9,7 +9,7 @@ namespace Xmf2.Commons.MvxExtends.Droid.Views
 		protected override void OnDestroy()
 		{
 			base.OnDestroy();
-			this.DisposeManagedObjects();
+			DisposeManagedObjects();
 		}
 
 		#region Dispose
@@ -25,10 +25,10 @@ namespace Xmf2.Commons.MvxExtends.Droid.Views
 					if (disposing)
 					{
 						// Manual release of managed resources.
-						this.DisposeManagedObjects();
+						DisposeManagedObjects();
 					}
 					// Release unmanaged resources.
-					this.DisposeUnmanagedObjects();
+					DisposeUnmanagedObjects();
 
 					disposed = true;
 
@@ -45,9 +45,9 @@ namespace Xmf2.Commons.MvxExtends.Droid.Views
 
 		protected virtual void DisposeManagedObjects()
 		{
-			if (this.ViewModel != null)
+			if (ViewModel != null)
 			{
-				this.ViewModel.Dispose();
+				ViewModel.Dispose();
 			}
 		}
 

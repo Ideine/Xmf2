@@ -23,8 +23,6 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <ExternalConsole>false</ExternalConsole>
-    <Commandlineparameters></Commandlineparameters>
-    <AndroidLinkTool></AndroidLinkTool>
     <AndroidLinkTool></AndroidLinkTool>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -36,7 +34,6 @@
     <WarningLevel>4</WarningLevel>
     <AndroidTlsProvider></AndroidTlsProvider>
     <AndroidUseAapt2>true</AndroidUseAapt2>
-    <AndroidTlsProvider></AndroidTlsProvider>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Mono.Android" />
@@ -61,10 +58,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="MvvmCross.Core" Version="5.7.0" />
-    <PackageReference Include="MvvmCross.Binding" Version="5.7.0" />
-    <PackageReference Include="MvvmCross.Platform" Version="5.7.0" />
-    <PackageReference Include="MvvmCross.Droid.Support.V7.AppCompat" Version="5.7.0" />
+    <PackageReference Include="MvvmCross.Droid.Support.V7.AppCompat" Version="6.4.2" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
 </Project>
