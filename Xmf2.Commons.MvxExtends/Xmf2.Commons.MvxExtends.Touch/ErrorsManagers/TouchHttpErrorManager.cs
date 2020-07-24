@@ -1,10 +1,10 @@
-﻿using Polly;
-using System;
+﻿using System;
 using System.Net;
+using Polly;
 using Xmf2.Commons.ErrorManagers;
 using Xmf2.Commons.MvxExtends.ErrorManagers;
 
-namespace Xmf2.Commons.MvxExtends.Touch.ErrorManagers
+namespace Xmf2.Commons.MvxExtends.Touch.ErrorsManagers
 {
 	public class TouchHttpErrorManager : BaseHttpErrorManager
 	{
