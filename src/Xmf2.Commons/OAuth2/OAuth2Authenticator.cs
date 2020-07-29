@@ -44,12 +44,11 @@ namespace Xmf2.Rest.OAuth2
 			{
 				throw new InvalidOperationException("Missing Access data");
 			}
-			
+
 			if (DateTime.Now.Add(Configuration.TokenSafetyMargin) > expireDate.Value)
 			{
 				//get a new refresh token now
-				IOAuth2Client oauth2Client = client as IOAuth2Client;
-				if (oauth2Client == null)
+				if (!(client is IOAuth2Client oauth2Client))
 				{
 					throw new NotSupportedException("This authenticator can only be used with an IOAuth2Client");
 				}
@@ -84,6 +83,7 @@ namespace Xmf2.Rest.OAuth2
 			{
 				throw new InvalidOperationException("Missing Access data");
 			}
+
 			request.AddHeader(AuthorizationHeader, $"{TokenType} {Access.AccessToken}");
 		}
 
@@ -94,12 +94,12 @@ namespace Xmf2.Rest.OAuth2
 
 		public Task HandleChallenge(IHttpClient client, IHttpRequestMessage request, ICredentials credentials, IHttpResponseMessage response)
 		{
-			if(Access != null && response != null && response.StatusCode == HttpStatusCode.Unauthorized)
+			if (Access != null && response != null && response.StatusCode == HttpStatusCode.Unauthorized)
 			{
 				Access.ExpiresAt = DateTime.MinValue;
 			}
 
-			return TaskHelper.CompletedTask; // refresh token will be done on next request call
+			return Task.CompletedTask; // refresh token will be done on next request call
 		}
 	}
 }

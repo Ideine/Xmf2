@@ -31,8 +31,7 @@ namespace Xmf2.Commons.Workers
 			{
 				await _mutex.WaitAsync();
 
-				TWorkerData workerData;
-				if (!_workerQueue.TryDequeue(out workerData)) //should not happen
+				if (!_workerQueue.TryDequeue(out TWorkerData workerData)) //should not happen
 				{
 					_mutex.Release();
 					continue;
@@ -75,8 +74,7 @@ namespace Xmf2.Commons.Workers
 		{
 			TKey key = _keyGetter(worker);
 
-			TResult result;
-			if (_previousResult.TryGetValue(key, out result))
+			if (_previousResult.TryGetValue(key, out TResult result))
 			{
 				completionCallback(result);
 				return;
@@ -91,13 +89,13 @@ namespace Xmf2.Commons.Workers
 			_mutex.Release();
 		}
 
-        public void InitializeWith(IEnumerable<Tuple<TKey, TResult>> existingData)
-        {
-            foreach(var items in existingData)
-            {
-                _previousResult.Add(items.Item1, items.Item2);
-            }
-        }
+		public void InitializeWith(IEnumerable<Tuple<TKey, TResult>> existingData)
+		{
+			foreach ((TKey key, TResult result) in existingData)
+			{
+				_previousResult.Add(key, result);
+			}
+		}
 
 		private async void Run()
 		{
@@ -105,15 +103,13 @@ namespace Xmf2.Commons.Workers
 			{
 				await _mutex.WaitAsync();
 
-				WorkItem wit;
-				if (!_workerQueue.TryDequeue(out wit)) //should not happen
+				if (!_workerQueue.TryDequeue(out WorkItem wit)) //should not happen
 				{
 					_mutex.Release();
 					continue;
 				}
 
-				TResult result;
-				if (!_previousResult.TryGetValue(wit.Key, out result))
+				if (!_previousResult.TryGetValue(wit.Key, out TResult result))
 				{
 					result = await _workerCallback(wit.WorkerData);
 					if (_canCacheResult(wit.WorkerData, result))
@@ -121,6 +117,7 @@ namespace Xmf2.Commons.Workers
 						_previousResult.Add(wit.Key, result);
 					}
 				}
+
 				wit.CompletionCallback(result);
 			}
 		}

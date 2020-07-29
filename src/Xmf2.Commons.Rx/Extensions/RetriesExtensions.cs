@@ -40,7 +40,7 @@
 
 				public static RetryResult FromException(Exception ex)
 				{
-					return new RetryResult(false, default(TResult), ex);
+					return new RetryResult(false, default, ex);
 				}
 			}
 
@@ -79,11 +79,11 @@
 				return _observable.Retry(retryCount).SelectMany(retryResult =>
 				{
 					return retryResult.IsSuccess ? Observable.Return(retryResult.Result) : Observable.Throw<TResult>(retryResult.Exception);
-				}).Select(x => 
+				}).Select(x =>
 				{
 					_attemptCount = 0;
 					return x;
-				}).Catch<TResult, Exception>(ex => 
+				}).Catch<TResult, Exception>(ex =>
 				{
 					_attemptCount = 0;
 					return Observable.Throw<TResult>(ex);

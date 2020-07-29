@@ -45,17 +45,17 @@ namespace Xmf2.Commons.Rx.Errors
 
 		protected Task HandleError(Exception ex, CustomErrorHandler errorHandler)
 		{
-			TaskCompletionSource<bool> tcs = new TaskCompletionSource<bool>();
-			Action callbackAction = () => tcs.TrySetResult(true);
+			var tcs = new TaskCompletionSource<bool>();
+			void CallbackAction() => tcs.TrySetResult(true);
 
-			bool customErrorHandled = errorHandler?.Invoke(ex, callbackAction) ?? false;
+			bool customErrorHandled = errorHandler?.Invoke(ex, CallbackAction) ?? false;
 
 			if (customErrorHandled)
 			{
 				return tcs.Task;
 			}
 
-			bool genericErrorHandled = HandleGenericError(ex, callbackAction);
+			bool genericErrorHandled = HandleGenericError(ex, CallbackAction);
 
 			if (genericErrorHandled)
 			{
@@ -66,18 +66,12 @@ namespace Xmf2.Commons.Rx.Errors
 			return tcs.Task;
 		}
 
-		protected virtual bool HandleGenericError(Exception ex, Action callbackAction)
+		protected virtual bool HandleGenericError(Exception ex, Action callbackAction) => ex switch
 		{
-			switch (ex)
-			{
-				case AccessDataException accessData:
-					return ShowErrorForAccessDataException(accessData, callbackAction);
-				case ManagedException managed:
-					return ShowErrorForManagedException(managed, callbackAction);
-			}
-
-			return ShowErrorForException(ex, callbackAction);
-		}
+			AccessDataException accessData => ShowErrorForAccessDataException(accessData, callbackAction),
+			ManagedException managed => ShowErrorForManagedException(managed, callbackAction),
+			_ => ShowErrorForException(ex, callbackAction)
+		};
 
 		protected virtual bool ShowErrorForAccessDataException(AccessDataException accessDataException, Action asyncCallback)
 		{

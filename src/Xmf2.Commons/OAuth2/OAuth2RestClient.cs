@@ -7,8 +7,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using RestSharp.Portable;
-using Xmf2.Commons.Extensions;
-using Xmf2.Rest.HttpClient.Impl;
+using Xmf2.Common.Extensions;
 using RestClientExtensions = Xmf2.Rest.HttpClient.RestClientExtensions;
 
 namespace Xmf2.Rest.OAuth2

@@ -9,8 +9,6 @@ using System.Threading.Tasks;
 using ReactiveUI;
 using Splat;
 using Xmf2.Commons.Errors;
-using Xmf2.Commons.Extensions;
-using Xmf2.Commons.Helpers;
 
 namespace Xmf2.Commons.Rx.ViewModels
 {
@@ -84,14 +82,14 @@ namespace Xmf2.Commons.Rx.ViewModels
 		#region Lifecycle management
 
 		/// <summary>
-		/// Method is called prior to any navigation and should be used to 
+		/// Method is called prior to any navigation and should be used to
 		/// load data needed when view is displayed.
 		/// </summary>
 		/// <returns>Awaitable task</returns>
 		protected virtual Task Initialize()
 		{
 			Debug.WriteLine($"[Lifecycle] Initialize {this.GetType().Name}");
-			return TaskHelper.CompletedTask;
+			return Task.CompletedTask;
 		}
 
 		/// <summary>
@@ -100,7 +98,7 @@ namespace Xmf2.Commons.Rx.ViewModels
 		protected virtual Task OnStart()
 		{
 			Debug.WriteLine($"[Lifecycle] OnStart {this.GetType().Name}");
-			return TaskHelper.CompletedTask;
+			return Task.CompletedTask;
 		}
 
 		/// <summary>
@@ -109,7 +107,7 @@ namespace Xmf2.Commons.Rx.ViewModels
 		protected virtual Task OnResume()
 		{
 			Debug.WriteLine($"[Lifecycle] OnResume {this.GetType().Name}");
-			return TaskHelper.CompletedTask;
+			return Task.CompletedTask;
 		}
 
 		/// <summary>
@@ -118,7 +116,7 @@ namespace Xmf2.Commons.Rx.ViewModels
 		protected virtual Task OnPause()
 		{
 			Debug.WriteLine($"[Lifecycle] OnPause {this.GetType().Name}");
-			return TaskHelper.CompletedTask;
+			return Task.CompletedTask;
 		}
 
 		/// <summary>
@@ -127,7 +125,7 @@ namespace Xmf2.Commons.Rx.ViewModels
 		protected virtual Task OnStop()
 		{
 			Debug.WriteLine($"[Lifecycle] OnStop {this.GetType().Name}");
-			return TaskHelper.CompletedTask;
+			return Task.CompletedTask;
 		}
 
 		private class ViewModelLifecycleManager : IViewModelLifecycleManager
@@ -214,7 +212,7 @@ namespace Xmf2.Commons.Rx.ViewModels
 					}
 
 					await GoToNextState();
-				}).Forget();
+				}).ConfigureAwait(false);
 			}
 
 			private async Task GoToNextState()
@@ -260,12 +258,12 @@ namespace Xmf2.Commons.Rx.ViewModels
 
 			private StateAutomata CreateStateGraph()
 			{
-				StateAutomata.Node created = new StateAutomata.Node(nameof(ViewModelState.Created));
-				StateAutomata.Node initialized = new StateAutomata.Node(nameof(ViewModelState.Initialized));
-				StateAutomata.Node started = new StateAutomata.Node(nameof(ViewModelState.Started));
-				StateAutomata.Node resumed = new StateAutomata.Node(nameof(ViewModelState.Resumed));
-				StateAutomata.Node paused = new StateAutomata.Node(nameof(ViewModelState.Paused));
-				StateAutomata.Node stopped = new StateAutomata.Node(nameof(ViewModelState.Stopped));
+				var created = new StateAutomata.Node(nameof(ViewModelState.Created));
+				var initialized = new StateAutomata.Node(nameof(ViewModelState.Initialized));
+				var started = new StateAutomata.Node(nameof(ViewModelState.Started));
+				var resumed = new StateAutomata.Node(nameof(ViewModelState.Resumed));
+				var paused = new StateAutomata.Node(nameof(ViewModelState.Paused));
+				var stopped = new StateAutomata.Node(nameof(ViewModelState.Stopped));
 
 				created.AddTransition(async () =>
 				{
@@ -290,7 +288,7 @@ namespace Xmf2.Commons.Rx.ViewModels
 					created, initialized, started, resumed, paused, stopped
 				});
 
-				async Task Run(Subject<bool> navigationObserver, Func<Task> navigationMethod)
+				static async Task Run(Subject<bool> navigationObserver, Func<Task> navigationMethod)
 				{
 					try
 					{

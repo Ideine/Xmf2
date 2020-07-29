@@ -12,16 +12,16 @@ namespace Xmf2.Rest.HttpClient
     internal static class HttpMethodExtensions
     {
         private static readonly IDictionary<Method, HttpMethod> _methodsToHttpMethods = new Dictionary<Method, HttpMethod>
-            {
-                { Method.DELETE, HttpMethod.Delete },
-                { Method.GET, HttpMethod.Get },
-                { Method.HEAD, HttpMethod.Head },
-                { Method.MERGE, new HttpMethod("MERGE") },
-                { Method.OPTIONS, HttpMethod.Options },
-                { Method.PATCH, new HttpMethod("PATCH") },
-                { Method.POST, HttpMethod.Post },
-                { Method.PUT, HttpMethod.Put },
-            };
+        {
+            { Method.DELETE, HttpMethod.Delete },
+            { Method.GET, HttpMethod.Get },
+            { Method.HEAD, HttpMethod.Head },
+            { Method.MERGE, new HttpMethod("MERGE") },
+            { Method.OPTIONS, HttpMethod.Options },
+            { Method.PATCH, new HttpMethod("PATCH") },
+            { Method.POST, HttpMethod.Post },
+            { Method.PUT, HttpMethod.Put },
+        };
 
         private static readonly IDictionary<string, Method> _httpMethodsToMethods = _methodsToHttpMethods
             .ToDictionary(x => x.Value.Method, x => x.Key, StringComparer.OrdinalIgnoreCase);
@@ -33,8 +33,7 @@ namespace Xmf2.Rest.HttpClient
         /// <returns>The converted <paramref name="method"/></returns>
         public static HttpMethod ToHttpMethod(this Method method)
         {
-            HttpMethod result;
-            if (_methodsToHttpMethods.TryGetValue(method, out result))
+	        if (_methodsToHttpMethods.TryGetValue(method, out HttpMethod result))
             {
                 return result;
             }
@@ -49,8 +48,7 @@ namespace Xmf2.Rest.HttpClient
         /// <returns>The converted <paramref name="method"/></returns>
         public static Method ToMethod(this HttpMethod method)
         {
-            Method result;
-            if (_httpMethodsToMethods.TryGetValue(method.Method, out result))
+	        if (_httpMethodsToMethods.TryGetValue(method.Method, out Method result))
             {
                 return result;
             }

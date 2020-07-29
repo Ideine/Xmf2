@@ -87,38 +87,33 @@ namespace Xmf2.Commons.Rx.ViewModels
 
 		private List<Transition> PathToState(string stateName)
 		{
-			if (_currentNode.Id == stateName) //do not need to find a path 
+			if (_currentNode.Id == stateName) //do not need to find a path
 			{
 				return new List<Transition>();
 			}
 
-			Dictionary<Node, bool> marked = _nodes.ToDictionary(x => x, x => false);
-			Dictionary<Node, Transition> parent = _nodes.ToDictionary(x => x, x => (Transition)null);
+			var marked = _nodes.ToDictionary(x => x, x => false);
+			var parent = _nodes.ToDictionary(x => x, x => (Transition)null);
 			marked[_currentNode] = true;
 
-			Queue<Node> exploreNodes = new Queue<Node>();
+			var exploreNodes = new Queue<Node>();
 			exploreNodes.Enqueue(_currentNode);
 
 			while (exploreNodes.Count > 0)
 			{
 				Node node = exploreNodes.Dequeue();
 
-				foreach (Transition transition in node.Edges)
+				foreach (var transition in node.Edges.Where(transition => !marked[transition.Destination]))
 				{
-					if (marked[transition.Destination]) // this node has already been visited, stop there
-					{
-						continue;
-					}
-
 					marked[transition.Destination] = true;
 					parent[transition.Destination] = transition;
 
 					if (transition.Destination.Id == stateName)
 					{
-						List<Transition> result = new List<Transition>();
+						var result = new List<Transition>();
 
 						Node resultNode = transition.Destination;
-						for (Transition t = parent[resultNode]; t != null; resultNode = t.Origin, t = parent[resultNode])
+						for (Transition t = parent[resultNode] ; t != null ; resultNode = t.Origin, t = parent[resultNode])
 						{
 							result.Insert(0, t);
 						}

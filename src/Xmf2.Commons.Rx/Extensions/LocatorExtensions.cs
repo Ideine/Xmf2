@@ -17,7 +17,7 @@ namespace Splat
 			}
 			catch
 			{
-				return default(TService);
+				return default;
 			}
 		}
 

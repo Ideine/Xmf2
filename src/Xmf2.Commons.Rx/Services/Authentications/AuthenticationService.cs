@@ -129,7 +129,7 @@ namespace Xmf2.Commons.Rx.Services.Authentications
 			_client.Logout();
 			CacheEngine.InvalidateScope(CacheEngine.SCOPE_USER);
 			OnLogout();
-			return TaskHelper.CompletedTask;
+			return Task.CompletedTask;
 		}
 
 		protected virtual void OnLogged() { }

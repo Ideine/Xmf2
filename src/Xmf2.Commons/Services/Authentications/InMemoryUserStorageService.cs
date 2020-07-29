@@ -5,7 +5,6 @@ using Xmf2.Commons.Services.Authentications.Models;
 
 namespace Xmf2.Commons.Services.Authentications
 {
-
 	public class InMemoryUserStorageService : IUserStorageService
 	{
 		private AuthenticationDetailStorageModel _detail;
@@ -18,7 +17,7 @@ namespace Xmf2.Commons.Services.Authentications
 		public Task Store(AuthenticationDetailStorageModel detail, CancellationToken ct)
 		{
 			_detail = detail;
-			return TaskHelper.CompletedTask;
+			return Task.CompletedTask;
 		}
 
 		public Task<bool> Has()
@@ -49,8 +48,7 @@ namespace Xmf2.Commons.Services.Authentications
 		public Task Delete(CancellationToken ct)
 		{
 			_detail = null;
-			return TaskHelper.CompletedTask;
+			return Task.CompletedTask;
 		}
 	}
-
 }

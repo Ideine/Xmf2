@@ -3,20 +3,13 @@
 namespace Xmf2.Commons.Exceptions
 {
 	public class ManagedException : Exception
-    {
-        public ManagedException()
-            : base()
-        { }
+	{
+		public bool IsLogged { get; set; }
+		public bool IsUserShown { get; set; }
+		public ManagedException() { }
 
-        public ManagedException(string message)
-            : base(message)
-        { }
+		public ManagedException(string message) : base(message) { }
 
-        public ManagedException(string message, Exception innerException)
-            : base(message, innerException)
-        { }
-
-        public bool IsLogged { get; set; }
-        public bool IsUserShown { get; set; }
-    }
+		public ManagedException(string message, Exception innerException) : base(message, innerException) { }
+	}
 }

@@ -18,7 +18,7 @@ namespace Xmf2.Commons.Rx.Errors
 		private readonly Lazy<WebExceptionStatus[]> _timeoutStatus;
 		private readonly Lazy<WebExceptionStatus[]> _noInternetStatus;
 
-		private readonly List<string> _noInternetMessages = new List<string>()
+		private readonly List<string> _noInternetMessages = new List<string>
 		{
 			"SSL handshake timed out",
 			"Unable to resolve host",
@@ -84,25 +84,25 @@ namespace Xmf2.Commons.Rx.Errors
 					return new AccessDataException(AccessDataException.ErrorType.NoInternetConnexion, ex);
 
 				default:
-					return IsInternetException(ex) ?
-						new AccessDataException(AccessDataException.ErrorType.NoInternetConnexion, ex)
+					return IsInternetException(ex)
+						? new AccessDataException(AccessDataException.ErrorType.NoInternetConnexion, ex)
 						: new AccessDataException(AccessDataException.ErrorType.Unknown, ex);
 			}
 		}
 
 		protected virtual bool IsInternetException(Exception ex)
 		{
-			if(ex is AggregateException aggEx && aggEx.InnerExceptions != null)
+			if (ex is AggregateException aggEx && aggEx.InnerExceptions != null)
 			{
-				if(aggEx.InnerExceptions.Any(IsInternetException))
+				if (aggEx.InnerExceptions.Any(IsInternetException))
 				{
 					return true;
 				}
 			}
 
-			if(ex.InnerException != null)
+			if (ex.InnerException != null)
 			{
-				if(IsInternetException(ex.InnerException))
+				if (IsInternetException(ex.InnerException))
 				{
 					return true;
 				}
@@ -112,22 +112,23 @@ namespace Xmf2.Commons.Rx.Errors
 			{
 				return _noInternetMessages.Any(msg => ex.Message.Contains(msg));
 			}
+
 			return false;
 		}
 
 		protected virtual IObservable<TResult> ApplyRetryPolicy<TResult>(IObservable<TResult> source)
 		{
 			return source.WithRetryPolicy(LogOnRetry)
-						 .Handle<WebException>(ex => _retryStatus.Value.Contains(ex.Status))
-						 .Handle<Exception>(ex =>
-											ex.Message.IndexOf("Bad file descriptor", StringComparison.OrdinalIgnoreCase) >= 0
-											|| ex.Message.IndexOf("Invalid argument", StringComparison.OrdinalIgnoreCase) >= 0)
-						 .Retry(3);
+				.Handle<WebException>(ex => _retryStatus.Value.Contains(ex.Status))
+				.Handle<Exception>(ex =>
+					ex.Message.IndexOf("Bad file descriptor", StringComparison.OrdinalIgnoreCase) >= 0
+					|| ex.Message.IndexOf("Invalid argument", StringComparison.OrdinalIgnoreCase) >= 0)
+				.Retry(3);
 		}
 
 		protected virtual WebExceptionStatus[] RetryStatus()
 		{
-			return new WebExceptionStatus[]
+			return new[]
 			{
 				WebExceptionStatus.ConnectFailure,
 				WebExceptionStatus.SendFailure,
@@ -137,14 +138,16 @@ namespace Xmf2.Commons.Rx.Errors
 
 		protected virtual WebExceptionStatus[] NoInternetStatus()
 		{
-			return new WebExceptionStatus[]{
+			return new[]
+			{
 				WebExceptionStatus.ConnectFailure
 			};
 		}
 
 		protected virtual WebExceptionStatus[] TimeoutStatus()
 		{
-			return new WebExceptionStatus[] { };
+			return new WebExceptionStatus[]
+				{ };
 		}
 
 		protected virtual void LogOnRetry(Exception ex, int attemptCount)

@@ -36,21 +36,21 @@ namespace Xmf2.Rest.Caches
 				_expireDate = DateTime.MinValue;
 			}
 
-			public Task<T> Load(bool force = false) => Load(default(TParam), CancellationToken.None, force);
+			public Task<T> Load(bool force = false) => Load(default, CancellationToken.None, force);
 
-			public Task<T> Load(CancellationToken ct, bool force = false) => Load(default(TParam), ct, force);
+			public Task<T> Load(CancellationToken ct, bool force = false) => Load(default, ct, force);
 
 			public Task<T> Load(TParam param, bool force = false) => Load(param, CancellationToken.None, force);
 
 			public async Task<T> Load(TParam param, CancellationToken ct, bool force = false)
 			{
-				if (_value == null || DateTime.Now > _expireDate || force || !object.Equals(_lastParam, param))
+				if (_value == null || DateTime.Now > _expireDate || force || !Equals(_lastParam, param))
 				{
 					await _mutex.WaitAsync(ct);
 					ct.ThrowIfCancellationRequested();
 					try
 					{
-						if (_value == null || DateTime.Now > _expireDate || force || !object.Equals(_lastParam, param))
+						if (_value == null || DateTime.Now > _expireDate || force || !Equals(_lastParam, param))
 						{
 							_expireDate = DateTime.Now.Add(_validityTime);
 							_lastParam = param;
@@ -67,7 +67,7 @@ namespace Xmf2.Rest.Caches
 		}
 
 		private static readonly Dictionary<string, List<ICacheItem>> _itemsPerScope = new Dictionary<string, List<ICacheItem>>();
-		
+
 		public static void InvalidateScope(string scope)
 		{
 			if (_itemsPerScope.ContainsKey(scope))
@@ -81,7 +81,7 @@ namespace Xmf2.Rest.Caches
 
 		public static ICacheItem<T> CreateCacheItem<T>(string scope, TimeSpan validityTime, Func<CancellationToken, Task<T>> loader) where T : class
 		{
-			CacheItem<T, object> item = new CacheItem<T, object>(validityTime, (p, ct) => loader(ct));
+			var item = new CacheItem<T, object>(validityTime, (p, ct) => loader(ct));
 
 			if (!_itemsPerScope.ContainsKey(scope))
 			{
@@ -94,7 +94,7 @@ namespace Xmf2.Rest.Caches
 
 		public static ICacheItem<T, TParam> CreateCacheItem<T, TParam>(string scope, TimeSpan validityTime, Func<TParam, CancellationToken, Task<T>> loader) where T : class
 		{
-			CacheItem<T, TParam> item = new CacheItem<T, TParam>(validityTime, loader);
+			var item = new CacheItem<T, TParam>(validityTime, loader);
 
 			if (!_itemsPerScope.ContainsKey(scope))
 			{

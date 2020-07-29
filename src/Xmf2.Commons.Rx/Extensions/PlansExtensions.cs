@@ -11,8 +11,7 @@ namespace System.Reactive.Linq
 
 		public static IObservable<TResult> ToObservable<TResult>(this Plan<IObservable<TResult>> source)
 		{
-			return Observable.When(source)
-				             .Merge();
+			return Observable.When(source).Merge();
 		}
 	}
 }
