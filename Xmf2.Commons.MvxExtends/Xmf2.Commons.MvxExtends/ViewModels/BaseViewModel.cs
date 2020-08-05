@@ -1,243 +1,219 @@
 ﻿using System;
-using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
-using MvvmCross.Platform;
+using MvvmCross;
+using MvvmCross.ViewModels;
 using Nito.AsyncEx;
 using Xmf2.Commons.MvxExtends.ErrorManagers;
-using MvvmCross.Core.ViewModels;
 
 namespace Xmf2.Commons.MvxExtends.ViewModels
 {
-    public abstract class BaseViewModel : MvxViewModel
-    {
-        /// <summary>
-        /// Gets the service.
-        /// </summary>
-        /// <typeparam name="TService">The type of the service.</typeparam>
-        /// <returns>An instance of the service.</returns>
-        public TService GetService<TService>() where TService : class
-        {
-            return Mvx.Resolve<TService>();
-        }
+	public abstract class BaseViewModel<TParameter> : MvxViewModel<TParameter>
+	{
+		#region ExecAsync
 
-        /// <summary>
-        /// Checks if a property already matches a desired value.  Sets the property and
-        /// notifies listeners only when necessary.
-        /// </summary>
-        /// <typeparam name="T">Type of the property.</typeparam>
-        /// <param name="backingStore">Reference to a property with both getter and setter.</param>
-        /// <param name="value">Desired value for the property.</param>
-        /// <param name="property">The property.</param>
-        protected void SetProperty<T>(
-            ref T backingStore,
-            T value,
-            Expression<Func<T>> property)
-        {
-            if (Equals(backingStore, value))
-            {
-                return;
-            }
+		private readonly AsyncLock _operationInProgressLock = new AsyncLock();
+		private CancellationTokenSource _operationInProgressCts;
 
-            backingStore = value;
+		protected virtual int GetOperationInProgressDefaultDelay()
+		{
+			return 60000;
+		}
 
-            this.RaisePropertyChanged(property);
-        }
+		public Task<bool> ExecAsync(Func<CancellationTokenSource, Task> action, bool withBusy = true, bool isUserAction = true)
+		{
+			return ExecAsync(action, GetOperationInProgressDefaultDelay(), withBusy, isUserAction);
+		}
 
-        #region ExecAsync
+		public async Task<bool> ExecAsync(Func<CancellationTokenSource, Task> action, int millisecondsDelay, bool withBusy, bool isUserAction)
+		{
+			CancellationTokenSource currentCancellationToken = null;
 
-        AsyncLock _operationInProgressLock = new AsyncLock();
-        CancellationTokenSource _operationInProgressCTS;
+			try
+			{
+				using (await _operationInProgressLock.LockAsync().ConfigureAwait(false))
+				{
+					if (isUserAction && _operationInProgressCts != null)
+					{
+						System.Diagnostics.Debug.WriteLine("Operation already in progress. ExecAsync canceled");
+						return false;
+					}
 
-        protected virtual int GetOperationInProgressDefaultDelay()
-        {
-            return 60000;
-        }
+					currentCancellationToken = new CancellationTokenSource(millisecondsDelay);
+					if (isUserAction)
+					{
+						_operationInProgressCts = currentCancellationToken;
+					}
+				}
 
-        public Task<bool> ExecAsync(Func<CancellationTokenSource, Task> action, bool withBusy = true, bool isUserAction = true)
-        {
-            return this.ExecAsync(action, this.GetOperationInProgressDefaultDelay(), withBusy, isUserAction);
-        }
+				Func<CancellationTokenSource, Task> actionToLaunch = action;
+				if (withBusy)
+				{
+					actionToLaunch = cts =>
+					{
+						return ExecWithBusyAsync(async () => await action(cts).ConfigureAwait(false));
+					};
+				}
 
-        public async Task<bool> ExecAsync(Func<CancellationTokenSource, Task> action, int millisecondsDelay, bool withBusy, bool isUserAction)
-        {
-            CancellationTokenSource currentCancellationToken = null;
+				// on fait un Task.Run pour changer de thread
+				await Task.Run(async () => await actionToLaunch(currentCancellationToken).ConfigureAwait(false)).ConfigureAwait(false);
+				return true;
+			}
+			catch (Exception e)
+			{
+				IErrorManager errorMgr = Mvx.IoCProvider.Resolve<IErrorManager>();
+				errorMgr.TreatError(e);
+				return false;
+			}
+			finally
+			{
+				if (currentCancellationToken != null)
+				{
+					if (_operationInProgressCts == currentCancellationToken)
+					{
+						_operationInProgressCts = null;
+					}
 
-            try
-            {
-                using (var release = await _operationInProgressLock.LockAsync().ConfigureAwait(false))
-                {
-                    if (isUserAction && _operationInProgressCTS != null)
-                    {
-                        Mvx.Warning("Operation already in progress. ExecAsync canceled");
-                        return false;
-                    }
+					currentCancellationToken.Dispose();
+				}
+			}
+		}
 
-                    currentCancellationToken = new CancellationTokenSource(millisecondsDelay);
-                    if (isUserAction)
-                        _operationInProgressCTS = currentCancellationToken;
-                }
+		#endregion
 
-                var actionToLaunch = action;
-                if (withBusy)
-                {
-                    actionToLaunch = (cts) =>
-                    {
-                        return this.ExecWithBusyAsync(async () => await action(cts).ConfigureAwait(false));
-                    };
-                }
+		#region Gestion IsBusy
 
-                // on fait un Task.Run pour changer de thread
-                await Task.Run(async () => await actionToLaunch(currentCancellationToken).ConfigureAwait(false)).ConfigureAwait(false);
-                return true;
-            }
-            catch (Exception e)
-            {
-                var errorMgr = this.GetService<IErrorManager>();
-                errorMgr.TreatError(e);
-                return false;
-            }
-            finally
-            {
-                if (currentCancellationToken != null)
-                {
-                    if (_operationInProgressCTS == currentCancellationToken)
-                        _operationInProgressCTS = null;
-                    currentCancellationToken.Dispose();
-                }
-            }
-        }
+		private int _busyCount;
+		private readonly object _busyLock = new object();
 
-        #endregion
+		private bool _isBusy;
 
-        #region Gestion IsBusy
+		public bool IsBusy
+		{
+			get => _isBusy;
+			private set => SetProperty(ref _isBusy, value);
+		}
 
-        private int _busyCount = 0;
-        private object _busyLock = new object();
+		public void MoreBusy()
+		{
+			lock (_busyLock)
+			{
+				_busyCount++;
+				IsBusy = true;
+			}
+		}
 
-        private bool _isBusy;
-        public bool IsBusy
-        {
-            get { return _isBusy; }
-            private set { this.SetProperty(ref _isBusy, value, () => this.IsBusy); }
-        }
+		public void LessBusy()
+		{
+			lock (_busyLock)
+			{
+				_busyCount--;
 
-        public void MoreBusy()
-        {
-            lock (_busyLock)
-            {
-                _busyCount++;
-                this.IsBusy = true;
-            }
-        }
+				if (_busyCount < 0)
+				{
+					throw new InvalidOperationException("LessBusy called without MoreBusy. BusyCount < 0");
+				}
+				else if (_busyCount == 0)
+				{
+					IsBusy = false;
+				}
+			}
+		}
 
-        public void LessBusy()
-        {
-            lock (_busyLock)
-            {
-                _busyCount--;
+		public void ExecWithBusy(Action action)
+		{
+			try
+			{
+				MoreBusy();
+				action();
+			}
+			finally
+			{
+				LessBusy();
+			}
+		}
 
-                if (_busyCount < 0)
-                    throw new InvalidOperationException("LessBusy called without MoreBusy. BusyCount < 0");
-                else if (_busyCount == 0)
-                    this.IsBusy = false;
-            }
-        }
+		public T ExecWithBusy<T>(Func<T> func)
+		{
+			try
+			{
+				MoreBusy();
+				return func();
+			}
+			finally
+			{
+				LessBusy();
+			}
+		}
 
-        public void ExecWithBusy(Action action)
-        {
-            try
-            {
-                this.MoreBusy();
-                action();
-            }
-            finally
-            {
-                this.LessBusy();
-            }
-        }
+		public async Task ExecWithBusyAsync(Func<Task> action)
+		{
+			try
+			{
+				MoreBusy();
+				await action().ConfigureAwait(false);
+			}
+			finally
+			{
+				LessBusy();
+			}
+		}
 
-        public T ExecWithBusy<T>(Func<T> func)
-        {
-            try
-            {
-                this.MoreBusy();
-                return func();
-            }
-            finally
-            {
-                this.LessBusy();
-            }
-        }
+		public async Task<T> ExecWithBusyAsync<T>(Func<Task<T>> action)
+		{
+			try
+			{
+				MoreBusy();
+				return await action().ConfigureAwait(false);
+			}
+			finally
+			{
+				LessBusy();
+			}
+		}
 
-        public async Task ExecWithBusyAsync(Func<Task> action)
-        {
-            try
-            {
-                this.MoreBusy();
-                await action().ConfigureAwait(false);
-            }
-            finally
-            {
-                this.LessBusy();
-            }
-        }
+		#endregion
 
-        public async Task<T> ExecWithBusyAsync<T>(Func<Task<T>> action)
-        {
-            try
-            {
-                this.MoreBusy();
-                return await action().ConfigureAwait(false);
-            }
-            finally
-            {
-                this.LessBusy();
-            }
-        }
+		#region Dispose
 
-        #endregion
+		private bool _disposed;
 
-        #region Dispose
+		public void Dispose()
+		{
+			Dispose(true);
+			GC.SuppressFinalize(this);
+		}
 
-        private bool disposed = false;
+		protected virtual void Dispose(bool disposing)
+		{
+			try
+			{
+				if (!_disposed)
+				{
+					if (disposing)
+					{
+						// Manual release of managed resources.
+						DisposeManagedObjects();
+					}
 
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-        protected virtual void Dispose(bool disposing)
-        {
-            try
-            {
-                if (!disposed)
-                {
-                    if (disposing)
-                    {
-                        // Manual release of managed resources.
-                        this.DisposeManagedObjects();
-                    }
-                    // Release unmanaged resources.
-                    this.DisposeUnmanagedObjects();
+					// Release unmanaged resources.
+					DisposeUnmanagedObjects();
 
-                    disposed = true;
-                }
-            }
-            catch { }
-        }
+					_disposed = true;
+				}
+			}
+			catch { }
+		}
 
-        ~BaseViewModel()
-        {
-            Dispose(false);
-        }
+		~BaseViewModel()
+		{
+			Dispose(false);
+		}
 
-        protected virtual void DisposeManagedObjects()
-        { }
+		protected virtual void DisposeManagedObjects() { }
 
-        protected virtual void DisposeUnmanagedObjects()
-        { }
+		protected virtual void DisposeUnmanagedObjects() { }
 
-        #endregion
-    }
+		#endregion
+	}
 }

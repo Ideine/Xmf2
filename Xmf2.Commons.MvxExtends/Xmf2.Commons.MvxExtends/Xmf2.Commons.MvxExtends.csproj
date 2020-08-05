@@ -1,104 +1,11 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
-  <PropertyGroup>
-    <MinimumVisualStudioVersion>10.0</MinimumVisualStudioVersion>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{7D6A560F-5947-4ABA-AF63-902E40ACDA2B}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Xmf2.Commons.MvxExtends</RootNamespace>
-    <AssemblyName>Xmf2.Commons.MvxExtends</AssemblyName>
-    <DefaultLanguage>fr-FR</DefaultLanguage>
-    <FileAlignment>512</FileAlignment>
-    <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <TargetFrameworkProfile>Profile259</TargetFrameworkProfile>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <ItemGroup>
-    <!-- A reference to the entire .NET Framework is automatically included -->
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Converters\BytesToStringConverter.cs" />
-    <Compile Include="Converters\OrConverter.cs" />
-    <Compile Include="Converters\AndConverter.cs" />
-    <Compile Include="Converters\DefaultValueConverter.cs" />
-    <Compile Include="Converters\IfEnumEqualsConverter.cs" />
-    <Compile Include="Converters\IfNotNullConverter.cs" />
-    <Compile Include="Converters\IsListEmptyConverter.cs" />
-    <Compile Include="Converters\IsStringEmptyConverter.cs" />
-    <Compile Include="Converters\NotConverter.cs" />
-    <Compile Include="Converters\PercentageFormatConverter.cs" />
-    <Compile Include="Converters\StringFormatConverter.cs" />
-    <Compile Include="ErrorManagers\AccessDataException.cs" />
-    <Compile Include="ErrorManagers\BaseErrorManager.cs" />
-    <Compile Include="ErrorManagers\BaseHttpErrorManager.cs" />
-    <Compile Include="ErrorManagers\IErrorManager.cs" />
-    <Compile Include="ErrorManagers\IHttpErrorManager.cs" />
-    <Compile Include="ErrorManagers\ManagedException.cs" />
-    <Compile Include="Extensions\ViewModelLoaderExtensions.cs" />
-    <Compile Include="Interactions\PopupMenuRequest.cs" />
-    <Compile Include="Logs\BaseLogger.cs" />
-    <Compile Include="Logs\ILogger.cs" />
-    <Compile Include="MvxAsyncCommand.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ViewModels\BaseViewModel.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Reference Include="Nito.AsyncEx, Version=3.0.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\packages\Nito.AsyncEx.3.0.1\lib\portable-net45+netcore45+wp8+wpa81\Nito.AsyncEx.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Polly, Version=4.3.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\packages\Polly.4.3.0\lib\portable-net45+netcore45+wpa81+wp8\Polly.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
-  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\MvvmCross\MvvmCross\Platform\Platform\MvvmCross.Platform.csproj">
-      <Project>{CFF6F25A-3C3B-44EE-A54C-2ED4AAFF3ADB}</Project>
-      <Name>MvvmCross.Platform</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\MvvmCross\MvvmCross\Core\Localization\MvvmCross.Localization.csproj">
-      <Project>{D89351C1-D48F-4AD0-A0B9-353A93425AB7}</Project>
-      <Name>MvvmCross.Localization</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\MvvmCross\MvvmCross\Core\Binding\MvvmCross.Binding.csproj">
-      <Project>{64DCD397-9019-41E8-A928-E5F5C5DF185B}</Project>
-      <Name>MvvmCross.Binding</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\MvvmCross\MvvmCross\Core\Core\MvvmCross.Core.csproj">
-      <Project>{B6E27475-E7D0-448C-A5CC-5097DCA1E2DD}</Project>
-      <Name>MvvmCross.Core</Name>
-    </ProjectReference>
-  </ItemGroup>
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<TargetFramework>netstandard2.0</TargetFramework>
+		<LangVersion>latest</LangVersion>
+	</PropertyGroup>
+	<ItemGroup>
+	  <PackageReference Include="MvvmCross" Version="6.4.2" />
+	  <PackageReference Include="Nito.AsyncEx" Version="5.0.0" />
+	  <PackageReference Include="Polly" Version="7.2.1" />
+	</ItemGroup>
 </Project>

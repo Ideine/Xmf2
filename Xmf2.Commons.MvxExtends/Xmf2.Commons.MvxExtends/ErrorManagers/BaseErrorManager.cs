@@ -1,72 +1,63 @@
 ﻿using System;
-using MvvmCross.Platform;
-using Xmf2.Commons.MvxExtends.Logs;
+using System.Diagnostics;
 
 namespace Xmf2.Commons.MvxExtends.ErrorManagers
 {
-	public abstract class BaseErrorManager : IErrorManager	
-    {
-        protected ILogger _logger;
+	public abstract class BaseErrorManager : IErrorManager
+	{
+		public virtual void TreatError(Exception e)
+		{
+			if (e is AccessDataException ade)
+			{
+				LogAccessDataException(ade);
+				ade.IsLogged = true;
 
-        public BaseErrorManager()
-        {
-            Mvx.TryResolve<ILogger>(out _logger);
-        }
+				if (!ade.IsUserShown)
+				{
+					ShowMessageForAccessDataException(ade);
+					ade.IsUserShown = true;
+				}
 
-        public virtual void TreatError(Exception e)
-        {
-            var ade = e as AccessDataException;
-            if (ade != null)
-            {
-                this.LogAccessDataException(ade);
-                ade.IsLogged = true;
+				return;
+			}
 
-                if (!ade.IsUserShown)
-                {
-                    this.ShowMessageForAccessDataException(ade);
-                    ade.IsUserShown = true;
-                }
-                return;
-            }
+			if (e is ManagedException me)
+			{
+				LogManagedException(me);
+				me.IsLogged = true;
 
-            var me = e as ManagedException;
-            if (me != null)
-            {
-                this.LogManagedException(me);
-                me.IsLogged = true;
+				if (!me.IsUserShown)
+				{
+					ShowMessageForManagedException(me);
+					me.IsUserShown = true;
+				}
 
-                if (!me.IsUserShown)
-                {
-                    this.ShowMessageForManagedException(me);
-                    me.IsUserShown = true;
-                }
-                return;
-            }
+				return;
+			}
 
-            this.LogException(e);
-            this.ShowMessageForException(e);
-        }
+			LogException(e);
+			ShowMessageForException(e);
+		}
 
-        protected virtual void LogAccessDataException(AccessDataException ade)
-        {
-            _logger?.LogError(ade);
-        }
+		protected virtual void LogAccessDataException(AccessDataException ade)
+		{
+			Debug.WriteLine(ade);
+		}
 
-        protected virtual void LogManagedException(ManagedException me)
-        {
-            _logger?.LogError(me);
-        }
+		protected virtual void LogManagedException(ManagedException me)
+		{
+			Debug.WriteLine(me);
+		}
 
-        protected virtual void LogException(Exception e)
-        {
-            _logger?.LogCritical();
-        }
+		protected virtual void LogException(Exception e)
+		{
+			Debug.WriteLine(e);
+		}
 
-        protected abstract void ShowMessageForAccessDataException(AccessDataException ade);
+		protected abstract void ShowMessageForAccessDataException(AccessDataException ade);
 
-        protected abstract void ShowMessageForManagedException(ManagedException me);
+		protected abstract void ShowMessageForManagedException(ManagedException me);
 
-        protected abstract void ShowMessageForException(Exception e);
-
-    }
+		protected abstract void ShowMessageForException(Exception e);
+	}
 }

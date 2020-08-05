@@ -1,132 +1,120 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using Android.App;
 using Android.Content;
-using Android.OS;
 using Android.Runtime;
-using Android.Views;
 using Android.Support.V7.Widget;
 using Android.Util;
+using Android.Views;
+using MvvmCross.ViewModels;
 using Xmf2.Commons.MvxExtends.Interactions;
-using MvvmCross.Core.ViewModels;
 
 namespace Xmf2.Commons.MvxExtends.DroidAppCompat.Views
 {
-    [Register("xmf2.commons.mvxextends.droidappcompat.views.PopupMenuLauncher")]
-    public class PopupMenuLauncher : View
-    {
-        PopupMenu _menu;
-        PopupMenuRequest _currentRequest;
+	[Register("xmf2.commons.mvxextends.droidappcompat.views.PopupMenuLauncher")]
+	public class PopupMenuLauncher : View
+	{
+		private PopupMenu _menu;
+		private PopupMenuRequest _currentRequest;
 
-        protected PopupMenuLauncher(IntPtr javaReference, JniHandleOwnership transfer)
-            : base(javaReference, transfer)
-        {
-        }
+		protected PopupMenuLauncher(IntPtr javaReference, JniHandleOwnership transfer)
+			: base(javaReference, transfer) { }
 
-        public PopupMenuLauncher(Context context)
-            : base(context)
-        {
-        }
+		public PopupMenuLauncher(Context context)
+			: base(context) { }
 
-        public PopupMenuLauncher(Context context, IAttributeSet attrs)
-            : base(context, attrs)
-        {
-        }
+		public PopupMenuLauncher(Context context, IAttributeSet attrs)
+			: base(context, attrs) { }
 
-        public PopupMenuLauncher(Context context, IAttributeSet attrs, int defStyle)
-            : base(context, attrs, defStyle)
-        {
-        }
+		public PopupMenuLauncher(Context context, IAttributeSet attrs, int defStyle)
+			: base(context, attrs, defStyle) { }
 
-        private IDisposable _subscription;
-        private IMvxInteraction<PopupMenuRequest> _popupMenuInteraction;
-        public IMvxInteraction<PopupMenuRequest> PopupMenuInteraction
-        {
-            get { return _popupMenuInteraction; }
-            set
-            {
-                if (_subscription != null)
-                {
-                    _subscription.Dispose();
-                    _subscription = null;
-                }
-                _popupMenuInteraction = value;
-                if (_popupMenuInteraction != null)
-                {
-                    _subscription = _popupMenuInteraction.WeakSubscribe(OpenPopupMenu);
-                }
-            }
-        }
+		private IDisposable _subscription;
+		private IMvxInteraction<PopupMenuRequest> _popupMenuInteraction;
 
-        private void OpenPopupMenu(PopupMenuRequest request)
-        {
-            this.CleanAll();
+		public IMvxInteraction<PopupMenuRequest> PopupMenuInteraction
+		{
+			get => _popupMenuInteraction;
+			set
+			{
+				if (_subscription != null)
+				{
+					_subscription.Dispose();
+					_subscription = null;
+				}
 
-            _currentRequest = request;
+				_popupMenuInteraction = value;
+				if (_popupMenuInteraction != null)
+				{
+					_subscription = _popupMenuInteraction.WeakSubscribe(OpenPopupMenu);
+				}
+			}
+		}
 
-            _menu = new PopupMenu(this.Context, this);
+		private void OpenPopupMenu(PopupMenuRequest request)
+		{
+			CleanAll();
 
-            int menuId = Menu.First + 1;
-            foreach (var item in request.LstPopupItem)
-            {
-                _menu.Menu.Add(0, menuId, item.Order, item.Title);
-                menuId++;
-            }
+			_currentRequest = request;
 
-            _menu.MenuItemClick += MenuItemClick;
-            _menu.DismissEvent += MenuDismissEvent;
+			_menu = new PopupMenu(Context, this);
 
-            _menu.Show();
-        }
+			int menuId = Menu.First + 1;
+			foreach (var item in request.LstPopupItem)
+			{
+				_menu.Menu.Add(0, menuId, item.Order, item.Title);
+				menuId++;
+			}
 
-        void MenuItemClick(object sender, PopupMenu.MenuItemClickEventArgs e)
-        {
-            if (_currentRequest != null && e.Item != null)
-            {
-                _currentRequest.Execute(e.Item.Order);
-            }
+			_menu.MenuItemClick += MenuItemClick;
+			_menu.DismissEvent += MenuDismissEvent;
 
-            this.CleanAll();
-        }
+			_menu.Show();
+		}
 
-        void MenuDismissEvent(object sender, PopupMenu.DismissEventArgs e)
-        {
-            if (_currentRequest != null)
-                _currentRequest.ExecuteCancel();
-            this.CleanAll();
-        }
+		private void MenuItemClick(object sender, PopupMenu.MenuItemClickEventArgs e)
+		{
+			if (_currentRequest != null && e.Item != null)
+			{
+				_currentRequest.Execute(e.Item.Order);
+			}
 
-        private void CleanAll()
-        {
-            if (_menu != null)
-            {
-                try
-                {
-                    _menu.MenuItemClick -= MenuItemClick;
-                    _menu.DismissEvent -= MenuDismissEvent;
-                }
-                catch { }
-                _menu = null;
-            }
+			CleanAll();
+		}
 
-            if (_currentRequest != null)
-            {
-                _currentRequest.Clean();
-                _currentRequest = null;
-            }
-        }
+		private void MenuDismissEvent(object sender, PopupMenu.DismissEventArgs e)
+		{
+			_currentRequest?.ExecuteCancel();
+			CleanAll();
+		}
 
-        protected override void Dispose(bool isDisposing)
-        {
-            if (isDisposing)
-            {
-                this.CleanAll();
-            }
+		private void CleanAll()
+		{
+			if (_menu != null)
+			{
+				try
+				{
+					_menu.MenuItemClick -= MenuItemClick;
+					_menu.DismissEvent -= MenuDismissEvent;
+				}
+				catch { }
 
-            base.Dispose(isDisposing);
-        }
-    }
+				_menu = null;
+			}
+
+			if (_currentRequest != null)
+			{
+				_currentRequest.Clean();
+				_currentRequest = null;
+			}
+		}
+
+		protected override void Dispose(bool isDisposing)
+		{
+			if (isDisposing)
+			{
+				CleanAll();
+			}
+
+			base.Dispose(isDisposing);
+		}
+	}
 }

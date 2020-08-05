@@ -1,72 +1,44 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using Android.App;
-using Android.Content;
-using Android.OS;
+using System.Diagnostics;
+using Android.Content.Res;
 using Android.Runtime;
+using Android.Support.V4.View;
 using Android.Views;
 using Android.Widget;
-using Android.Support.V4.View;
-using Android.Content.Res;
-using Android.Support.V7.Widget;
-
-using Java.Lang;
-using MvvmCross.Binding.Droid.Target;
-using MvvmCross.Binding;
-using MvvmCross.Platform.Platform;
+using MvvmCross.Platforms.Android.Binding.Target;
 
 namespace Xmf2.Commons.MvxExtends.DroidAppCompat.Target
 {
-    public class BackgroundTintDrawableNameTargetBinding : MvxAndroidTargetBinding
-    {
-        public BackgroundTintDrawableNameTargetBinding(View view)
-            : base(view)
-        {
+	public class BackgroundTintDrawableNameTargetBinding : MvxAndroidTargetBinding<View, string>
+	{
+		public BackgroundTintDrawableNameTargetBinding(View view) : base(view) { }
 
-        }
+		protected override void SetValueImpl(View target, string value)
+		{
+			Resources resources = AndroidGlobals.ApplicationContext.Resources;
+			int id = resources.GetIdentifier(value, "drawable", AndroidGlobals.ApplicationContext.PackageName);
+			if (id == 0)
+			{
+				Debug.WriteLine("Value '{0}' was not a known drawable name", value);
+				return;
+			}
 
-        protected override void SetValueImpl(object target, object value)
-        {
-            if (value == null)
-                return;
+			ColorStateList colorList = AndroidGlobals.ApplicationContext.GetColorStateList(id);
 
-            if (!(value is string))
-            {
-                MvxBindingTrace.Trace(MvxTraceLevel.Warning,
-                                      "Value '{0}' could not be parsed as a valid string identifier", value);
-                return;
-            }
+			ITintableBackgroundView tintableBackgroundView = null;
+			try
+			{
+				tintableBackgroundView = target.JavaCast<ITintableBackgroundView>();
+			}
+			catch { }
 
-            var resources = AndroidGlobals.ApplicationContext.Resources;
-            var id = resources.GetIdentifier((string)value, "drawable", AndroidGlobals.ApplicationContext.PackageName);
-            if (id == 0)
-            {
-                MvxBindingTrace.Trace(MvxTraceLevel.Warning,
-                                      "Value '{0}' was not a known drawable name", value);
-                return;
-            }
-
-            var colorList = AndroidGlobals.ApplicationContext.Resources.GetColorStateList(id);
-
-            ITintableBackgroundView tintableBackgroundView = null;
-            try
-            {
-                tintableBackgroundView = ((View)target).JavaCast<ITintableBackgroundView>();
-            }
-            catch { }
-            
-            if (tintableBackgroundView != null)
-                tintableBackgroundView.SupportBackgroundTintList = colorList;
-            else
-                ((Button)target).BackgroundTintList = colorList;
-        }
-
-        public override Type TargetType
-        {
-            get { return typeof(string); }
-        }
-    }
+			if (tintableBackgroundView != null)
+			{
+				tintableBackgroundView.SupportBackgroundTintList = colorList;
+			}
+			else
+			{
+				((Button)target).BackgroundTintList = colorList;
+			}
+		}
+	}
 }
