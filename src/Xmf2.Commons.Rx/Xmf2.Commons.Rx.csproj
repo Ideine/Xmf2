@@ -2,9 +2,6 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <PackageTargetFallback>
-        $(PackageTargetFallback);portable-net45+win8+wpa81+wp8
-    </PackageTargetFallback>
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
 
@@ -14,8 +11,5 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Xmf2.Commons\Xmf2.Commons.csproj" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="ViewModels\" />
   </ItemGroup>
 </Project>
