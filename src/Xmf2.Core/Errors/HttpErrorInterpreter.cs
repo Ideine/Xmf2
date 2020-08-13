@@ -25,13 +25,13 @@ namespace Xmf2.Core.Errors
 			{
 				string name = e.GetType().FullName?.ToLowerInvariant();
 
-				return name == "java.net.SocketTimeoutException" ||
-					   name == "java.net.SocketException" ||
-					   name == "java.net.ConnectException" ||
-					   name == "javax.net.SSLHandshakeException" ||
-					   e is SocketException ||
-					   e is TimeoutException ||
-					   e is TaskCanceledException;
+				return name == "java.net.SocketTimeoutException"
+					|| name == "java.net.SocketException"
+					|| name == "java.net.ConnectException"
+					|| name == "javax.net.SSLHandshakeException"
+					|| (e is SocketException socketException)//TODO: socket error code should be restricted to avoid catching exception unrelated to timeout.
+					|| (e is TimeoutException)
+					|| (e is TaskCanceledException);
 			}))
 			{
 				return new AccessDataException(AccessDataException.ErrorType.Timeout, ex);
