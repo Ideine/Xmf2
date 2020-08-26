@@ -4,9 +4,9 @@ using MvvmCross.Converters;
 
 namespace Xmf2.Commons.MvxExtends.Converters
 {
-	public class IfNotNullConverter : IMvxValueConverter
+	public class IfNotNullConverter : MvxValueConverter
 	{
-		public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+		public override object Convert(object value, Type targetType, object parameter, CultureInfo culture)
 		{
 			if (value != null)
 			{
@@ -16,11 +16,6 @@ namespace Xmf2.Commons.MvxExtends.Converters
 			{
 				return null;
 			}
-		}
-
-		public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-		{
-			throw new NotImplementedException();
 		}
 	}
 }
