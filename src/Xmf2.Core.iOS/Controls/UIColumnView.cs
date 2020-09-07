@@ -89,7 +89,10 @@ namespace Xmf2.Core.iOS.Controls
 				if (allConstraints != null)
 				{
 					this.EnsureRemove(allConstraints);
-					allConstraints.ForEach(c => c.Dispose());
+					foreach (var constraint in allConstraints)
+					{
+						constraint.Dispose();
+					}
 					_subviewConstraints.Clear();
 				}
 				_subviewConstraints = null;
