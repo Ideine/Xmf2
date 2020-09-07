@@ -26,7 +26,10 @@ namespace Xmf2.Components.ViewModels.LinearLists
 
 		public virtual void SetItemSource(IReadOnlyList<TItem> itemModelList)
 		{
-			_viewModels.ForEach(x => x.Dispose());
+			foreach (var viewmodel in _viewModels)
+			{
+				viewmodel.Dispose();
+			}
 			_viewModels.Clear();
 
 			if (itemModelList == null)
