@@ -54,7 +54,7 @@ namespace Xmf2.Components.ViewModels.LinearLists
 
 		protected override IViewState NewState()
 		{
-			return new ListViewState(_viewModels.ConvertAll(x =>
+			return new ListViewState(_viewModels.ToArray().Select(x =>
 			{
 				IViewState state = x.ViewState();
 				if (state is IEntityViewState result)
@@ -62,7 +62,7 @@ namespace Xmf2.Components.ViewModels.LinearLists
 					return result;
 				}
 				throw new InvalidOperationException($"Child state of ListViewModel must implement IEntityViewState, got {state.GetType()}");
-			}));
+			}).ToList());
 		}
 
 		void IListViewModel.SetItemSource(IEnumerable<IEntity> itemModelList)
