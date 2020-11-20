@@ -16,7 +16,8 @@ namespace Xmf2.Core.Errors
 		public virtual AccessDataException InterpretException(Exception ex)
 		{
 			if (ex.GetType().FullName == "Java.Net.UnknownHostException"
-				|| ex.GetType().Name == "SSLException")
+				|| ex.GetType().Name == "SSLException"
+				|| AnyToDescendant(ex, e => e is RestException restEx && restEx.Response.StatusCode == HttpStatusCode.BadGateway))
 			{
 				return new AccessDataException(AccessDataException.ErrorType.NoInternetConnexion, ex);
 			}

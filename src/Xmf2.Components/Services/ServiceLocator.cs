@@ -64,12 +64,9 @@ namespace Xmf2.Components.Services
 
 		public TInterface Resolve<TInterface>()
 		{
-			if (TryResolve(out TInterface result))
-			{
-				return result;
-			}
-
-			throw new InvalidOperationException($"No implementation found for type {typeof(TInterface)}");
+			return TryResolve(out TInterface result)
+				? result
+				: throw new InvalidOperationException($"No implementation found for type {typeof(TInterface)}");
 		}
 
 		public bool TryResolve<TInterface>(out TInterface implementation)
