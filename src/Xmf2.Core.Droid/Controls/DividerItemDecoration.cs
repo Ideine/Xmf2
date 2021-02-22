@@ -3,9 +3,10 @@ using Android.Content;
 using Android.Content.Res;
 using Android.Graphics;
 using Android.Graphics.Drawables;
+using Android.Runtime;
+using Android.Views;
 using AndroidX.Core.Content;
 using AndroidX.RecyclerView.Widget;
-using Android.Views;
 
 namespace Xmf2.Core.Droid.Controls
 {
@@ -43,7 +44,7 @@ namespace Xmf2.Core.Droid.Controls
 			SetOrientation(orientation);
 		}
 
-		protected DividerItemDecoration(IntPtr javaReference, Android.Runtime.JniHandleOwnership transfer) : base(javaReference, transfer) { }
+		protected DividerItemDecoration(IntPtr javaReference, JniHandleOwnership transfer) : base(javaReference, transfer) { }
 
 		public void SetOrientation(int orientation)
 		{

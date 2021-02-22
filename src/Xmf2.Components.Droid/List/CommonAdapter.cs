@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using Android.Runtime;
-using AndroidX.RecyclerView.Widget;
 using Android.Views;
+using AndroidX.RecyclerView.Widget;
 using Xmf2.Components.Droid.Interfaces;
 using Xmf2.Components.Interfaces;
 using Xmf2.Core.Subscriptions;

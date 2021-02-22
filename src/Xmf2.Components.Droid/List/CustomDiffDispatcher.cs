@@ -15,7 +15,14 @@ namespace Xmf2.Components.Droid.List
 
 		public void OnChanged(int position, int count, Java.Lang.Object payload)
 		{
-			_adapter.NotifyItemRangeChanged(position + _shiftCount, count, payload);
+			if (count == 1)
+			{
+				_adapter.NotifyItemChanged(position + _shiftCount, payload);
+			}
+			else
+			{
+				_adapter.NotifyItemRangeChanged(position + _shiftCount, count, payload);
+			}
 		}
 
 		public void OnInserted(int position, int count)

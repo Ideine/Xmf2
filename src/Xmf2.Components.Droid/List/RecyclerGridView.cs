@@ -1,10 +1,10 @@
 ﻿using System;
+using AndroidX.RecyclerView.Widget;
+using Xmf2.Components.Droid.Interfaces;
+using Xmf2.Components.Interfaces;
+using Xmf2.Core.Droid.Controls;
 using Xmf2.Core.Droid.Helpers;
 using Xmf2.Core.Subscriptions;
-using AndroidX.RecyclerView.Widget;
-using Xmf2.Components.Interfaces;
-using Xmf2.Components.Droid.Interfaces;
-using Xmf2.Core.Droid.Controls;
 
 namespace Xmf2.Components.Droid.List
 {

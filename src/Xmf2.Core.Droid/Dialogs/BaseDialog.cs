@@ -1,9 +1,11 @@
 ﻿using System;
+using Android.App;
 using Android.Content;
 using Android.Graphics;
-using AndroidX.AppCompat.App;
+using Android.Runtime;
 using Plugin.CurrentActivity;
 using Xmf2.Core.Subscriptions;
+using AlertDialog = AndroidX.AppCompat.App.AlertDialog;
 
 namespace Xmf2.Core.Droid.Dialogs
 {
@@ -13,7 +15,7 @@ namespace Xmf2.Core.Droid.Dialogs
 
 		protected BaseDialog(Context context) : base(context) { }
 		protected BaseDialog(Context context, int themeResId) : base(context, themeResId) { }
-		protected BaseDialog(IntPtr javaRef, Android.Runtime.JniHandleOwnership transfer) : base(javaRef, transfer) { }
+		protected BaseDialog(IntPtr javaRef, JniHandleOwnership transfer) : base(javaRef, transfer) { }
 
 		protected void DoAction(Action action)
 		{
@@ -23,7 +25,7 @@ namespace Xmf2.Core.Droid.Dialogs
 
 		private void ApplySize(float widthRatio, float heightRatio)
 		{
-			var currentActivity = CrossCurrentActivity.Current.Activity;
+			Activity currentActivity = CrossCurrentActivity.Current.Activity;
 
 			if (currentActivity != null && !currentActivity.IsFinishing)
 			{

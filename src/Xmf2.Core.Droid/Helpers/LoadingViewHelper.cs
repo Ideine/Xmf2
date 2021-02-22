@@ -80,7 +80,7 @@ namespace Xmf2.Core.Droid.Helpers
 					loadingView = inflater.Inflate(Resource.Layout.LoadingView, null).DisposeViewWith(_disposable);
 				}
 
-				using (var progressView = loadingView.FindViewById<ProgressBar>(Resource.Id.LoadingProgress))
+				using (ProgressBar progressView = loadingView.FindViewById<ProgressBar>(Resource.Id.LoadingProgress))
 				{
 					UIHelper.SetColorFilter(progressView, Color.White);
 				}
@@ -90,7 +90,7 @@ namespace Xmf2.Core.Droid.Helpers
 				if (_viewGroup != null)
 				{
 					_loadingView = loadingView;
-					using (var layoutManager = GetLayoutManager())
+					using (ViewGroup.LayoutParams layoutManager = GetLayoutManager())
 					{
 						_viewGroup.AddView(_loadingView, layoutManager);
 					}

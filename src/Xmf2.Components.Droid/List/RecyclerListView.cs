@@ -1,9 +1,10 @@
 ﻿using System;
 using Android.Content;
 using Android.Graphics.Drawables;
+using AndroidX.RecyclerView.Widget;
 using Xmf2.Components.Droid.Interfaces;
 using Xmf2.Components.Interfaces;
-using AndroidX.RecyclerView.Widget;
+using DividerItemDecoration = Xmf2.Core.Droid.Controls.DividerItemDecoration;
 
 namespace Xmf2.Components.Droid.List
 {
@@ -21,7 +22,7 @@ namespace Xmf2.Components.Droid.List
 
 		protected RecyclerView.ItemDecoration CreateDrawableSeparator(Context context, Drawable drawable)
 		{
-			return new Core.Droid.Controls.DividerItemDecoration(Orientation, drawable);
+			return new DividerItemDecoration(Orientation, drawable);
 		}
 	}
 }

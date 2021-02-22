@@ -1,7 +1,7 @@
 ﻿using System;
 using Android.Runtime;
-using AndroidX.RecyclerView.Widget;
 using Android.Views;
+using AndroidX.RecyclerView.Widget;
 using Xmf2.Core.Droid.Helpers;
 using Xmf2.Core.Subscriptions;
 

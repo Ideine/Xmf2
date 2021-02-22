@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Linq;
 using Android.Views;
-using Xmf2.Core.Subscriptions;
 using AndroidX.RecyclerView.Widget;
-using Xmf2.Components.Interfaces;
-using Xmf2.Components.Droid.Views;
 using Xmf2.Components.Droid.Interfaces;
+using Xmf2.Components.Droid.Views;
+using Xmf2.Components.Interfaces;
 using Xmf2.Components.ViewModels.LinearLists;
+using Xmf2.Core.Subscriptions;
 
 namespace Xmf2.Components.Droid.List
 {

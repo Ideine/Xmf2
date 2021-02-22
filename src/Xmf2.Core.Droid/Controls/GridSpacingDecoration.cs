@@ -1,6 +1,6 @@
 ﻿using Android.Graphics;
-using AndroidX.RecyclerView.Widget;
 using Android.Views;
+using AndroidX.RecyclerView.Widget;
 
 namespace Xmf2.Core.Droid.Controls
 {

@@ -24,20 +24,18 @@ namespace Xmf2.Core.Droid.Helpers
 
         public void OnGlobalLayout()
         {
-            using (var r = new Rect())
-            {
-                try
-                {
-                    _rootView.GetWindowVisibleDisplayFrame(r);
+	        using var r = new Rect();
+	        try
+	        {
+		        _rootView.GetWindowVisibleDisplayFrame(r);
 
-                    float keyboardHeight = _rootView.Height - r.Bottom;
-                    OnKeyboardVisibilityChanged(r.Bottom, keyboardHeight, keyboardHeight > 0);
-                }
-                catch (Exception ex)
-                {
-                    //view can be disposed
-                }
-            }
+		        float keyboardHeight = _rootView.Height - r.Bottom;
+		        OnKeyboardVisibilityChanged(r.Bottom, keyboardHeight, keyboardHeight > 0);
+	        }
+	        catch (Exception)
+	        {
+		        //view can be disposed
+	        }
         }
 
         private void OnKeyboardVisibilityChanged(float visibleScreenHeight, float keyboardHeight, bool visible)

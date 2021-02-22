@@ -2,9 +2,9 @@
 using Android.Content;
 using Android.Graphics;
 using Android.OS;
-using AndroidX.Core.Content;
 using Android.Views;
 using Android.Widget;
+using AndroidX.Core.Content;
 
 namespace Xmf2.Core.Droid.Helpers
 {
