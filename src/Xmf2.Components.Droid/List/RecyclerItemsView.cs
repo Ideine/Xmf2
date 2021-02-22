@@ -10,6 +10,7 @@ using Xmf2.Core.Subscriptions;
 
 namespace Xmf2.Components.Droid.List
 {
+	[Obsolete("vju 22/02/2021 : bug with input, wip")]
 	public abstract class RecyclerItemsView : BaseComponentView<ListViewState>
 	{
 		protected RecyclerView RecyclerView { get; private set; }
