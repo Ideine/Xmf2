@@ -19,7 +19,12 @@ namespace Xmf2.Core.Authentications
 
 		protected virtual TimeSpan SafetySecondsMargin { get; } = TimeSpan.FromSeconds(15);
 
-		public TokenAuthentication Token { get; set; }
+		private TokenAuthentication _token;
+		public TokenAuthentication Token { get => _token; }
+		public void SetToken(TokenAuthentication token)
+		{
+			_token = token;
+		}
 
 		public virtual bool CanPreAuthenticate(IRestClient client, IRestRequest request, ICredentials credentials)
 		{
@@ -65,10 +70,10 @@ namespace Xmf2.Core.Authentications
 		{
 			if (Token != null && response != null && response.StatusCode == HttpStatusCode.Unauthorized)
 			{
-				Token.ExpireDate = DateTime.MinValue;
+				this.SetToken(new TokenAuthentication(_token.Token, DateTime.Now));// refresh token will be done on next request call
 			}
 
-			return Task.CompletedTask; // refresh token will be done on next request call
+			return Task.CompletedTask; 
 		}
 
 		protected bool IsExpired()

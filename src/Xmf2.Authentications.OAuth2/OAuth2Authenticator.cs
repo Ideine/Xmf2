@@ -24,11 +24,11 @@ namespace Xmf2.Authentications.OAuth2
 				_access = value;
 				if (_access != null)
 				{
-					Token = new TokenAuthentication(_access.AccessToken, _access.ExpiresAt);
+					SetToken(new TokenAuthentication(_access.AccessToken, _access.ExpiresAt));
 				}
 				else
 				{
-					Token = null;
+					SetToken(null);
 				}
 			}
 		}

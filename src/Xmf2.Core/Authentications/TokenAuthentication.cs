@@ -10,8 +10,8 @@ namespace Xmf2.Core.Authentications
 			ExpireDate = expireDate;
 		}
 
-		public string Token { get; set; }
+		public string Token { get; }
 
-		public DateTime ExpireDate { get; set; }
+		public DateTime ExpireDate { get; }
 	}
 }
