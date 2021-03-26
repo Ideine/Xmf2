@@ -1,17 +1,20 @@
 ﻿using System;
+using Android.App;
+using Android.Content;
 using Android.Graphics;
 using Android.OS;
 using Android.Runtime;
 using Android.Views;
 using Xmf2.Components.Bootstrappers;
 using Xmf2.Components.Droid.Interfaces;
+using Xmf2.Components.Events;
 using Xmf2.Components.Interfaces;
 using Xmf2.Core.Subscriptions;
 using Xmf2.NavigationGraph.Core.Interfaces;
 
 namespace Xmf2.Components.Droid.Fragments
 {
-	public abstract class BaseDialogFragment<TComponentViewModel, TComponentView> : NavigationGraph.Droid.Bases.BaseDialogFragment<TComponentViewModel>
+	public abstract class BaseDialogFragment<TComponentViewModel, TComponentView> : NavigationGraph.Droid.Bases.BaseDialogFragment<TComponentViewModel>, IDialogInterfaceOnKeyListener
 		where TComponentViewModel : class, IComponentViewModel
 		where TComponentView : class, IComponentView
 	{
@@ -73,6 +76,26 @@ namespace Xmf2.Components.Droid.Fragments
 		{
 			base.OnViewCreated(view, savedInstanceState);
 			ViewModel.Lifecycle.Initialize();
+		}
+
+		public override Dialog OnCreateDialog(Bundle savedInstanceState)
+		{
+			var dialog = base.OnCreateDialog(savedInstanceState);
+			dialog.SetOnKeyListener(this);
+			return dialog;
+		}
+
+		public bool OnKey(IDialogInterface dialog, [GeneratedEnum] Keycode keyCode, KeyEvent e)
+		{
+			if (keyCode == Keycode.Back)
+			{
+				Services.Resolve<IEventBus>().Publish(new BackEvent());
+				return true;
+			}
+			else
+			{
+				return false;
+			}
 		}
 
 		#region Lifecycle
