@@ -2,8 +2,8 @@ using System;
 using Android.App;
 using Android.Content;
 using Firebase.Messaging;
-using Android.Support.V4.App;
 using System.Collections.Generic;
+using AndroidX.Core.App;
 
 namespace Xmf2.Notification.Droid
 {
