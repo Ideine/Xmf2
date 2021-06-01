@@ -53,6 +53,7 @@
     <Compile Include="MyFirebaseListenerService.cs" />
     <Compile Include="NotificationDisplayService.cs" />
     <Compile Include="INotificationSetup.cs" />
+    <Compile Include="IDroidNotificationConstants.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Xmf2.Components\Xmf2.Components.csproj">
