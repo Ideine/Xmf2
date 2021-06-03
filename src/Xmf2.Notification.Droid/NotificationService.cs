@@ -16,11 +16,13 @@ namespace Xmf2.Notification.Droid
 		private FirebaseApp _app = null;
 
 		private readonly Context _context;
+		private readonly IDroidNotificationConstants _constants;
 
-		public NotificationService(string gcmId, Context applicationContext, IKeyValueStorageService settingsService, INotificationDataService notificationDataService) : base(settingsService, notificationDataService)
+		public NotificationService(string gcmId, Context applicationContext, IKeyValueStorageService settingsService, INotificationDataService notificationDataService, IDroidNotificationConstants constants) : base(settingsService, notificationDataService)
 		{
 			_gcmId = gcmId;
 			_context = applicationContext;
+			_constants = constants;
 		}
 
 		protected override DeviceType Device => DeviceType.Android;
@@ -32,7 +34,7 @@ namespace Xmf2.Notification.Droid
 				try
 				{
 					//*
-					//EnsureInitialized();
+					EnsureInitialized();
 					Firebase.Iid.FirebaseInstanceId.Instance.DeleteInstanceId();
 					// */
 				}
@@ -69,7 +71,7 @@ namespace Xmf2.Notification.Droid
 				}
 
 				//*
-				//EnsureInitialized();
+				EnsureInitialized();
 				string token = Firebase.Iid.FirebaseInstanceId.Instance.GetToken(_gcmId, Firebase.Messaging.FirebaseMessaging.InstanceIdScope);
 				// */
 
@@ -100,15 +102,41 @@ namespace Xmf2.Notification.Droid
 				Android.Util.Log.Error("Xmf2/Token", $"Initialize firebase app with token {_gcmId}");
 				try
 				{
-					_app = FirebaseApp.InitializeApp(_context);
-					Android.Util.Log.Error("Xmf2/Token", $"Firebase app initialized !");
-					Android.Util.Log.Error("Xmf2/Token", $"Has instance ? => {(Firebase.FirebaseApp.Instance != null ? "true" : "false")}");
+					if (_constants != null)
+					{
+						FirebaseOptions options = new FirebaseOptions.Builder()
+							.SetApplicationId(_constants.AppId)
+							.SetApiKey(_constants.ApiKey)
+							.SetGcmSenderId(_constants.GcmId)
+							.SetProjectId(_constants.ProjectId)
+							.Build();
+
+						_app = FirebaseApp.InitializeApp(_context, options);
+					}
+					else
+					{
+						//23/06/2020 vju : si cette ligne ne fonctionne pas, il faut passer par les constantes pour indiquer les options
+						//en effet la cible GoogleServiceJson peut ne pas fonctionner dans la version 60.1142.1
+						_app = FirebaseApp.InitializeApp(_context);
+					}
+
+					_initialized = true;
+					Android.Util.Log.Info("Xmf2/Token", "Firebase app initialized !");
+					Android.Util.Log.Info("Xmf2/Token", $"Has instance ? => {(Firebase.FirebaseApp.Instance != null ? "true" : "false")}");
 				}
 				catch (Exception ex)
 				{
-					Android.Util.Log.Error("Xmf2/Token", $"Exception while initializing firebase app {ex}");
+					if(ex.Message.Contains("FirebaseApp name [DEFAULT] already exists!"))
+					{
+						_initialized = true;
+					}
+					else
+					{
+						Android.Util.Log.Error("Xmf2/Token", $"Exception while initializing firebase app {ex}");
+						_initialized = false;
+					}
 				}
-				_initialized = true;
+
 				return _app;
 			}
 		}
