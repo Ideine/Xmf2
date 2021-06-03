@@ -82,7 +82,13 @@
     <Compile Include="List\RecyclerGridView.cs" />
     <Compile Include="List\RecyclerItemsView.cs" />
     <Compile Include="List\RecyclerListView.cs" />
+    <Compile Include="List\BaseListView.cs" />
+    <Compile Include="List\CustomGridSpanSizeLookup.cs" />
+    <Compile Include="Resources\Resource.designer.cs" />
   </ItemGroup> 
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\ListView.axml" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Xmf2.Components\Xmf2.Components.csproj">
       <Project>{F7DB4CF5-A47C-4178-B776-D8857468DD47}</Project>
