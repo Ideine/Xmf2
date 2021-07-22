@@ -49,7 +49,6 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="NotificationService.cs" />
-    <Compile Include="MyFirebaseInstanceIdService.cs" />
     <Compile Include="MyFirebaseListenerService.cs" />
     <Compile Include="NotificationDisplayService.cs" />
     <Compile Include="INotificationSetup.cs" />
@@ -66,8 +65,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Xamarin.Firebase.Common" Version="119.5.0" />
-    <PackageReference Include="Xamarin.Firebase.Messaging" Version="121.0.1" />
+    <PackageReference Include="Xamarin.Firebase.Common" Version="120.0.0" />
+    <PackageReference Include="Xamarin.Firebase.Messaging" Version="122.0.0" />
     <PackageReference Include="Xamarin.GooglePlayServices.Base" Version="117.6.0" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />

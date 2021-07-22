@@ -1,16 +1,28 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Android.App;
-using Android.Util;
 using Android.Content;
+using Android.Util;
 using Firebase.Messaging;
 using Xmf2.Components.Bootstrappers;
+using Xmf2.Core.Services;
 
 namespace Xmf2.Notification.Droid
 {
-	[Service, IntentFilter(new[] { "com.google.firebase.MESSAGING_EVENT" })]
+	[Service, IntentFilter(new[]
+	{
+		"com.google.firebase.MESSAGING_EVENT"
+	})]
 	public class MyFirebaseListenerService : FirebaseMessagingService
 	{
+		public override void OnNewToken(string token)
+		{
+			base.OnNewToken(token);
+			BaseApplicationBootstrapper.StaticServices.TryResolve(out INotificationService notificationService);
+			notificationService?.SetToken(token);
+		}
+
 		public override void OnMessageReceived(RemoteMessage message)
 		{
 			base.OnMessageReceived(message);
@@ -78,10 +90,10 @@ namespace Xmf2.Notification.Droid
 
 		private void InitializeSetup(Context applicationContext)
 		{
-			var query = from assembly in AppDomain.CurrentDomain.GetAssemblies()
-						from type in assembly.GetTypes()
-						where typeof(INotificationSetup).IsAssignableFrom(type) && type != typeof(INotificationSetup)
-						select type;
+			IEnumerable<Type> query = from assembly in AppDomain.CurrentDomain.GetAssemblies()
+				from type in assembly.GetTypes()
+				where typeof(INotificationSetup).IsAssignableFrom(type) && type != typeof(INotificationSetup)
+				select type;
 
 			Type setupType = query.FirstOrDefault();
 

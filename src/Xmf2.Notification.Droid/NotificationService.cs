@@ -1,9 +1,13 @@
 ﻿using System;
-using Firebase;
+using System.Threading.Tasks;
 using Android.Content;
 using Android.Gms.Common;
+using Android.Gms.Extensions;
+using Android.Util;
+using Firebase;
+using Firebase.Installations;
+using Firebase.Messaging;
 using Xmf2.Core.Services;
-using System.Threading.Tasks;
 
 namespace Xmf2.Notification.Droid
 {
@@ -29,16 +33,13 @@ namespace Xmf2.Notification.Droid
 
 		protected override void DeleteRegisterId()
 		{
-			Task.Run(() =>
+			Task.Run(async () =>
 			{
 				try
 				{
-					//*
-					EnsureInitialized();
-					Firebase.Iid.FirebaseInstanceId.Instance.DeleteInstanceId();
-					// */
+					await FirebaseInstallations.Instance.Delete();
 				}
-				catch (Exception ex) { }
+				catch (Exception) { }
 			}).ConfigureAwait(false);
 		}
 
@@ -60,7 +61,7 @@ namespace Xmf2.Notification.Droid
 			return resultCode == ConnectionResult.Success;
 		}
 
-		private void PickToken()
+		private async Task PickToken()
 		{
 			try
 			{
@@ -70,18 +71,14 @@ namespace Xmf2.Notification.Droid
 					return;
 				}
 
-				//*
 				EnsureInitialized();
-				string token = Firebase.Iid.FirebaseInstanceId.Instance.GetToken(_gcmId, Firebase.Messaging.FirebaseMessaging.InstanceIdScope);
-				// */
-
-				Android.Util.Log.Warn("Xmf2/Token", $"PickToken : {token}");
-
+				string token = (string)await FirebaseMessaging.Instance.GetToken();
+				Log.Warn("Xmf2/Token", $"PickToken : {token}");
 				SetToken(token);
 			}
 			catch (Exception ex)
 			{
-				Android.Util.Log.Error("Xmf2/Token", $"Can not get token from firebase {ex}");
+				Log.Error("Xmf2/Token", $"Can not get token from firebase {ex}");
 			}
 		}
 
@@ -99,7 +96,7 @@ namespace Xmf2.Notification.Droid
 					return _app;
 				}
 
-				Android.Util.Log.Error("Xmf2/Token", $"Initialize firebase app with token {_gcmId}");
+				Log.Error("Xmf2/Token", $"Initialize firebase app with token {_gcmId}");
 				try
 				{
 					if (_constants != null)
@@ -121,18 +118,18 @@ namespace Xmf2.Notification.Droid
 					}
 
 					_initialized = true;
-					Android.Util.Log.Info("Xmf2/Token", "Firebase app initialized !");
-					Android.Util.Log.Info("Xmf2/Token", $"Has instance ? => {(Firebase.FirebaseApp.Instance != null ? "true" : "false")}");
+					Log.Info("Xmf2/Token", "Firebase app initialized !");
+					Log.Info("Xmf2/Token", $"Has instance ? => {(FirebaseApp.Instance != null ? "true" : "false")}");
 				}
 				catch (Exception ex)
 				{
-					if(ex.Message.Contains("FirebaseApp name [DEFAULT] already exists!"))
+					if (ex.Message.Contains("FirebaseApp name [DEFAULT] already exists!"))
 					{
 						_initialized = true;
 					}
 					else
 					{
-						Android.Util.Log.Error("Xmf2/Token", $"Exception while initializing firebase app {ex}");
+						Log.Error("Xmf2/Token", $"Exception while initializing firebase app {ex}");
 						_initialized = false;
 					}
 				}

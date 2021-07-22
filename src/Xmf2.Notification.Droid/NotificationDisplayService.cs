@@ -3,6 +3,7 @@ using Android.App;
 using Android.Content;
 using Firebase.Messaging;
 using System.Collections.Generic;
+using System.Diagnostics;
 using AndroidX.Core.App;
 
 namespace Xmf2.Notification.Droid
@@ -38,7 +39,7 @@ namespace Xmf2.Notification.Droid
 			int pendingIntentId = (int)(DateTime.Now.Date.Millisecond & 0xFFFFFFF);
 			PendingIntent notificationContentIntent = PendingIntent.GetActivity(context, pendingIntentId, IntentForNotification(context, notification, notificationData, content), PendingIntentFlags.OneShot);
 
-			NotificationCompat.Builder builder = new NotificationCompat.Builder(context)
+			NotificationCompat.Builder builder = new NotificationCompat.Builder(context, _channelId)
 				.SetStyle(new NotificationCompat.BigTextStyle().BigText(content))
 				.SetContentText(content)
 				.SetAutoCancel(true)
@@ -52,24 +53,25 @@ namespace Xmf2.Notification.Droid
 			}
 
 			NotificationManager notificationManager = (NotificationManager)context.GetSystemService(Context.NotificationService);
+			Debug.Assert(notificationManager != null, nameof(notificationManager) + " != null");
 
 			if (Android.OS.Build.VERSION.SdkInt >= Android.OS.BuildVersionCodes.O)
 			{
 				NotificationChannel notificationChannel = notificationManager.GetNotificationChannel(_channelId);
 
-				if (notificationManager.GetNotificationChannel(_channelId) == null)
+				if (notificationChannel == null)
 				{
-					notificationChannel = new NotificationChannel(_channelId, _channelName, NotificationImportance.Default);
+					notificationChannel = new NotificationChannel(_channelId, _channelName, NotificationImportance.Default)
+					{
+						Description = _channelDescription
+					};
 
-					notificationChannel.Description = _channelDescription;
 					notificationChannel.EnableLights(true);
 					// Sets the notification light color for notifications posted to this
 					// channel, if the device supports this feature.
 					notificationChannel.LightColor = 0x7F00FF00;
-
 					notificationManager.CreateNotificationChannel(notificationChannel);
 				}
-				builder.SetChannelId(notificationChannel.Id);
 			}
 
 			BuildNotification(context, builder, notification, notificationData, content);
