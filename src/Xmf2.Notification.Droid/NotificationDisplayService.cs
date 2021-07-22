@@ -1,10 +1,10 @@
 using System;
+using System.Collections.Generic;
 using Android.App;
 using Android.Content;
-using Firebase.Messaging;
-using System.Collections.Generic;
-using System.Diagnostics;
+using Android.OS;
 using AndroidX.Core.App;
+using Firebase.Messaging;
 
 namespace Xmf2.Notification.Droid
 {
@@ -39,23 +39,10 @@ namespace Xmf2.Notification.Droid
 			int pendingIntentId = (int)(DateTime.Now.Date.Millisecond & 0xFFFFFFF);
 			PendingIntent notificationContentIntent = PendingIntent.GetActivity(context, pendingIntentId, IntentForNotification(context, notification, notificationData, content), PendingIntentFlags.OneShot);
 
-			NotificationCompat.Builder builder = new NotificationCompat.Builder(context, _channelId)
-				.SetStyle(new NotificationCompat.BigTextStyle().BigText(content))
-				.SetContentText(content)
-				.SetAutoCancel(true)
-				.SetContentIntent(notificationContentIntent)
-				.SetDefaults((int)NotificationDefaults.Vibrate)
-				.SetLights(0x7F00FF00, 100, 25);
-
-			if (_backgroundColor != -1)
-			{
-				builder.SetColor(_backgroundColor);
-			}
-
 			NotificationManager notificationManager = (NotificationManager)context.GetSystemService(Context.NotificationService);
-			Debug.Assert(notificationManager != null, nameof(notificationManager) + " != null");
+			System.Diagnostics.Debug.Assert(notificationManager != null, nameof(notificationManager) + " != null");
 
-			if (Android.OS.Build.VERSION.SdkInt >= Android.OS.BuildVersionCodes.O)
+			if (Build.VERSION.SdkInt >= BuildVersionCodes.O)
 			{
 				NotificationChannel notificationChannel = notificationManager.GetNotificationChannel(_channelId);
 
@@ -72,6 +59,19 @@ namespace Xmf2.Notification.Droid
 					notificationChannel.LightColor = 0x7F00FF00;
 					notificationManager.CreateNotificationChannel(notificationChannel);
 				}
+			}
+
+			NotificationCompat.Builder builder = new NotificationCompat.Builder(context, _channelId)
+				.SetStyle(new NotificationCompat.BigTextStyle().BigText(content))
+				.SetContentText(content)
+				.SetAutoCancel(true)
+				.SetContentIntent(notificationContentIntent)
+				.SetDefaults((int)NotificationDefaults.Vibrate)
+				.SetLights(0x7F00FF00, 100, 25);
+
+			if (_backgroundColor != -1)
+			{
+				builder.SetColor(_backgroundColor);
 			}
 
 			BuildNotification(context, builder, notification, notificationData, content);
