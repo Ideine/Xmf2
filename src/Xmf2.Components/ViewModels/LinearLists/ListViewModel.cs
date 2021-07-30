@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Xmf2.Components.Interfaces;
 
 namespace Xmf2.Components.ViewModels.LinearLists
@@ -26,11 +27,16 @@ namespace Xmf2.Components.ViewModels.LinearLists
 
 		public virtual void SetItemSource(IReadOnlyList<TItem> itemModelList)
 		{
-			foreach (var viewmodel in _viewModels)
-			{
-				viewmodel.Dispose();
-			}
+			var viewModelArray = ViewModels.ToArray();
 			_viewModels.Clear();
+			Task.Run(async () =>
+			{
+				await Task.Delay(10000);
+				foreach (var viewmodel in viewModelArray)
+				{
+					viewmodel.Dispose();
+				}
+			});
 
 			if (itemModelList == null)
 			{
