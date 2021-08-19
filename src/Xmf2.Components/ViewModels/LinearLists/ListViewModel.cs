@@ -27,12 +27,12 @@ namespace Xmf2.Components.ViewModels.LinearLists
 
 		public virtual void SetItemSource(IReadOnlyList<TItem> itemModelList)
 		{
-			var viewModelArray = ViewModels.ToArray();
+			TCellViewModel[] viewModelArray = ViewModels.ToArray();
 			_viewModels.Clear();
 			Task.Run(async () =>
 			{
 				await Task.Delay(10000);
-				foreach (var viewmodel in viewModelArray)
+				foreach (TCellViewModel viewmodel in viewModelArray)
 				{
 					viewmodel.Dispose();
 				}
@@ -43,7 +43,7 @@ namespace Xmf2.Components.ViewModels.LinearLists
 				return;
 			}
 
-			var finalCount = _viewModels.Count + itemModelList.Count;
+			int finalCount = _viewModels.Count + itemModelList.Count;
 
 			_viewModels.AddRange(itemModelList.Select((itemModel, index) =>
 			{

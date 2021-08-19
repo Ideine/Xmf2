@@ -26,7 +26,10 @@ namespace Xmf2.Components.iOS.Views.Multistates
 			_currentCase = default(TCaseEnum);
 			_byCaseInfo = componentFactoryByCase.ToDictionary(
 				keySelector: kvp => kvp.Key,
-				elementSelector: kvp => new ComponentInfo { ComponentFactory = kvp.Value }.DisposeWith(Disposables),
+				elementSelector: kvp => new ComponentInfo
+				{
+					ComponentFactory = kvp.Value
+				}.DisposeWith(Disposables),
 				comparer: componentFactoryByCase.Comparer
 			);
 			_container = this.CreateView().DisposeViewWith(Disposables);
@@ -38,26 +41,28 @@ namespace Xmf2.Components.iOS.Views.Multistates
 		{
 			base.OnStateUpdate(state);
 
-			var newCase = state.Case;
-			var newInfo = _byCaseInfo[state.Case];
+			TCaseEnum newCase = state.Case;
+			ComponentInfo newInfo = _byCaseInfo[state.Case];
 
-			if (	!_currentCaseOnceSet
-				||	!_byCaseInfo.Comparer.Equals(_currentCase, newCase))
+			if (!_currentCaseOnceSet || !_byCaseInfo.Comparer.Equals(_currentCase, newCase))
 			{
 				if (_currentInfo != null)
 				{
-					if (_currentInfo.TryGetExistingConstraints(out var constraints))
+					if (_currentInfo.TryGetExistingConstraints(out NSLayoutConstraint[] constraints))
 					{
 						_container.EnsureRemove(constraints);
 					}
+
 					_container.EnsureRemove(_container.Subviews);
 				}
+
 				if (_aggressiveViewDispose)
 				{
 					_currentInfo?.DisposeConstraints();
 					_currentInfo?.DisposeComponent();
 				}
-				var newView = newInfo.GetComponent().View;
+
+				UIView newView = newInfo.GetComponent().View;
 				newView.TranslatesAutoresizingMaskIntoConstraints = false;
 				_container.AddSubview(newView);
 				_container.AddConstraints(newInfo.GetOrCreateConstraints(parentView: _container));
@@ -65,6 +70,7 @@ namespace Xmf2.Components.iOS.Views.Multistates
 				_currentCase = newCase;
 				_currentCaseOnceSet = true;
 			}
+
 			newInfo.GetComponent().SetState(state.State);
 		}
 
@@ -80,6 +86,7 @@ namespace Xmf2.Components.iOS.Views.Multistates
 			{
 				_byCaseInfo = null;
 			}
+
 			base.Dispose(disposing);
 		}
 
@@ -97,21 +104,20 @@ namespace Xmf2.Components.iOS.Views.Multistates
 			internal bool TryGetExistingConstraints(out NSLayoutConstraint[] constraints)
 			{
 				constraints = _viewConstraints;
-				return (constraints != null);
+				return constraints != null;
 			}
+
 			internal NSLayoutConstraint[] GetOrCreateConstraints(UIView parentView)
 			{
 				if (_viewConstraints is null)
 				{
-					var view = GetComponent().View;
-					_viewConstraints = new NSLayoutConstraint[]
+					UIView view = GetComponent().View;
+					_viewConstraints = new[]
 					{
-						NSLayoutConstraint.Create(parentView, NSLayoutAttribute.CenterX , NSLayoutRelation.Equal, view, NSLayoutAttribute.CenterX, 1f, 0f).WithAutomaticIdentifier(),
-						NSLayoutConstraint.Create(parentView, NSLayoutAttribute.CenterY , NSLayoutRelation.Equal, view, NSLayoutAttribute.CenterY, 1f, 0f).WithAutomaticIdentifier(),
-						NSLayoutConstraint.Create(parentView, NSLayoutAttribute.Width   , NSLayoutRelation.Equal, view, NSLayoutAttribute.Width  , 1f, 0f).WithAutomaticIdentifier(),
-						NSLayoutConstraint.Create(parentView, NSLayoutAttribute.Height  , NSLayoutRelation.Equal, view, NSLayoutAttribute.Height , 1f, 0f).WithAutomaticIdentifier(),
+						NSLayoutConstraint.Create(parentView, NSLayoutAttribute.CenterX, NSLayoutRelation.Equal, view, NSLayoutAttribute.CenterX, 1f, 0f).WithAutomaticIdentifier(), NSLayoutConstraint.Create(parentView, NSLayoutAttribute.CenterY, NSLayoutRelation.Equal, view, NSLayoutAttribute.CenterY, 1f, 0f).WithAutomaticIdentifier(), NSLayoutConstraint.Create(parentView, NSLayoutAttribute.Width, NSLayoutRelation.Equal, view, NSLayoutAttribute.Width, 1f, 0f).WithAutomaticIdentifier(), NSLayoutConstraint.Create(parentView, NSLayoutAttribute.Height, NSLayoutRelation.Equal, view, NSLayoutAttribute.Height, 1f, 0f).WithAutomaticIdentifier(),
 					};
 				}
+
 				return _viewConstraints;
 			}
 
@@ -120,20 +126,24 @@ namespace Xmf2.Components.iOS.Views.Multistates
 				_component?.Dispose();
 				_component = null;
 			}
+
 			internal void DisposeConstraints()
 			{
 				if (_viewConstraints is null)
 				{
 					return;
 				}
-				for (int i = 0; i < _viewConstraints.Length; i++)
+
+				for (int i = 0 ; i < _viewConstraints.Length ; i++)
 				{
 					_viewConstraints[i].Dispose();
 				}
+
 				_viewConstraints = null;
 			}
 
 			public void Dispose() => Dispose(true);
+
 			protected virtual void Dispose(bool disposing)
 			{
 				if (!_disposedValue)
@@ -144,10 +154,12 @@ namespace Xmf2.Components.iOS.Views.Multistates
 						DisposeConstraints();
 						DisposeComponent();
 					}
+
 					_disposedValue = true;
 				}
 			}
 		}
+
 		public Func<UIView> NewViewFactory { private get; set; }
 
 		#endregion Nested Types
