@@ -12,7 +12,7 @@ namespace Xmf2.Components.iOS.ChipCloud
 
 		private LayoutProcessor _layoutProcessor;
 
-		private List<ChipCloudItemCell> _views;
+		private List<ChipCloudItemCell> _views = new List<ChipCloudItemCell>();
 
 		public IChipCloudItemSource Source { get; set; }
 
