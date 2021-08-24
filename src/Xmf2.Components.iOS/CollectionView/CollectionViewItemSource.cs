@@ -98,12 +98,16 @@ namespace Xmf2.Components.iOS.CollectionView
 				_collectionView = null;
 				_componentViewCreator = null;
 
-				foreach (IComponentView view in _componentViews.Values.ToArray())
+				if (_componentViews != null)
 				{
-					view.Dispose();
+					foreach (IComponentView view in _componentViews.Values.ToArray())
+					{
+						view.Dispose();
+					}
+
+					_componentViews.Clear();
+					_componentViews = null;
 				}
-				_componentViews.Clear();
-				_componentViews = null;
 			}
 
 			base.Dispose(disposing);
