@@ -16,7 +16,7 @@ namespace Xmf2.Core.Errors
 		public virtual AccessDataException InterpretException(Exception ex)
 		{
 			if (ex.GetType().FullName == "Java.Net.UnknownHostException"
-				|| ex.GetType().Name == "SSLException")
+			    || ex.GetType().Name == "SSLException")
 			{
 				return new AccessDataException(AccessDataException.ErrorType.NoInternetConnexion, ex);
 			}
@@ -26,12 +26,12 @@ namespace Xmf2.Core.Errors
 				string name = e.GetType().FullName?.ToLowerInvariant();
 
 				return name == "java.net.SocketTimeoutException"
-					|| name == "java.net.SocketException"
-					|| name == "java.net.ConnectException"
-					|| name == "javax.net.SSLHandshakeException"
-					|| (e is SocketException socketException)//TODO: socket error code should be restricted to avoid catching exception unrelated to timeout.
-					|| (e is TimeoutException)
-					|| (e is TaskCanceledException);
+				       || name == "java.net.SocketException"
+				       || name == "java.net.ConnectException"
+				       || name == "javax.net.SSLHandshakeException"
+				       || (e is SocketException socketException) //TODO: socket error code should be restricted to avoid catching exception unrelated to timeout.
+				       || (e is TimeoutException)
+				       || (e is TaskCanceledException);
 			}))
 			{
 				return new AccessDataException(AccessDataException.ErrorType.Timeout, ex);
@@ -64,9 +64,10 @@ namespace Xmf2.Core.Errors
 					return new AccessDataException(AccessDataException.ErrorType.UnAuthorized, ex);
 
 				case RestException restEx when (int)restEx.Response.StatusCode == STATUS_CODE_INVALID_APP_VERSION
-											|| (int)restEx.Response.StatusCode == STATUS_CODE_UPGRADE_REQUIRED:
+				                               || (int)restEx.Response.StatusCode == STATUS_CODE_UPGRADE_REQUIRED:
 					return new AccessDataException(AccessDataException.ErrorType.InvalidAppVersion, restEx);
 
+				case RestException restEx when restEx.Response.StatusCode == HttpStatusCode.BadGateway:
 				case OperationCanceledException canceledException when canceledException.CancellationToken.IsCancellationRequested:
 					return new AccessDataException(AccessDataException.ErrorType.Timeout);
 
