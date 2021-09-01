@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
 using System.Net.Http;
 using RestSharp.Portable;
 using Xmf2.Rest.HttpClient.Impl.Http;
@@ -17,22 +16,6 @@ namespace Xmf2.Rest.HttpClient.Impl
 	/// </remarks>
 	public class DefaultHttpClientFactory : IHttpClientFactory
 	{
-		private readonly bool _setCredentials;
-
-		/// <summary>
-		/// Initializes a new instance of the <see cref="DefaultHttpClientFactory" /> class.
-		/// </summary>
-		public DefaultHttpClientFactory() : this(true) { }
-
-		/// <summary>
-		/// Initializes a new instance of the <see cref="DefaultHttpClientFactory"/> class.
-		/// </summary>
-		/// <param name="setCredentials">Set the credentials for the native <see cref="HttpMessageHandler"/> (<see cref="HttpClientHandler"/>)?</param>
-		public DefaultHttpClientFactory(bool setCredentials)
-		{
-			_setCredentials = setCredentials;
-		}
-
 		/// <summary>
 		/// Create the client
 		/// </summary>
@@ -44,14 +27,21 @@ namespace Xmf2.Rest.HttpClient.Impl
 		/// </remarks>
 		public virtual IHttpClient CreateClient(IRestClient client)
 		{
-			var handler = CreateMessageHandler(client);
+			HttpMessageHandler handler = CreateMessageHandler(client);
 
-			var httpClient = new System.Net.Http.HttpClient(handler, disposeHandler:true)
+			System.Net.Http.HttpClient httpClient;
+			if (handler != null)
 			{
-				BaseAddress = GetBaseAddress(client)
-			};
+				httpClient = new System.Net.Http.HttpClient(handler, true);
+			}
+			else
+			{
+				httpClient = new System.Net.Http.HttpClient();
+			}
 
-			var timeout = client.Timeout;
+			httpClient.BaseAddress = GetBaseAddress(client);
+
+			TimeSpan? timeout = client.Timeout;
 			if (timeout.HasValue)
 			{
 				httpClient.Timeout = timeout.Value;
@@ -73,7 +63,7 @@ namespace Xmf2.Rest.HttpClient.Impl
 		/// </remarks>
 		public virtual IHttpRequestMessage CreateRequestMessage(IRestClient client, IRestRequest request, IList<Parameter> parameters)
 		{
-			var address = GetMessageAddress(client, request);
+			Uri address = GetMessageAddress(client, request);
 			var method = GetHttpMethod(client, request).ToHttpMethod();
 			var message = new HttpRequestMessage(method, address);
 			message = AddHttpHeaderParameters(message, request, parameters);
@@ -103,13 +93,13 @@ namespace Xmf2.Rest.HttpClient.Impl
 		/// <returns>The relative request message URL</returns>
 		protected virtual Uri GetMessageAddress(IRestClient client, IRestRequest request)
 		{
-			var fullUrl = client.BuildUri(request);
+			Uri fullUrl = client.BuildUri(request);
 			if (client.BaseUrl == null)
 			{
 				return fullUrl;
 			}
 
-			var url = client.BuildUri(null, false).MakeRelativeUri(fullUrl);
+			Uri url = client.BuildUri(null, false).MakeRelativeUri(fullUrl);
 			return url;
 		}
 
@@ -133,14 +123,14 @@ namespace Xmf2.Rest.HttpClient.Impl
 		/// <returns>The modified HTTP request message</returns>
 		protected virtual HttpRequestMessage AddHttpHeaderParameters(HttpRequestMessage message, IRestRequest request, IList<Parameter> parameters)
 		{
-			foreach (var param in parameters.Where(x => x.Type == ParameterType.HttpHeader))
+			foreach (Parameter param in parameters.Where(x => x.Type == ParameterType.HttpHeader))
 			{
 				if (message.Headers.Contains(param.Name))
 				{
 					message.Headers.Remove(param.Name);
 				}
 
-				var paramValue = param.ToRequestString();
+				string paramValue = param.ToRequestString();
 				if (param.ValidateOnAdd)
 				{
 					message.Headers.Add(param.Name, paramValue);
@@ -161,41 +151,9 @@ namespace Xmf2.Rest.HttpClient.Impl
 		/// <returns>A new HttpMessageHandler object</returns>
 		protected virtual HttpMessageHandler CreateMessageHandler(IRestClient client)
 		{
-			var handler = NewHandler();
-
-#if !NO_PROXY
-			if (handler.SupportsProxy && client.Proxy != null)
-			{
-				handler.Proxy = client.Proxy;
-			}
-#endif
-
-			if (client.CookieContainer != null)
-			{
-				handler.UseCookies = true;
-				handler.CookieContainer = client.CookieContainer;
-			}
-
-			if (_setCredentials)
-			{
-				var credentials = client.Credentials;
-				if (credentials != null)
-				{
-					handler.Credentials = credentials;
-				}
-			}
-
-			if (handler.SupportsAutomaticDecompression)
-			{
-				handler.AutomaticDecompression = DecompressionMethods.Deflate | DecompressionMethods.GZip;
-			}
-
-			return handler;
-		}
-
-		protected virtual HttpClientHandler NewHandler()
-		{
-			return new HttpClientHandler();
+			//vju 01/09/2021 : do not create HttpMessageHandler to use platform default
+			//more detail on : http://jonathanpeppers.com/Blog/improving-http-performance-in-xamarin-applications
+			return null;
 		}
 	}
 }
