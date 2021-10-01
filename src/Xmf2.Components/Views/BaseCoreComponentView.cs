@@ -32,13 +32,16 @@ namespace Xmf2.Components.Views
 
 			if (state is TViewState typedState)
 			{
-				OnStateUpdate(typedState);
-
-				CurrentState = typedState;
-				return;
+				if (!state.Equals(CurrentState))
+				{
+					OnStateUpdate(typedState);
+					CurrentState = typedState;
+				}
 			}
-
-			throw new ArgumentException($"expected state type for {GetType().Name} to be {typeof(TViewState)}, got {state.GetType()}", nameof(state));
+			else
+			{
+				throw new ArgumentException($"expected state type for {GetType().Name} to be {typeof(TViewState)}, got {state.GetType()}", nameof(state));
+			}
 		}
 
 		protected virtual void OnStateUpdate(TViewState state) { }
