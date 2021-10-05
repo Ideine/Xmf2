@@ -38,7 +38,7 @@ namespace Xmf2.Components.Droid.List
 
 		protected virtual CommonAdapter CreateAdapter()
 		{
-			return new CommonAdapter(typeof(IEntityViewState), id => _factory(Services)).DisposeWith(Disposables);
+			return new CommonAdapter(typeof(IEntityViewState), _ => _factory(Services)).DisposeWith(Disposables);
 		}
 
 		protected virtual void OnDesignView() { }

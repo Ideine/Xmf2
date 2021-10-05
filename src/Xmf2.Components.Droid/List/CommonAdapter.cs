@@ -13,7 +13,7 @@ namespace Xmf2.Components.Droid.List
 {
 	public class CommonAdapter : RecyclerView.Adapter
 	{
-		private readonly Xmf2Disposable _disposable = new Xmf2Disposable();
+		private readonly Xmf2Disposable _disposable = new();
 
 		private List<Type> _stateList;
 		protected Dictionary<Type, Func<string, IComponentView>> ComponentCreatorMap { get; private set; }
@@ -22,15 +22,15 @@ namespace Xmf2.Components.Droid.List
 		public const int HEADER_START_TYPE_INDEX = 1000;
 		public const int FOOTER_START_TYPE_INDEX = 2000;
 
-		protected List<IComponentView> HeaderList { get; private set; } = new List<IComponentView>();
-		private Dictionary<IComponentView, int?> _headersHeight = new Dictionary<IComponentView, int?>();
-		private Dictionary<IComponentView, IViewState> _headerStates = new Dictionary<IComponentView, IViewState>();
+		protected List<IComponentView> HeaderList { get; private set; } = new();
+		private Dictionary<IComponentView, int?> _headersHeight = new();
+		private Dictionary<IComponentView, IViewState> _headerStates = new();
 
-		private List<IComponentView> _footerList = new List<IComponentView>();
-		private Dictionary<IComponentView, IViewState> _footerStates = new Dictionary<IComponentView, IViewState>();
+		private List<IComponentView> _footerList = new();
+		private Dictionary<IComponentView, IViewState> _footerStates = new();
 
-		private Dictionary<IComponentView, ParallaxRecyclerViewHelper> _parallaxDictionary = new Dictionary<IComponentView, ParallaxRecyclerViewHelper>();
-		private Dictionary<IComponentView, View> _stickyDictionary = new Dictionary<IComponentView, View>();
+		private Dictionary<IComponentView, ParallaxRecyclerViewHelper> _parallaxDictionary = new();
+		private Dictionary<IComponentView, View> _stickyDictionary = new();
 
 		private IReadOnlyList<IEntityViewState> _itemSource;
 
@@ -127,7 +127,7 @@ namespace Xmf2.Components.Droid.List
 					if (_headersHeight.TryGetValue(header, out int? height) && height.HasValue)
 					{
 						ViewGroup.LayoutParams param = headerView.LayoutParameters;
-						param.Height = height.Value;
+						param!.Height = height.Value;
 						headerView.LayoutParameters = param;
 					}
 

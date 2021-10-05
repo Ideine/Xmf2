@@ -13,9 +13,9 @@ namespace Xmf2.Components.Droid.List
 {
 	public class BaseListView<TViewState> : BaseComponentView<TViewState>, IListView where TViewState : class, IViewState
 	{
-		private Dictionary<IComponentView, RecyclerView.OnScrollListener> _listenerList = new Dictionary<IComponentView, RecyclerView.OnScrollListener>();
+		private Dictionary<IComponentView, RecyclerView.OnScrollListener> _listenerList = new();
 
-		private Dictionary<IComponentView, EventSubscriber<RecyclerView>> _helperList = new Dictionary<IComponentView, EventSubscriber<RecyclerView>>();
+		private Dictionary<IComponentView, EventSubscriber<RecyclerView>> _helperList = new();
 
 		protected RecyclerView RecyclerView;
 

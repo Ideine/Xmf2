@@ -20,7 +20,7 @@ namespace Xmf2.Components.Droid.List
 
 		public override bool AreContentsTheSame(int oldItemPosition, int newItemPosition)
 		{
-			return false;
+			return _newList[newItemPosition].Equals(_oldList[oldItemPosition]);
 		}
 
 		public override bool AreItemsTheSame(int oldItemPosition, int newItemPosition)
