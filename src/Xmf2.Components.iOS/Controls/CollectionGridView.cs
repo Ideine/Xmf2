@@ -11,7 +11,15 @@ using Xmf2.iOS.Extensions.Controls;
 
 namespace Xmf2.Components.iOS.Controls
 {
-	public abstract class CollectionGridView<TComponentView> : BaseComponentView<IListViewState> where TComponentView : IComponentView
+	public abstract class CollectionGridView<TComponentView> : CollectionGridView<TComponentView, IListViewState>
+		where TComponentView : IComponentView
+	{
+		protected CollectionGridView(IServiceLocator services) : base(services) { }
+	}
+
+	public abstract class CollectionGridView<TComponentView, TState> : BaseComponentView<TState>
+		where TComponentView : IComponentView
+		where TState : class, IListViewState
 	{
 		protected UICollectionView GridView;
 
@@ -47,7 +55,7 @@ namespace Xmf2.Components.iOS.Controls
 			if (itemSize != null)
 			{
 				layout.ItemSize = itemSize.Value;
-				layout.MinimumInteritemSpacing = 0f;//cette taille sera induite par la largeur de l'item size.
+				layout.MinimumInteritemSpacing = 0f; //cette taille sera induite par la largeur de l'item size.
 			}
 			else
 			{
@@ -99,7 +107,7 @@ namespace Xmf2.Components.iOS.Controls
 		{
 			return new CollectionViewItemSource<CollectionViewItemCell>(
 				listView,
-                id => ViewFactory(Services).DisposeViewWith(Disposables),
+				id => ViewFactory(Services).DisposeViewWith(Disposables),
 				CollectionViewItemCell.NsCellIdentifier).DisposeWith(Disposables);
 		}
 
@@ -107,7 +115,7 @@ namespace Xmf2.Components.iOS.Controls
 
 		protected override UIView RenderView() => GridView;
 
-		protected override void OnStateUpdate(IListViewState state)
+		protected override void OnStateUpdate(TState state)
 		{
 			base.OnStateUpdate(state);
 			_source.ItemSource = state.Items;
@@ -120,9 +128,9 @@ namespace Xmf2.Components.iOS.Controls
 				GridView = null;
 				_source = null;
 			}
+
 			base.Dispose(disposing);
 		}
-
 
 		#region Nested class
 
@@ -136,6 +144,7 @@ namespace Xmf2.Components.iOS.Controls
 				{
 					return false;
 				}
+
 				_lastFrame = newBounds;
 				return true;
 			}
@@ -143,13 +152,12 @@ namespace Xmf2.Components.iOS.Controls
 			private static bool AreTheSame(CGRect frame1, CGRect frame2)
 			{
 				return frame1.X != frame2.X
-					|| frame1.Y != frame2.Y
-					|| frame1.Width != frame2.Width
-					|| frame1.Height != frame2.Height;
+				       || frame1.Y != frame2.Y
+				       || frame1.Width != frame2.Width
+				       || frame1.Height != frame2.Height;
 			}
 		}
 
 		#endregion
 	}
 }
-
