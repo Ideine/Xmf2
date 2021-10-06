@@ -1,11 +1,11 @@
 ﻿using System;
+using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
+using Xmf2.Common.Collections;
 using Xmf2.Core.Exceptions;
 using Xmf2.Core.HttpClient;
-using System.Linq;
-using Xmf2.Common.Collections;
-using Newtonsoft.Json;
 
 namespace Xmf2.Core.Errors
 {
@@ -25,10 +25,11 @@ namespace Xmf2.Core.Errors
 					return ERROR_HANDLED;
 				}
 			}
-			bool exceptionHandled =    ex is NotImplementedException notImplementedException && await HandleNotImplementedException(notImplementedException)
-									|| ex is InvalidAppVersionException invalidAppVersionException && await HandleInvalidAppVersionException(invalidAppVersionException)
-									|| ex is AccessDataException accessDataException && await HandleAccessDataException(accessDataException)
-									|| await HandleGenericException(ex);
+
+			bool exceptionHandled = (ex is NotImplementedException notImplementedException && await HandleNotImplementedException(notImplementedException))
+			                        || (ex is InvalidAppVersionException invalidAppVersionException && await HandleInvalidAppVersionException(invalidAppVersionException))
+			                        || (ex is AccessDataException accessDataException && await HandleAccessDataException(accessDataException))
+			                        || await HandleGenericException(ex);
 			return exceptionHandled;
 		}
 
@@ -40,9 +41,9 @@ namespace Xmf2.Core.Errors
 		public static bool TryDeserializeResponseContent<TResponse>(Exception fromEx, out HttpStatusCode httpStatusCode, out TResponse content)
 		{
 			if (TryGetRestException(fromEx, out var restException)
-			   && restException.Response != null
-			   && restException.Response.Content.NotNullOrEmpty()
-			   && TryDeserialize(restException.Response.Content, out content))
+			    && restException.Response != null
+			    && restException.Response.Content.NotNullOrEmpty()
+			    && TryDeserialize(restException.Response.Content, out content))
 			{
 				httpStatusCode = restException.Response.StatusCode;
 				return true;
@@ -71,8 +72,7 @@ namespace Xmf2.Core.Errors
 
 		public static bool TryGetHttpStatusCode(Exception fromEx, out HttpStatusCode errorCode)
 		{
-			if (TryGetRestException(fromEx, out var restException)
-			   && restException.Response != null)
+			if (TryGetRestException(fromEx, out RestException restException) && restException.Response != null)
 			{
 				errorCode = restException.Response.StatusCode;
 				return true;
@@ -83,17 +83,16 @@ namespace Xmf2.Core.Errors
 				return false;
 			}
 		}
+
 		public static bool TryGetRestException(Exception fromEx, out RestException restException)
 		{
-			restException = fromEx.Traverse(bySelector: e => e.InnerException)
-			                      .FirstOrDefault(e => e is RestException) as RestException;
+			restException = fromEx.Traverse(e => e.InnerException).FirstOrDefault(e => e is RestException) as RestException;
 			return restException != null;
 		}
 
 		public static bool IsExceptionInInner<TException>(Exception fromEx) where TException : Exception
 		{
-			return fromEx.Traverse(bySelector: e => e.InnerException)
-								  .Any(e => e is TException);
+			return fromEx.Traverse(e => e.InnerException).Any(e => e is TException);
 		}
 	}
 }

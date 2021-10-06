@@ -37,7 +37,7 @@ namespace Xmf2.Core.Errors
 				return new AccessDataException(AccessDataException.ErrorType.Timeout, ex);
 			}
 
-			if (ex is HttpRequestException httpException && httpException.InnerException is WebException webException)
+			if (ex is HttpRequestException { InnerException: WebException webException })
 			{
 				switch (webException.Status)
 				{
@@ -68,10 +68,10 @@ namespace Xmf2.Core.Errors
 					return new AccessDataException(AccessDataException.ErrorType.InvalidAppVersion, restEx);
 
 				case RestException restEx when restEx.Response.StatusCode == HttpStatusCode.BadGateway:
-				case OperationCanceledException canceledException when canceledException.CancellationToken.IsCancellationRequested:
+				case OperationCanceledException { CancellationToken: { IsCancellationRequested: true } }:
 					return new AccessDataException(AccessDataException.ErrorType.Timeout);
 
-				case WebException webEx when webEx.Status == WebExceptionStatus.ConnectFailure:
+				case WebException { Status: WebExceptionStatus.ConnectFailure }:
 					return new AccessDataException(AccessDataException.ErrorType.NoInternetConnexion, ex);
 
 				default:
@@ -83,7 +83,7 @@ namespace Xmf2.Core.Errors
 
 		private static bool AnyToDescendant(Exception baseEx, Func<Exception, bool> action)
 		{
-			var ex = baseEx;
+			Exception ex = baseEx;
 
 			while (ex != null)
 			{
