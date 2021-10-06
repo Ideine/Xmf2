@@ -3,6 +3,7 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Sockets;
 using System.Threading.Tasks;
+using Xmf2.Common.Extensions;
 using Xmf2.Core.Exceptions;
 using Xmf2.Core.HttpClient;
 
@@ -21,17 +22,17 @@ namespace Xmf2.Core.Errors
 				return new AccessDataException(AccessDataException.ErrorType.NoInternetConnexion, ex);
 			}
 
-			if (AnyToDescendant(ex, e =>
+			if (ex.AnyToDescendant(e =>
 			{
 				string name = e.GetType().FullName?.ToLowerInvariant();
-
+				//TODO: socket error code should be restricted to avoid catching exception unrelated to timeout.
 				return name == "java.net.SocketTimeoutException"
 				       || name == "java.net.SocketException"
 				       || name == "java.net.ConnectException"
 				       || name == "javax.net.SSLHandshakeException"
-				       || (e is SocketException socketException) //TODO: socket error code should be restricted to avoid catching exception unrelated to timeout.
-				       || (e is TimeoutException)
-				       || (e is TaskCanceledException);
+				       || e is SocketException
+				       || e is TimeoutException
+				       || e is TaskCanceledException;
 			}))
 			{
 				return new AccessDataException(AccessDataException.ErrorType.Timeout, ex);
@@ -78,26 +79,5 @@ namespace Xmf2.Core.Errors
 					return new AccessDataException(AccessDataException.ErrorType.Unknown, ex);
 			}
 		}
-
-		#region Helper
-
-		private static bool AnyToDescendant(Exception baseEx, Func<Exception, bool> action)
-		{
-			Exception ex = baseEx;
-
-			while (ex != null)
-			{
-				if (action(ex))
-				{
-					return true;
-				}
-
-				ex = ex.InnerException;
-			}
-
-			return false;
-		}
-
-		#endregion
 	}
 }
