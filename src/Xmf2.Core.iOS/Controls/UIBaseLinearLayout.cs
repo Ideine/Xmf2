@@ -53,7 +53,7 @@ namespace Xmf2.Core.iOS.Controls
 
 		public override void AddSubview(UIView view)
 		{
-			var previousViews = _views.ToArray();
+			UIView[] previousViews = _views.ToArray();
 
 			AddSubviewInternal(view);
 
@@ -71,7 +71,7 @@ namespace Xmf2.Core.iOS.Controls
 			{
 				if (_withSeparators)
 				{
-					var separator = _separatorCreator();
+					UIView separator = _separatorCreator();
 					_separatorViews.Add(separator);
 					base.AddSubview(separator);
 
@@ -102,7 +102,7 @@ namespace Xmf2.Core.iOS.Controls
 				return;
 			}
 
-			var previousViews = _views.ToArray();
+			UIView[] previousViews = _views.ToArray();
 			AddSubviewsInternal(viewsToAdd);
 			if (ConstraintCreator != null)
 			{
@@ -113,10 +113,10 @@ namespace Xmf2.Core.iOS.Controls
 				else
 				{
 					RemoveEndConstraint();
-					var previousView = previousViews.Last();
+					UIView previousView = previousViews.Last();
 					for (int i = 0; i < viewsToAdd.Length; i++)
 					{
-						var view = viewsToAdd[i];
+						UIView view = viewsToAdd[i];
 						if (_withSeparators)
 						{
 							UIView separator;
@@ -168,12 +168,12 @@ namespace Xmf2.Core.iOS.Controls
 			if (toRemove.Any() || toAdd.Any())
 			{
 				ClearConstraints();
-				foreach (var v in toRemove)
+				foreach (UIView v in toRemove)
 				{
 					_views.Remove(v);
 					v.RemoveFromSuperview();
 				}
-				foreach (var v in toAdd)
+				foreach (UIView v in toAdd)
 				{
 					AddSubviewInternal(v);
 				}
@@ -206,10 +206,10 @@ namespace Xmf2.Core.iOS.Controls
 			UIView previousView = firstView;
 			if (_withSeparators)
 			{
-				var usableArray = views.ToArray();
+				UIView[] usableArray = views.ToArray();
 				for (int i = 1; i < usableArray.Length; i++)
 				{
-					var view = usableArray[i];
+					UIView view = usableArray[i];
 					UIView separator;
 					if (i >= _separatorViews.Count)
 					{
@@ -231,7 +231,7 @@ namespace Xmf2.Core.iOS.Controls
 			}
 			else
 			{
-				foreach (var view in views.Skip(1))
+				foreach (UIView view in views.Skip(1))
 				{
 					SpaceConstraint(previousView, view);
 					FillSizeConstraint(view);
@@ -245,13 +245,13 @@ namespace Xmf2.Core.iOS.Controls
 		{
 			ClearConstraints();
 
-			for (var i = 0; i < _views.Count; i++)
+			for (int i = 0; i < _views.Count; i++)
 			{
 				_views[i].RemoveFromSuperview();
 			}
 			_views.Clear();
 
-			foreach (var separator in _separatorViews)
+			foreach (UIView separator in _separatorViews)
 			{
 				separator.RemoveFromSuperview();
 			}
@@ -277,14 +277,14 @@ namespace Xmf2.Core.iOS.Controls
 		{
 			for (int i = 0; i < viewsToAdd.Length; i++)
 			{
-				var view = viewsToAdd[i];
+				UIView view = viewsToAdd[i];
 				view.TranslatesAutoresizingMaskIntoConstraints = false;
 				base.AddSubview(view);
 
 				bool notLast = i != viewsToAdd.Length - 1;
 				if (_withSeparators && notLast)
 				{
-					var separator = _separatorCreator();
+					UIView separator = _separatorCreator();
 					separator.TranslatesAutoresizingMaskIntoConstraints = false;
 					_separatorViews.Add(separator);
 					base.AddSubview(separator);
@@ -296,14 +296,14 @@ namespace Xmf2.Core.iOS.Controls
 
 		private void SpaceConstraint(UIView previousCell, UIView nextCell)
 		{
-			var constraint = ConstraintCreator.Space(previousCell, nextCell);
+			NSLayoutConstraint[] constraint = ConstraintCreator.Space(previousCell, nextCell);
 			_spacingConstraints.Add(constraint);
 			AddConstraints(constraint);
 		}
 
 		private void SpaceConstraint(UIView previousCell, UIView separator, UIView nextCell)
 		{
-			var constraints = ConstraintCreator.Space(previousCell, separator, nextCell);
+			NSLayoutConstraint[] constraints = ConstraintCreator.Space(previousCell, separator, nextCell);
 			_spacingConstraints.Add(constraints);
 			AddConstraints(constraints);
 		}
@@ -317,7 +317,7 @@ namespace Xmf2.Core.iOS.Controls
 
 		private void FillSizeSeparatorConstraint(UIView separator)
 		{
-			var constraints = ConstraintCreator.FillSizeSeparator(this, separator);
+			NSLayoutConstraint[] constraints = ConstraintCreator.FillSizeSeparator(this, separator);
 			_fillSizeConstraints.Add(constraints);
 			AddConstraints(constraints);
 		}
@@ -346,10 +346,10 @@ namespace Xmf2.Core.iOS.Controls
 
 		private void RemoveSpacingConstraints()
 		{
-			foreach (var constraints in _spacingConstraints)
+			foreach (NSLayoutConstraint[] constraints in _spacingConstraints)
 			{
 				RemoveConstraints(constraints);
-				foreach (var constraint in constraints)
+				foreach (NSLayoutConstraint constraint in constraints)
 				{
 					constraint.Dispose();
 				}
@@ -379,10 +379,10 @@ namespace Xmf2.Core.iOS.Controls
 
 		private void RemoveFillingSizeConstraint()
 		{
-			foreach (var constraints in _fillSizeConstraints)
+			foreach (NSLayoutConstraint[] constraints in _fillSizeConstraints)
 			{
 				RemoveConstraints(constraints);
-				foreach (var constraint in constraints)
+				foreach (NSLayoutConstraint constraint in constraints)
 				{
 					constraint.Dispose();
 				}
@@ -423,7 +423,7 @@ namespace Xmf2.Core.iOS.Controls
 
 			public void DisposeRemoved()
 			{
-				foreach (var v in RemovedViews)
+				foreach (UIView v in RemovedViews)
 				{
 					v.Dispose();
 				}

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using UIKit;
 using Xmf2.Components.Interfaces;
 using Xmf2.Components.iOS.Interfaces;
@@ -8,7 +9,14 @@ using Xmf2.Core.Subscriptions;
 
 namespace Xmf2.Components.iOS.Controls
 {
-	public class TableListView<TComponentView> : BaseComponentView<IListViewState> where TComponentView : IComponentView
+	public class TableListView<TComponentView> : TableListView<TComponentView, IListViewState> where TComponentView : IComponentView
+	{
+		public TableListView(IServiceLocator services, Func<IServiceLocator, IComponentView> factory) : base(services, factory) { }
+	}
+
+	public class TableListView<TComponentView, TViewState> : BaseComponentView<TViewState>
+		where TComponentView : IComponentView
+		where TViewState : class, IListViewState
 	{
 		protected UITableView ListView;
 
@@ -27,7 +35,7 @@ namespace Xmf2.Components.iOS.Controls
 		{
 			get => ListView.ContentInset;
 			set => ListView.ContentInset = value;
-		} 
+		}
 
 		public TableListView(IServiceLocator services, Func<IServiceLocator, IComponentView> factory) : base(services)
 		{
@@ -63,10 +71,17 @@ namespace Xmf2.Components.iOS.Controls
 			return ListView;
 		}
 
-		protected override void OnStateUpdate(IListViewState state)
+		protected override void OnStateUpdate(TViewState state)
 		{
-			base.OnStateUpdate(state);
-			_source.ItemSource = state.Items;
+			try
+			{
+				base.OnStateUpdate(state);
+				_source.ItemSource = state.Items;
+			}
+			catch (Exception e)
+			{
+				Debugger.Break();
+			}
 		}
 
 		protected override void Dispose(bool disposing)
@@ -77,8 +92,8 @@ namespace Xmf2.Components.iOS.Controls
 				_source = null;
 				_factory = null;
 			}
+
 			base.Dispose(disposing);
 		}
 	}
 }
-

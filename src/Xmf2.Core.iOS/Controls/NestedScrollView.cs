@@ -14,8 +14,8 @@ namespace Xmf2.Core.iOS.Controls
 	{
 		private const string SELECTOR_BOUNDS_SIZE = "bounds";
 		private const string SELECTOR_CONTENT_SIZE = "contentSize";
-		private readonly List<UIView> _subviewsInLayoutOrder = new List<UIView>(4);
-		private readonly List<StickyViewData> _stickyViewList = new List<StickyViewData>();
+		private readonly List<UIView> _subviewsInLayoutOrder = new(4);
+		private readonly List<StickyViewData> _stickyViewList = new();
 
 		private readonly UILinearLayout _contentView;
 
