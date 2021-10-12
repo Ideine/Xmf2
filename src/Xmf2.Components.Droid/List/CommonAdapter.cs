@@ -178,7 +178,7 @@ namespace Xmf2.Components.Droid.List
 					_headersHeight[header] = height;
 				}
 
-				if (index.HasValue)
+				if (index.HasValue && index < HeaderList.Count)
 				{
 					HeaderList.Insert(index.Value, header);
 					NotifyItemInserted(index.Value);
