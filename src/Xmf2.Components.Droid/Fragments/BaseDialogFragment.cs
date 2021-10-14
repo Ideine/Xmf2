@@ -87,7 +87,7 @@ namespace Xmf2.Components.Droid.Fragments
 
 		public bool OnKey(IDialogInterface dialog, [GeneratedEnum] Keycode keyCode, KeyEvent e)
 		{
-			if (keyCode == Keycode.Back)
+			if (keyCode == Keycode.Back && e.Action == KeyEventActions.Up)
 			{
 				Services.Resolve<IEventBus>().Publish(new BackEvent());
 				return true;
