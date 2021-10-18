@@ -109,5 +109,14 @@ namespace Xmf2.Core.Droid.Helpers
 		{
 			view.Visibility = visible ? ViewStates.Visible : ViewStates.Invisible;
 		}
+
+		/// <summary>
+		/// Get Id of drawable by the name of the resource
+		/// </summary>
+		/// <returns>Id of the resource</returns>
+		public static int GetDrawableByName(this Context context, string name)
+		{
+			return context.Resources.GetIdentifier(name, "drawable", context.PackageName);
+		}
 	}
 }
