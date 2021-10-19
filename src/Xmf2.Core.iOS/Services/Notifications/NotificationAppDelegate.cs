@@ -60,10 +60,9 @@ namespace Xmf2.Core.iOS.Services.Notifications
 			}
 		}
 
-
-
 		public override void ReceivedRemoteNotification(UIApplication application, NSDictionary userInfo)
 		{
+			UpdateBadgeFromUserInfo(userInfo);
 			if (application.ApplicationState != UIApplicationState.Active)
 			{
 				HandleDataUpdate(userInfo);
@@ -80,6 +79,28 @@ namespace Xmf2.Core.iOS.Services.Notifications
 			else
 			{
 				HandleDataUpdate(userInfo);
+			}
+		}
+
+		protected static void UpdateBadgeFromUserInfo(NSDictionary userInfo)
+		{
+			var apsKey = new NSString("aps");
+			//badge key
+			var badgeKey = new NSString("badge");
+
+			if (userInfo is null)
+			{
+				return;
+			}
+
+			if (userInfo.TryGet(apsKey, out NSDictionary aps) && aps.TryGet(badgeKey, out NSNumber badgeCountNumber))
+			{
+				int badgeCount = badgeCountNumber.Int32Value;
+				UIApplication.SharedApplication.InvokeOnMainThread(() =>
+				{
+					//do not inline
+					UIApplication.SharedApplication.ApplicationIconBadgeNumber = badgeCount;
+				});
 			}
 		}
 
@@ -111,8 +132,10 @@ namespace Xmf2.Core.iOS.Services.Notifications
 				{
 					writer.WriteObject(userInfo);
 				}
+
 				content = writer.ToString();
 			}
+
 			HandleDeeplink(content);
 		}
 
@@ -125,8 +148,8 @@ namespace Xmf2.Core.iOS.Services.Notifications
 
 			if (!UIDevice.CurrentDevice.CheckSystemVersion(10, 0)) // iOS < 10.0
 			{
-				if (   launchOptions.TryGet(UIApplication.LaunchOptionsLocalNotificationKey, out UILocalNotification notification)
-					&& notification.UserInfo != null)
+				if (launchOptions.TryGet(UIApplication.LaunchOptionsLocalNotificationKey, out UILocalNotification notification)
+				    && notification.UserInfo != null)
 				{
 					DeeplinkFromNotification(notification.UserInfo);
 				}
@@ -256,7 +279,7 @@ namespace Xmf2.Core.iOS.Services.Notifications
 		private static NSObject[] ToNSObjects(NSArray array)
 		{
 			NSObject[] result = new NSObject[(int)array.Count];
-			for (nuint i = 0; i < array.Count; ++i)
+			for (nuint i = 0 ; i < array.Count ; ++i)
 			{
 				result[i] = array.GetItem<NSObject>(i);
 			}

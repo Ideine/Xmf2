@@ -28,6 +28,7 @@ namespace Xmf2.Core.Errors
 				//TODO: socket error code should be restricted to avoid catching exception unrelated to timeout.
 				return name == "java.net.SocketTimeoutException"
 				       || name == "java.net.SocketException"
+				       || name == "java.net.UnknownHostException"
 				       || name == "java.net.ConnectException"
 				       || name == "javax.net.SSLHandshakeException"
 				       || e is SocketException
@@ -48,6 +49,10 @@ namespace Xmf2.Core.Errors
 					case WebExceptionStatus.Timeout:
 						return new AccessDataException(AccessDataException.ErrorType.Timeout, ex);
 				}
+			}
+			else if (ex is HttpRequestException httpException && httpException.Message.Contains("SSL"))
+			{
+				return new AccessDataException(AccessDataException.ErrorType.Timeout, ex);
 			}
 
 			switch (ex)
