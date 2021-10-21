@@ -40,7 +40,6 @@
     <Compile Include="CollectionView\CollectionViewItemCell.cs" />
     <Compile Include="CollectionView\CollectionViewItemSource.cs" />
     <Compile Include="Interfaces\IComponentView.cs" />
-    <Compile Include="Interfaces\IViewPresenterService.cs" />
     <Compile Include="Navigations\NavigationRegistrationHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Views\BaseComponentView.cs" />
