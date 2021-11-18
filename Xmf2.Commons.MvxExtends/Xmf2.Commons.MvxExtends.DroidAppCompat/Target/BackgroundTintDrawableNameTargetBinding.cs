@@ -1,7 +1,7 @@
-using Android.Content.Res;
 using Android.Views;
-using Android.Support.V4.View;
+using Android.Content.Res;
 using MvvmCross.Platforms.Android.Binding.Target;
+using AndroidX.Core.View;
 
 namespace Xmf2.Commons.MvxExtends.DroidAppCompat.Target
 {

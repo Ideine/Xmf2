@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -57,8 +57,13 @@
       <Name>Xmf2.Commons</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="MvvmCross.Droid.Support.V7.AppCompat" Version="6.4.2" />
+  <ItemGroup>    
+    <PackageReference Include="Xamarin.AndroidX.Migration" Version="1.0.8" />    
+    <PackageReference Include="Xamarin.AndroidX.Core" Version="1.6.0.3" />
+    <PackageReference Include="Xamarin.AndroidX.Activity" Version="1.3.1.2" />    
+    <PackageReference Include="Xamarin.AndroidX.Fragment" Version="1.3.6.3" />
+    <PackageReference Include="Xamarin.AndroidX.AppCompat" Version="1.3.1.1" />
+    <PackageReference Include="MvvmCross" Version="8.0.2" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
 </Project>

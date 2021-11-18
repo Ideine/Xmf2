@@ -3,9 +3,9 @@ using Android.Util;
 using Android.Views;
 using Android.Content;
 using Android.Runtime;
-using Android.Support.V7.Widget;
 using MvvmCross.ViewModels;
 using Xmf2.Commons.MvxExtends.Interactions;
+using AndroidX.AppCompat.Widget;
 
 namespace Xmf2.Commons.MvxExtends.DroidAppCompat.Views
 {
