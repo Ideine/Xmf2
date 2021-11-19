@@ -1,11 +1,11 @@
 using System;
 using Xmf2.Commons.Subscriptions;
 using Xmf2.Commons.MvxExtends.ViewModels;
-using MvvmCross.Droid.Support.V7.AppCompat;
+using MvvmCross.Platforms.Android.Views;
 
 namespace Xmf2.Commons.MvxExtends.DroidAppCompat.Views
 {
-	public abstract class BaseView<TViewModel, TParameter> : MvxAppCompatActivity<TViewModel> where TViewModel : BaseViewModel<TParameter> where TParameter : class
+	public abstract class BaseView<TViewModel, TParameter> : MvxActivity<TViewModel> where TViewModel : BaseViewModel<TParameter> where TParameter : class
 	{
 		protected Xmf2Disposable Disposable = new Xmf2Disposable();
 
