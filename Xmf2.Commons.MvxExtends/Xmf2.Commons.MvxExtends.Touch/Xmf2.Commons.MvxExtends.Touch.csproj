@@ -56,8 +56,8 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="MvvmCross" Version="8.0.2" />
-    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
-    <PackageReference Include="Xmf2.iOS.Extensions" Version="1.0.7" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="Xmf2.iOS.Extensions" Version="1.0.9" />
   </ItemGroup>
   <Target Name="CustomBuildInfo" BeforeTargets="BeforeBuild">
     <Message Text="$(CustomBuildInfoMessage)" Importance="high" />
