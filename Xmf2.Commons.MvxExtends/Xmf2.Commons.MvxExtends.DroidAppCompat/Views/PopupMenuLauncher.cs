@@ -49,8 +49,8 @@ namespace Xmf2.Commons.MvxExtends.DroidAppCompat.Views
 
 			_menu = new PopupMenu(Context, this);
 
-			int menuId = Menu.First + 1;
-			foreach (var item in request.LstPopupItem)
+			int menuId = IMenu.First + 1;
+			foreach (PopupMenuRequest.Item item in request.LstPopupItem)
 			{
 				_menu.Menu.Add(0, menuId, item.Order, item.Title);
 				menuId++;

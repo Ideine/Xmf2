@@ -42,7 +42,7 @@ namespace Xmf2.Commons.MvxExtends.DroidAppCompat.Target
 			{
 				_menu = new PopupMenu(view.Context, view);
 
-				int menuId = Menu.First + 1;
+				int menuId = IMenu.First + 1;
 				foreach (PopupMenuRequest.Item item in _currentRequest.LstPopupItem)
 				{
 					_menu.Menu.Add(0, menuId, item.Order, item.Title);
