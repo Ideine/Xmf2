@@ -1,12 +1,13 @@
 ﻿using System;
-using System.Net;
+using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
-using Xmf2.Commons.Logs;
-using Xmf2.Commons.Exceptions;
 using Xmf2.Commons.Errors;
-using System.Collections.Generic;
+using Xmf2.Commons.Exceptions;
+using Xmf2.Commons.Logs;
+using Xmf2.Rest.OAuth2;
 
 namespace Xmf2.Commons.Rx.Errors
 {
@@ -18,7 +19,7 @@ namespace Xmf2.Commons.Rx.Errors
 		private readonly Lazy<WebExceptionStatus[]> _timeoutStatus;
 		private readonly Lazy<WebExceptionStatus[]> _noInternetStatus;
 
-		private readonly List<string> _noInternetMessages = new List<string>
+		private readonly List<string> _noInternetMessages = new()
 		{
 			"SSL handshake timed out",
 			"Unable to resolve host",
@@ -57,37 +58,18 @@ namespace Xmf2.Commons.Rx.Errors
 
 		protected virtual AccessDataException ProcessException(Exception ex)
 		{
-			switch (ex)
+			return ex switch
 			{
-				case AccessDataException accessData:
-					return accessData;
-
-				case OperationCanceledException operationCanceled when operationCanceled.CancellationToken.IsCancellationRequested:
-					return new AccessDataException(AccessDataException.ErrorType.Timeout);
-
-				case InvalidAppVersionException _:
-					return new AccessDataException(AccessDataException.ErrorType.InvalidAppVersion, ex);
-
-				case WebException webException when _noInternetStatus.Value.Contains(webException.Status):
-					return new AccessDataException(AccessDataException.ErrorType.NoInternetConnexion, ex);
-
-				case WebException webException when _timeoutStatus.Value.Contains(webException.Status):
-					return new AccessDataException(AccessDataException.ErrorType.Timeout, ex);
-
-				case TimeoutException timeoutException:
-					return new AccessDataException(AccessDataException.ErrorType.Timeout, ex);
-
-				case Rest.OAuth2.RestException restException when HttpStatusCode.NotFound == restException?.Response.StatusCode:
-					return new AccessDataException(AccessDataException.ErrorType.NotFound, ex);
-
-				case Exception exType when exType.GetType().FullName.Contains("IOException"):
-					return new AccessDataException(AccessDataException.ErrorType.NoInternetConnexion, ex);
-
-				default:
-					return IsInternetException(ex)
-						? new AccessDataException(AccessDataException.ErrorType.NoInternetConnexion, ex)
-						: new AccessDataException(AccessDataException.ErrorType.Unknown, ex);
-			}
+				AccessDataException accessData => accessData,
+				OperationCanceledException operationCanceled when operationCanceled.CancellationToken.IsCancellationRequested => new AccessDataException(AccessDataException.ErrorType.Timeout),
+				InvalidAppVersionException _ => new AccessDataException(AccessDataException.ErrorType.InvalidAppVersion, ex),
+				WebException webException when _noInternetStatus.Value.Contains(webException.Status) => new AccessDataException(AccessDataException.ErrorType.NoInternetConnexion, ex),
+				WebException webException when _timeoutStatus.Value.Contains(webException.Status) => new AccessDataException(AccessDataException.ErrorType.Timeout, ex),
+				TimeoutException => new AccessDataException(AccessDataException.ErrorType.Timeout, ex),
+				RestException restException when HttpStatusCode.NotFound == restException?.Response.StatusCode => new AccessDataException(AccessDataException.ErrorType.NotFound, ex),
+				Exception exType when exType.GetType().FullName.Contains("IOException") => new AccessDataException(AccessDataException.ErrorType.NoInternetConnexion, ex),
+				_ => IsInternetException(ex) ? new AccessDataException(AccessDataException.ErrorType.NoInternetConnexion, ex) : new AccessDataException(AccessDataException.ErrorType.Unknown, ex)
+			};
 		}
 
 		protected virtual bool IsInternetException(Exception ex)
@@ -126,29 +108,19 @@ namespace Xmf2.Commons.Rx.Errors
 				.Retry(3);
 		}
 
-		protected virtual WebExceptionStatus[] RetryStatus()
+		protected virtual WebExceptionStatus[] RetryStatus() => new[]
 		{
-			return new[]
-			{
-				WebExceptionStatus.ConnectFailure,
-				WebExceptionStatus.SendFailure,
-				WebExceptionStatus.UnknownError
-			};
-		}
+			WebExceptionStatus.ConnectFailure,
+			WebExceptionStatus.SendFailure,
+			WebExceptionStatus.UnknownError
+		};
 
-		protected virtual WebExceptionStatus[] NoInternetStatus()
+		protected virtual WebExceptionStatus[] NoInternetStatus() => new[]
 		{
-			return new[]
-			{
-				WebExceptionStatus.ConnectFailure
-			};
-		}
+			WebExceptionStatus.ConnectFailure
+		};
 
-		protected virtual WebExceptionStatus[] TimeoutStatus()
-		{
-			return new WebExceptionStatus[]
-				{ };
-		}
+		protected virtual WebExceptionStatus[] TimeoutStatus() => Array.Empty<WebExceptionStatus>();
 
 		protected virtual void LogOnRetry(Exception ex, int attemptCount)
 		{

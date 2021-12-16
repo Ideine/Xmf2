@@ -17,7 +17,7 @@ namespace Xmf2.Rest.Caches
 		{
 			private readonly TimeSpan _validityTime;
 			private readonly Func<TParam, CancellationToken, Task<T>> _loader;
-			private readonly SemaphoreSlim _mutex = new SemaphoreSlim(1, 1);
+			private readonly SemaphoreSlim _mutex = new(1, 1);
 			private T _value;
 			private TParam _lastParam;
 			private DateTime _expireDate;

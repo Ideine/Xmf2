@@ -16,13 +16,13 @@ namespace Xmf2.Commons.Rx.ViewModels
 	{
 		private const int DEFAULT_TIMEOUT = 60;
 
-		protected Lazy<IErrorHandler> ErrorHandler { get; } = new Lazy<IErrorHandler>(Locator.Current.GetService<IErrorHandler>);
+		protected Lazy<IErrorHandler> ErrorHandler { get; } = new(Locator.Current.GetService<IErrorHandler>);
 
-		private readonly Subject<bool> _isInitializing = new Subject<bool>();
-		private readonly Subject<bool> _isStarting = new Subject<bool>();
-		private readonly Subject<bool> _isResuming = new Subject<bool>();
-		private readonly Subject<bool> _isPausing = new Subject<bool>();
-		private readonly Subject<bool> _isStopping = new Subject<bool>();
+		private readonly Subject<bool> _isInitializing = new();
+		private readonly Subject<bool> _isStarting = new();
+		private readonly Subject<bool> _isResuming = new();
+		private readonly Subject<bool> _isPausing = new();
+		private readonly Subject<bool> _isStopping = new();
 
 		public ViewModelActivator Activator { get; }
 
@@ -141,8 +141,8 @@ namespace Xmf2.Commons.Rx.ViewModels
 			}
 
 			private readonly BaseViewModel _viewModel;
-			private readonly ConcurrentQueue<ViewModelState> _transitionsQueue = new ConcurrentQueue<ViewModelState>();
-			private readonly object _isRunningMutex = new object();
+			private readonly ConcurrentQueue<ViewModelState> _transitionsQueue = new();
+			private readonly object _isRunningMutex = new();
 			private readonly TaskCompletionSource<object> _initializationTask;
 			private readonly StateAutomata _stateAutomata;
 
