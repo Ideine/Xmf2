@@ -4,7 +4,7 @@ using Xmf2.Commons.MvxExtends.ViewModels;
 
 namespace Xmf2.Commons.MvxExtends.DroidAppCompat.Views
 {
-    public abstract class BaseView<TViewModel> : MvxActivity<TViewModel> where TViewModel : BaseViewModel
+    public abstract class BaseView<TViewModel, TParameter> : MvxActivity<TViewModel> where TViewModel : BaseViewModel<TParameter> where TParameter : class
     {
         public BaseView() : base() { }
 

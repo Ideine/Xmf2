@@ -3,7 +3,8 @@ using Xmf2.Commons.MvxExtends.ViewModels;
 
 namespace Xmf2.Commons.MvxExtends.Droid.Views
 {
-    public abstract class BaseView<TViewModel> : MvxActivity<TViewModel> where TViewModel : BaseViewModel
+    public abstract class BaseView<TViewModel, TParmeter> : MvxActivity<TViewModel>
+        where TViewModel : BaseViewModel<TParmeter> where TParmeter : class
     {
         protected override void OnDestroy()
         {
