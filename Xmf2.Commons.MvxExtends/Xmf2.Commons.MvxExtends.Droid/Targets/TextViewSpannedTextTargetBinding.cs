@@ -1,19 +1,7 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using Android.App;
-using Android.Content;
-using Android.OS;
-using Android.Runtime;
-using Android.Views;
-using Android.Widget;
-using Android.Graphics;
 using Android.Text;
-using MvvmCross.Binding.Droid.Target;
-using MvvmCross.Binding;
-using MvvmCross.Platform.Platform;
+using Android.Widget;
+using MvvmCross.Platforms.Android.Binding.Target;
 
 namespace Xmf2.Commons.MvxExtends.Droid.Targets
 {
@@ -29,8 +17,7 @@ namespace Xmf2.Commons.MvxExtends.Droid.Targets
         {
             if (value != null && !(value is ISpanned))
             {
-                MvxBindingTrace.Trace(MvxTraceLevel.Warning,
-                                      "Value '{0}' could not be parsed as a ISpanned", value);
+                System.Diagnostics.Debug.Write($"Value '{value}' could not be parsed as a ISpanned");
             }
 
             TextView tvw = target as TextView;

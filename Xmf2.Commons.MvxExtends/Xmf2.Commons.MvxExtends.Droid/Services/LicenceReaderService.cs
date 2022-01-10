@@ -8,7 +8,6 @@ namespace Xmf2.Commons.MvxExtends.Droid.Services
 {
     public class LicenceReaderService : ILicenceReaderService
     {
-
         private readonly Context _context;
 
         private AssetManager _assetManager;

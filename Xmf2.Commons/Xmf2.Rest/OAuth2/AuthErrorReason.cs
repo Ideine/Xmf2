@@ -1,4 +1,4 @@
-namespace Xmf2.Rest.OAuth2
+﻿namespace Xmf2.Rest.OAuth2
 {
 	public enum AuthErrorReason
 	{

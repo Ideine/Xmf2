@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 
 namespace Xmf2.Commons.Services.Authentications.Models
 {

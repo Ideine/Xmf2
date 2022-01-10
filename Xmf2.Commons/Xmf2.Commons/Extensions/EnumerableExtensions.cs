@@ -1,17 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Xmf2.Commons.Extensions
 {
     public static class EnumerableExtensions
-    {
-        public static IEnumerable<T> EmptyIfNull<T>(this IEnumerable<T> source)
-        {
+	{
+		public static IEnumerable<T> EmptyIfNull<T>(this IEnumerable<T> source)
+		{
 			return source ?? new T[0];
-        }
+		}
 
 		/// <summary>
 		/// Détermine si la séquence passée est <c>null</c> ou vide.
@@ -37,5 +35,5 @@ namespace Xmf2.Commons.Extensions
 				throw new ArgumentNullException(nameof(source));
 			return !source.Any();
 		}
-    }
+	}
 }

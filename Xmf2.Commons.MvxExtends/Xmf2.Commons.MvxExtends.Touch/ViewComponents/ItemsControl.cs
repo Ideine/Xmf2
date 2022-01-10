@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using MvvmCross.Platform.Platform;
 using UIKit;
 
 namespace Xmf2.Commons.MvxExtends.Touch.ViewComponents
@@ -252,7 +251,7 @@ namespace Xmf2.Commons.MvxExtends.Touch.ViewComponents
             catch (Exception ex)
             {
 #if DEBUG
-                MvxTrace.Trace($"ItemSelected: Exception: {ex}");
+                System.Diagnostics.Debug.WriteLine($"ItemSelected: Exception: {ex}");
 #endif
             }
         }

@@ -1,9 +1,6 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using UIKit;
 using CoreGraphics;
+using UIKit;
 
 public static class AnimationExtensions
 {

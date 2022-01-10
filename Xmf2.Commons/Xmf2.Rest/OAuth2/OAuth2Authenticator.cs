@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
@@ -42,7 +42,7 @@ namespace Xmf2.Rest.OAuth2
 			{
 				throw new InvalidOperationException("Missing Access data");
 			}
-			
+
 			if (DateTime.Now.Add(Configuration.TokenSafetyMargin) > expireDate.Value)
 			{
 				//get a new refresh token now

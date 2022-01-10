@@ -1,5 +1,5 @@
 ﻿using System;
-using MvvmCross.Platform;
+using MvvmCross;
 
 namespace Xmf2.Commons.MvxExtends.Licences.Models
 {

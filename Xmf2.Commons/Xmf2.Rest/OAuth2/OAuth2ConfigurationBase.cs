@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Net;
 using Newtonsoft.Json;
 using RestSharp.Portable;
@@ -11,7 +11,7 @@ namespace Xmf2.Rest.OAuth2
 
 		public string LoginUrl { get; protected set; }
 
-		public Method RefreshMethod { get; protected set;} = Method.POST;
+		public Method RefreshMethod { get; protected set; } = Method.POST;
 
 		public string RefreshUrl { get; protected set; }
 
@@ -73,5 +73,4 @@ namespace Xmf2.Rest.OAuth2
 
 		protected abstract OAuth2AuthResult HandleAuthResult(TAuthRequestResponse response);
 	}
-
 }

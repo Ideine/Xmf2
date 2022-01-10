@@ -13,7 +13,7 @@ namespace Xmf2.Rest.HttpClient.Impl.Http
     public class DefaultHttpClient : IHttpClient
     {
         private readonly DefaultHttpHeaders _defaultHeaders;
-		
+
         private readonly CookieContainer _cookies;
 
         /// <summary>
@@ -64,20 +64,20 @@ namespace Xmf2.Rest.HttpClient.Impl.Http
         /// <returns>The task to query the response</returns>
         public async Task<IHttpResponseMessage> SendAsync(IHttpRequestMessage request, CancellationToken cancellationToken)
         {
-	        try
-	        {
-		        var requestMessage = request.AsHttpRequestMessage();
-		        var response = await Client.SendAsync(requestMessage, cancellationToken);
-		        return new DefaultHttpResponseMessage(requestMessage, response, _cookies);
-	        }
-	        catch (TaskCanceledException ex)
-	        {
-		        if (ex.CancellationToken == cancellationToken)
-		        {
-			        throw;
-		        }
-		        throw new TimeoutException("HTTP Timeout", ex);
-	        }
+            try
+            {
+                var requestMessage = request.AsHttpRequestMessage();
+                var response = await Client.SendAsync(requestMessage, cancellationToken);
+                return new DefaultHttpResponseMessage(requestMessage, response, _cookies);
+            }
+            catch (TaskCanceledException ex)
+            {
+                if (ex.CancellationToken == cancellationToken)
+                {
+                    throw;
+                }
+                throw new TimeoutException("HTTP Timeout", ex);
+            }
         }
 
         /// <summary>

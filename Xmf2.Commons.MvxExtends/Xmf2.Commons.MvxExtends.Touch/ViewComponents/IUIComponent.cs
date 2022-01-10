@@ -1,9 +1,9 @@
-using MvvmCross.Binding.iOS.Views;
+using MvvmCross.Platforms.Ios.Binding.Views;
 using Xmf2.Commons.MvxExtends.ViewModels;
 
 namespace Xmf2.Commons.MvxExtends.Touch.ViewComponents
 {
-	public interface IUIComponent : IMvxBindable
+    public interface IUIComponent : IMvxBindable
 	{
 		void AutoLayout();
 		void Bind();

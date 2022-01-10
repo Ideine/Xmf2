@@ -1,21 +1,10 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using Android.App;
-using Android.Content;
-using Android.OS;
-using Android.Runtime;
-using Android.Views;
-using Android.Widget;
-
-using MvvmCross.Droid.Support.V7.AppCompat;
+using MvvmCross.Platforms.Android.Views;
 using Xmf2.Commons.MvxExtends.ViewModels;
 
 namespace Xmf2.Commons.MvxExtends.DroidAppCompat.Views
 {
-    public abstract class BaseView<TViewModel> : MvxAppCompatActivity<TViewModel> where TViewModel : BaseViewModel
+    public abstract class BaseView<TViewModel> : MvxActivity<TViewModel> where TViewModel : BaseViewModel
     {
         public BaseView() : base() { }
 

@@ -72,11 +72,11 @@ namespace Xmf2.Rest.HttpClient.Impl.Http
         /// </summary>
         public IHttpContent Content { get; }
 
-		/// <summary>
-		/// Throws an exception when the status doesn't indicate success.
-		/// </summary>
-		/// <exception cref="HttpRequestException">Thrown when no response message was returned for a request.</exception>
-		public void EnsureSuccessStatusCode()
+        /// <summary>
+        /// Throws an exception when the status doesn't indicate success.
+        /// </summary>
+        /// <exception cref="HttpRequestException">Thrown when no response message was returned for a request.</exception>
+        public void EnsureSuccessStatusCode()
         {
             if (ResponseMessage == null)
                 throw new HttpRequestException(ReasonPhrase);

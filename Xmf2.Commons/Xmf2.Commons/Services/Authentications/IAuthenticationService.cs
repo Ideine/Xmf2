@@ -1,9 +1,8 @@
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
 
 namespace Xmf2.Commons.Services.Authentications
 {
-
 	public interface IAuthenticationService
 	{
 		bool IsLogged { get; }
@@ -24,5 +23,4 @@ namespace Xmf2.Commons.Services.Authentications
 
 		Task Logout(CancellationToken ct);
 	}
-
 }

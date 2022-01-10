@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using RestSharp.Portable;
 
 namespace Xmf2.Rest.OAuth2

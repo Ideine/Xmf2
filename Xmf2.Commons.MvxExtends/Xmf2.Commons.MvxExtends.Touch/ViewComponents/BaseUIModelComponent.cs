@@ -1,14 +1,14 @@
 using System;
+using MvvmCross;
 using MvvmCross.Binding.Attributes;
 using MvvmCross.Binding.BindingContext;
-using MvvmCross.Binding.iOS.Views;
-using MvvmCross.Platform;
+using MvvmCross.Platforms.Ios.Binding.Views;
 using UIKit;
 
 namespace Xmf2.Commons.MvxExtends.Touch.ViewComponents
 {
 
-	public abstract class BaseUIModelComponent<TModel> : UIView, IUIModelComponent<TModel>, IMvxBindable, IDisposable
+    public abstract class BaseUIModelComponent<TModel> : UIView, IUIModelComponent<TModel>, IMvxBindable, IDisposable
 													where TModel : class
 	{
 		protected BaseUIModelComponent()

@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 
 namespace System
 {
-	public static class StringHelper
+    public static class StringHelper
 	{
 		public static string Join(string separator, bool removeEmptyEntries, params string[] values)
 		{

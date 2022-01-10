@@ -1,11 +1,11 @@
-﻿using MvvmCross.Platform.Platform;
-using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.IO;
+using MvvmCross.Base;
+using Newtonsoft.Json;
 
 namespace Xmf2.Commons.MvxExtends.Helpers
 {
-	public class NavigationJsonConverter : IMvxJsonConverter
+    public class NavigationJsonConverter : IMvxJsonConverter
 	{
 		private static readonly JsonSerializerSettings Settings;
 

@@ -9,7 +9,6 @@ namespace Xmf2.Commons.MvxExtends.Touch.ViewComponents
 {
     public class NavBarWithTwoActions : UIView
     {
-
         private static readonly UIColor _DEFAULT_TEXT_HIGHLIGHT_COLOR = UIColorExtension.ColorFromHex(0x757575);
         private bool _layoutDone;
 

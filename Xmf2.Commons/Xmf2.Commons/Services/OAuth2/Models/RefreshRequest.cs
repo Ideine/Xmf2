@@ -1,4 +1,4 @@
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 
 namespace Xmf2.Commons.Services.OAuth2.Models
 {

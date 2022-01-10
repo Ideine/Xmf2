@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Threading.Tasks;
-using MvvmCross.Platform.Platform;
 
 namespace Xmf2.Commons.MvxExtends.Services
 {
-	public interface INotificationService
+    public interface INotificationService
 	{
 		void SetToken(string token);
 
@@ -65,7 +64,7 @@ namespace Xmf2.Commons.MvxExtends.Services
 			}
 			catch (Exception ex)
 			{
-				MvxTrace.Trace($"Error while registering for notification: {ex}");
+				System.Diagnostics.Debug.WriteLine($"Error while registering for notification: {ex}");
 			}
 		}
 
@@ -83,7 +82,7 @@ namespace Xmf2.Commons.MvxExtends.Services
 			}
 			catch (Exception ex)
 			{
-				MvxTrace.Trace($"Error while unregistering for notification: {ex}");
+				System.Diagnostics.Debug.WriteLine($"Error while unregistering for notification: {ex}");
 			}
 		}
 

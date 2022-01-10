@@ -1,11 +1,10 @@
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
 using Xmf2.Commons.Services.Authentications.Models;
 using Xmf2.Rest.OAuth2;
 
 namespace Xmf2.Commons.Services.Authentications
 {
-
 	public class InMemoryUserStorageService : IUserStorageService
 	{
 		private AuthenticationDetailStorageModel _detail;
@@ -52,5 +51,4 @@ namespace Xmf2.Commons.Services.Authentications
 			return TaskHelper.CompletedTask;
 		}
 	}
-
 }

@@ -1,10 +1,9 @@
-﻿using System;
-using System.Runtime.CompilerServices;
+﻿using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 
 namespace Xmf2.Commons.Extensions
 {
-	public static class TaskExtensions
+    public static class TaskExtensions
 	{
 		public static ConfiguredTaskAwaitable Forget(this Task task)
 		{

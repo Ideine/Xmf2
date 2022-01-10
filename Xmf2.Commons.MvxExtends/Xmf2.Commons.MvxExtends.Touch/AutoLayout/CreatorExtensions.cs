@@ -3,8 +3,6 @@ using CoreGraphics;
 using Foundation;
 using UIKit;
 
-
-
 public static class CreatorExtensions
 {
 	#region UIButton

@@ -1,4 +1,4 @@
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
 using RestSharp.Portable;
 using Xmf2.Commons.ErrorManagers;

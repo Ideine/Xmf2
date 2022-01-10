@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
-using MvvmCross.Platform;
+using MvvmCross;
 using Polly;
 using Xmf2.Commons.ErrorManagers;
 using Xmf2.Commons.Logs;

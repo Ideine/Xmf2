@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
-using MvvmCross.Platform;
-using MvvmCross.Core.ViewModels;
+using MvvmCross;
+using MvvmCross.ViewModels;
 using Xmf2.Commons.ErrorManagers;
 using Xmf2.Commons.MvxExtends.Extensions;
 using System.Windows.Input;
+using MvvmCross.Commands;
+using MvvmCross.Navigation;
 
 namespace Xmf2.Commons.MvxExtends.ViewModels
 {
@@ -40,7 +42,7 @@ namespace Xmf2.Commons.MvxExtends.ViewModels
 
 		protected virtual void CloseViewModel()
 		{
-			Close(this);
+			Mvx.IoCProvider.Resolve<IMvxNavigationService>().Close(this);
 		}
 
 		protected virtual void CloseAction()
@@ -85,7 +87,7 @@ namespace Xmf2.Commons.MvxExtends.ViewModels
 					{
 						if (isUserAction && _operationInProgressCTS != null)
 						{
-							Mvx.Warning("User operation already in progress. ExecAsync canceled");
+							System.Diagnostics.Debug.WriteLine("User operation already in progress. ExecAsync canceled");
 							return false;
 						}
 						_operationInProgressCTS = currentCancellationToken;

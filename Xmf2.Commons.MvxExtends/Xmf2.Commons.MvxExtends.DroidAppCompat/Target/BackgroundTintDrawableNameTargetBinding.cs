@@ -1,22 +1,9 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using Android.App;
-using Android.Content;
-using Android.OS;
 using Android.Runtime;
 using Android.Views;
 using Android.Widget;
-using Android.Support.V4.View;
-using Android.Content.Res;
-using Android.Support.V7.Widget;
-
-using Java.Lang;
-using MvvmCross.Binding.Droid.Target;
-using MvvmCross.Binding;
-using MvvmCross.Platform.Platform;
+using AndroidX.Core.View;
+using MvvmCross.Platforms.Android.Binding.Target;
 
 namespace Xmf2.Commons.MvxExtends.DroidAppCompat.Target
 {
@@ -35,8 +22,7 @@ namespace Xmf2.Commons.MvxExtends.DroidAppCompat.Target
 
             if (!(value is string))
             {
-                MvxBindingTrace.Trace(MvxTraceLevel.Warning,
-                                      "Value '{0}' could not be parsed as a valid string identifier", value);
+                System.Diagnostics.Debug.WriteLine($"Value '{value}' could not be parsed as a valid string identifier");
                 return;
             }
 
@@ -44,8 +30,7 @@ namespace Xmf2.Commons.MvxExtends.DroidAppCompat.Target
             var id = resources.GetIdentifier((string)value, "drawable", AndroidGlobals.ApplicationContext.PackageName);
             if (id == 0)
             {
-                MvxBindingTrace.Trace(MvxTraceLevel.Warning,
-                                      "Value '{0}' was not a known drawable name", value);
+                System.Diagnostics.Debug.WriteLine($"Value '{value}' was not a known drawable name");
                 return;
             }
 

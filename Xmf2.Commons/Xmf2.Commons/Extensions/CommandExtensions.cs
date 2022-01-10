@@ -1,9 +1,8 @@
-﻿using System;
-using System.Windows.Input;
+﻿using System.Windows.Input;
 
 namespace Xmf2.Commons.Extensions
 {
-	public static class CommandExtensions
+    public static class CommandExtensions
 	{
 		public static void TryExecute(this ICommand command, object parameter = null)
 		{

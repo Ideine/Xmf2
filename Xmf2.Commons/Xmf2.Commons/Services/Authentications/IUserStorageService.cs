@@ -1,4 +1,4 @@
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
 using Xmf2.Commons.Services.Authentications.Models;
 
@@ -22,5 +22,4 @@ namespace Xmf2.Commons.Services.Authentications
 
 		Task Delete(CancellationToken ct);
 	}
-
 }

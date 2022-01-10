@@ -1,120 +1,91 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectTypeGuids>{FEACFBD2-3405-455C-9665-78FE426C6842};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <ProjectGuid>{F09C3AFD-FA59-4BF1-99EA-DBD2AC3BAB3B}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <RootNamespace>Xmf2.Commons.MvxExtends.Touch</RootNamespace>
-    <IPhoneResourcePrefix>Resources</IPhoneResourcePrefix>
-    <AssemblyName>Xmf2.Commons.MvxExtends.Touch</AssemblyName>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug</OutputPath>
-    <DefineConstants>DEBUG;</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <ConsolePause>false</ConsolePause>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>full</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release</OutputPath>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <ConsolePause>false</ConsolePause>
-  </PropertyGroup>
-  <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="System.Xml" />
-    <Reference Include="System.Core" />
-    <Reference Include="Xamarin.iOS" />
-    <Reference Include="System.IO.Compression" />
-    <Reference Include="System.Net.Http" />
-    <Reference Include="Polly">
-      <HintPath>..\..\..\..\packages\Polly.7.1.1\lib\netstandard2.0\Polly.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="AutoLayout\AnimationExtensions.cs" />
-    <Compile Include="AutoLayout\ConstrainSet.cs" />
-    <Compile Include="AutoLayout\CreatorExtensions.cs" />
-    <Compile Include="AutoLayout\Layout.cs" />
-    <Compile Include="AutoLayout\LayoutExtensions.cs" />
-    <Compile Include="Controls\UIHighlightButton.cs" />
-    <Compile Include="ErrorsManagers\TouchHttpErrorManager.cs" />
-    <Compile Include="Extensions\UIColorExtension.cs" />
-    <Compile Include="Extensions\UIExtractFontWeight.cs" />
-    <Compile Include="Extensions\UINavigationControllerExtension.cs" />
-    <Compile Include="Layout\LayoutConsts.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\LicenceReaderService.cs" />
-    <Compile Include="Services\NotificationService.cs" />
-    <Compile Include="ViewComponents\FloatLabels\FloatLabelDesigner.cs" />
-    <Compile Include="ViewComponents\FloatLabels\FloatLabeledTextField.cs" />
-    <Compile Include="ViewComponents\BaseUIComponent.cs" />
-    <Compile Include="ViewComponents\BaseUIModelComponent.cs" />
-    <Compile Include="ViewComponents\ItemsControl.cs" />
-    <Compile Include="ViewComponents\IUIComponent.cs" />
-    <Compile Include="ViewComponents\IUIModelComponent.cs" />
-    <Compile Include="ViewComponents\NavBarWithTwoActions.cs" />
-    <Compile Include="ViewComponents\SimpleNavbarComponent.cs" />
-    <Compile Include="ViewComponents\UIEdgeableLabel.cs" />
-    <Compile Include="ViewComponents\UITextViewWithPlaceHolder.cs" />
-    <Compile Include="Views\BaseViewController.cs" />
-    <Compile Include="ViewsAdapter\TableView\MvxDeselectRowTableViewSource.cs" />
-  </ItemGroup>
-  <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
-  <ItemGroup>
-    <ProjectReference Include="..\Xmf2.Commons.MvxExtends\Xmf2.Commons.MvxExtends.csproj">
-      <Project>{7D6A560F-5947-4ABA-AF63-902E40ACDA2B}</Project>
-      <Name>Xmf2.Commons.MvxExtends</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Xmf2.Commons\Xmf2.Commons\Xmf2.Commons.csproj">
-      <Project>{6F547CA0-07E5-4D09-AF1C-E26AEF8BC45A}</Project>
-      <Name>Xmf2.Commons</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Helpers\YourViewController.workbook" />
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Reference Include="MvvmCross.Platform">
-      <HintPath>..\packages\MvvmCross.Platform.4.4.0\lib\Xamarin.iOS10\MvvmCross.Platform.dll</HintPath>
-      <Name>MvvmCross.Platform.dll</Name>
-    </Reference>
-    <Reference Include="MvvmCross.Platform.iOS">
-      <HintPath>..\packages\MvvmCross.Platform.4.4.0\lib\Xamarin.iOS10\MvvmCross.Platform.iOS.dll</HintPath>
-      <Name>MvvmCross.Platform.iOS.dll</Name>
-    </Reference>
-    <Reference Include="MvvmCross.Core">
-      <HintPath>..\packages\MvvmCross.Core.4.4.0\lib\Xamarin.iOS10\MvvmCross.Core.dll</HintPath>
-      <Name>MvvmCross.Core.dll</Name>
-    </Reference>
-    <Reference Include="MvvmCross.iOS">
-      <HintPath>..\packages\MvvmCross.Core.4.4.0\lib\Xamarin.iOS10\MvvmCross.iOS.dll</HintPath>
-      <Name>MvvmCross.iOS.dll</Name>
-    </Reference>
-    <Reference Include="MvvmCross.Binding">
-      <HintPath>..\packages\MvvmCross.Binding.4.4.0\lib\Xamarin.iOS10\MvvmCross.Binding.dll</HintPath>
-      <Name>MvvmCross.Binding.dll</Name>
-    </Reference>
-    <Reference Include="MvvmCross.Binding.iOS">
-      <HintPath>..\packages\MvvmCross.Binding.4.4.0\lib\Xamarin.iOS10\MvvmCross.Binding.iOS.dll</HintPath>
-      <Name>MvvmCross.Binding.iOS.dll</Name>
-    </Reference>
-    <Reference Include="MvvmCross.Localization">
-      <HintPath>..\packages\MvvmCross.Binding.4.4.0\lib\Xamarin.iOS10\MvvmCross.Localization.dll</HintPath>
-      <Name>MvvmCross.Localization.dll</Name>
-    </Reference>
-    <Reference Include="MvvmCross.iOS.Support">
-      <HintPath>..\packages\MvvmCross.iOS.Support.4.4.0\lib\Xamarin.iOS10\MvvmCross.iOS.Support.dll</HintPath>
-      <Name>MvvmCross.iOS.Support.dll</Name>
-    </Reference>
-  </ItemGroup>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+	<PropertyGroup>
+		<LangVersion>latest</LangVersion>
+	</PropertyGroup>
+	<PropertyGroup>
+		<Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+		<Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+		<ProductVersion>8.0.30703</ProductVersion>
+		<SchemaVersion>2.0</SchemaVersion>
+		<ProjectGuid>{139C315D-31E1-48EB-AEFB-F9F8CBFF4581}</ProjectGuid>
+		<ProjectTypeGuids>{FEACFBD2-3405-455C-9665-78FE426C6842};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+		<TemplateGuid>{a52b8a63-bc84-4b47-910d-692533484892}</TemplateGuid>
+		<OutputType>Library</OutputType>
+		<RootNamespace>Xmf2.Commons.MvxExtend.Touch</RootNamespace>
+		<IPhoneResourcePrefix>Resources</IPhoneResourcePrefix>
+		<AssemblyName>Xmf2.Commons.MvxExtend.Touch</AssemblyName>
+		<RestoreProjectStyle>PackageReference</RestoreProjectStyle>
+	</PropertyGroup>
+	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+		<DebugSymbols>true</DebugSymbols>
+		<DebugType>portable</DebugType>
+		<Optimize>false</Optimize>
+		<OutputPath>bin\Debug</OutputPath>
+		<DefineConstants>DEBUG;</DefineConstants>
+		<ErrorReport>prompt</ErrorReport>
+		<WarningLevel>4</WarningLevel>
+	</PropertyGroup>
+	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+		<DebugType>portable</DebugType>
+		<Optimize>true</Optimize>
+		<OutputPath>bin\Release</OutputPath>
+		<ErrorReport>prompt</ErrorReport>
+		<WarningLevel>4</WarningLevel>
+	</PropertyGroup>
+	<ItemGroup>
+		<Reference Include="System" />
+		<Reference Include="System.Xml" />
+		<Reference Include="System.Core" />
+		<Reference Include="Xamarin.iOS" />
+	</ItemGroup>
+	<ItemGroup>
+		<Compile Include="Properties\AssemblyInfo.cs" />
+		<Compile Include="AutoLayout\Layout.cs" />
+		<Compile Include="AutoLayout\CreatorExtensions.cs" />
+		<Compile Include="AutoLayout\ConstrainSet.cs" />
+		<Compile Include="AutoLayout\LayoutExtensions.cs" />
+		<Compile Include="AutoLayout\AnimationExtensions.cs" />
+		<Compile Include="Controls\UIHighlightButton.cs" />
+		<Compile Include="ErrorsManagers\TouchHttpErrorManager.cs" />
+		<Compile Include="Extensions\UIColorExtension.cs" />
+		<Compile Include="Extensions\UIExtractFontWeight.cs" />
+		<Compile Include="Extensions\UINavigationControllerExtension.cs" />
+		<Compile Include="Layout\LayoutConsts.cs" />
+		<Compile Include="Services\LicenceReaderService.cs" />
+		<Compile Include="Services\NotificationService.cs" />
+		<Compile Include="ViewComponents\IUIComponent.cs" />
+		<Compile Include="ViewComponents\IUIModelComponent.cs" />
+		<Compile Include="ViewComponents\UITextViewWithPlaceHolder.cs" />
+		<Compile Include="ViewComponents\UIEdgeableLabel.cs" />
+		<Compile Include="ViewComponents\BaseUIComponent.cs" />
+		<Compile Include="ViewComponents\SimpleNavbarComponent.cs" />
+		<Compile Include="ViewComponents\BaseUIModelComponent.cs" />
+		<Compile Include="ViewComponents\NavBarWithTwoActions.cs" />
+		<Compile Include="ViewComponents\ItemsControl.cs" />
+		<Compile Include="ViewComponents\FloatLabels\FloatLabeledTextField.cs" />
+		<Compile Include="ViewComponents\FloatLabels\FloatLabelDesigner.cs" />
+		<Compile Include="Views\BaseViewController.cs" />
+		<Compile Include="ViewsAdapter\TableView\MvxDeselectRowTableViewSource.cs" />
+	</ItemGroup>
+	<ItemGroup>
+	  <ProjectReference Include="..\..\Xmf2.Commons\Xmf2.Commons\Xmf2.Commons.csproj">
+	    <Name>Xmf2.Commons</Name>
+	  </ProjectReference>
+	  <ProjectReference Include="..\Xmf2.Commons.MvxExtends\Xmf2.Commons.MvxExtends.csproj">
+	    <Name>Xmf2.Commons.MvxExtends</Name>
+	  </ProjectReference>
+	</ItemGroup>
+	<ItemGroup>
+	  <PackageReference Include="Polly">
+	    <Version>7.2.2</Version>
+	  </PackageReference>
+	  <PackageReference Include="MvvmCross">
+	    <Version>7.1.2</Version>
+	  </PackageReference>
+	</ItemGroup>
+	<ItemGroup>
+	  <Folder Include="Controls\" />
+	</ItemGroup>
+	<Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
 </Project>

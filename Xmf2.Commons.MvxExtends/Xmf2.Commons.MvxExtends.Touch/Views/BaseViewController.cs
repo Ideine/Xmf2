@@ -1,13 +1,12 @@
-﻿using Foundation;
-using MvvmCross.iOS.Support.Views;
-using System;
+﻿using System;
+using Foundation;
+using MvvmCross.Platforms.Ios.Views;
 using UIKit;
 using Xmf2.Commons.MvxExtends.ViewModels;
-using MvvmCross.Platform.Platform;
 
 namespace Xmf2.Commons.MvxExtends.Touch.Views
 {
-	public abstract class BaseViewController<TViewModel>
+    public abstract class BaseViewController<TViewModel>
 		: MvxBaseViewController<TViewModel> where TViewModel : BaseViewModel
 	{
 		private bool _layoutDone;

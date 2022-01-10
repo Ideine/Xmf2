@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
@@ -67,7 +67,7 @@ namespace Xmf2.Commons.Caches
 		}
 
 		private static readonly Dictionary<string, List<ICacheItem>> _itemsPerScope = new Dictionary<string, List<ICacheItem>>();
-		
+
 		public static void InvalidateScope(string scope)
 		{
 			if (_itemsPerScope.ContainsKey(scope))

@@ -5,7 +5,6 @@ namespace Xmf2.Commons.MvxExtends.Touch.Services
 {
     public class LicenceReaderService : ILicenceReaderService
     {
-
         public LicenceReaderService()
         {
 

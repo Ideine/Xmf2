@@ -1,4 +1,4 @@
-﻿using MvvmCross.Platform.Converters;
+﻿using MvvmCross.Converters;
 using System;
 
 namespace Xmf2.Commons.MvxExtends.Converters
