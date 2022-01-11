@@ -9,7 +9,7 @@ using Xmf2.Commons.MvxExtends.ViewModels;
 namespace Xmf2.Commons.MvxExtends.Touch.ViewComponents
 {
     public abstract class BaseUIComponent<TViewModel> : UIView, IUIComponent<TViewModel>, IMvxBindable, IDisposable
-													where TViewModel : BaseViewModel
+													where TViewModel : BaseViewModel<object>
 	{
 		protected BaseUIComponent()
 		{

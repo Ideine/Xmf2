@@ -11,7 +11,7 @@ namespace Xmf2.Commons.MvxExtends.Touch.ViewComponents
 		void ViewDidAppear();
 	}
 
-	public interface IUIComponent<TViewModel> : IUIComponent where TViewModel : BaseViewModel
+	public interface IUIComponent<TViewModel> : IUIComponent where TViewModel : BaseViewModel<object>
 	{
 		TViewModel ViewModel { get; set; }
 	}

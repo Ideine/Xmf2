@@ -6,8 +6,9 @@ using Xmf2.Commons.MvxExtends.ViewModels;
 
 namespace Xmf2.Commons.MvxExtends.Touch.Views
 {
-    public abstract class BaseViewController<TViewModel>
-		: MvxBaseViewController<TViewModel> where TViewModel : BaseViewModel
+    public abstract class BaseViewController<TViewModel, TParameter> : MvxBaseViewController<TViewModel>
+		where TViewModel : BaseViewModel<TParameter>
+		where TParameter : class
 	{
 		private bool _layoutDone;
 
