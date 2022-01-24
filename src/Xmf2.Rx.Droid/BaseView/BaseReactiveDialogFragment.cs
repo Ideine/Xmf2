@@ -1,11 +1,7 @@
 ﻿using System;
-using Android;
 using Android.Graphics;
 using Android.Runtime;
-using Android.Support.V4.App;
-using Android.Support.V7.Transition;
 using Android.Views;
-using ReactiveUI.AndroidSupport;
 using Xmf2.Rx.ViewModels;
 
 namespace Xmf2.Rx.Droid.BaseView

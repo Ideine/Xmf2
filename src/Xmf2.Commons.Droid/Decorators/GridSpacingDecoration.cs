@@ -1,7 +1,6 @@
-﻿using System;
-using Android.Graphics;
-using Android.Support.V7.Widget;
+﻿using Android.Graphics;
 using Android.Views;
+using AndroidX.RecyclerView.Widget;
 
 namespace Xmf2.Commons.Droid.Decorators
 {

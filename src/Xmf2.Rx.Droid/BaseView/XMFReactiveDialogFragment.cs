@@ -1,13 +1,9 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Reactive;
-using System.Reactive.Linq;
-using System.Reactive.Subjects;
 using Android.Runtime;
 using ReactiveUI;
 using Xmf2.Rx.Helpers;
-using PropertyChangingEventArgs = ReactiveUI.PropertyChangingEventArgs;
-using PropertyChangingEventHandler = ReactiveUI.PropertyChangingEventHandler;
 
 namespace Xmf2.Rx.Droid.BaseView
 {
@@ -45,8 +41,8 @@ namespace Xmf2.Rx.Droid.BaseView
 	/// This is a Fragment that is both an Activity and has ReactiveObject powers 
 	/// (i.e. you can call RaiseAndSetIfChanged)
 	/// </summary>
-	public class XMFReactiveDialogFragment : Android.Support.V4.App.DialogFragment,
-		IReactiveNotifyPropertyChanged<XMFReactiveDialogFragment>, IReactiveObject, IHandleObservableErrors, ICanActivate
+	public class XMFReactiveDialogFragment : AndroidX.Fragment.App.DialogFragment,
+		IReactiveNotifyPropertyChanged<XMFReactiveDialogFragment>, IReactiveObject, IHandleObservableErrors
 	{
 		protected XMFReactiveDialogFragment()
 		{
@@ -56,36 +52,11 @@ namespace Xmf2.Rx.Droid.BaseView
 		{
 		}
 
-		public event PropertyChangingEventHandler PropertyChanging
-		{
-			add =>
-				WeakEventManager<ReactiveUI.INotifyPropertyChanging, PropertyChangingEventHandler,
-					PropertyChangingEventArgs>.AddHandler(this, value);
-			remove =>
-				WeakEventManager<ReactiveUI.INotifyPropertyChanging, PropertyChangingEventHandler,
-					PropertyChangingEventArgs>.RemoveHandler(this, value);
-		}
+		/// <inheritdoc/>
+		public event PropertyChangingEventHandler? PropertyChanging;
 
-		void IReactiveObject.RaisePropertyChanging(PropertyChangingEventArgs args)
-		{
-			WeakEventManager<ReactiveUI.INotifyPropertyChanging, PropertyChangingEventHandler,
-				PropertyChangingEventArgs>.DeliverEvent(this, args);
-		}
-
-		public event PropertyChangedEventHandler PropertyChanged
-		{
-			add =>
-				WeakEventManager<INotifyPropertyChanged, PropertyChangedEventHandler, PropertyChangedEventArgs>.AddHandler(this,
-					value);
-			remove => WeakEventManager<INotifyPropertyChanged, PropertyChangedEventHandler, PropertyChangedEventArgs>
-				.RemoveHandler(this, value);
-		}
-
-		void IReactiveObject.RaisePropertyChanged(PropertyChangedEventArgs args)
-		{
-			WeakEventManager<INotifyPropertyChanged, PropertyChangedEventHandler, PropertyChangedEventArgs>.DeliverEvent(this,
-				args);
-		}
+		/// <inheritdoc/>
+		public event PropertyChangedEventHandler? PropertyChanged;
 
 		/// <summary>
 		/// Represents an Observable that fires *before* a property is about to
@@ -99,6 +70,12 @@ namespace Xmf2.Rx.Droid.BaseView
 		/// </summary>
 		public IObservable<IReactivePropertyChangedEventArgs<XMFReactiveDialogFragment>> Changed =>
 			this.getChangedObservable();
+
+		/// <inheritdoc/>
+		void IReactiveObject.RaisePropertyChanging(PropertyChangingEventArgs args) => PropertyChanging?.Invoke(this, args);
+
+		/// <inheritdoc/>
+		void IReactiveObject.RaisePropertyChanged(PropertyChangedEventArgs args) => PropertyChanged?.Invoke(this, args);
 
 		/// <summary>
 		/// When this method is called, an object will not fire change

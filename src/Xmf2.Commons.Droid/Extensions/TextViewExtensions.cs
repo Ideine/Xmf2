@@ -1,5 +1,4 @@
-﻿using System;
-using Android.Text;
+﻿using Android.Text;
 using Android.Text.Style;
 using Java.Lang;
 

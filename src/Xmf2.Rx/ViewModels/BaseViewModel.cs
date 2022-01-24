@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Reactive;
@@ -10,14 +9,13 @@ using System.Threading.Tasks;
 using ReactiveUI;
 using Splat;
 using Xmf2.Commons.Errors;
-using Xmf2.Commons.Extensions;
 using Xmf2.Commons.Helpers;
 
 namespace Xmf2.Rx.ViewModels
 {
-	public abstract class BaseViewModel : ReactiveObject, ISupportsActivation
+	public abstract class BaseViewModel : ReactiveObject
 	{
-		protected Lazy<IErrorHandler> ErrorHandler { get; } = new Lazy<IErrorHandler>(Locator.Current.GetService<IErrorHandler>);
+		protected Lazy<IErrorHandler> ErrorHandler { get; } = new Lazy<IErrorHandler>(Locator.Current.GetService<IErrorHandler>());
 
 		public int ObservableTimeout { get; set; } = 30;
 
@@ -31,7 +29,7 @@ namespace Xmf2.Rx.ViewModels
 
 		public IViewModelLifecycleManager LifecycleManager { get; }
 
-		public ReactiveCommand CloseCommand { get; protected set; }
+		public ReactiveCommand<Unit, Unit> CloseCommand { get; protected set; }
 
 		public IObservable<bool> IsInitializing { get; }
 

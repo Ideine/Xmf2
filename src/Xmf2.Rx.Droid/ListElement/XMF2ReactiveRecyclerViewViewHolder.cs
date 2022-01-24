@@ -4,8 +4,8 @@ using System.Linq;
 using System.Reactive.Linq;
 using System.Reflection;
 using System.Runtime.Serialization;
-using Android.Support.V7.Widget;
 using Android.Views;
+using AndroidX.RecyclerView.Widget;
 using ReactiveUI;
 using Xmf2.Rx.Helpers;
 
@@ -52,27 +52,17 @@ namespace Xmf2.Rx.Droid.ListElement
 			set { ViewModel = (TViewModel)value; }
 		}
 
-		public event ReactiveUI.PropertyChangingEventHandler PropertyChanging
-		{
-			add { WeakEventManager<ReactiveUI.INotifyPropertyChanging, ReactiveUI.PropertyChangingEventHandler, ReactiveUI.PropertyChangingEventArgs>.AddHandler(this, value); }
-			remove { WeakEventManager<ReactiveUI.INotifyPropertyChanging, ReactiveUI.PropertyChangingEventHandler, ReactiveUI.PropertyChangingEventArgs>.RemoveHandler(this, value); }
-		}
+		/// <inheritdoc/>
+		public event PropertyChangingEventHandler? PropertyChanging;
 
-		void IReactiveObject.RaisePropertyChanging(ReactiveUI.PropertyChangingEventArgs args)
-		{
-			WeakEventManager<ReactiveUI.INotifyPropertyChanging, ReactiveUI.PropertyChangingEventHandler, ReactiveUI.PropertyChangingEventArgs>.DeliverEvent(this, args);
-		}
+		/// <inheritdoc/>
+		public event PropertyChangedEventHandler? PropertyChanged;
 
-		public event PropertyChangedEventHandler PropertyChanged
-		{
-			add { WeakEventManager<INotifyPropertyChanged, PropertyChangedEventHandler, PropertyChangedEventArgs>.AddHandler(this, value); }
-			remove { WeakEventManager<INotifyPropertyChanged, PropertyChangedEventHandler, PropertyChangedEventArgs>.RemoveHandler(this, value); }
-		}
+		/// <inheritdoc/>
+		void IReactiveObject.RaisePropertyChanging(PropertyChangingEventArgs args) => PropertyChanging?.Invoke(this, args);
 
-		void IReactiveObject.RaisePropertyChanged(PropertyChangedEventArgs args)
-		{
-			WeakEventManager<INotifyPropertyChanged, PropertyChangedEventHandler, PropertyChangedEventArgs>.DeliverEvent(this, args);
-		}
+		/// <inheritdoc/>
+		void IReactiveObject.RaisePropertyChanged(PropertyChangedEventArgs args) => PropertyChanged?.Invoke(this, args);
 
 		/// <summary>
 		/// Represents an Observable that fires *before* a property is about to

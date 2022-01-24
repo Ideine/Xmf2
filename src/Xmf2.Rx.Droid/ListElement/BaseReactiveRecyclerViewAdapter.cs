@@ -1,11 +1,12 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Reactive.Disposables;
 using System.Windows.Input;
 using Android.Content;
 using Android.OS;
-using Android.Support.V7.Widget;
 using Android.Views;
+using AndroidX.RecyclerView.Widget;
 using ReactiveUI;
 
 namespace Xmf2.Rx.Droid.ListElement
@@ -22,8 +23,8 @@ namespace Xmf2.Rx.Droid.ListElement
 
 		protected readonly Context Context;
 
-		private IReadOnlyReactiveList<TItemData> _itemsSource;
-		public IReadOnlyReactiveList<TItemData> ItemsSource
+		private ObservableCollection<TItemData> _itemsSource;
+		public ObservableCollection<TItemData> ItemsSource
 		{
 			get => _itemsSource;
 			set

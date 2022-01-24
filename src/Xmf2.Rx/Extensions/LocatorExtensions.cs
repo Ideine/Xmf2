@@ -1,5 +1,4 @@
 ﻿using System;
-using Splat;
 
 namespace Splat
 {
@@ -35,11 +34,6 @@ namespace Splat
 		public static TService Resolve<TService>(this object _)
 		{
 			return Locator.Current.GetService<TService>();
-		}
-
-		public static TService ResolveOrDefault<TService>(this object _)
-		{
-			return Locator.Current.GetServiceOrDefault<TService>();
 		}
 	}
 }

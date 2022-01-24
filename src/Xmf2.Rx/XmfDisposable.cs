@@ -45,24 +45,6 @@ namespace Xmf2.Rx
 			ActionDisposable.From(() => setListener(null)).DisposeEvent(container);
 			return container;
 		}
-
-		public static void WhenActivatedAndDispose(this ISupportsActivation This, XmfDisposable disposables, Action<CompositeDisposable> block)
-		{
-			This.WhenActivated(dispo =>
-			{
-				dispo.DisposeBinding(disposables);
-				block(dispo);
-			});
-		}
-
-		public static IDisposable WhenActivatedAndDispose(this IActivatable This, XmfDisposable disposables, Action<CompositeDisposable> block, IViewFor view = null)
-		{
-			return This.WhenActivated(dispo =>
-			{
-				dispo.DisposeBinding(disposables);
-				block(dispo);
-			}, view);
-		}
 	}
 
 	public class ActionDisposable : IDisposable

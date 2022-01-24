@@ -1,7 +1,6 @@
-﻿using System;
-using Android.App;
-using Android.Support.V7.App;
-using Android.Support.V7.Widget;
+﻿using Android.App;
+using Android.Widget;
+using AndroidX.AppCompat.App;
 
 namespace Xmf2.Commons.Droid.Extensions
 {
