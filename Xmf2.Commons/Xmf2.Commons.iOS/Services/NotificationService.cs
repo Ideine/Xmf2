@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Diagnostics;
+using System.Linq;
 using Foundation;
 using UIKit;
 using UserNotifications;
@@ -8,9 +10,7 @@ namespace Xmf2.Commons.MvxExtends.Touch.Services
 {
 	public class NotificationService : BaseNotificationService
 	{
-		public NotificationService(IKeyValueStorageService settingsService, INotificationDataService notificationDataService) : base(settingsService, notificationDataService)
-		{
-		}
+		public NotificationService(IKeyValueStorageService settingsService, INotificationDataService notificationDataService) : base(settingsService, notificationDataService) { }
 
 		protected override DeviceType Device => DeviceType.iOS;
 
@@ -62,7 +62,7 @@ namespace Xmf2.Commons.MvxExtends.Touch.Services
 			if (!UIDevice.CurrentDevice.CheckSystemVersion(10, 0)) // iOS < 10.0
 			{
 				if (launchOptions.ContainsKey(UIApplication.LaunchOptionsLocalNotificationKey)
-				   && launchOptions[UIApplication.LaunchOptionsLocalNotificationKey] is UILocalNotification notification)
+				    && launchOptions[UIApplication.LaunchOptionsLocalNotificationKey] is UILocalNotification notification)
 				{
 					if (notification.UserInfo != null)
 					{
@@ -72,7 +72,7 @@ namespace Xmf2.Commons.MvxExtends.Touch.Services
 			}
 
 			if (launchOptions.ContainsKey(UIApplication.LaunchOptionsRemoteNotificationKey)
-			   && launchOptions[UIApplication.LaunchOptionsRemoteNotificationKey] is NSDictionary userInfo)
+			    && launchOptions[UIApplication.LaunchOptionsRemoteNotificationKey] is NSDictionary userInfo)
 			{
 				if (userInfo != null)
 				{
@@ -89,15 +89,9 @@ namespace Xmf2.Commons.MvxExtends.Touch.Services
 			}
 		}
 
-		protected virtual void DeeplinkFromNotification(NSDictionary userInfo)
-		{
+		protected virtual void DeeplinkFromNotification(NSDictionary userInfo) { }
 
-		}
-
-		protected virtual void BackroundProcessFromNotification(NSDictionary userInfo)
-		{
-
-		}
+		protected virtual void BackroundProcessFromNotification(NSDictionary userInfo) { }
 
 		public override void RegisteredForRemoteNotifications(UIApplication application, NSData deviceToken)
 		{
@@ -106,7 +100,7 @@ namespace Xmf2.Commons.MvxExtends.Touch.Services
 
 		public override void FailedToRegisterForRemoteNotifications(UIApplication application, NSError error)
 		{
-			System.Diagnostics.Debug.WriteLine($"Failed to register for remote notifications: {error}");
+			Debug.WriteLine($"Failed to register for remote notifications: {error}");
 			NotificationService?.SetToken(null);
 		}
 
@@ -118,10 +112,10 @@ namespace Xmf2.Commons.MvxExtends.Touch.Services
 				return;
 			}
 
-			NSString apsKey = new NSString("aps");
-			NSString alertKey = new NSString("alert");
-			NSString locArgsKey = new NSString("loc-args");
-			NSString locKeyKey = new NSString("loc-key");
+			NSString apsKey = new("aps");
+			NSString alertKey = new("alert");
+			NSString locArgsKey = new("loc-args");
+			NSString locKeyKey = new("loc-key");
 
 			if (userInfo.ContainsKey(apsKey) && userInfo[apsKey] is NSDictionary aps)
 			{
@@ -140,6 +134,7 @@ namespace Xmf2.Commons.MvxExtends.Touch.Services
 						{
 							localizedKey = rawLocKey;
 						}
+
 						if (localizedKey != null && alertDictionary.ContainsKey(locArgsKey) && alertDictionary[locArgsKey] is NSArray args)
 						{
 							string format = NSBundle.MainBundle.LocalizedString(localizedKey, null) ?? localizedKey;
@@ -178,7 +173,7 @@ namespace Xmf2.Commons.MvxExtends.Touch.Services
 
 				notificationCenter.AddNotificationRequest(notificationRequest, (err) =>
 				{
-					System.Diagnostics.Debug.WriteLine($"LocalNotificationError: Code={err.Code} / Description={err.Description} / FailureReason={err.LocalizedFailureReason}");
+					Debug.WriteLine($"LocalNotificationError: Code={err.Code} / Description={err.Description} / FailureReason={err.LocalizedFailureReason}");
 				});
 			}
 			else
@@ -195,14 +190,9 @@ namespace Xmf2.Commons.MvxExtends.Touch.Services
 
 		protected abstract INotificationService NotificationService { get; }
 
-		private string TokenToString(NSData deviceToken)
+		private static string TokenToString(NSData deviceToken)
 		{
-			string deviceTokenString = deviceToken.Description;
-			deviceTokenString = deviceTokenString.Trim('<', '>');
-			deviceTokenString = deviceTokenString.Replace(" ", "");
-			deviceTokenString = deviceTokenString.ToUpper();
-
-			return deviceTokenString;
+			return string.Join(string.Empty, deviceToken.Select(x => x.ToString("x2")));
 		}
 
 		public class LocalNotificationDelegate : UNUserNotificationCenterDelegate
@@ -214,13 +204,9 @@ namespace Xmf2.Commons.MvxExtends.Touch.Services
 				_notificationCallback = notificationCallback;
 			}
 
-			protected LocalNotificationDelegate(NSObjectFlag t) : base(t)
-			{
-			}
+			protected LocalNotificationDelegate(NSObjectFlag t) : base(t) { }
 
-			protected internal LocalNotificationDelegate(IntPtr handle) : base(handle)
-			{
-			}
+			protected internal LocalNotificationDelegate(IntPtr handle) : base(handle) { }
 
 			public override void DidReceiveNotificationResponse(UNUserNotificationCenter center, UNNotificationResponse response, Action completionHandler)
 			{
