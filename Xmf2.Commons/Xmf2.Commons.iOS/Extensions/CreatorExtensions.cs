@@ -5,22 +5,22 @@ using Xmf2.Commons.iOS.Controls;
 
 public static class CreatorExtensions
 {
-    #region UIButton
+	#region UIButton
 
-    public static UIButton CreateButton(this object parent)
-    {
-        return new UIButton(UIButtonType.Custom);
-    }
+	public static UIButton CreateButton(this object parent)
+	{
+		return new UIButton(UIButtonType.Custom);
+	}
 
-    public static UIButton CreateButton(this object parent, UIButtonType type)
-    {
-        return new UIButton(type);
-    }
+	public static UIButton CreateButton(this object parent, UIButtonType type)
+	{
+		return new UIButton(type);
+	}
 
-    public static UIHighlightButton CreateHighlightButton(this object parent)
-    {
-        return new UIHighlightButton();
-    }
+	public static UIHighlightButton CreateHighlightButton(this object parent)
+	{
+		return new UIHighlightButton();
+	}
 
 
 	public static TUIButton WithHighlightBackgroundColor<TUIButton>(this TUIButton button, int color) where TUIButton : UIHighlightButton
@@ -28,11 +28,12 @@ public static class CreatorExtensions
 		button.HighlightColor = color.ColorFromHex();
 		return button;
 	}
+
 	public static TUIButton WithHighlightBackgroundColor<TUIButton>(this TUIButton button, UIColor color) where TUIButton : UIHighlightButton
-    {
-        button.HighlightColor = color;
-        return button;
-    }
+	{
+		button.HighlightColor = color;
+		return button;
+	}
 
 	public static TUIButton WithTitle<TUIButton>(this TUIButton button, string title) where TUIButton : UIButton
 	{
@@ -53,28 +54,29 @@ public static class CreatorExtensions
 	}
 
 	public static TUIButton WithTextColor<TUIButton>(this TUIButton button, UIColor color) where TUIButton : UIButton
-    {
-        button.SetTitleColor(color, UIControlState.Normal);
-        return button;
-    }
-
-    public static TUIButton WithTextColorHighlight<TUIButton>(this TUIButton button, UIColor color) where TUIButton : UIButton
-    {
-        button.SetTitleColor(color, UIControlState.Highlighted);
-        return button;
-    }
-
-    public static TUIButton WithTextColorSelected<TUIButton>(this TUIButton button, UIColor color) where TUIButton : UIButton
-    {
-        button.SetTitleColor(color, UIControlState.Selected);
-        return button;
-    }
-
-    public static TUIButton WithImage<TUIButton>(this TUIButton button, string image) where TUIButton : UIButton
-    {
-        button.WithImage(image, UIControlState.Normal);
-        return button;
+	{
+		button.SetTitleColor(color, UIControlState.Normal);
+		return button;
 	}
+
+	public static TUIButton WithTextColorHighlight<TUIButton>(this TUIButton button, UIColor color) where TUIButton : UIButton
+	{
+		button.SetTitleColor(color, UIControlState.Highlighted);
+		return button;
+	}
+
+	public static TUIButton WithTextColorSelected<TUIButton>(this TUIButton button, UIColor color) where TUIButton : UIButton
+	{
+		button.SetTitleColor(color, UIControlState.Selected);
+		return button;
+	}
+
+	public static TUIButton WithImage<TUIButton>(this TUIButton button, string image) where TUIButton : UIButton
+	{
+		button.WithImage(image, UIControlState.Normal);
+		return button;
+	}
+
 	public static TUIButton WithImage<TUIButton>(this TUIButton button, string image, UIControlState state) where TUIButton : UIButton
 	{
 		if (String.IsNullOrEmpty(image))
@@ -85,68 +87,69 @@ public static class CreatorExtensions
 		{
 			button.SetImage(new UIImage(image), state);
 		}
+
 		return button;
 	}
 
 	public static TUIButton WithImage<TUIButton>(this TUIButton button, UIImage image) where TUIButton : UIButton
-    {
-        button.SetImage(image, UIControlState.Normal);
-        return button;
-    }
+	{
+		button.SetImage(image, UIControlState.Normal);
+		return button;
+	}
 
-    public static TUIButton WithImageHighlight<TUIButton>(this TUIButton button, string image) where TUIButton : UIButton
-    {
-        button.SetImage(new UIImage(image), UIControlState.Highlighted);
-        return button;
-    }
+	public static TUIButton WithImageHighlight<TUIButton>(this TUIButton button, string image) where TUIButton : UIButton
+	{
+		button.SetImage(new UIImage(image), UIControlState.Highlighted);
+		return button;
+	}
 
-    public static TUIButton WithImageHighlight<TUIButton>(this TUIButton button, UIImage image) where TUIButton : UIButton
-    {
-        button.SetImage(image, UIControlState.Highlighted);
-        return button;
-    }
+	public static TUIButton WithImageHighlight<TUIButton>(this TUIButton button, UIImage image) where TUIButton : UIButton
+	{
+		button.SetImage(image, UIControlState.Highlighted);
+		return button;
+	}
 
-    public static TUIButton WithImageSelected<TUIButton>(this TUIButton button, string image) where TUIButton : UIButton
-    {
-        button.SetImage(new UIImage(image), UIControlState.Selected);
-        return button;
-    }
+	public static TUIButton WithImageSelected<TUIButton>(this TUIButton button, string image) where TUIButton : UIButton
+	{
+		button.SetImage(new UIImage(image), UIControlState.Selected);
+		return button;
+	}
 
-    public static TUIButton WithImageSelected<TUIButton>(this TUIButton button, UIImage image) where TUIButton : UIButton
-    {
-        button.SetImage(image, UIControlState.Selected);
-        return button;
-    }
+	public static TUIButton WithImageSelected<TUIButton>(this TUIButton button, UIImage image) where TUIButton : UIButton
+	{
+		button.SetImage(image, UIControlState.Selected);
+		return button;
+	}
 
-    public static TUIButton WithImageFocused<TUIButton>(this TUIButton button, string image) where TUIButton : UIButton
-    {
-        button.SetImage(new UIImage(image), UIControlState.Focused);
-        return button;
-    }
+	public static TUIButton WithImageFocused<TUIButton>(this TUIButton button, string image) where TUIButton : UIButton
+	{
+		button.SetImage(new UIImage(image), UIControlState.Focused);
+		return button;
+	}
 
-    public static TUIButton WithImageFocused<TUIButton>(this TUIButton button, UIImage image) where TUIButton : UIButton
-    {
-        button.SetImage(image, UIControlState.Focused);
-        return button;
-    }
+	public static TUIButton WithImageFocused<TUIButton>(this TUIButton button, UIImage image) where TUIButton : UIButton
+	{
+		button.SetImage(image, UIControlState.Focused);
+		return button;
+	}
 
-    public static TUIButton WithFont<TUIButton>(this TUIButton button, UIFont font) where TUIButton : UIButton
-    {
-        button.Font = font;
-        return button;
-    }
+	public static TUIButton WithFont<TUIButton>(this TUIButton button, UIFont font) where TUIButton : UIButton
+	{
+		button.Font = font;
+		return button;
+	}
 
-    public static TUIButton WithSystemFont<TUIButton>(this TUIButton button, int size, UIFontWeight weight = UIFontWeight.Regular) where TUIButton : UIButton
-    {
-        button.Font = UIFont.SystemFontOfSize(size, weight);
-        return button;
-    }
+	public static TUIButton WithSystemFont<TUIButton>(this TUIButton button, int size, UIFontWeight weight = UIFontWeight.Regular) where TUIButton : UIButton
+	{
+		button.Font = UIFont.SystemFontOfSize(size, weight);
+		return button;
+	}
 
-    public static TUIButton OnClick<TUIButton>(this TUIButton button, Action action) where TUIButton : UIButton
-    {
-        button.TouchUpInside += (sender, e) => action?.Invoke();
-        return button;
-    }
+	public static TUIButton OnClick<TUIButton>(this TUIButton button, Action action) where TUIButton : UIButton
+	{
+		button.TouchUpInside += (sender, e) => action?.Invoke();
+		return button;
+	}
 
 	public static TUIButton OnClick<TUIButton>(this TUIButton button, Action<TUIButton, EventArgs> action) where TUIButton : UIButton
 	{
@@ -155,15 +158,15 @@ public static class CreatorExtensions
 	}
 
 	public static TUIButton OnClick<TUIButton>(this TUIButton button, Action action, out Action unregisterAction) where TUIButton : UIButton
-    {
-        EventHandler onTouchUpInside = (sender, e) => action?.Invoke();
-        button.TouchUpInside += onTouchUpInside;
-        unregisterAction = () =>
-        {
-            button.TouchUpInside -= onTouchUpInside;
-        };
-        return button;
-    }
+	{
+		EventHandler onTouchUpInside = (sender, e) => action?.Invoke();
+		button.TouchUpInside += onTouchUpInside;
+		unregisterAction = () =>
+		{
+			button.TouchUpInside -= onTouchUpInside;
+		};
+		return button;
+	}
 
 	#endregion
 
@@ -179,41 +182,47 @@ public static class CreatorExtensions
 		return new UIView().WithBackgroundColor(backgroundColor);
 	}
 
-    public static UIView CreateView(this object parent)
-    {
-        return new UIView();
-    }
+	public static UIView CreateView(this object parent)
+	{
+		return new UIView();
+	}
 
 	public static TParentView WithSubviews<TParentView>(this TParentView parentView, UIView view) where TParentView : UIView
 	{
 		parentView.AddSubview(view);
 		return parentView;
 	}
+
 	public static TParentView WithSubviews<TParentView>(this TParentView parentView, UIView view1, UIView view2) where TParentView : UIView
 	{
 		parentView.AddSubviews(view1, view2);
 		return parentView;
 	}
+
 	public static TParentView WithSubviews<TParentView>(this TParentView parentView, UIView view1, UIView view2, UIView view3) where TParentView : UIView
 	{
 		parentView.AddSubviews(view1, view2, view3);
 		return parentView;
 	}
+
 	public static TParentView WithSubviews<TParentView>(this TParentView parentView, UIView view1, UIView view2, UIView view3, UIView view4) where TParentView : UIView
 	{
 		parentView.AddSubviews(view1, view2, view3, view4);
 		return parentView;
 	}
+
 	public static TParentView WithSubviews<TParentView>(this TParentView parentView, UIView view1, UIView view2, UIView view3, UIView view4, UIView view5) where TParentView : UIView
 	{
 		parentView.AddSubviews(view1, view2, view3, view4, view5);
 		return parentView;
 	}
+
 	public static TParentView WithSubviews<TParentView>(this TParentView parentView, UIView view1, UIView view2, UIView view3, UIView view4, UIView view5, UIView view6) where TParentView : UIView
 	{
 		parentView.AddSubviews(view1, view2, view3, view4, view5, view6);
 		return parentView;
 	}
+
 	public static TParentView WithSubviews<TParentView>(this TParentView parentView, UIView view1, UIView view2, UIView view3, UIView view4, UIView view5, UIView view6, params UIView[] views) where TParentView : UIView
 	{
 		parentView.AddSubviews(view1, view2, view3, view4, view5, view6);
@@ -226,16 +235,16 @@ public static class CreatorExtensions
 	#region ScrollView
 
 	public static UIScrollView CreateVerticalScroll(this object _)
-    {
-        return new UIScrollView()
-        {
-            AlwaysBounceHorizontal = false,
-            AlwaysBounceVertical = false,
-            Bounces = false,
-            BouncesZoom = false,
-            ShowsVerticalScrollIndicator = true,
-            ShowsHorizontalScrollIndicator = false
-        }.WithContentInsetAdjustementBehavior(UIScrollViewContentInsetAdjustmentBehavior.Never);
+	{
+		return new UIScrollView
+		{
+			AlwaysBounceHorizontal = false,
+			AlwaysBounceVertical = false,
+			Bounces = false,
+			BouncesZoom = false,
+			ShowsVerticalScrollIndicator = true,
+			ShowsHorizontalScrollIndicator = false
+		}.WithContentInsetAdjustementBehavior(UIScrollViewContentInsetAdjustmentBehavior.Never);
 	}
 
 	public static UIScrollView WithContentInsetAdjustementBehavior(this UIScrollView view, UIScrollViewContentInsetAdjustmentBehavior behavior)
@@ -244,321 +253,325 @@ public static class CreatorExtensions
 		{
 			view.ContentInsetAdjustmentBehavior = behavior;
 		}
+
 		return view;
 	}
 
-    public static UIScrollView Disable(this UIScrollView view)
-    {
-        view.ScrollEnabled = false;
-        return view;
-    }
+	public static UIScrollView Disable(this UIScrollView view)
+	{
+		view.ScrollEnabled = false;
+		return view;
+	}
 
-    public static UIScrollView Enable(this UIScrollView view)
-    {
-        view.ScrollEnabled = true;
-        return view;
-    }
+	public static UIScrollView Enable(this UIScrollView view)
+	{
+		view.ScrollEnabled = true;
+		return view;
+	}
 
-    #endregion
+	#endregion
 
-    #region UILabel
+	#region UILabel
 
-    public static UILabel CreateLabel(this object parent)
-    {
-        return new UILabel();
-    }
+	public static UILabel CreateLabel(this object parent)
+	{
+		return new UILabel();
+	}
 
-    public static UILabel WithText(this UILabel label, string text)
-    {
-        label.Text = text;
-        return label;
-    }
+	public static UILabel WithText(this UILabel label, string text)
+	{
+		label.Text = text;
+		return label;
+	}
 
 	public static UILabel WithTextColor(this UILabel label, int color)
 	{
 		return WithTextColor(label, color.ColorFromHex());
 	}
+
 	public static UILabel WithTextColor(this UILabel label, UIColor color)
-    {
-        label.TextColor = color;
-        return label;
-    }
-
-    public static UILabel WithFont(this UILabel label, UIFont font)
-    {
-        label.Font = font;
-        return label;
-    }
-
-    public static UILabel WithAlignment(this UILabel label, UITextAlignment alignment)
-    {
-        label.TextAlignment = alignment;
-        return label;
-    }
-
-    public static UILabel WithTextWrapping(this UILabel label, int maxLine = 0)
-    {
-        label.Lines = maxLine;
-        label.LineBreakMode = UILineBreakMode.WordWrap;
-        return label;
-    }
-
-    public static UILabel WithEllipsis(this UILabel label)
-    {
-        label.LineBreakMode = UILineBreakMode.TailTruncation;
-        return label;
-    }
-
-    public static UILabel WithSystemFont(this UILabel label, int size, UIFontWeight weight = UIFontWeight.Regular)
-    {
-        label.Font = UIFont.SystemFontOfSize(size, weight);
-        return label;
-    }
-
-    #endregion UILabel
-
-    #region UITextField
-
-    public static UITextField CreateTextField(this object parent)
-    {
-        return new UITextField();
-    }
-
-    public static UITextField AsPasswordField(this UITextField input, UIReturnKeyType returnKeyType)
-    {
-        input.KeyboardType = UIKeyboardType.Default;
-        input.SpellCheckingType = UITextSpellCheckingType.No;
-        input.ReturnKeyType = returnKeyType;
-        input.AutocorrectionType = UITextAutocorrectionType.No;
-        input.AutocapitalizationType = UITextAutocapitalizationType.None;
-        input.SecureTextEntry = true;
-        return input;
-    }
-
-    public static UITextField AsEmailField(this UITextField input, UIReturnKeyType returnKeyType)
-    {
-        input.KeyboardType = UIKeyboardType.EmailAddress;
-        input.SpellCheckingType = UITextSpellCheckingType.No;
-        input.ReturnKeyType = returnKeyType;
-        input.AutocorrectionType = UITextAutocorrectionType.No;
-        input.AutocapitalizationType = UITextAutocapitalizationType.None;
-        return input;
-    }
-    public static UITextField AsNumpadField(this UITextField input, UIReturnKeyType returnKeyType)
-    {
-        input.KeyboardType = UIKeyboardType.NumberPad;
-        input.SpellCheckingType = UITextSpellCheckingType.No;
-        input.ReturnKeyType = returnKeyType;
-        input.AutocorrectionType = UITextAutocorrectionType.No;
-        input.AutocapitalizationType = UITextAutocapitalizationType.None;
-        return input;
-    }
-
-    public static UITextField WithTextColor(this UITextField input, UIColor color)
-    {
-        input.TextColor = color;
-        return input;
-    }
-
-    public static UITextField WithText(this UITextField input, string text)
-    {
-        input.Text = text;
-        return input;
-    }
-
-    public static UITextField WithFont(this UITextField input, UIFont font)
-    {
-        input.Font = font;
-        return input;
-    }
-
-    public static UITextField WithAlignment(this UITextField input, UITextAlignment alignment)
-    {
-        input.TextAlignment = alignment;
-        return input;
-    }
-
-    public static UITextField WithSystemFont(this UITextField input, int size, UIFontWeight weight = UIFontWeight.Regular)
-    {
-        input.Font = UIFont.SystemFontOfSize(size, weight);
-        return input;
-    }
-
-    public static UITextField WithPlaceholder(this UITextField input, string placeholder)
-    {
-        input.Placeholder = placeholder;
-        return input;
-    }
-
-    public static UITextField OnReturn(this UITextField input, Action action, bool dismissKeyboard)
-    {
-        input.ShouldReturn += (textField) =>
-        {
-            if (dismissKeyboard)
-            {
-                textField.ResignFirstResponder();
-            }
-            action?.Invoke();
-            return true;
-        };
-        return input;
-    }
-
-    public static UITextField WithAutocapitalization(this UITextField input, UITextAutocapitalizationType autocapitalizationType = UITextAutocapitalizationType.Words)
-    {
-        input.AutocapitalizationType = autocapitalizationType;
-        return input;
-    }
-
-	public static UITextField OnReturnNextResponder(this UITextField input, UIResponder nextReponder, UIReturnKeyType returnKeyType = UIReturnKeyType.Default, Action action = null)
-    {
-        input.ReturnKeyType = returnKeyType;
-        input.ShouldReturn += (textField) =>
-        {
-            action?.Invoke();
-            if (nextReponder == null)
-            {
-                return false;
-            }
-
-            nextReponder.BecomeFirstResponder();
-			return false;
-        };
-        return input;
-    }
-
-    public static UITextField WithBorderStyle(this UITextField input, UITextBorderStyle style)
 	{
-        input.BorderStyle = style;
+		label.TextColor = color;
+		return label;
+	}
+
+	public static UILabel WithFont(this UILabel label, UIFont font)
+	{
+		label.Font = font;
+		return label;
+	}
+
+	public static UILabel WithAlignment(this UILabel label, UITextAlignment alignment)
+	{
+		label.TextAlignment = alignment;
+		return label;
+	}
+
+	public static UILabel WithTextWrapping(this UILabel label, int maxLine = 0)
+	{
+		label.Lines = maxLine;
+		label.LineBreakMode = UILineBreakMode.WordWrap;
+		return label;
+	}
+
+	public static UILabel WithEllipsis(this UILabel label)
+	{
+		label.LineBreakMode = UILineBreakMode.TailTruncation;
+		return label;
+	}
+
+	public static UILabel WithSystemFont(this UILabel label, int size, UIFontWeight weight = UIFontWeight.Regular)
+	{
+		label.Font = UIFont.SystemFontOfSize(size, weight);
+		return label;
+	}
+
+	#endregion UILabel
+
+	#region UITextField
+
+	public static UITextField CreateTextField(this object parent)
+	{
+		return new UITextField();
+	}
+
+	public static UITextField AsPasswordField(this UITextField input, UIReturnKeyType returnKeyType)
+	{
+		input.KeyboardType = UIKeyboardType.Default;
+		input.SpellCheckingType = UITextSpellCheckingType.No;
+		input.ReturnKeyType = returnKeyType;
+		input.AutocorrectionType = UITextAutocorrectionType.No;
+		input.AutocapitalizationType = UITextAutocapitalizationType.None;
+		input.SecureTextEntry = true;
 		return input;
 	}
 
-	#endregion 
+	public static UITextField AsEmailField(this UITextField input, UIReturnKeyType returnKeyType)
+	{
+		input.KeyboardType = UIKeyboardType.EmailAddress;
+		input.SpellCheckingType = UITextSpellCheckingType.No;
+		input.ReturnKeyType = returnKeyType;
+		input.AutocorrectionType = UITextAutocorrectionType.No;
+		input.AutocapitalizationType = UITextAutocapitalizationType.None;
+		return input;
+	}
+
+	public static UITextField AsNumpadField(this UITextField input, UIReturnKeyType returnKeyType)
+	{
+		input.KeyboardType = UIKeyboardType.NumberPad;
+		input.SpellCheckingType = UITextSpellCheckingType.No;
+		input.ReturnKeyType = returnKeyType;
+		input.AutocorrectionType = UITextAutocorrectionType.No;
+		input.AutocapitalizationType = UITextAutocapitalizationType.None;
+		return input;
+	}
+
+	public static UITextField WithTextColor(this UITextField input, UIColor color)
+	{
+		input.TextColor = color;
+		return input;
+	}
+
+	public static UITextField WithText(this UITextField input, string text)
+	{
+		input.Text = text;
+		return input;
+	}
+
+	public static UITextField WithFont(this UITextField input, UIFont font)
+	{
+		input.Font = font;
+		return input;
+	}
+
+	public static UITextField WithAlignment(this UITextField input, UITextAlignment alignment)
+	{
+		input.TextAlignment = alignment;
+		return input;
+	}
+
+	public static UITextField WithSystemFont(this UITextField input, int size, UIFontWeight weight = UIFontWeight.Regular)
+	{
+		input.Font = UIFont.SystemFontOfSize(size, weight);
+		return input;
+	}
+
+	public static UITextField WithPlaceholder(this UITextField input, string placeholder)
+	{
+		input.Placeholder = placeholder;
+		return input;
+	}
+
+	public static UITextField OnReturn(this UITextField input, Action action, bool dismissKeyboard)
+	{
+		input.ShouldReturn += (textField) =>
+		{
+			if (dismissKeyboard)
+			{
+				textField.ResignFirstResponder();
+			}
+
+			action?.Invoke();
+			return true;
+		};
+		return input;
+	}
+
+	public static UITextField WithAutocapitalization(this UITextField input, UITextAutocapitalizationType autocapitalizationType = UITextAutocapitalizationType.Words)
+	{
+		input.AutocapitalizationType = autocapitalizationType;
+		return input;
+	}
+
+	public static UITextField OnReturnNextResponder(this UITextField input, UIResponder nextReponder, UIReturnKeyType returnKeyType = UIReturnKeyType.Default, Action action = null)
+	{
+		input.ReturnKeyType = returnKeyType;
+		input.ShouldReturn += (textField) =>
+		{
+			action?.Invoke();
+			if (nextReponder == null)
+			{
+				return false;
+			}
+
+			nextReponder.BecomeFirstResponder();
+			return false;
+		};
+		return input;
+	}
+
+	public static UITextField WithBorderStyle(this UITextField input, UITextBorderStyle style)
+	{
+		input.BorderStyle = style;
+		return input;
+	}
+
+	#endregion
 
 	#region UISearchBar
 
 	public static UISearchBar CreateSearchBar(this object parent)
-    {
-        return new UISearchBar();
-    }
+	{
+		return new UISearchBar();
+	}
 
-    public static UISearchBar WithPlaceholder(this UISearchBar input, string text)
-    {
-        input.Placeholder = text;
-        return input;
-    }
+	public static UISearchBar WithPlaceholder(this UISearchBar input, string text)
+	{
+		input.Placeholder = text;
+		return input;
+	}
 
-    public static UISearchBar WithTintColor(this UISearchBar input, UIColor color)
-    {
-        input.TintColor = color;
-        return input;
-    }
+	public static UISearchBar WithTintColor(this UISearchBar input, UIColor color)
+	{
+		input.TintColor = color;
+		return input;
+	}
 
-    public static UISearchBar WithBarTintColor(this UISearchBar input, UIColor color)
-    {
-        input.BarTintColor = color;
-        return input;
-    }
+	public static UISearchBar WithBarTintColor(this UISearchBar input, UIColor color)
+	{
+		input.BarTintColor = color;
+		return input;
+	}
 
 	public static UISearchBar WithBorderWidthAndColor(this UISearchBar input, UIColor color, int width)
 	{
-        input.Layer.BorderColor = color.CGColor;
-        input.Layer.BorderWidth = width;
+		input.Layer.BorderColor = color.CGColor;
+		input.Layer.BorderWidth = width;
 		return input;
 	}
 
 	public static UISearchBar WithSearchBarStyle(this UISearchBar input, UISearchBarStyle style)
-    {
-        input.SearchBarStyle = style;
-        return input;
-    }
-
-    public static UISearchBar WithBarStyle(this UISearchBar input, UIBarStyle style)
 	{
-        input.BarStyle = style;
+		input.SearchBarStyle = style;
 		return input;
 	}
 
-    public static UISearchBar WithTranslucent(this UISearchBar input, bool isTranslucent = true)
-    {
-        input.Translucent = isTranslucent;
-        return input;
-    }
+	public static UISearchBar WithBarStyle(this UISearchBar input, UIBarStyle style)
+	{
+		input.BarStyle = style;
+		return input;
+	}
 
-    public static UISearchBar WithOpaque(this UISearchBar input, bool isOpaque = true)
-    {
-        input.Opaque = isOpaque;
-        return input;
-    }
+	public static UISearchBar WithTranslucent(this UISearchBar input, bool isTranslucent = true)
+	{
+		input.Translucent = isTranslucent;
+		return input;
+	}
 
-    #endregion
+	public static UISearchBar WithOpaque(this UISearchBar input, bool isOpaque = true)
+	{
+		input.Opaque = isOpaque;
+		return input;
+	}
 
-    #region UITextView
+	#endregion
 
-    public static UITextView CreateTextView(this object parent)
-    {
-        return new UITextView();
-    }
+	#region UITextView
 
-    public static UITextView WithText(this UITextView input, string text)
-    {
-        input.Text = text;
-        return input;
-    }
+	public static UITextView CreateTextView(this object parent)
+	{
+		return new UITextView();
+	}
 
-    #endregion UITextView
+	public static UITextView WithText(this UITextView input, string text)
+	{
+		input.Text = text;
+		return input;
+	}
 
-    #region UIImageView
+	#endregion UITextView
 
-    public static UIImageView CreateImageView(this object parent)
-    {
-        return new UIImageView();
-    }
+	#region UIImageView
 
-    public static UIImageView WithImage(this UIImageView view, UIImage image)
-    {
-        view.Image = image;
-        return view;
-    }
+	public static UIImageView CreateImageView(this object parent)
+	{
+		return new UIImageView();
+	}
 
-    public static UIImageView WithImage(this UIImageView view, string imageName)
-    {
-        view.Image = new UIImage(imageName);
-        return view;
-    }
+	public static UIImageView WithImage(this UIImageView view, UIImage image)
+	{
+		view.Image = image;
+		return view;
+	}
 
-    public static UIImageView UniformToFit(this UIImageView view)
-    {
-        view.ContentMode = UIViewContentMode.ScaleAspectFit;
-        return view;
-    }
+	public static UIImageView WithImage(this UIImageView view, string imageName)
+	{
+		view.Image = new UIImage(imageName);
+		return view;
+	}
 
-    #endregion
+	public static UIImageView UniformToFit(this UIImageView view)
+	{
+		view.ContentMode = UIViewContentMode.ScaleAspectFit;
+		return view;
+	}
 
-    #region Generic
+	#endregion
 
-    public static TView Hide<TView>(this TView view) where TView : UIView
-    {
-        view.Hidden = true;
-        return view;
-    }
+	#region Generic
 
-    public static TView Show<TView>(this TView view) where TView : UIView
-    {
-        view.Hidden = false;
-        return view;
-    }
+	public static TView Hide<TView>(this TView view) where TView : UIView
+	{
+		view.Hidden = true;
+		return view;
+	}
 
-    public static TView Invisible<TView>(this TView view) where TView : UIView
-    {
-        view.Alpha = 0f;
-        return view;
-    }
+	public static TView Show<TView>(this TView view) where TView : UIView
+	{
+		view.Hidden = false;
+		return view;
+	}
 
-    public static TView Visible<TView>(this TView view) where TView : UIView
-    {
-        view.Alpha = 1f;
-        return view;
+	public static TView Invisible<TView>(this TView view) where TView : UIView
+	{
+		view.Alpha = 0f;
+		return view;
+	}
+
+	public static TView Visible<TView>(this TView view) where TView : UIView
+	{
+		view.Alpha = 1f;
+		return view;
 	}
 
 	public static TView Visible<TView>(this TView view, bool value) where TView : UIView
@@ -580,73 +593,74 @@ public static class CreatorExtensions
 	}
 
 	public static TView WithBackgroundColor<TView>(this TView view, UIColor color) where TView : UIView
-    {
-        view.BackgroundColor = color;
-        return view;
-    }
-
-    public static TView WithBorder<TView>(this TView view, UIColor borderColor, int size) where TView : UIView
-    {
-        view.Layer.BorderColor = borderColor.CGColor;
-        view.Layer.BorderWidth = size;
-        return view;
-    }
-
-    public static TView WithShadow<TView>(this TView view, UIColor shadowColor, int left, int top, float radius = 8f, float opacity = 1f) where TView : UIView
-    {
-        view.Layer.ShadowColor = shadowColor.CGColor;
-        view.Layer.ShadowOpacity = opacity;
-        view.Layer.ShadowRadius = radius;
-        view.Layer.ShadowOffset = new CGSize(left, top);
-
-        return view;
-    }
-
-    public static TView WithClipping<TView>(this TView view) where TView : UIView
-    {
-        view.ClipsToBounds = true;
-
-        return view;
-    }
-
-    public static TView WithoutShadow<TView>(this TView view) where TView : UIView
-    {
-        view.Layer.ShadowColor = UIColor.Clear.CGColor;
-        view.Layer.ShadowOpacity = 0;
-        view.Layer.ShadowRadius = 0;
-        view.Layer.ShadowOffset = CGSize.Empty;
-
-        return view;
-    }
-
-    public static TView WithCornerRadius<TView>(this TView view, int size) where TView : UIView
-    {
-        view.Layer.CornerRadius = size;
-        return view;
-    }
-
-    public static TView Disable<TView>(this TView view) where TView : UIView
-    {
-        view.UserInteractionEnabled = false;
-        return view;
-    }
-
-    public static TView Enable<TView>(this TView view) where TView : UIView
-    {
-        view.UserInteractionEnabled = true;
-        return view;
+	{
+		view.BackgroundColor = color;
+		return view;
 	}
+
+	public static TView WithBorder<TView>(this TView view, UIColor borderColor, int size) where TView : UIView
+	{
+		view.Layer.BorderColor = borderColor.CGColor;
+		view.Layer.BorderWidth = size;
+		return view;
+	}
+
+	public static TView WithShadow<TView>(this TView view, UIColor shadowColor, int left, int top, float radius = 8f, float opacity = 1f) where TView : UIView
+	{
+		view.Layer.ShadowColor = shadowColor.CGColor;
+		view.Layer.ShadowOpacity = opacity;
+		view.Layer.ShadowRadius = radius;
+		view.Layer.ShadowOffset = new CGSize(left, top);
+
+		return view;
+	}
+
+	public static TView WithClipping<TView>(this TView view) where TView : UIView
+	{
+		view.ClipsToBounds = true;
+
+		return view;
+	}
+
+	public static TView WithoutShadow<TView>(this TView view) where TView : UIView
+	{
+		view.Layer.ShadowColor = UIColor.Clear.CGColor;
+		view.Layer.ShadowOpacity = 0;
+		view.Layer.ShadowRadius = 0;
+		view.Layer.ShadowOffset = CGSize.Empty;
+
+		return view;
+	}
+
+	public static TView WithCornerRadius<TView>(this TView view, int size) where TView : UIView
+	{
+		view.Layer.CornerRadius = size;
+		return view;
+	}
+
+	public static TView Disable<TView>(this TView view) where TView : UIView
+	{
+		view.UserInteractionEnabled = false;
+		return view;
+	}
+
+	public static TView Enable<TView>(this TView view) where TView : UIView
+	{
+		view.UserInteractionEnabled = true;
+		return view;
+	}
+
 	public static TView Enable<TView>(this TView view, bool value) where TView : UIView
 	{
 		return value ? view.Enable() : view.Disable();
 	}
 
 	public static TView AddTapAction<TView>(this TView view, Action tapped) where TView : UIView
-    {
-        UITapGestureRecognizer recognizer = new UITapGestureRecognizer(tapped);
-        view.AddGestureRecognizer(recognizer);
-        return view;
-    }
+	{
+		UITapGestureRecognizer recognizer = new UITapGestureRecognizer(tapped);
+		view.AddGestureRecognizer(recognizer);
+		return view;
+	}
 
 	#endregion
 
@@ -675,10 +689,10 @@ public static class CreatorExtensions
 	public static UITableView CreateTableView(this UIResponder _, CGRect? frame)
 	{
 		var tableView = frame.HasValue
-					  ? new UITableView(frame.Value)
-					  : new UITableView();
+			? new UITableView(frame.Value)
+			: new UITableView();
 		return (UIDevice.CurrentDevice.CheckSystemVersion(11, 0))
-			? tableView.WithoutAutomaticEstimatedHeights()//https://stackoverflow.com/a/46257601/1584823
+			? tableView.WithoutAutomaticEstimatedHeights() //https://stackoverflow.com/a/46257601/1584823
 			: tableView;
 	}
 
@@ -688,17 +702,19 @@ public static class CreatorExtensions
 		{
 			view.EstimatedRowHeight = 0f;
 		}
+
 		if (view.EstimatedSectionHeaderHeight == UITableView.AutomaticDimension)
 		{
 			view.EstimatedSectionHeaderHeight = 0f;
 		}
+
 		if (view.EstimatedSectionFooterHeight == UITableView.AutomaticDimension)
 		{
 			view.EstimatedSectionFooterHeight = 0f;
 		}
+
 		return view;
 	}
 
 	#endregion UITableView
-
 }
