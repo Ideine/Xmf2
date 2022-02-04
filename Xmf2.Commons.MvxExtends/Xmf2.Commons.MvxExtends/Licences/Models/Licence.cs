@@ -1,5 +1,5 @@
 ﻿using System;
-using MvvmCross.Platform;
+using MvvmCross;
 
 namespace Xmf2.Commons.MvxExtends.Licences.Models
 {
@@ -22,7 +22,7 @@ namespace Xmf2.Commons.MvxExtends.Licences.Models
 
         public Licence()
         {
-            _licenceReaderService = Mvx.Resolve<ILicenceReaderService>();
+            _licenceReaderService = Mvx.IoCProvider.Resolve<ILicenceReaderService>();
         }
 
         public String GetSummaryText(string licencePathFile)

@@ -1,4 +1,4 @@
-﻿using MvvmCross.Platform.Platform;
+﻿using MvvmCross.Base;
 using Newtonsoft.Json;
 using System;
 using System.IO;

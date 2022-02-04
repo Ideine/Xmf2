@@ -1,52 +1,39 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
-using MvvmCross.Platform;
-using MvvmCross.Core.ViewModels;
 using Xmf2.Commons.ErrorManagers;
 using Xmf2.Commons.MvxExtends.Extensions;
 using System.Windows.Input;
+using MvvmCross.ViewModels;
+using MvvmCross;
+using MvvmCross.Commands;
 
 namespace Xmf2.Commons.MvxExtends.ViewModels
 {
 	public abstract class BaseViewModel : MvxViewModel
 	{
 		private static readonly Task CompletedTask = Task.FromResult<object>(null);
-		private readonly Lazy<IErrorManager> _errorManager = new Lazy<IErrorManager>(Mvx.Resolve<IErrorManager>);
+		private readonly Lazy<IErrorManager> _errorManager = new Lazy<IErrorManager>(Mvx.IoCProvider.Resolve<IErrorManager>);
 		protected IErrorManager ErrorManager => _errorManager.Value;
 
 		private ICommand _closeCommand;
 		public ICommand CloseCommand => _closeCommand ?? (_closeCommand = new MvxCommand(CloseAction));
 
-		public virtual void OnEnter()
-		{
+		public virtual void OnEnter() { }
 
-		}
+		public virtual void OnResume() { }
 
-		public virtual void OnResume()
-		{
+		public virtual void OnPause() { }
 
-		}
-
-		public virtual void OnPause()
-		{
-
-		}
-
-		public virtual void OnStop()
-		{
-
-		}
+		public virtual void OnStop() { }
 
 		protected virtual void CloseViewModel()
 		{
-			Close(this);
+			//Close(this); todo
+			//Close(this);
 		}
 
-		protected virtual void CloseAction()
-		{
-			CloseViewModel();
-		}
+		protected virtual void CloseAction() => CloseViewModel();
 
 		#region ExecAsync
 
@@ -85,7 +72,7 @@ namespace Xmf2.Commons.MvxExtends.ViewModels
 					{
 						if (isUserAction && _operationInProgressCTS != null)
 						{
-							Mvx.Warning("User operation already in progress. ExecAsync canceled");
+							//Mvx.Warning("User operation already in progress. ExecAsync canceled"); todo
 							return false;
 						}
 						_operationInProgressCTS = currentCancellationToken;
@@ -274,8 +261,8 @@ namespace Xmf2.Commons.MvxExtends.ViewModels
 					disposed = true;
 				}
 			}
-			catch 
-			{ 
+			catch
+			{
 				//ignored
 			}
 		}
@@ -286,13 +273,13 @@ namespace Xmf2.Commons.MvxExtends.ViewModels
 		}
 
 		protected virtual void DisposeManagedObjects()
-		{ 
-		
+		{
+
 		}
 
 		protected virtual void DisposeUnmanagedObjects()
-		{ 
-		
+		{
+
 		}
 
 		#endregion Dispose

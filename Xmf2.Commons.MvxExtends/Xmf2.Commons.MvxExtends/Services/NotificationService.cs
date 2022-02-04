@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Threading.Tasks;
-using MvvmCross.Platform.Platform;
 
 namespace Xmf2.Commons.MvxExtends.Services
 {
@@ -65,7 +64,7 @@ namespace Xmf2.Commons.MvxExtends.Services
 			}
 			catch (Exception ex)
 			{
-				MvxTrace.Trace($"Error while registering for notification: {ex}");
+				//MvxTrace.Trace($"Error while registering for notification: {ex}"); todo
 			}
 		}
 
@@ -83,7 +82,7 @@ namespace Xmf2.Commons.MvxExtends.Services
 			}
 			catch (Exception ex)
 			{
-				MvxTrace.Trace($"Error while unregistering for notification: {ex}");
+				//MvxTrace.Trace($"Error while unregistering for notification: {ex}");
 			}
 		}
 

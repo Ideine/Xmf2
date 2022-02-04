@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
-using MvvmCross.Platform;
+using MvvmCross;
 using Polly;
 using Xmf2.Commons.ErrorManagers;
 using Xmf2.Commons.Logs;
@@ -24,7 +24,7 @@ namespace Xmf2.Commons.MvxExtends.ErrorManagers
 					|| ex.Message.IndexOf("Invalid argument", StringComparison.OrdinalIgnoreCase) != -1)
 				.RetryAsync(3, (Action<Exception, int>) LogRetryException);
 
-			Mvx.TryResolve<ILogger>(out _logger);
+			Mvx.IoCProvider.TryResolve<ILogger>(out _logger);
 		}
 
 		public virtual async Task<TResult> ExecuteAsync<TResult>(Func<Task<TResult>> action)

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Text;
-using MvvmCross.Platform;
-using MvvmCross.Platform.Platform;
+using MvvmCross;
 using Xmf2.Commons.Logs;
 
 namespace Xmf2.Commons.MvxExtends.Logs
@@ -13,26 +12,26 @@ namespace Xmf2.Commons.MvxExtends.Logs
 			if (e == null && message == null)
 				return;
 
-			MvxTraceLevel traceLevel;
+			//MvxTraceLevel traceLevel; todo
 			switch (level)
 			{
 				case LogLevel.Critical:
 				case LogLevel.Error:
-					traceLevel = MvxTraceLevel.Error;
+					//traceLevel = MvxTraceLevel.Error;
 					break;
 				case LogLevel.Warning:
-					traceLevel = MvxTraceLevel.Warning;
+					//traceLevel = MvxTraceLevel.Warning;
 					break;
 				case LogLevel.Info:
 				default:
-					traceLevel = MvxTraceLevel.Diagnostic;
+					//traceLevel = MvxTraceLevel.Diagnostic;
 					break;
 			}
 
 			message = (message != null)
 					? message.Replace("{", "{{").Replace("}", "}}")
 					: String.Empty;
-			Mvx.Trace(traceLevel, this.FormatException(e, message));
+			//Mvx.Trace(traceLevel, this.FormatException(e, message));
 		}
 
 		public virtual void LogCritical(Exception e = null, string message = null)

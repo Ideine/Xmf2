@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
-using MvvmCross.Platform;
+using MvvmCross;
 using Xmf2.Commons.ErrorManagers;
 using Xmf2.Commons.Logs;
 
@@ -12,7 +12,7 @@ namespace Xmf2.Commons.MvxExtends.ErrorManagers
 
 		public BaseErrorManager()
 		{
-			Mvx.TryResolve<ILogger>(out _logger);
+			Mvx.IoCProvider.TryResolve<ILogger>(out _logger);
 		}
 
 		public virtual void TreatError(Exception e, bool promptErrorMessageToUser)

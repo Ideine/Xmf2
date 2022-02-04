@@ -1,113 +1,13 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <MinimumVisualStudioVersion>10.0</MinimumVisualStudioVersion>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{7D6A560F-5947-4ABA-AF63-902E40ACDA2B}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Xmf2.Commons.MvxExtends</RootNamespace>
-    <AssemblyName>Xmf2.Commons.MvxExtends</AssemblyName>
-    <DefaultLanguage>fr-FR</DefaultLanguage>
-    <FileAlignment>512</FileAlignment>
-    <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
-    <TargetFrameworkProfile>Profile111</TargetFrameworkProfile>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <ItemGroup>
-    <!-- A reference to the entire .NET Framework is automatically included -->
-    <None Include="project.json" />
+    <PackageReference Include="MvvmCross" Version="8.0.2" />
+    <PackageReference Include="Polly" Version="7.1.1" />    
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Converters\ToUpperConverter.cs" />
-    <Compile Include="Converters\BytesToStringConverter.cs" />
-    <Compile Include="Converters\IsStringNotNullOrEmptyConverter.cs" />
-    <Compile Include="Converters\IsNotNullValueConverter.cs" />
-    <Compile Include="Converters\OrConverter.cs" />
-    <Compile Include="Converters\AndConverter.cs" />
-    <Compile Include="Converters\DefaultValueConverter.cs" />
-    <Compile Include="Converters\IfEnumEqualsConverter.cs" />
-    <Compile Include="Converters\IfNotNullConverter.cs" />
-    <Compile Include="Converters\IsListEmptyConverter.cs" />
-    <Compile Include="Converters\IsStringEmptyConverter.cs" />
-    <Compile Include="Converters\NotConverter.cs" />
-    <Compile Include="Converters\PercentageFormatConverter.cs" />
-    <Compile Include="Converters\StringFormatConverter.cs" />
-    <Compile Include="Converters\FormattableValueConverter.cs" />
-    <Compile Include="ErrorManagers\BaseErrorManager.cs" />
-    <Compile Include="ErrorManagers\BaseHttpErrorManager.cs" />
-    <Compile Include="Extensions\ViewModelLoaderExtensions.cs" />
-    <Compile Include="Helpers\EnumMemberHelper.cs" />
-    <Compile Include="Helpers\NavigationJsonConverter.cs" />
-    <Compile Include="Logs\BaseLogger.cs" />
-    <Compile Include="Services\NotificationService.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ViewModels\BaseViewModel.cs" />
-    <Compile Include="Extensions\SemaphoreSlimExtensions.cs" />
-    <Compile Include="Extensions\TaskExtensions.cs" />
-    <Compile Include="Licences\ILicenceReaderService.cs" />
-    <Compile Include="Licences\LicenceStyle.cs" />
-    <Compile Include="Licences\LicencesLoader.cs" />
-    <Compile Include="Licences\NoticesHtmlBuilder.cs" />
-    <Compile Include="Licences\Models\Licence.cs" />
-    <Compile Include="Licences\Models\Notice.cs" />
-    <Compile Include="Licences\Models\Notices.cs" />
-    <Compile Include="Converters\LambdaConverter.cs" />
+    <ProjectReference Include="..\..\Xmf2.Commons\Xmf2.Commons\Xmf2.Commons.csproj" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\Xmf2.Commons\Xmf2.Commons\Xmf2.Commons.csproj">
-      <Project>{6F547CA0-07E5-4D09-AF1C-E26AEF8BC45A}</Project>
-      <Name>Xmf2.Commons</Name>
-    </ProjectReference>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Newtonsoft.Json.10.0.2\lib\portable-net45+win8+wpa81+wp8\Newtonsoft.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="MvvmCross.Binding">
-      <HintPath>..\packages\MvvmCross.Binding.4.4.0\lib\portable-net45+win+wpa81+wp80\MvvmCross.Binding.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="MvvmCross.Core">
-      <HintPath>..\packages\MvvmCross.Core.4.4.0\lib\portable-net45+win+wpa81+wp80\MvvmCross.Core.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="MvvmCross.Localization">
-      <HintPath>..\packages\MvvmCross.Binding.4.4.0\lib\portable-net45+win+wpa81+wp80\MvvmCross.Localization.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="MvvmCross.Platform">
-      <HintPath>..\packages\MvvmCross.Platform.4.4.0\lib\portable-net45+win+wpa81+wp80\MvvmCross.Platform.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Polly">
-      <HintPath>..\..\..\..\packages\Polly.7.1.1\lib\netstandard1.1\Polly.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Runtime.InteropServices.RuntimeInformation">
-      <HintPath>..\packages\System.Runtime.InteropServices.RuntimeInformation.4.3.0\lib\netstandard1.1\System.Runtime.InteropServices.RuntimeInformation.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Helpers\propx.snippet" />
-    <None Include="Helpers\cmdxx.snippet" />
-    <None Include="Helpers\cmdx.snippet" />
-  </ItemGroup>
-  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
 </Project>
