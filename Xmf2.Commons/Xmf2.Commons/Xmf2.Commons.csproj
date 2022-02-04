@@ -1,95 +1,12 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <MinimumVisualStudioVersion>10.0</MinimumVisualStudioVersion>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{6F547CA0-07E5-4D09-AF1C-E26AEF8BC45A}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Xmf2.Commons</RootNamespace>
-    <AssemblyName>Xmf2.Commons</AssemblyName>
-    <DefaultLanguage>fr-FR</DefaultLanguage>
-    <FileAlignment>512</FileAlignment>
-    <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
-    <TargetFrameworkProfile>Profile111</TargetFrameworkProfile>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <NoWarn>RECS0165</NoWarn>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <ItemGroup>
-    <Compile Include="Caches\LoaderWithParametersCache.cs" />
-    <Compile Include="Caches\LoaderCache.cs" />
-    <Compile Include="ErrorManagers\InvalidAppVersionException.cs" />
-    <Compile Include="Extensions\EnumerableExtensions.cs" />
-    <Compile Include="Extensions\EnumExtensions.cs" />
-    <Compile Include="Extensions\ObjectExtensions.cs" />
-    <Compile Include="Extensions\StringExtensions.cs" />
-    <Compile Include="Extensions\TaskExtensions.cs" />
-    <Compile Include="Helpers\ActionHelper.cs" />
-    <Compile Include="Helpers\StringHelper.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ErrorManagers\AccessDataException.cs" />
-    <Compile Include="ErrorManagers\IErrorManager.cs" />
-    <Compile Include="ErrorManagers\IHttpErrorManager.cs" />
-    <Compile Include="ErrorManagers\ManagedException.cs" />
-    <Compile Include="Logs\ILogger.cs" />
-    <Compile Include="Services\Authentications\AuthenticationService.cs" />
-    <Compile Include="Services\Authentications\IAuthenticationService.cs" />
-    <Compile Include="Services\Authentications\InMemoryUserStorageService.cs" />
-    <Compile Include="Services\Authentications\IUserStorageService.cs" />
-    <Compile Include="Services\Authentications\Models\AuthenticationDetailStorageModel.cs" />
-    <Compile Include="Services\OAuth2\BodyOAuth2Configuration.cs" />
-    <Compile Include="Services\OAuth2\Models\AuthenticationResponse.cs" />
-    <Compile Include="Services\OAuth2\Models\LoginRequest.cs" />
-    <Compile Include="Services\OAuth2\Models\RefreshRequest.cs" />
-    <Compile Include="Services\OAuth2\OAuth2ClientFactory.cs" />
-    <Compile Include="Services\DataAccess\RequestService.cs" />
-    <Compile Include="Services\DataAccess\OAuth2RequestService.cs" />
-    <Compile Include="Extensions\CommandExtensions.cs" />
-    <Compile Include="Caches\CacheEngine.cs" />
-    <Compile Include="Caches\ICacheItem.cs" />
-  </ItemGroup>
-  <ItemGroup />
-  <ItemGroup>
-    <Reference Include="FubarCoder.RestSharp.Portable.Core">
-      <HintPath>..\packages\FubarCoder.RestSharp.Portable.Core.4.0.8\lib\portable45-net45+win8+wp8+wpa81\FubarCoder.RestSharp.Portable.Core.dll</HintPath>
-    </Reference>
+  <ItemGroup>       
+    <PackageReference Include="FubarCoder.RestSharp.Portable.Core" Version="4.0.8" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
-    <None Include="project.json" />
+    <ProjectReference Include="..\Xmf2.Rest\Xmf2.Rest.csproj" />
   </ItemGroup>
-  <ItemGroup />
-  <ItemGroup>
-    <ProjectReference Include="..\Xmf2.Rest\Xmf2.Rest.csproj">
-      <Project>{33FBCB55-FDDA-4F7F-9CA1-87D4DF2788E8}</Project>
-      <Name>Xmf2.Rest</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
 </Project>

@@ -1,5 +1,6 @@
-using MvvmCross.Binding.iOS.Views;
 using Xmf2.Commons.MvxExtends.ViewModels;
+using MvvmCross.Platforms.Ios.Binding.Views;
+using MvvmCross.ViewModels;
 
 namespace Xmf2.Commons.MvxExtends.Touch.ViewComponents
 {
@@ -11,7 +12,7 @@ namespace Xmf2.Commons.MvxExtends.Touch.ViewComponents
 		void ViewDidAppear();
 	}
 
-	public interface IUIComponent<TViewModel> : IUIComponent where TViewModel : BaseViewModel
+	public interface IUIComponent<TViewModel> : IUIComponent where TViewModel : IMvxViewModel
 	{
 		TViewModel ViewModel { get; set; }
 	}

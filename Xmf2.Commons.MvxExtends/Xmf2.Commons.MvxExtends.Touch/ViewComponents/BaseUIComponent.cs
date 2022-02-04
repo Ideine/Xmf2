@@ -1,19 +1,20 @@
 using System;
+using UIKit;
+using MvvmCross;
 using MvvmCross.Binding.Attributes;
 using MvvmCross.Binding.BindingContext;
-using MvvmCross.Binding.iOS.Views;
-using MvvmCross.Platform;
-using UIKit;
+using MvvmCross.Platforms.Ios.Binding.Views;
 using Xmf2.Commons.MvxExtends.ViewModels;
+using MvvmCross.ViewModels;
 
 namespace Xmf2.Commons.MvxExtends.Touch.ViewComponents
 {
 	public abstract class BaseUIComponent<TViewModel> : UIView, IUIComponent<TViewModel>, IMvxBindable, IDisposable
-													where TViewModel : BaseViewModel
+													where TViewModel : IMvxViewModel
 	{
 		protected BaseUIComponent()
 		{
-			BindingContext = Mvx.Resolve<IMvxBindingContext>();
+			BindingContext = Mvx.IoCProvider.Resolve<IMvxBindingContext>();
 		}
 
 		public virtual void AutoLayout()

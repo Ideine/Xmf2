@@ -7,11 +7,16 @@ using System.Windows.Input;
 using MvvmCross.ViewModels;
 using MvvmCross;
 using MvvmCross.Commands;
+using MvvmCross.Navigation;
 
 namespace Xmf2.Commons.MvxExtends.ViewModels
 {
-	public abstract class BaseViewModel : MvxViewModel
+	public abstract class BaseViewModel<TParameter> : MvxViewModel<TParameter> where TParameter : class
 	{
+		private readonly Lazy<IMvxNavigationService> _navigationService;
+		protected IMvxNavigationService NavigationService => _navigationService.Value;
+
+
 		private static readonly Task CompletedTask = Task.FromResult<object>(null);
 		private readonly Lazy<IErrorManager> _errorManager = new Lazy<IErrorManager>(Mvx.IoCProvider.Resolve<IErrorManager>);
 		protected IErrorManager ErrorManager => _errorManager.Value;
@@ -27,13 +32,25 @@ namespace Xmf2.Commons.MvxExtends.ViewModels
 
 		public virtual void OnStop() { }
 
-		protected virtual void CloseViewModel()
-		{
-			//Close(this); todo
-			//Close(this);
-		}
+		protected virtual void CloseViewModel() => Close(this);
 
 		protected virtual void CloseAction() => CloseViewModel();
+
+		protected Task<bool> ShowViewModel<TViewModel>() where TViewModel : IMvxViewModel
+		{
+			return _navigationService.Value.Navigate<TViewModel>();
+		}
+
+		protected Task<bool> ShowViewModel<TViewModel, TTargetParameter>(TTargetParameter parameter)
+			where TViewModel : IMvxViewModel<TTargetParameter>
+		{
+			return _navigationService.Value.Navigate<TViewModel, TTargetParameter>(parameter);
+		}
+		protected Task<bool> Close<TViewModel>(TViewModel viewModel)
+			where TViewModel : IMvxViewModel
+		{
+			return _navigationService.Value.Close(viewModel);
+		}
 
 		#region ExecAsync
 

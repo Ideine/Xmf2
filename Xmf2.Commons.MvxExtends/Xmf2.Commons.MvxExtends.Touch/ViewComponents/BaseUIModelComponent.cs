@@ -1,9 +1,9 @@
+using UIKit;
 using System;
+using MvvmCross;
 using MvvmCross.Binding.Attributes;
 using MvvmCross.Binding.BindingContext;
-using MvvmCross.Binding.iOS.Views;
-using MvvmCross.Platform;
-using UIKit;
+using MvvmCross.Platforms.Ios.Binding.Views;
 
 namespace Xmf2.Commons.MvxExtends.Touch.ViewComponents
 {
@@ -13,7 +13,7 @@ namespace Xmf2.Commons.MvxExtends.Touch.ViewComponents
 	{
 		protected BaseUIModelComponent()
 		{
-			BindingContext = Mvx.Resolve<IMvxBindingContext>();
+			BindingContext = Mvx.IoCProvider.Resolve<IMvxBindingContext>();
 		}
 
 		public virtual void AutoLayout()

@@ -1,10 +1,10 @@
-﻿using MvvmCross.Binding.BindingContext;
-using UIKit;
+﻿using UIKit;
+using MvvmCross.Binding.BindingContext;
 using Xmf2.Commons.MvxExtends.ViewModels;
 
 namespace Xmf2.Commons.MvxExtends.Touch.ViewComponents
 {
-	public class SimpleNavbarComponent : BaseUIComponent<BaseViewModel>
+	public class SimpleNavbarComponent : BaseUIComponent<BaseViewModel<Unit>>
 	{
 		private readonly UIButton _backButton;
 		private readonly UILabel _titleLabel;
@@ -67,7 +67,7 @@ namespace Xmf2.Commons.MvxExtends.Touch.ViewComponents
 		{
 			base.Bind();
 
-			var binding = this.CreateBindingSet<SimpleNavbarComponent, BaseViewModel>();
+			var binding = this.CreateBindingSet<SimpleNavbarComponent, BaseViewModel<Unit>>();
 
 			binding.Bind(_backButton).To(vm => vm.CloseCommand);
 
