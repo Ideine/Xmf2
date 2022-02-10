@@ -16,13 +16,17 @@ namespace Xmf2.Commons.MvxExtends.ViewModels
 		private readonly Lazy<IMvxNavigationService> _navigationService;
 		protected IMvxNavigationService NavigationService => _navigationService.Value;
 
-
 		private static readonly Task CompletedTask = Task.FromResult<object>(null);
 		private readonly Lazy<IErrorManager> _errorManager = new Lazy<IErrorManager>(Mvx.IoCProvider.Resolve<IErrorManager>);
 		protected IErrorManager ErrorManager => _errorManager.Value;
 
 		private ICommand _closeCommand;
 		public ICommand CloseCommand => _closeCommand ?? (_closeCommand = new MvxCommand(CloseAction));
+
+		protected BaseViewModel()
+		{
+			_navigationService = new Lazy<IMvxNavigationService>(() => Mvx.IoCProvider.Resolve<IMvxNavigationService>());
+		}
 
 		public virtual void OnEnter() { }
 

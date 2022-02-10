@@ -1,48 +1,25 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using Android.App;
-using Android.Content;
-using Android.OS;
-using Android.Runtime;
-using Android.Views;
 using Android.Widget;
-using Android.Graphics;
 using Android.Text;
-using MvvmCross.Binding.Droid.Target;
-using MvvmCross.Binding;
-using MvvmCross.Platform.Platform;
+using MvvmCross.Platforms.Android.Binding.Target;
 
 namespace Xmf2.Commons.MvxExtends.Droid.Targets
 {
-    public class TextViewSpannedTextTargetBinding : MvxAndroidTargetBinding
-    {
-        public TextViewSpannedTextTargetBinding(TextView view)
-            : base(view)
-        {
+	public class TextViewSpannedTextTargetBinding : MvxAndroidTargetBinding
+	{
+		public TextViewSpannedTextTargetBinding(TextView view) : base(view) { }
 
-        }
+		public override Type TargetType => typeof(ISpanned);
 
-        protected override void SetValueImpl(object target, object value)
-        {
-            if (value != null && !(value is ISpanned))
-            {
-                MvxBindingTrace.Trace(MvxTraceLevel.Warning,
-                                      "Value '{0}' could not be parsed as a ISpanned", value);
-            }
+		protected override void SetValueImpl(object target, object value)
+		{
+			if (value != null && !(value is ISpanned))
+			{
+				System.Diagnostics.Debug.WriteLine("Value '{0}' could not be parsed as a ISpanned", value);
+			}
 
-            TextView tvw = target as TextView;
-            if (tvw != null)
-            {
-                tvw.SetText((ISpanned)value, TextView.BufferType.Spannable);
-            }
-        }
-
-        public override Type TargetType
-        {
-            get { return typeof(ISpanned); }
-        }
-    }
+			TextView tvw = target as TextView;
+			tvw?.SetText((ISpanned)value, TextView.BufferType.Spannable);
+		}
+	}
 }

@@ -1,25 +1,11 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using Android.App;
-using Android.Content;
-using Android.OS;
-using Android.Runtime;
-using Android.Views;
 using Android.Widget;
-using MvvmCross.Binding.Droid.Target;
+using MvvmCross.Platforms.Android.Binding.Target;
 
 namespace Xmf2.Commons.MvxExtends.Droid.Targets
 {
-    public class ImageViewEmptyableDrawableNameTargetBinding : MvxImageViewDrawableNameTargetBinding
-    {
-        public ImageViewEmptyableDrawableNameTargetBinding(ImageView imageView)
-            : base(imageView)
-        {
-
-        }
+	public class ImageViewEmptyableDrawableNameTargetBinding : MvxImageViewDrawableNameTargetBinding
+	{
+		public ImageViewEmptyableDrawableNameTargetBinding(ImageView imageView) : base(imageView) { }
 		/*
         protected override bool GetBitmap(object value, out Android.Graphics.Bitmap bitmap)
         {
@@ -29,7 +15,6 @@ namespace Xmf2.Commons.MvxExtends.Droid.Targets
                 return false;
             }
 
-
             if (value is string)
             {
                 if (string.IsNullOrEmpty((string)value))
@@ -38,9 +23,8 @@ namespace Xmf2.Commons.MvxExtends.Droid.Targets
                     return false;
                 }
             }
-
             return base.GetBitmap(value, out bitmap);
         }
 		*/
-    }
+	}
 }

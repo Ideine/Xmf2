@@ -1,20 +1,11 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using Android.App;
-using Android.Content;
-using Android.OS;
-using Android.Runtime;
-using Android.Views;
-using Android.Widget;
+using MvvmCross.Platforms.Android.Views;
 using Xmf2.Commons.MvxExtends.ViewModels;
-using MvvmCross.Droid.Views;
 
 namespace Xmf2.Commons.MvxExtends.Droid.Views
 {
-    public abstract class BaseView<TViewModel> : MvxActivity<TViewModel> where TViewModel : BaseViewModel
+	public abstract class BaseView<TViewModel, TParameter> : MvxActivity<TViewModel>
+        where TParameter : class
+        where TViewModel : BaseViewModel<TParameter>
     {
         protected override void OnDestroy()
         {

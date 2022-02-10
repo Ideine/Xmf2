@@ -1,14 +1,12 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using Android.Content;
 using Android.Content.Res;
 using Xmf2.Commons.MvxExtends.Licences;
 
 namespace Xmf2.Commons.MvxExtends.Droid.Services
 {
-    public class LicenceReaderService : ILicenceReaderService
+	public class LicenceReaderService : ILicenceReaderService
     {
-
         private readonly Context _context;
 
         private AssetManager _assetManager;
