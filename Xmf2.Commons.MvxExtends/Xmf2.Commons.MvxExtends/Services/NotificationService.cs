@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Threading.Tasks;
 
 namespace Xmf2.Commons.MvxExtends.Services
@@ -64,7 +65,7 @@ namespace Xmf2.Commons.MvxExtends.Services
 			}
 			catch (Exception ex)
 			{
-				//MvxTrace.Trace($"Error while registering for notification: {ex}"); todo
+				Debug.WriteLine($"Error while registering for notification: {ex}");
 			}
 		}
 

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using Xmf2.Commons.ErrorManagers;
@@ -93,7 +94,7 @@ namespace Xmf2.Commons.MvxExtends.ViewModels
 					{
 						if (isUserAction && _operationInProgressCTS != null)
 						{
-							//Mvx.Warning("User operation already in progress. ExecAsync canceled"); todo
+							Debug.WriteLine("User operation already in progress. ExecAsync canceled");
 							return false;
 						}
 						_operationInProgressCTS = currentCancellationToken;

@@ -1,4 +1,5 @@
-﻿using UIKit;
+﻿using System.Diagnostics;
+using UIKit;
 using Foundation;
 using MvvmCross;
 using MvvmCross.Platforms.Ios.Core;
@@ -44,7 +45,7 @@ namespace Xmf2.Commons.MvxExtends.Touch.Services
 
 		public override void FailedToRegisterForRemoteNotifications(UIApplication application, NSError error)
 		{
-			//MvxTrace.Trace($"Failed to register for remote notifications: {error}"); todo
+			Debug.WriteLine($"Failed to register for remote notifications: {error}");
 			GetNotificationService()?.SetToken(null);
 		}
 
