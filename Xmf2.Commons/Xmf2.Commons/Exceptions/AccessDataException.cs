@@ -18,26 +18,22 @@ namespace Xmf2.Commons.Exceptions
 
 		public AccessDataException(ErrorType type) : base(GetDescriptionFor(type))
 		{
-			this.Type = type;
+			Type = type;
 		}
 
 		public AccessDataException(ErrorType type, Exception innerException) : base(GetDescriptionFor(type), innerException)
 		{
-			this.Type = type;
+			Type = type;
 		}
 
-		private static string GetDescriptionFor(ErrorType type)
+		private static string GetDescriptionFor(ErrorType type) => type switch
 		{
-			switch (type)
-			{
-				case ErrorType.NoInternetConnexion: return "Access Data Exception : No Internet Connection";
-				case ErrorType.Timeout: return "Access Data Exception : Timeout";
-				case ErrorType.UnAuthorized: return "Access Data Exception : Unauthorized";
-				case ErrorType.InvalidAppVersion: return "Access Data Exception : Invalid app version";
-				case ErrorType.NotFound: return "Access Data Exception : Not found";
-				default:
-					return "Access Data Exception : Unknown data access error";
-			}
-		}
+			ErrorType.NoInternetConnexion => "Access Data Exception : No Internet Connection",
+			ErrorType.Timeout => "Access Data Exception : Timeout",
+			ErrorType.UnAuthorized => "Access Data Exception : Unauthorized",
+			ErrorType.InvalidAppVersion => "Access Data Exception : Invalid app version",
+			ErrorType.NotFound => "Access Data Exception : Not found",
+			_ => "Access Data Exception : Unknown data access error"
+		};
 	}
 }

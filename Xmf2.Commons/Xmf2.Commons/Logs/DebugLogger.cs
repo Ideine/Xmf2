@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Diagnostics;
+
 namespace Xmf2.Commons.Logs
 {
 	public class DebugLogger : ILogger
@@ -30,7 +32,7 @@ namespace Xmf2.Commons.Logs
 
 		private void InternalLog(LogLevel level, Exception e, string message)
 		{
-			System.Diagnostics.Debug.WriteLine($"LOG/{level}: {message ?? ""} {e?.ToString() ?? ""}");
+			Debug.WriteLine($"LOG/{level}: {message ?? ""} {e?.ToString() ?? ""}");
 		}
 	}
 }

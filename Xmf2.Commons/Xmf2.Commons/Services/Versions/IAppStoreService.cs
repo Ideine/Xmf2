@@ -1,5 +1,4 @@
-﻿using System;
-namespace Xmf2.Commons.Services.Versions
+﻿namespace Xmf2.Commons.Services.Versions
 {
 	public interface IAppStoreService
 	{

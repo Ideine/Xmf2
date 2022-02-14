@@ -44,13 +44,13 @@ namespace Xmf2.Rest.Caches
 
 			public async Task<T> Load(TParam param, CancellationToken ct, bool force = false)
 			{
-				if (_value == null || DateTime.Now > _expireDate || force || !object.Equals(_lastParam, param))
+				if (_value == null || DateTime.Now > _expireDate || force || !Equals(_lastParam, param))
 				{
 					await _mutex.WaitAsync(ct);
 					ct.ThrowIfCancellationRequested();
 					try
 					{
-						if (_value == null || DateTime.Now > _expireDate || force || !object.Equals(_lastParam, param))
+						if (_value == null || DateTime.Now > _expireDate || force || !Equals(_lastParam, param))
 						{
 							_expireDate = DateTime.Now.Add(_validityTime);
 							_lastParam = param;
@@ -62,12 +62,13 @@ namespace Xmf2.Rest.Caches
 						_mutex.Release();
 					}
 				}
+
 				return _value;
 			}
 		}
 
 		private static readonly Dictionary<string, List<ICacheItem>> _itemsPerScope = new Dictionary<string, List<ICacheItem>>();
-		
+
 		public static void InvalidateScope(string scope)
 		{
 			if (_itemsPerScope.ContainsKey(scope))
@@ -87,6 +88,7 @@ namespace Xmf2.Rest.Caches
 			{
 				_itemsPerScope.Add(scope, new List<ICacheItem>());
 			}
+
 			_itemsPerScope[scope].Add(item);
 
 			return item;
@@ -100,6 +102,7 @@ namespace Xmf2.Rest.Caches
 			{
 				_itemsPerScope.Add(scope, new List<ICacheItem>());
 			}
+
 			_itemsPerScope[scope].Add(item);
 
 			return item;

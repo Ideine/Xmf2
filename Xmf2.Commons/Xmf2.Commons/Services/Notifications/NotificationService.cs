@@ -2,7 +2,7 @@
 using System.Diagnostics;
 using System.Threading.Tasks;
 
-namespace Xmf2.Commons.Services
+namespace Xmf2.Commons.Services.Notifications
 {
 	public interface INotificationService
 	{

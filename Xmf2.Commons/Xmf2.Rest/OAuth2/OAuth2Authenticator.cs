@@ -84,6 +84,7 @@ namespace Xmf2.Rest.OAuth2
 			{
 				throw new InvalidOperationException("Missing Access data");
 			}
+
 			request.AddHeader(AuthorizationHeader, $"{TokenType} {Access.AccessToken}");
 		}
 
@@ -98,6 +99,7 @@ namespace Xmf2.Rest.OAuth2
 			{
 				Access.ExpiresAt = DateTime.MinValue;
 			}
+
 			return TaskHelper.CompletedTask; // refresh token will be done on next request call
 		}
 	}
