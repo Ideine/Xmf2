@@ -8,29 +8,29 @@ namespace Xmf2.Commons.iOS.Controls
 	{
 		private readonly UILabel _placeholderLabel;
 
-		public UITextViewWithPlaceHolder() : base()
+		public UITextViewWithPlaceHolder()
 		{
-			this._placeholderLabel = new UILabel()
+			_placeholderLabel = new UILabel
 			{
 				BackgroundColor = UIColor.Clear,
 				LineBreakMode = UILineBreakMode.WordWrap,
 				TextAlignment = UITextAlignment.Natural,
 				Lines = 0
 			};
-			this.PlaceholderColor = UIColor.Gray;
-			this.Started += this.OnStarted;
-			this.Ended += this.OnEnded;
-			this.Add(this._placeholderLabel);
+			PlaceholderColor = UIColor.Gray;
+			Started += OnStarted;
+			Ended += OnEnded;
+			Add(_placeholderLabel);
 		}
 
-		public UILabel Placeholder { get { return _placeholderLabel; } }
+		public UILabel Placeholder => _placeholderLabel;
 		public string PlaceholderText
 		{
-			get { return _placeholderLabel.Text; }
+			get => _placeholderLabel.Text;
 			set
 			{
 				_placeholderLabel.Text = value;
-				this.DrawPlaceholder();
+				DrawPlaceholder();
 			}
 		}
 		public override string Text
@@ -38,50 +38,59 @@ namespace Xmf2.Commons.iOS.Controls
 			set
 			{
 				base.Text = value;
-				this.UpdatePlaceHolderVisibility();
+				UpdatePlaceHolderVisibility();
 			}
 		}
-		public UIColor PlaceholderColor { get { return _placeholderLabel.TextColor; } set { _placeholderLabel.TextColor = value; } }
-		public UIFont PlaceholderFont { get { return _placeholderLabel.Font; } set { _placeholderLabel.Font = value; } }
+		public UIColor PlaceholderColor
+		{
+			get => _placeholderLabel.TextColor;
+			set => _placeholderLabel.TextColor = value;
+		}
+
+		public UIFont PlaceholderFont
+		{
+			get => _placeholderLabel.Font;
+			set => _placeholderLabel.Font = value;
+		}
 
 		public override void Draw(CGRect rect)
 		{
 			base.Draw(rect);
-			this.DrawPlaceholder();
+			DrawPlaceholder();
 		}
 
 		private void DrawPlaceholder()
 		{
-			var inset = this.TextContainerInset;
-			var leftInset = this.TextContainer.LineFragmentPadding + inset.Left;
-			var rightInset = this.TextContainer.LineFragmentPadding + inset.Right;
-			var placeHolderMaxSize = new CGSize(width: this.Frame.Width - (leftInset + rightInset)
-											 , height: this.Frame.Height - (inset.Top + inset.Bottom));
-			this._placeholderLabel.Frame = new CGRect(new CGPoint(leftInset, inset.Top), placeHolderMaxSize);
-			this._placeholderLabel.SizeToFit();
+			var inset = TextContainerInset;
+			var leftInset = TextContainer.LineFragmentPadding + inset.Left;
+			var rightInset = TextContainer.LineFragmentPadding + inset.Right;
+			var placeHolderMaxSize = new CGSize(width: Frame.Width - (leftInset + rightInset), height: Frame.Height - (inset.Top + inset.Bottom));
+			_placeholderLabel.Frame = new CGRect(new CGPoint(leftInset, inset.Top), placeHolderMaxSize);
+			_placeholderLabel.SizeToFit();
 		}
 
 		private void OnStarted(object sender, EventArgs e)
 		{
-			this._placeholderLabel.Hidden = true;
+			_placeholderLabel.Hidden = true;
 		}
 
 		private void OnEnded(object sender, EventArgs e)
 		{
-			this.UpdatePlaceHolderVisibility();
+			UpdatePlaceHolderVisibility();
 		}
 
 		private void UpdatePlaceHolderVisibility()
 		{
-			this._placeholderLabel.Hidden = !string.IsNullOrWhiteSpace(this.Text);
+			_placeholderLabel.Hidden = !string.IsNullOrWhiteSpace(Text);
 		}
 
-        public void AutoHeight(){
-            nfloat fixedWidth = Frame.Size.Width;
-            var newSize=SizeThatFits(new CGSize(width: fixedWidth, height: nfloat.MaxValue));
-            var newFrame = Frame;
-            newFrame.Size = new CGSize(width: Math.Max(newSize.Width, fixedWidth), height: newSize.Height);
-            Frame = newFrame;
-        }
+		public void AutoHeight()
+		{
+			nfloat fixedWidth = Frame.Size.Width;
+			var newSize = SizeThatFits(new CGSize(width: fixedWidth, height: nfloat.MaxValue));
+			var newFrame = Frame;
+			newFrame.Size = new CGSize(width: Math.Max(newSize.Width, fixedWidth), height: newSize.Height);
+			Frame = newFrame;
+		}
 	}
 }

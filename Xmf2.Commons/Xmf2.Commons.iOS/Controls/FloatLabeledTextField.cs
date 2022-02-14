@@ -1,8 +1,8 @@
 ﻿using System;
-using UIKit;
+using System.ComponentModel;
 using CoreGraphics;
 using Foundation;
-using System.ComponentModel;
+using UIKit;
 
 namespace Xmf2.Commons.iOS.Controls
 {
@@ -50,9 +50,8 @@ namespace Xmf2.Commons.iOS.Controls
 				_floatingLabel.SizeToFit();
 				_floatingLabel.Frame =
 					new CGRect(0, _floatingLabel.Font.LineHeight,
-							   _floatingLabel.Frame.Size.Width,
-							   _floatingLabel.Frame.Size.Height);
-
+						_floatingLabel.Frame.Size.Width,
+						_floatingLabel.Frame.Size.Height);
 			}
 		}
 
@@ -106,40 +105,40 @@ namespace Xmf2.Commons.iOS.Controls
 		protected void DownFloatLabel()
 		{
 			Animate(0.3f, 0.0f,
-						UIViewAnimationOptions.BeginFromCurrentState
-						| UIViewAnimationOptions.CurveEaseOut,
-						() =>
-						{
-							lock (_locker)
-							{
-								_floatingLabel.Frame = new CGRect(_floatingLabel.Frame.Location.X,
-																  _floatingLabel.Font.LineHeight,
-																  _floatingLabel.Frame.Size.Width,
-																  _floatingLabel.Frame.Size.Height);
-								_floatingLabel.Font = PlaceholderFont;
-								_floatingLabel.TextColor = (Enabled) ? PlaceholderColor : FloatingLabelDisabledTextColor;
-							}
-						},
-						() => { });
+				UIViewAnimationOptions.BeginFromCurrentState
+				| UIViewAnimationOptions.CurveEaseOut,
+				() =>
+				{
+					lock (_locker)
+					{
+						_floatingLabel.Frame = new CGRect(_floatingLabel.Frame.Location.X,
+							_floatingLabel.Font.LineHeight,
+							_floatingLabel.Frame.Size.Width,
+							_floatingLabel.Frame.Size.Height);
+						_floatingLabel.Font = PlaceholderFont;
+						_floatingLabel.TextColor = (Enabled) ? PlaceholderColor : FloatingLabelDisabledTextColor;
+					}
+				},
+				() => { });
 		}
 
 		protected void UpFloatLabel()
 		{
 			Animate(0.3f, 0.0f,
-						UIViewAnimationOptions.BeginFromCurrentState
-						| UIViewAnimationOptions.CurveEaseOut,
-						() =>
-						{
-							lock (_locker)
-							{
-								HandleState(true);
-								_floatingLabel.Frame = new CGRect(_floatingLabel.Frame.Location.X,
-								0.0f,
-								_floatingLabel.Frame.Size.Width,
-								_floatingLabel.Frame.Size.Height);
-							}
-						},
-						() => { });
+				UIViewAnimationOptions.BeginFromCurrentState
+				| UIViewAnimationOptions.CurveEaseOut,
+				() =>
+				{
+					lock (_locker)
+					{
+						HandleState(true);
+						_floatingLabel.Frame = new CGRect(_floatingLabel.Frame.Location.X,
+							0.0f,
+							_floatingLabel.Frame.Size.Width,
+							_floatingLabel.Frame.Size.Height);
+					}
+				},
+				() => { });
 		}
 
 		public override void LayoutSubviews()
@@ -169,6 +168,7 @@ namespace Xmf2.Commons.iOS.Controls
 					{
 						DownFloatLabel();
 					}
+
 					return;
 				case ActivationMode.OnFirstCharacter:
 					if (!string.IsNullOrEmpty(Text))
@@ -179,6 +179,7 @@ namespace Xmf2.Commons.iOS.Controls
 					{
 						DownFloatLabel();
 					}
+
 					return;
 			}
 		}
@@ -301,80 +302,74 @@ namespace Xmf2.Commons.iOS.Controls
 		#region Constructor Method
 
 		public static FloatLabeledTextField CreateOnFocusTextField(UIColor textColor, UIFont textFont,
-																   string placeholder,
-																   UIColor cursorColor,
-																   UIColor floatLabelColor, UIFont floatLabelFont,
-																   UIColor textDisabledColor = null, UIFont textDisabledFont = null,
-																   UIColor textFocusedColor = null, UIFont textFocusedFont = null,
-																   UIColor floatLabelDisabledColor = null, UIFont floatLabelDisabledFont = null,
-																   UIColor floatLabelFocusedColor = null, UIFont floatLabelFocusedFont = null,
-																   UIColor placeholderColor = null, UIFont placeholderFont = null
-																  )
-					=> CreateTextField(ActivationMode.OnFocus,
-									   textColor, textFont,
-									   placeholder,
-									   cursorColor,
-									   floatLabelColor, floatLabelFont,
-									   textDisabledColor, textDisabledFont,
-									   textFocusedColor, textFocusedFont,
-									   floatLabelDisabledColor, floatLabelDisabledFont,
-									   floatLabelFocusedColor, floatLabelFocusedFont,
-									   placeholderColor, placeholderFont);
+			string placeholder,
+			UIColor cursorColor,
+			UIColor floatLabelColor, UIFont floatLabelFont,
+			UIColor textDisabledColor = null, UIFont textDisabledFont = null,
+			UIColor textFocusedColor = null, UIFont textFocusedFont = null,
+			UIColor floatLabelDisabledColor = null, UIFont floatLabelDisabledFont = null,
+			UIColor floatLabelFocusedColor = null, UIFont floatLabelFocusedFont = null,
+			UIColor placeholderColor = null, UIFont placeholderFont = null
+		) => CreateTextField(ActivationMode.OnFocus,
+			textColor, textFont,
+			placeholder,
+			cursorColor,
+			floatLabelColor, floatLabelFont,
+			textDisabledColor, textDisabledFont,
+			textFocusedColor, textFocusedFont,
+			floatLabelDisabledColor, floatLabelDisabledFont,
+			floatLabelFocusedColor, floatLabelFocusedFont,
+			placeholderColor, placeholderFont);
 
 		public static FloatLabeledTextField CreateOnFirstCharTextField(UIColor textColor, UIFont textFont,
-																	   string placeholder,
-																	   UIColor cursorColor,
-																	   UIColor floatLabelColor, UIFont floatLabelFont,
-																	   UIColor textDisabledColor = null, UIFont textDisabledFont = null,
-																	   UIColor textFocusedColor = null, UIFont textFocusedFont = null,
-																	   UIColor floatLabelDisabledColor = null, UIFont floatLabelDisabledFont = null,
-																	   UIColor floatLabelFocusedColor = null, UIFont floatLabelFocusedFont = null, UIColor placeholderColor = null, UIFont placeholderFont = null
-																	  )
-					=> CreateTextField(ActivationMode.OnFirstCharacter,
-									   textColor, textFont,
-									   placeholder,
-									   cursorColor,
-									   floatLabelColor, floatLabelFont,
-									   textDisabledColor, textDisabledFont,
-									   textFocusedColor, textFocusedFont,
-									   floatLabelDisabledColor, floatLabelDisabledFont,
-									   floatLabelFocusedColor, floatLabelFocusedFont,
-									   placeholderColor, placeholderFont);
+			string placeholder,
+			UIColor cursorColor,
+			UIColor floatLabelColor, UIFont floatLabelFont,
+			UIColor textDisabledColor = null, UIFont textDisabledFont = null,
+			UIColor textFocusedColor = null, UIFont textFocusedFont = null,
+			UIColor floatLabelDisabledColor = null, UIFont floatLabelDisabledFont = null,
+			UIColor floatLabelFocusedColor = null, UIFont floatLabelFocusedFont = null, UIColor placeholderColor = null, UIFont placeholderFont = null
+		) => CreateTextField(ActivationMode.OnFirstCharacter,
+			textColor, textFont,
+			placeholder,
+			cursorColor,
+			floatLabelColor, floatLabelFont,
+			textDisabledColor, textDisabledFont,
+			textFocusedColor, textFocusedFont,
+			floatLabelDisabledColor, floatLabelDisabledFont,
+			floatLabelFocusedColor, floatLabelFocusedFont,
+			placeholderColor, placeholderFont);
 
 		private static FloatLabeledTextField CreateTextField(ActivationMode mode,
-															 UIColor textColor, UIFont textFont,
-															 string placeholder,
-															 UIColor cursorColor,
-															 UIColor floatLabelColor, UIFont floatLabelFont,
-															 UIColor textDisabledColor = null, UIFont textDisabledFont = null,
-															 UIColor textFocusedColor = null, UIFont textFocusedFont = null,
-															 UIColor floatLabelDisabledColor = null, UIFont floatLabelDisabledFont = null,
-															 UIColor floatLabelFocusedColor = null, UIFont floatLabelFocusedFont = null,
-															 UIColor placeholderColor = null, UIFont placeholderFont = null
-															)
-					=> new FloatLabeledTextField
-					{
-						Mode = mode,
-						TintColor = cursorColor,
-						TextNormalColor = textColor,
-						TextNormalFont = textFont,
-						FloatingLabelNormalTextColor = floatLabelColor,
-						FloatingLabelNormalFont = floatLabelFont,
-
-						TextDisabledColor = textDisabledColor ?? textColor,
-						TextDisabledFont = textDisabledFont ?? textFont,
-						TextFocusedColor = textFocusedColor ?? textColor,
-						TextFocusedFont = textFocusedFont ?? textFont,
-
-						FloatingLabelDisabledFont = floatLabelDisabledFont ?? floatLabelFont,
-						FloatingLabelDisabledTextColor = floatLabelDisabledColor ?? floatLabelColor,
-						FloatingLabelFocusedFont = floatLabelFocusedFont ?? floatLabelFont,
-						FloatingLabelFocusedTextColor = floatLabelFocusedColor ?? floatLabelColor,
-
-						PlaceholderFont = placeholderFont ?? floatLabelFont,
-						PlaceholderColor = placeholderColor ?? floatLabelColor,
-						Placeholder = placeholder
-					};
+			UIColor textColor, UIFont textFont,
+			string placeholder,
+			UIColor cursorColor,
+			UIColor floatLabelColor, UIFont floatLabelFont,
+			UIColor textDisabledColor = null, UIFont textDisabledFont = null,
+			UIColor textFocusedColor = null, UIFont textFocusedFont = null,
+			UIColor floatLabelDisabledColor = null, UIFont floatLabelDisabledFont = null,
+			UIColor floatLabelFocusedColor = null, UIFont floatLabelFocusedFont = null,
+			UIColor placeholderColor = null, UIFont placeholderFont = null
+		) => new FloatLabeledTextField
+		{
+			Mode = mode,
+			TintColor = cursorColor,
+			TextNormalColor = textColor,
+			TextNormalFont = textFont,
+			FloatingLabelNormalTextColor = floatLabelColor,
+			FloatingLabelNormalFont = floatLabelFont,
+			TextDisabledColor = textDisabledColor ?? textColor,
+			TextDisabledFont = textDisabledFont ?? textFont,
+			TextFocusedColor = textFocusedColor ?? textColor,
+			TextFocusedFont = textFocusedFont ?? textFont,
+			FloatingLabelDisabledFont = floatLabelDisabledFont ?? floatLabelFont,
+			FloatingLabelDisabledTextColor = floatLabelDisabledColor ?? floatLabelColor,
+			FloatingLabelFocusedFont = floatLabelFocusedFont ?? floatLabelFont,
+			FloatingLabelFocusedTextColor = floatLabelFocusedColor ?? floatLabelColor,
+			PlaceholderFont = placeholderFont ?? floatLabelFont,
+			PlaceholderColor = placeholderColor ?? floatLabelColor,
+			Placeholder = placeholder
+		};
 
 		#endregion
 	}

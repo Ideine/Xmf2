@@ -1,5 +1,6 @@
-﻿using System;
-using UIKit;
+﻿using UIKit;
+using Xmf2.Commons.iOS.Extensions;
+using Xmf2.iOS.Extensions.Extensions;
 
 namespace Xmf2.Commons.iOS.Controls
 {
@@ -11,10 +12,7 @@ namespace Xmf2.Commons.iOS.Controls
 
 		public override bool Highlighted
 		{
-			get
-			{
-				return base.Highlighted;
-			}
+			get => base.Highlighted;
 			set
 			{
 				if (base.Highlighted != value)
@@ -22,11 +20,11 @@ namespace Xmf2.Commons.iOS.Controls
 					if (value)
 					{
 						_oldBackgroundColor = BackgroundColor;
-						UIView.Animate(0.2, () => BackgroundColor = HighlightColor, ActionHelper.NoOp);
+						Animate(0.2, () => BackgroundColor = HighlightColor, ActionHelper.NoOp);
 					}
 					else
 					{
-						UIView.Animate(0.2, () => BackgroundColor = _oldBackgroundColor, ActionHelper.NoOp);
+						Animate(0.2, () => BackgroundColor = _oldBackgroundColor, ActionHelper.NoOp);
 					}
 
 					base.Highlighted = value;

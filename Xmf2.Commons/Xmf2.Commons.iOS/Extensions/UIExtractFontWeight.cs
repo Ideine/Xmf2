@@ -1,4 +1,6 @@
-namespace UIKit
+using UIKit;
+
+namespace Xmf2.Commons.iOS.Extensions
 {
 	/// <summary>
 	/// Permet d'utiliser directement les valeurs obtenues depuis Adobe extract sur iOS.

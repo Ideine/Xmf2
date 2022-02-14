@@ -1,5 +1,4 @@
-﻿using System;
-namespace Xmf2.Notification.Droid
+﻿namespace Xmf2.Notification.Droid
 {
 	public interface INotificationSetup
 	{

@@ -4,9 +4,9 @@ using System.Linq;
 using Foundation;
 using UIKit;
 using UserNotifications;
-using Xmf2.Commons.Services;
+using Xmf2.Commons.Services.Notifications;
 
-namespace Xmf2.Commons.MvxExtends.Touch.Services
+namespace Xmf2.Commons.iOS.Services
 {
 	public class NotificationService : BaseNotificationService
 	{
@@ -91,7 +91,7 @@ namespace Xmf2.Commons.MvxExtends.Touch.Services
 
 		protected virtual void DeeplinkFromNotification(NSDictionary userInfo) { }
 
-		protected virtual void BackroundProcessFromNotification(NSDictionary userInfo) { }
+		protected virtual void BackgroundProcessFromNotification(NSDictionary userInfo) { }
 
 		public override void RegisteredForRemoteNotifications(UIApplication application, NSData deviceToken)
 		{
@@ -108,7 +108,7 @@ namespace Xmf2.Commons.MvxExtends.Touch.Services
 		{
 			if (application.ApplicationState != UIApplicationState.Active)
 			{
-				BackroundProcessFromNotification(userInfo);
+				BackgroundProcessFromNotification(userInfo);
 				return;
 			}
 
@@ -156,7 +156,7 @@ namespace Xmf2.Commons.MvxExtends.Touch.Services
 			ShowLocalNotification(alert, userInfo);
 		}
 
-		protected void ShowLocalNotification(string text, NSDictionary userInfo)
+		protected static void ShowLocalNotification(string text, NSDictionary userInfo)
 		{
 			if (UIDevice.CurrentDevice.CheckSystemVersion(10, 0))
 			{
@@ -197,7 +197,7 @@ namespace Xmf2.Commons.MvxExtends.Touch.Services
 
 		public class LocalNotificationDelegate : UNUserNotificationCenterDelegate
 		{
-			private Action<NSDictionary> _notificationCallback;
+			private readonly Action<NSDictionary> _notificationCallback;
 
 			public LocalNotificationDelegate(Action<NSDictionary> notificationCallback)
 			{

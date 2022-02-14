@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using Android.App;
 using Android.Content;
-using Android.Support.V4.App;
+using AndroidX.Core.App;
 using Firebase.Messaging;
 
 namespace Xmf2.Notification.Droid
@@ -19,12 +19,12 @@ namespace Xmf2.Notification.Droid
 			PendingIntent notificationContentIntent = PendingIntent.GetActivity(context, 0, IntentForNotification(context, notification, notificationData, content), 0);
 
 			NotificationCompat.Builder builder = new NotificationCompat.Builder(context)
-				.SetStyle(new NotificationCompat.BigTextStyle().BigText(content))
-				.SetContentText(content)
-				.SetAutoCancel(true)
-				.SetContentIntent(notificationContentIntent)
-				.SetDefaults((int)NotificationDefaults.Vibrate)
-				.SetLights(0x7F00FF00, 100, 25)
+					.SetStyle(new NotificationCompat.BigTextStyle().BigText(content))
+					.SetContentText(content)
+					.SetAutoCancel(true)
+					.SetContentIntent(notificationContentIntent)
+					.SetDefaults((int)NotificationDefaults.Vibrate)
+					.SetLights(0x7F00FF00, 100, 25)
 				;
 			BuildNotification(context, builder, notification, notificationData, content);
 

@@ -3,15 +3,24 @@ using System.Linq;
 using Android.App;
 using Android.Content;
 using Android.Util;
-using Firebase.Iid;
 using Firebase.Messaging;
 using Splat;
+using Xmf2.Commons.Services.Notifications;
 
 namespace Xmf2.Notification.Droid
 {
-	[Service, IntentFilter(new[] { "com.google.firebase.MESSAGING_EVENT" })]
+	[Service, IntentFilter(new[]
+	{
+		"com.google.firebase.MESSAGING_EVENT"
+	})]
 	public class MyFirebaseListenerService : FirebaseMessagingService
 	{
+		public override void OnNewToken(string token)
+		{
+			base.OnNewToken(token);
+			Locator.Current.GetService<INotificationService>()?.SetToken(token);
+		}
+
 		public override void OnMessageReceived(RemoteMessage message)
 		{
 			base.OnMessageReceived(message);
@@ -77,10 +86,10 @@ namespace Xmf2.Notification.Droid
 		private void InitializeSetup(Context applicationContext)
 		{
 			var query = from assembly in AppDomain.CurrentDomain.GetAssemblies()
-						from type in assembly.GetTypes()
-						where type.Name == "Bootstrapper"
-						where typeof(INotificationSetup).IsAssignableFrom(type)
-						select type;
+				from type in assembly.GetTypes()
+				where type.Name == "Bootstrapper"
+				where typeof(INotificationSetup).IsAssignableFrom(type)
+				select type;
 
 			Type setupType = query.FirstOrDefault();
 

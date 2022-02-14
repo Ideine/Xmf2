@@ -1,14 +1,15 @@
 ﻿using System;
 using System.Windows.Input;
-using CoreGraphics;
 using UIKit;
-using Xmf2.Commons.iOS.Layout;
+using Xmf2.Common.Extensions;
+using Xmf2.iOS.Extensions.Constraints;
+using Xmf2.iOS.Extensions.Extensions;
 
 namespace Xmf2.Commons.iOS.Controls
 {
 	public class NavBarWithTwoActions : UIView
 	{
-		private static readonly UIColor _DEFAULT_TEXT_HIGHLIGHT_COLOR = UIColorExtension.ColorFromHex(0x757575);
+		private static readonly UIColor DEFAULT_TEXT_HIGHLIGHT_COLOR = 0x757575.ColorFromHex();
 		private bool _layoutDone;
 
 		private readonly UIView _container;
@@ -71,26 +72,28 @@ namespace Xmf2.Commons.iOS.Controls
 
 		public NavBarWithTwoActions(string leftImage, string rightImage)
 		{
-			this.LeftButton  = this.CreateButton().WithTitle(LeftActionTitle) .OnClick(OnClickLeftButton) .WithTextColorHighlight(_DEFAULT_TEXT_HIGHLIGHT_COLOR);
-			this.RightButton = this.CreateButton().WithTitle(RightActionTitle).OnClick(OnClickRightButton).WithTextColorHighlight(_DEFAULT_TEXT_HIGHLIGHT_COLOR);
-			this.Title		 = this.CreateLabel()
-								   .WithText(TextTitle)
-								   .WithAlignment(UITextAlignment.Center);
+			this.LeftButton = this.CreateButton().WithTitle(LeftActionTitle).OnClick(OnClickLeftButton).WithTextColorHighlight(DEFAULT_TEXT_HIGHLIGHT_COLOR);
+			this.RightButton = this.CreateButton().WithTitle(RightActionTitle).OnClick(OnClickRightButton).WithTextColorHighlight(DEFAULT_TEXT_HIGHLIGHT_COLOR);
+			this.Title = this.CreateLabel()
+				.WithText(TextTitle)
+				.WithAlignment(UITextAlignment.Center);
 			this.Title.AdjustsFontSizeToFitWidth = true;
 			this.Title.MinimumScaleFactor = 0.7f;
 
-			bool hasLeftImage  = !string.IsNullOrEmpty(leftImage);
+			bool hasLeftImage = !string.IsNullOrEmpty(leftImage);
 			bool hasRightImage = !string.IsNullOrEmpty(rightImage);
-			LeftButton .ContentEdgeInsets = new UIEdgeInsets(top: 0, left: 15, bottom: 0, right:  0);
-			RightButton.ContentEdgeInsets = new UIEdgeInsets(top: 0, left:  0, bottom: 0, right: 15);
+			LeftButton.ContentEdgeInsets = new UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 0);
+			RightButton.ContentEdgeInsets = new UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 15);
 			if (hasLeftImage)
 			{
 				LeftButton.WithImage(leftImage);
 			}
+
 			if (hasRightImage)
 			{
 				RightButton.WithImage(rightImage);
 			}
+
 			_container = this.CreateView().WithSubviews(Title, LeftButton, RightButton);
 			this.AddSubview(_container);
 		}
@@ -111,20 +114,20 @@ namespace Xmf2.Commons.iOS.Controls
 				.AnchorBottom(_container);
 
 			_container.CenterVertically(LeftButton)
-					  .CenterVertically(Title)
-					  .CenterVertically(RightButton)
-					  .FillHeight(LeftButton)
-					  .FillHeight(RightButton)
-					  ;
+				.CenterVertically(Title)
+				.CenterVertically(RightButton)
+				.FillHeight(LeftButton)
+				.FillHeight(RightButton)
+				;
 
 			//Horizontal Layout
 			this.CenterAndFillWidth(_container);
 
 			_container.AnchorLeft(LeftButton)
-					  .AnchorRight(RightButton)
-					  .CenterHorizontally(Title)
-					  .MinHorizontalSpace(LeftButton, Title)
-					  .MinHorizontalSpace(Title, RightButton);
+				.AnchorRight(RightButton)
+				.CenterHorizontally(Title)
+				.MinHorizontalSpace(LeftButton, Title)
+				.MinHorizontalSpace(Title, RightButton);
 			Title.SetContentCompressionResistancePriority((float)UILayoutPriority.DefaultLow, UILayoutConstraintAxis.Horizontal);
 		}
 
@@ -141,17 +144,19 @@ namespace Xmf2.Commons.iOS.Controls
 		#region Dispose
 
 		private bool _disposed;
+
 		protected override void Dispose(bool disposing)
 		{
 			if (!_disposed)
 			{
 				try
 				{
-					if (disposing)// Release managed resources.
+					if (disposing) // Release managed resources.
 					{
 						LeftAction = null;
 						RightAction = null;
 					}
+
 					// Release unmanaged resources...
 					_disposed = true;
 				}
@@ -232,4 +237,3 @@ namespace Xmf2.Commons.iOS.Controls
 		#endregion
 	}
 }
-
