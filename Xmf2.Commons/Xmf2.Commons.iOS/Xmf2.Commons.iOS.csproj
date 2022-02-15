@@ -46,6 +46,7 @@
         <Compile Include="Controls\NavBarWithTwoActions.cs" />
         <Compile Include="Controls\UIHighlightButton.cs" />
         <Compile Include="Controls\UITextViewWithPlaceholder.cs" />
+        <Compile Include="Extensions\CreatorExtensions.cs" />
         <Compile Include="Extensions\UIExtractFontWeight.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
         <Compile Include="Services\AppStoreService.cs" />
