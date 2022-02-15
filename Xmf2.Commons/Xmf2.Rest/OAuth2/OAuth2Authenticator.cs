@@ -100,7 +100,7 @@ namespace Xmf2.Rest.OAuth2
 				Access.ExpiresAt = DateTime.MinValue;
 			}
 
-			return TaskHelper.CompletedTask; // refresh token will be done on next request call
+			return Task.CompletedTask; // refresh token will be done on next request call
 		}
 	}
 }

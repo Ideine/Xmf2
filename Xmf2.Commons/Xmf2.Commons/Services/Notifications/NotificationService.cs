@@ -19,7 +19,7 @@ namespace Xmf2.Commons.Services.Notifications
 
 		string Get(string key);
 
-		bool Set(string key, string value);
+		void Set(string key, string value);
 
 		void Delete(string key);
 
