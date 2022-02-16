@@ -12,8 +12,6 @@ namespace Xmf2.Commons.iOS.Controls
 		private static readonly UIColor DEFAULT_TEXT_HIGHLIGHT_COLOR = 0x757575.ColorFromHex();
 		private bool _layoutDone;
 
-		private readonly UIView _container;
-
 		#region Public Properties
 
 		public Action LeftAction { get; set; }
@@ -67,6 +65,7 @@ namespace Xmf2.Commons.iOS.Controls
 		public UIButton LeftButton { get; }
 		public UIButton RightButton { get; }
 		public UILabel Title { get; }
+		public UIView Container;
 
 		#endregion
 
@@ -94,8 +93,8 @@ namespace Xmf2.Commons.iOS.Controls
 				RightButton.WithImage(rightImage);
 			}
 
-			_container = this.CreateView().WithSubviews(Title, LeftButton, RightButton);
-			this.AddSubview(_container);
+			Container = this.CreateView().WithSubviews(Title, LeftButton, RightButton);
+			this.AddSubview(Container);
 		}
 
 		public void AutoLayout()
@@ -110,10 +109,10 @@ namespace Xmf2.Commons.iOS.Controls
 		protected virtual void ApplyAutoLayout()
 		{
 			//Vertical Layout
-			this.AnchorTop(_container)
-				.AnchorBottom(_container);
+			this.SafeAreaLayoutGuide.TopAnchor.ConstraintEqualTo(Container.TopAnchor).Active = true;
+			this.AnchorBottom(Container);
 
-			_container.CenterVertically(LeftButton)
+			Container.CenterVertically(LeftButton)
 				.CenterVertically(Title)
 				.CenterVertically(RightButton)
 				.FillHeight(LeftButton)
@@ -121,9 +120,9 @@ namespace Xmf2.Commons.iOS.Controls
 				;
 
 			//Horizontal Layout
-			this.CenterAndFillWidth(_container);
+			this.CenterAndFillWidth(Container);
 
-			_container.AnchorLeft(LeftButton)
+			Container.AnchorLeft(LeftButton)
 				.AnchorRight(RightButton)
 				.CenterHorizontally(Title)
 				.MinHorizontalSpace(LeftButton, Title)
