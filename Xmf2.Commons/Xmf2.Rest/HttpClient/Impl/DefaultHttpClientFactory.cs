@@ -17,23 +17,6 @@ namespace Xmf2.Rest.HttpClient.Impl
 	/// </remarks>
 	public class DefaultHttpClientFactory : IHttpClientFactory
 	{
-		private readonly bool _setCredentials;
-
-		/// <summary>
-		/// Initializes a new instance of the <see cref="DefaultHttpClientFactory" /> class.
-		/// </summary>
-		public DefaultHttpClientFactory()
-			: this(true) { }
-
-		/// <summary>
-		/// Initializes a new instance of the <see cref="DefaultHttpClientFactory"/> class.
-		/// </summary>
-		/// <param name="setCredentials">Set the credentials for the native <see cref="HttpMessageHandler"/> (<see cref="HttpClientHandler"/>)?</param>
-		public DefaultHttpClientFactory(bool setCredentials)
-		{
-			_setCredentials = setCredentials;
-		}
-
 		/// <summary>
 		/// Create the client
 		/// </summary>
@@ -45,9 +28,18 @@ namespace Xmf2.Rest.HttpClient.Impl
 		/// </remarks>
 		public virtual IHttpClient CreateClient(IRestClient client)
 		{
-			var handler = CreateMessageHandler(client);
+			HttpMessageHandler handler = CreateMessageHandler(client);
+			System.Net.Http.HttpClient httpClient;
 
-			var httpClient = new System.Net.Http.HttpClient(handler, true);
+			if (handler == null)
+			{
+				httpClient = new System.Net.Http.HttpClient();
+			}
+			else
+			{
+				httpClient = new System.Net.Http.HttpClient(handler, true);
+			}
+
 			httpClient.BaseAddress = GetBaseAddress(client);
 
 			var timeout = client.Timeout;
@@ -160,36 +152,7 @@ namespace Xmf2.Rest.HttpClient.Impl
 		/// <returns>A new HttpMessageHandler object</returns>
 		protected virtual HttpMessageHandler CreateMessageHandler(IRestClient client)
 		{
-			var handler = NewHandler();
-
-#if !NO_PROXY
-			if (handler.SupportsProxy && client.Proxy != null)
-			{
-				handler.Proxy = client.Proxy;
-			}
-#endif
-
-			if (client.CookieContainer != null)
-			{
-				handler.UseCookies = true;
-				handler.CookieContainer = client.CookieContainer;
-			}
-
-			if (_setCredentials)
-			{
-				var credentials = client.Credentials;
-				if (credentials != null)
-				{
-					handler.Credentials = credentials;
-				}
-			}
-
-			if (handler.SupportsAutomaticDecompression)
-			{
-				handler.AutomaticDecompression = DecompressionMethods.Deflate | DecompressionMethods.GZip;
-			}
-
-			return handler;
+			return null;
 		}
 
 		protected virtual HttpClientHandler NewHandler()
