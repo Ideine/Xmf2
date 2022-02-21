@@ -82,7 +82,7 @@ namespace Xmf2.Rest.Caches
 
 		public static ICacheItem<T> CreateCacheItem<T>(string scope, TimeSpan validityTime, Func<CancellationToken, Task<T>> loader) where T : class
 		{
-			CacheItem<T, object> item = new CacheItem<T, object>(validityTime, (p, ct) => loader(ct));
+			CacheItem<T, object> item = new CacheItem<T, object>(validityTime, (_, ct) => loader(ct));
 
 			if (!_itemsPerScope.ContainsKey(scope))
 			{

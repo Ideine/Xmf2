@@ -15,9 +15,9 @@ namespace Xmf2.Notification.Droid
 	{
 		private readonly string _gcmId;
 
-		private readonly object _initializeLock = new object();
-		private bool _initialized = false;
-		private FirebaseApp _app = null;
+		private readonly object _initializeLock = new();
+		private bool _initialized;
+		private FirebaseApp _app;
 
 		private readonly Context _context;
 
