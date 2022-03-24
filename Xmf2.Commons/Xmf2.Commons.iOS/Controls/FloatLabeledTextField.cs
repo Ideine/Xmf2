@@ -20,8 +20,6 @@ namespace Xmf2.Commons.iOS.Controls
 			Unknow, Normal, Disabled, Focused
 		}
 
-		private readonly object _locker = new();
-
 		private StateEnum _oldState;
 
 		protected ActivationMode Mode;
@@ -102,47 +100,29 @@ namespace Xmf2.Commons.iOS.Controls
 			AddSubview(_floatingLabel);
 		}
 
-		protected static void DownFloatLabel()
+		protected void DownFloatLabel()
 		{
-			Animate(0.3f, 0.0f,
-				UIViewAnimationOptions.BeginFromCurrentState
-				| UIViewAnimationOptions.CurveEaseOut,
-				() =>
-				{
-					// lock (_locker)
-					// {
-					// 	_floatingLabel.Frame = new CGRect(_floatingLabel.Frame.Location.X, _floatingLabel.Font.LineHeight, _floatingLabel.Frame.Size.Width, _floatingLabel.Frame.Size.Height);
-					// 	_floatingLabel.Font = PlaceholderFont;
-					// 	_floatingLabel.TextColor = Enabled ? PlaceholderColor : FloatingLabelDisabledTextColor;
-					// }
-				},
-				() => { });
+			AnimateNotify(0.3f, 0.0f, UIViewAnimationOptions.BeginFromCurrentState | UIViewAnimationOptions.CurveEaseOut, () =>
+			{
+				_floatingLabel.Frame = new CGRect(_floatingLabel.Frame.Location.X, _floatingLabel.Font.LineHeight, _floatingLabel.Frame.Size.Width, _floatingLabel.Frame.Size.Height);
+				_floatingLabel.Font = PlaceholderFont;
+				_floatingLabel.TextColor = Enabled ? PlaceholderColor : FloatingLabelDisabledTextColor;
+			}, _ => { });
 		}
 
-		private static void UpFloatLabel()
+		private void UpFloatLabel()
 		{
-			Animate(0.3f, 0.0f,
-				UIViewAnimationOptions.BeginFromCurrentState
-				| UIViewAnimationOptions.CurveEaseOut,
-				() =>
-				{
-					// lock (_locker)
-					// {
-					// 	HandleState(true);
-					// 	_floatingLabel.Frame = new CGRect(_floatingLabel.Frame.Location.X, 0.0f, _floatingLabel.Frame.Size.Width, _floatingLabel.Frame.Size.Height);
-					// }
-				},
-				() => { });
+			AnimateNotify(0.3f, 0.0f, UIViewAnimationOptions.BeginFromCurrentState | UIViewAnimationOptions.CurveEaseOut, () =>
+			{
+				_floatingLabel.Frame = new CGRect(_floatingLabel.Frame.Location.X, 0.0f, _floatingLabel.Frame.Size.Width, _floatingLabel.Frame.Size.Height);
+			}, _ => { });
 		}
 
 		public override void LayoutSubviews()
 		{
-			lock (_locker)
-			{
-				base.LayoutSubviews();
-				HandleState();
-				HandleChange();
-			}
+			base.LayoutSubviews();
+			HandleState();
+			HandleChange();
 		}
 
 		protected void HandleChange()
