@@ -20,7 +20,7 @@ namespace Xmf2.Commons.iOS.Controls
 			Unknow, Normal, Disabled, Focused
 		}
 
-		private readonly object _locker = new object();
+		private readonly object _locker = new();
 
 		private StateEnum _oldState;
 
@@ -102,41 +102,35 @@ namespace Xmf2.Commons.iOS.Controls
 			AddSubview(_floatingLabel);
 		}
 
-		protected void DownFloatLabel()
+		protected static void DownFloatLabel()
 		{
 			Animate(0.3f, 0.0f,
 				UIViewAnimationOptions.BeginFromCurrentState
 				| UIViewAnimationOptions.CurveEaseOut,
 				() =>
 				{
-					lock (_locker)
-					{
-						_floatingLabel.Frame = new CGRect(_floatingLabel.Frame.Location.X,
-							_floatingLabel.Font.LineHeight,
-							_floatingLabel.Frame.Size.Width,
-							_floatingLabel.Frame.Size.Height);
-						_floatingLabel.Font = PlaceholderFont;
-						_floatingLabel.TextColor = (Enabled) ? PlaceholderColor : FloatingLabelDisabledTextColor;
-					}
+					// lock (_locker)
+					// {
+					// 	_floatingLabel.Frame = new CGRect(_floatingLabel.Frame.Location.X, _floatingLabel.Font.LineHeight, _floatingLabel.Frame.Size.Width, _floatingLabel.Frame.Size.Height);
+					// 	_floatingLabel.Font = PlaceholderFont;
+					// 	_floatingLabel.TextColor = Enabled ? PlaceholderColor : FloatingLabelDisabledTextColor;
+					// }
 				},
 				() => { });
 		}
 
-		protected void UpFloatLabel()
+		private static void UpFloatLabel()
 		{
 			Animate(0.3f, 0.0f,
 				UIViewAnimationOptions.BeginFromCurrentState
 				| UIViewAnimationOptions.CurveEaseOut,
 				() =>
 				{
-					lock (_locker)
-					{
-						HandleState(true);
-						_floatingLabel.Frame = new CGRect(_floatingLabel.Frame.Location.X,
-							0.0f,
-							_floatingLabel.Frame.Size.Width,
-							_floatingLabel.Frame.Size.Height);
-					}
+					// lock (_locker)
+					// {
+					// 	HandleState(true);
+					// 	_floatingLabel.Frame = new CGRect(_floatingLabel.Frame.Location.X, 0.0f, _floatingLabel.Frame.Size.Width, _floatingLabel.Frame.Size.Height);
+					// }
 				},
 				() => { });
 		}
@@ -350,7 +344,7 @@ namespace Xmf2.Commons.iOS.Controls
 			UIColor floatLabelDisabledColor = null, UIFont floatLabelDisabledFont = null,
 			UIColor floatLabelFocusedColor = null, UIFont floatLabelFocusedFont = null,
 			UIColor placeholderColor = null, UIFont placeholderFont = null
-		) => new FloatLabeledTextField
+		) => new()
 		{
 			Mode = mode,
 			TintColor = cursorColor,
