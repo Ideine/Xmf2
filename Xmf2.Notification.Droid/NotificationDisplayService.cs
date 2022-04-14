@@ -37,7 +37,7 @@ namespace Xmf2.Notification.Droid
 		public virtual void ShowNotification(FirebaseMessagingService context, RemoteMessage.Notification notification, IDictionary<string, string> notificationData, string content)
 		{
 			int pendingIntentId = (int)(DateTime.Now.Date.Millisecond & 0xFFFFFFF);
-			PendingIntent notificationContentIntent = PendingIntent.GetActivity(context, pendingIntentId, IntentForNotification(context, notification, notificationData, content), 0);
+			PendingIntent notificationContentIntent = PendingIntent.GetActivity(context, pendingIntentId, IntentForNotification(context, notification, notificationData, content), PendingIntentFlags.Immutable);
 
 			NotificationManager notificationManager = (NotificationManager)context.GetSystemService(Context.NotificationService);
 			System.Diagnostics.Debug.Assert(notificationManager != null, nameof(notificationManager) + " != null");
