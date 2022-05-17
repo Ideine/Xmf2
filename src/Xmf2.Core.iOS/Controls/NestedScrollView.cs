@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using CoreGraphics;
@@ -354,7 +354,7 @@ namespace Xmf2.Core.iOS.Controls
 					bottom = contentHeight;
 				}
 
-				nfloat height = bottom - top;
+				nfloat height = NMath.Max(bottom - top, 0f);//avoid negative height.
 				if (contentHeight > MINIMAL_RENDER_HEIGHT && height < MINIMAL_RENDER_HEIGHT) //arbitrary value to render at least one cell
 				{
 					height = MINIMAL_RENDER_HEIGHT;
