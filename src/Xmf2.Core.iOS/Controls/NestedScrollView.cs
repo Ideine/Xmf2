@@ -46,7 +46,11 @@ namespace Xmf2.Core.iOS.Controls
 
 			AddConstraints(new[]
 			{
-				NSLayoutConstraint.Create(this, Left, Equal, _contentView, Left, 1f, 0).WithAutomaticIdentifier(), NSLayoutConstraint.Create(this, Right, Equal, _contentView, Right, 1f, 0).WithAutomaticIdentifier(), NSLayoutConstraint.Create(this, Top, Equal, _contentView, Top, 1f, 0).WithAutomaticIdentifier(), NSLayoutConstraint.Create(this, Bottom, Equal, _contentView, Bottom, 1f, 0).WithAutomaticIdentifier(), NSLayoutConstraint.Create(this, CenterX, Equal, _contentView, CenterX, 1f, 0).WithAutomaticIdentifier(),
+				NSLayoutConstraint.Create(this, Left, Equal, _contentView, Left, 1f, 0).WithAutomaticIdentifier(),
+				NSLayoutConstraint.Create(this, Right, Equal, _contentView, Right, 1f, 0).WithAutomaticIdentifier(),
+				NSLayoutConstraint.Create(this, Top, Equal, _contentView, Top, 1f, 0).WithAutomaticIdentifier(),
+				NSLayoutConstraint.Create(this, Bottom, Equal, _contentView, Bottom, 1f, 0).WithAutomaticIdentifier(),
+				NSLayoutConstraint.Create(this, CenterX, Equal, _contentView, CenterX, 1f, 0).WithAutomaticIdentifier()
 			});
 		}
 
@@ -253,7 +257,14 @@ namespace Xmf2.Core.iOS.Controls
 
 				NSLayoutConstraint[] innerConstraints =
 				{
-					NSLayoutConstraint.Create(this, Width, Equal, innerView, Width, 1f, 0).WithAutomaticIdentifier(), NSLayoutConstraint.Create(this, CenterX, Equal, innerView, CenterX, 1f, 0).WithAutomaticIdentifier(), _innerTopConstraint = NSLayoutConstraint.Create(innerView, Top, Equal, this, Top, 1f, 0).WithAutomaticIdentifier(), _innerHeightConstraint = NSLayoutConstraint.Create(innerView, Height, Equal, 1f, 10).WithAutomaticIdentifier(), NSLayoutConstraint.Create(this, Width, Equal, child, Width, 1f, 0).WithAutomaticIdentifier(), NSLayoutConstraint.Create(this, CenterX, Equal, child, CenterX, 1f, 0).WithAutomaticIdentifier(), _innerChildTopConstraint = NSLayoutConstraint.Create(child, Top, Equal, this, Top, 1f, 0).WithAutomaticIdentifier(), _innerChildHeightConstraint = NSLayoutConstraint.Create(child, Height, Equal, 1f, 10).WithAutomaticIdentifier()
+					NSLayoutConstraint.Create(this, Width, Equal, innerView, Width, 1f, 0).WithAutomaticIdentifier(),
+					NSLayoutConstraint.Create(this, CenterX, Equal, innerView, CenterX, 1f, 0).WithAutomaticIdentifier(),
+					_innerTopConstraint = NSLayoutConstraint.Create(innerView, Top, Equal, this, Top, 1f, 0).WithAutomaticIdentifier(),
+					_innerHeightConstraint = NSLayoutConstraint.Create(innerView, Height, Equal, 1f, 10).WithAutomaticIdentifier(),
+					NSLayoutConstraint.Create(this, Width, Equal, child, Width, 1f, 0).WithAutomaticIdentifier(),
+					NSLayoutConstraint.Create(this, CenterX, Equal, child, CenterX, 1f, 0).WithAutomaticIdentifier(),
+					_innerChildTopConstraint = NSLayoutConstraint.Create(child, Top, Equal, this, Top, 1f, 0).WithAutomaticIdentifier(),
+					_innerChildHeightConstraint = NSLayoutConstraint.Create(child, Height, Equal, 1f, 10).WithAutomaticIdentifier()
 				};
 
 				NSLayoutConstraint[] constraintsToRemove = child.Constraints.Where(x => x.FirstItem == innerView || x.SecondItem == innerView).ToArray();
@@ -278,7 +289,10 @@ namespace Xmf2.Core.iOS.Controls
 
 				NSLayoutConstraint[] innerConstraints =
 				{
-					NSLayoutConstraint.Create(this, Width, Equal, innerView, Width, 1f, 0).WithAutomaticIdentifier(), NSLayoutConstraint.Create(this, CenterX, Equal, innerView, CenterX, 1f, 0).WithAutomaticIdentifier(), _innerTopConstraint = NSLayoutConstraint.Create(innerView, Top, Equal, this, Top, 1f, 0).WithAutomaticIdentifier(), _innerHeightConstraint = NSLayoutConstraint.Create(innerView, Height, Equal, 1f, 10).WithAutomaticIdentifier(),
+					NSLayoutConstraint.Create(this, Width, Equal, innerView, Width, 1f, 0).WithAutomaticIdentifier(),
+					NSLayoutConstraint.Create(this, CenterX, Equal, innerView, CenterX, 1f, 0).WithAutomaticIdentifier(),
+					_innerTopConstraint = NSLayoutConstraint.Create(innerView, Top, Equal, this, Top, 1f, 0).WithAutomaticIdentifier(),
+					_innerHeightConstraint = NSLayoutConstraint.Create(innerView, Height, Equal, 1f, 10).WithAutomaticIdentifier()
 				};
 
 				AddConstraints(innerConstraints);
@@ -340,7 +354,7 @@ namespace Xmf2.Core.iOS.Controls
 					bottom = contentHeight;
 				}
 
-				nfloat height = bottom - top;
+				nfloat height = NMath.Max(bottom - top, 0f);//avoid negative height.
 				if (contentHeight > MINIMAL_RENDER_HEIGHT && height < MINIMAL_RENDER_HEIGHT) //arbitrary value to render at least one cell
 				{
 					height = MINIMAL_RENDER_HEIGHT;
