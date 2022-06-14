@@ -8,6 +8,7 @@ using Xmf2.Components.Events;
 using Xmf2.Components.Interfaces;
 using Xmf2.Core.Subscriptions;
 using Xmf2.NavigationGraph.Core.Interfaces;
+using Xmf2.NavigationGraph.Droid.Interfaces;
 
 namespace Xmf2.Components.Droid.Fragments
 {
@@ -31,6 +32,8 @@ namespace Xmf2.Components.Droid.Fragments
 		}
 
 		protected override IViewModelLocatorService<TComponentViewModel> ViewModelLocatorService => BaseApplicationBootstrapper.StaticServices.Resolve<IViewModelLocatorService<TComponentViewModel>>();
+
+		protected override IRegistrationPresenterService<TComponentViewModel> PresenterService => Services.Resolve<IRegistrationPresenterService<TComponentViewModel>>();
 
 		private EventSubscriber _stateChangedSubscriber;
 		protected Xmf2Disposable Disposables = new Xmf2Disposable();
