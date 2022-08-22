@@ -56,13 +56,16 @@ namespace Xmf2.Core.iOS.Controls
 
 		public override void AddSubview(UIView view)
 		{
+			const string IOS_13_SCROLLVIEW_CLASS_NAME = "_UIScrollViewScrollIndicator";
 			if (view is UIScrollView scrollView)
 			{
 				scrollView.AddObserver(this, SELECTOR_CONTENT_SIZE, NSKeyValueObservingOptions.Old, Handle);
 				view = new ScrollItemWrapper(scrollView, this);
 			}
-			else if (view is UIImageView && view.Frame.Equals(new CGRect(0, 0, 2.5f, 2.5f))) //TODO: review scrollbar detection
+			else if (view?.Class?.Name == IOS_13_SCROLLVIEW_CLASS_NAME || (view is UIImageView && view.Frame.Equals(new CGRect(0, 0, 2.5f, 2.5f))))
 			{
+				//vju 12/11/2019 in ios 13 scroll indicator have a private class
+				//before it's an imageview with constant frame
 				base.AddSubview(view);
 				return;
 			}
@@ -98,11 +101,13 @@ namespace Xmf2.Core.iOS.Controls
 			AddSubview(placeholderView);
 
 			stickableView.TranslatesAutoresizingMaskIntoConstraints = false;
-			var stickedViewYPosition = NSLayoutConstraint.Create(stickableView, Top, Equal, this, Top, 1f, 0f).WithAutomaticIdentifier();
-			var unstickedViewYPosition = NSLayoutConstraint.Create(stickableView, CenterY, Equal, placeholderView, CenterY, 1f, 0f).WithAutomaticIdentifier();
+			NSLayoutConstraint stickedViewYPosition = NSLayoutConstraint.Create(stickableView, Top, Equal, this, Top, 1f, 0f).WithAutomaticIdentifier();
+			NSLayoutConstraint unstickedViewYPosition = NSLayoutConstraint.Create(stickableView, CenterY, Equal, placeholderView, CenterY, 1f, 0f).WithAutomaticIdentifier();
 			AddConstraints(new[]
 			{
-				NSLayoutConstraint.Create(stickableView, Height, Equal, placeholderView, Height, 1f, 0).WithAutomaticIdentifier(), NSLayoutConstraint.Create(this, Width, Equal, stickableView, Width, 1f, 0).WithAutomaticIdentifier(), NSLayoutConstraint.Create(this, CenterX, Equal, stickableView, CenterX, 1f, 0).WithAutomaticIdentifier()
+				NSLayoutConstraint.Create(stickableView, Height, Equal, placeholderView, Height, 1f, 0).WithAutomaticIdentifier(),
+				NSLayoutConstraint.Create(this, Width, Equal, stickableView, Width, 1f, 0).WithAutomaticIdentifier(),
+				NSLayoutConstraint.Create(this, CenterX, Equal, stickableView, CenterX, 1f, 0).WithAutomaticIdentifier()
 			});
 			var stickyViewData = new StickyViewData()
 			{
@@ -179,10 +184,10 @@ namespace Xmf2.Core.iOS.Controls
 
 			if (_stickyViewList.Count > 0)
 			{
-				var scrollViewYOffset = ContentOffset.Y;
-				foreach (var wrapper in _stickyViewList)
+				nfloat scrollViewYOffset = ContentOffset.Y;
+				foreach (StickyViewData wrapper in _stickyViewList)
 				{
-					var stickyViewYOffset = Max(wrapper.LinearLayoutPlaceholder.Frame.Y, scrollViewYOffset);
+					nfloat stickyViewYOffset = Max(wrapper.LinearLayoutPlaceholder.Frame.Y, scrollViewYOffset);
 					if (hasChanged |= wrapper.StickedViewYPosition.Constant != stickyViewYOffset)
 					{
 						wrapper.StickedViewYPosition.Constant = stickyViewYOffset;
@@ -354,7 +359,7 @@ namespace Xmf2.Core.iOS.Controls
 					bottom = contentHeight;
 				}
 
-				nfloat height = NMath.Max(bottom - top, 0f);//avoid negative height.
+				nfloat height = NMath.Max(bottom - top, 0f); //avoid negative height.
 				if (contentHeight > MINIMAL_RENDER_HEIGHT && height < MINIMAL_RENDER_HEIGHT) //arbitrary value to render at least one cell
 				{
 					height = MINIMAL_RENDER_HEIGHT;
