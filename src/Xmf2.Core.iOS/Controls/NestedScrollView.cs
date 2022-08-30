@@ -272,6 +272,8 @@ namespace Xmf2.Core.iOS.Controls
 					_innerChildHeightConstraint = NSLayoutConstraint.Create(child, Height, Equal, 1f, 10).WithAutomaticIdentifier()
 				};
 
+				_innerChildHeightConstraint.Priority = (float)UILayoutPriority.DefaultLow;
+
 				NSLayoutConstraint[] constraintsToRemove = child.Constraints.Where(x => x.FirstItem == innerView || x.SecondItem == innerView).ToArray();
 				child.RemoveConstraints(constraintsToRemove);
 
@@ -299,6 +301,8 @@ namespace Xmf2.Core.iOS.Controls
 					_innerTopConstraint = NSLayoutConstraint.Create(innerView, Top, Equal, this, Top, 1f, 0).WithAutomaticIdentifier(),
 					_innerHeightConstraint = NSLayoutConstraint.Create(innerView, Height, Equal, 1f, 10).WithAutomaticIdentifier()
 				};
+
+				_innerHeightConstraint.Priority = (float)UILayoutPriority.DefaultLow;
 
 				AddConstraints(innerConstraints);
 			}
