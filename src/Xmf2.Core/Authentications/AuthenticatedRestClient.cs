@@ -42,28 +42,24 @@ namespace Xmf2.Core.Authentications
 
 		public override async Task<IRestResponse> Execute(IRestRequest request, CancellationToken ct)
 		{
-			using (IHttpResponseMessage response = await ExecuteRequest(request, ct).ConfigureAwait(false))
+			using IHttpResponseMessage response = await ExecuteRequest(request, ct).ConfigureAwait(false);
+			if (response.IsSuccessStatusCode)
 			{
-				if (response.IsSuccessStatusCode)
-				{
-					return await RestResponse.CreateResponse(this, request, response, ct).ConfigureAwait(false);
-				}
-				IRestResponse restResponse = await RestResponse.CreateResponse(this, request, response, ct).ConfigureAwait(false);
-				throw new RestException(restResponse);
+				return await RestResponse.CreateResponse(this, request, response, ct).ConfigureAwait(false);
 			}
+			IRestResponse restResponse = await RestResponse.CreateResponse(this, request, response, ct).ConfigureAwait(false);
+			throw new RestException(restResponse);
 		}
 
 		public override async Task<IRestResponse<T>> Execute<T>(IRestRequest request, CancellationToken ct)
 		{
-			using (IHttpResponseMessage response = await ExecuteRequest(request, ct).ConfigureAwait(false))
+			using IHttpResponseMessage response = await ExecuteRequest(request, ct).ConfigureAwait(false);
+			if (response.IsSuccessStatusCode)
 			{
-				if (response.IsSuccessStatusCode)
-				{
-					return await RestResponse.CreateResponse<T>(this, request, response, ct).ConfigureAwait(false);
-				}
-				IRestResponse restResponse = await RestResponse.CreateResponse(this, request, response, ct).ConfigureAwait(false);
-				throw new RestException(restResponse);
+				return await RestResponse.CreateResponse<T>(this, request, response, ct).ConfigureAwait(false);
 			}
+			IRestResponse restResponse = await RestResponse.CreateResponse(this, request, response, ct).ConfigureAwait(false);
+			throw new RestException(restResponse);
 		}
 
 		public IRestClient ParentClient { get; set; }
