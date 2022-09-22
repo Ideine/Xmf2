@@ -1,11 +1,19 @@
 ﻿using Android.Content;
 using Android.Views.InputMethods;
 using Android.Widget;
+using Plugin.CurrentActivity;
 
 namespace Xmf2.Core.Droid.Helpers
 {
 	public static class KeyboardHelper
 	{
+		public static bool IsActive()
+		{
+			var activity = CrossCurrentActivity.Current.Activity;
+			InputMethodManager inputMethodManager = (InputMethodManager)activity.GetSystemService(Context.InputMethodService);
+			return inputMethodManager?.IsActive ?? false;
+		}
+
 		public static void HideFrom(this EditText input)
 		{
 			InputMethodManager inputManager = (InputMethodManager)input.Context.GetSystemService(Context.InputMethodService);
