@@ -31,12 +31,13 @@ namespace Xmf2.Components.Droid.Fragments
 			}
 		}
 
+		protected override IRegistrationPresenterService<TComponentViewModel> PresenterService => BaseApplicationBootstrapper.StaticServices.Resolve<IRegistrationPresenterService<TComponentViewModel>>();
 		protected override IViewModelLocatorService<TComponentViewModel> ViewModelLocatorService => BaseApplicationBootstrapper.StaticServices.Resolve<IViewModelLocatorService<TComponentViewModel>>();
 
 		protected override IRegistrationPresenterService<TComponentViewModel> PresenterService => Services.Resolve<IRegistrationPresenterService<TComponentViewModel>>();
 
 		private EventSubscriber _stateChangedSubscriber;
-		protected Xmf2Disposable Disposables = new Xmf2Disposable();
+		protected Xmf2Disposable Disposables = new();
 
 		protected IServiceLocator Services => ViewModel.Services;
 
@@ -59,7 +60,7 @@ namespace Xmf2.Components.Droid.Fragments
 
 		private void UpdateState()
 		{
-			var state = ViewModel?.ViewState();
+			IViewState state = ViewModel?.ViewState();
 			if (state != null)
 			{
 				Activity.RunOnUiThread(() => Component?.SetState(state));

@@ -14,7 +14,7 @@ namespace Xmf2.Core.Droid.Helpers
 {
 	public class LoadingViewHelper : IDisposable
 	{
-		private readonly Xmf2Disposable _disposable = new Xmf2Disposable();
+		private readonly Xmf2Disposable _disposable = new();
 
 		private LoadingEnableHelper _throttling;
 

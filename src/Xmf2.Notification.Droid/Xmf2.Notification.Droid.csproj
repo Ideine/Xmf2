@@ -12,7 +12,7 @@
     <OutputType>Library</OutputType>
     <RootNamespace>Xmf2.Notification.Droid</RootNamespace>
     <AssemblyName>Xmf2.Notification.Droid</AssemblyName>
-    <TargetFrameworkVersion>v11.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v12.0</TargetFrameworkVersion>
     <AndroidResgenFile>Resources\Resource.designer.cs</AndroidResgenFile>
     <AndroidResgenClass>Resource</AndroidResgenClass>
     <MonoAndroidResourcePrefix>Resources</MonoAndroidResourcePrefix>

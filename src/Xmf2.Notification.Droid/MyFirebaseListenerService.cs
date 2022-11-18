@@ -10,7 +10,7 @@ using Xmf2.Core.Services;
 
 namespace Xmf2.Notification.Droid
 {
-	[Service, IntentFilter(new[]
+	[Service(Exported = false), IntentFilter(new[]
 	{
 		"com.google.firebase.MESSAGING_EVENT"
 	})]
