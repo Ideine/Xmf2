@@ -31,7 +31,6 @@ namespace Xmf2.Components.Droid.Fragments
 			}
 		}
 
-		protected override IRegistrationPresenterService<TComponentViewModel> PresenterService => BaseApplicationBootstrapper.StaticServices.Resolve<IRegistrationPresenterService<TComponentViewModel>>();
 		protected override IViewModelLocatorService<TComponentViewModel> ViewModelLocatorService => BaseApplicationBootstrapper.StaticServices.Resolve<IViewModelLocatorService<TComponentViewModel>>();
 
 		protected override IRegistrationPresenterService<TComponentViewModel> PresenterService => Services.Resolve<IRegistrationPresenterService<TComponentViewModel>>();

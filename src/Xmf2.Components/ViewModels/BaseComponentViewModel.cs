@@ -107,6 +107,14 @@ namespace Xmf2.Components.ViewModels
 			Exec(operation => operation.ViewModelUpdate(execution), errorHandler);
 		}
 
+		protected void ExecIfNotBusy(Func<IViewModelOperation, IViewModelOperation> creator, CustomErrorHandler errorHandler = null)
+		{
+			if (!Busy.IsEnabled)
+			{
+				ExecSafeSync(creator, errorHandler);
+			}
+		}
+
 		protected void ExecSafeSync(Func<IViewModelOperation, IViewModelOperation> creator, CustomErrorHandler errorHandler = null)
 		{
 			ExecAsync(creator, errorHandler).FireAndForget();
