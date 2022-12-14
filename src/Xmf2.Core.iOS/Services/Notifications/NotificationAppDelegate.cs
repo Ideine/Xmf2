@@ -139,7 +139,7 @@ namespace Xmf2.Core.iOS.Services.Notifications
 			HandleDeeplink(content);
 		}
 
-		private void HandleLaunchOptions(NSDictionary launchOptions)
+		protected void HandleLaunchOptions(NSDictionary launchOptions)
 		{
 			if (launchOptions == null)
 			{
