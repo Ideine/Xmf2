@@ -30,6 +30,10 @@ namespace Xmf2.Core.iOS.Services
 			{
 				RegisterUserNotificationSettings();
 			}
+			else
+			{
+				SetToken(null);
+			}
 			//TODO: rediriger ces erreurs vers un véritable Error handler, pour qu'elle terminent éventuellement sur kibana.
 			//#wi:7965
 			if (err != null)
