@@ -32,9 +32,14 @@ namespace Xmf2.Authentications.OAuth2
 				throw new InvalidOperationException("Configuration has not been set before calling login method");
 			}
 
-			IRestRequest request = new RestRequest(Configuration.LoginUrl, Configuration.LoginMethod);
-			Configuration.PopulateLoginRequest(request, login, password);
-			return ExecuteAuthRequest(request);
+			IRestRequest RequestFunc()
+			{
+				IRestRequest request = new RestRequest(Configuration.LoginUrl, Configuration.LoginMethod);
+				Configuration.PopulateLoginRequest(request, login, password);
+				return request;
+			}
+
+			return ExecuteAuthRequest(RequestFunc);
 		}
 
 		public Task<OAuth2AuthResult> Refresh()
@@ -49,15 +54,21 @@ namespace Xmf2.Authentications.OAuth2
 				throw new InvalidOperationException("Can not refresh without a Refresh token");
 			}
 
-			IRestRequest request = new RestRequest(Configuration.RefreshUrl, Configuration.RefreshMethod);
-			Configuration.PopulateRefreshRequest(request, _tokens.RefreshToken);
-			return ExecuteAuthRequest(request);
+			IRestRequest RequestFunc()
+			{
+				var request = new RestRequest(Configuration.RefreshUrl, Configuration.RefreshMethod);
+				Configuration.PopulateRefreshRequest(request, _tokens.RefreshToken);
+				return request;
+			}
+
+			return ExecuteAuthRequest(RequestFunc);
 		}
 
-		protected async Task<OAuth2AuthResult> ExecuteAuthRequest(IRestRequest request)
+		protected async Task<OAuth2AuthResult> ExecuteAuthRequest(Func<IRestRequest> requestFunc)
 		{
 			using (await _locker.LockAsync())
 			{
+				IRestRequest request = requestFunc.Invoke();
 				request.AddHeader(AuthenticationConstants.NO_AUTH_HEADER, true);
 				IRestResponse response = await Execute(request);
 				OAuth2AuthResult result = Configuration.HandleAuthResult(response);
