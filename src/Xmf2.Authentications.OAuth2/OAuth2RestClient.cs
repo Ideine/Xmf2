@@ -25,66 +25,76 @@ namespace Xmf2.Authentications.OAuth2
 
 		public OAuth2RestClient(IHttpClientFactory factory, Uri baseUrl) : base(factory, baseUrl) { }
 
-		public Task<OAuth2AuthResult> Login(string login, string password)
+		public async Task<OAuth2AuthResult> Login(string login, string password)
 		{
-			if (Configuration == null)
+			using (await _locker.LockAsync())
 			{
-				throw new InvalidOperationException("Configuration has not been set before calling login method");
-			}
+				if (Configuration == null)
+				{
+					throw new InvalidOperationException("Configuration has not been set before calling login method");
+				}
 
-			IRestRequest RequestFunc()
-			{
-				IRestRequest request = new RestRequest(Configuration.LoginUrl, Configuration.LoginMethod);
-				Configuration.PopulateLoginRequest(request, login, password);
-				return request;
-			}
+				IRestRequest RequestFunc()
+				{
+					IRestRequest request = new RestRequest(Configuration.LoginUrl, Configuration.LoginMethod);
+					Configuration.PopulateLoginRequest(request, login, password);
+					return request;
+				}
 
-			return ExecuteAuthRequest(RequestFunc);
+				return await ExecuteAuthRequest(RequestFunc);
+			}
 		}
 
-		public Task<OAuth2AuthResult> Refresh()
+		public async Task<OAuth2AuthResult> Refresh()
 		{
-			if (Configuration == null)
+			using (await _locker.LockAsync())
 			{
-				throw new InvalidOperationException("Configuration has not been set before calling refresh method");
-			}
+				if (Configuration == null)
+				{
+					throw new InvalidOperationException("Configuration has not been set before calling refresh method");
+				}
 
-			if (_tokens.RefreshToken == null)
-			{
-				throw new InvalidOperationException("Can not refresh without a Refresh token");
-			}
+				if (_tokens.RefreshToken == null)
+				{
+					throw new InvalidOperationException("Can not refresh without a Refresh token");
+				}
 
-			IRestRequest RequestFunc()
-			{
-				var request = new RestRequest(Configuration.RefreshUrl, Configuration.RefreshMethod);
-				Configuration.PopulateRefreshRequest(request, _tokens.RefreshToken);
-				return request;
-			}
+				if (DateTime.Now.Add(TimeSpan.FromSeconds(15)) > _tokens.ExpiresAt)
+				{
+					IRestRequest RequestFunc()
+					{
+						var request = new RestRequest(Configuration.RefreshUrl, Configuration.RefreshMethod);
+						Configuration.PopulateRefreshRequest(request, _tokens.RefreshToken);
+						return request;
+					}
 
-			return ExecuteAuthRequest(RequestFunc);
+					return await ExecuteAuthRequest(RequestFunc);
+				}
+				else
+				{
+					return _tokens;
+				}
+			}
 		}
 
 		protected async Task<OAuth2AuthResult> ExecuteAuthRequest(Func<IRestRequest> requestFunc)
 		{
-			using (await _locker.LockAsync())
+			IRestRequest request = requestFunc.Invoke();
+			request.AddHeader(AuthenticationConstants.NO_AUTH_HEADER, true);
+			IRestResponse response = await Execute(request);
+			OAuth2AuthResult result = Configuration.HandleAuthResult(response);
+
+			if (result.IsSuccess)
 			{
-				IRestRequest request = requestFunc.Invoke();
-				request.AddHeader(AuthenticationConstants.NO_AUTH_HEADER, true);
-				IRestResponse response = await Execute(request);
-				OAuth2AuthResult result = Configuration.HandleAuthResult(response);
-
-				if (result.IsSuccess)
-				{
-					SetAuthenticationTokens(result);
-					OnAuthSuccess?.Invoke(this, result);
-				}
-				else if (result.ErrorReason == AuthErrorReason.InvalidCredentials)
-				{
-					Logout();
-				}
-
-				return result;
+				SetAuthenticationTokens(result);
+				OnAuthSuccess?.Invoke(this, result);
 			}
+			else if (result.ErrorReason == AuthErrorReason.InvalidCredentials)
+			{
+				Logout();
+			}
+
+			return result;
 		}
 
 		public override async Task Logout()
