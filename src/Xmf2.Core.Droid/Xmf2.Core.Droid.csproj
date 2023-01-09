@@ -86,7 +86,7 @@
     <PackageReference Include="Plugin.CurrentActivity" Version="2.1.0.4" />
     <PackageReference Include="Xamarin.AndroidX.AppCompat" Version="1.5.1.1" />
     <PackageReference Include="Xamarin.AndroidX.RecyclerView" Version="1.2.1.8" />
-    <PackageReference Include="Xamarin.Essentials" Version="1.7.3" />  
+    <PackageReference Include="Xamarin.Essentials" Version="1.7.4" />  
 	</ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\values\attrs.xml" />
