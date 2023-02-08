@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Xmf2.Components.Interfaces;
+using Xmf2.Core.Exceptions;
 
 namespace Xmf2.Components.ViewModels.LinearLists
 {
@@ -67,7 +68,8 @@ namespace Xmf2.Components.ViewModels.LinearLists
 				{
 					return result;
 				}
-				throw new InvalidOperationException($"Child state of ListViewModel must implement IEntityViewState, got {state.GetType()}");
+
+				throw new DeveloperException($"Child state of ListViewModel must implement IEntityViewState, got {state?.GetType()}");
 			}).ToList());
 		}
 
