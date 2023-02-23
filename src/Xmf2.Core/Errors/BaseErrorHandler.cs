@@ -42,7 +42,7 @@ namespace Xmf2.Core.Errors
 		{
 			if (TryGetRestException(fromEx, out var restException)
 			    && restException.Response != null
-			    && restException.Response.Content.NotNullOrEmpty()
+			    && !string.IsNullOrEmpty(restException.Response.Content)
 			    && TryDeserialize(restException.Response.Content, out content))
 			{
 				httpStatusCode = restException.Response.StatusCode;

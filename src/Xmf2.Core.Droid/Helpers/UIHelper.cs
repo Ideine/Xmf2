@@ -12,26 +12,17 @@ namespace Xmf2.Core.Droid.Helpers
 	{
 		public static void SetTranslucentStatusBar(this Activity activity)
 		{
-			void SetWindowFlag(WindowManagerFlags flags, bool activate)
+			void SetWindowFlag(WindowManagerFlags flags)
 			{
 				Window win = activity.Window;
 				WindowManagerLayoutParams winParams = win.Attributes;
-
-				if (activate)
-				{
-					winParams.Flags |= flags;
-				}
-				else
-				{
-					winParams.Flags = flags;
-				}
-
+				winParams.Flags |= flags;
 				win.Attributes = winParams;
 			}
 
 			if (Build.VERSION.SdkInt >= BuildVersionCodes.Lollipop)
 			{
-				SetWindowFlag(WindowManagerFlags.TranslucentStatus, activate: false);
+				SetWindowFlag(WindowManagerFlags.TranslucentStatus);
 				activity.Window.SetStatusBarColor(Color.Transparent);
 				activity.Window.DecorView.SystemUiVisibility = StatusBarVisibility.Visible;
 			}
