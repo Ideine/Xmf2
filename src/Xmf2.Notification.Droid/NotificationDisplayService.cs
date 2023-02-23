@@ -26,7 +26,7 @@ namespace Xmf2.Notification.Droid
 		//The background color on notification channel
 		private readonly int _backgroundColor;
 
-		public BaseNotificationDisplayService(string channelId, string channelName, string channelDescription, int backgroundColor)
+		protected BaseNotificationDisplayService(string channelId, string channelName, string channelDescription, int backgroundColor)
 		{
 			_channelId = channelId;
 			_channelName = channelName;
@@ -36,24 +36,29 @@ namespace Xmf2.Notification.Droid
 
 		public virtual void ShowNotification(FirebaseMessagingService context, RemoteMessage.Notification notification, IDictionary<string, string> notificationData, string content)
 		{
-			int pendingIntentId = (int)(DateTime.Now.Date.Millisecond & 0xFFFFFFF);
-			PendingIntent notificationContentIntent = PendingIntent.GetActivity(context, pendingIntentId, IntentForNotification(context, notification, notificationData, content), PendingIntentFlags.OneShot);
+			int pendingIntentId = DateTime.Now.Date.Millisecond & 0xFFFFFFF;
+			PendingIntent notificationContentIntent = PendingIntent.GetActivity(context, pendingIntentId, IntentForNotification(context, notification, notificationData, content), PendingIntentFlags.OneShot | PendingIntentFlags.Immutable);
 
 			NotificationManager notificationManager = (NotificationManager)context.GetSystemService(Context.NotificationService);
 			System.Diagnostics.Debug.Assert(notificationManager != null, nameof(notificationManager) + " != null");
 
+			string channelId = string.Empty;
+
 			if (Build.VERSION.SdkInt >= BuildVersionCodes.O)
 			{
-				NotificationChannel notificationChannel = notificationManager.GetNotificationChannel(_channelId);
+				(string id, string title, string description, NotificationImportance importance) = GetChannelInformationFromNotificationData(notificationData, content);
+				channelId = id;
+				NotificationChannel notificationChannel = notificationManager.GetNotificationChannel(channelId);
 
 				if (notificationChannel == null)
 				{
-					notificationChannel = new NotificationChannel(_channelId, _channelName, NotificationImportance.Default)
+					notificationChannel = new NotificationChannel(channelId, title, importance)
 					{
-						Description = _channelDescription
+						Description = description
 					};
 
 					notificationChannel.EnableLights(true);
+					notificationChannel.EnableVibration(true);
 					// Sets the notification light color for notifications posted to this
 					// channel, if the device supports this feature.
 					notificationChannel.LightColor = 0x7F00FF00;
@@ -61,7 +66,7 @@ namespace Xmf2.Notification.Droid
 				}
 			}
 
-			NotificationCompat.Builder builder = new NotificationCompat.Builder(context, _channelId)
+			NotificationCompat.Builder builder = new NotificationCompat.Builder(context, channelId)
 				.SetStyle(new NotificationCompat.BigTextStyle().BigText(content))
 				.SetContentText(content)
 				.SetAutoCancel(true)
@@ -83,5 +88,10 @@ namespace Xmf2.Notification.Droid
 		protected abstract Intent IntentForNotification(FirebaseMessagingService context, RemoteMessage.Notification notification, IDictionary<string, string> notificationData, string content);
 
 		protected abstract void BuildNotification(FirebaseMessagingService context, NotificationCompat.Builder builder, RemoteMessage.Notification notification, IDictionary<string, string> notificationData, string content);
+
+		protected virtual (string, string, string, NotificationImportance) GetChannelInformationFromNotificationData(IDictionary<string, string> data, string content)
+		{
+			return (_channelId, _channelName, _channelDescription, NotificationImportance.Default);
+		}
 	}
 }
