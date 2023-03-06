@@ -259,8 +259,8 @@ namespace Xmf2.Components.Droid.List
 					_parallaxDictionary.Remove(header);
 					_headersHeight.Remove(header);
 					_stickyDictionary.Remove(header);
-					NotifyItemRemoved(index);
-				}
+					NotifyDataSetChanged();
+ 				}
 
 				return res;
 			}
@@ -275,12 +275,11 @@ namespace Xmf2.Components.Droid.List
 			int index = _footerList.IndexOf(footer);
 			if (index != 1)
 			{
-				index = GetFooterPositionInItemList(index);
 				bool res = _footerList.Remove(footer);
 				if (res)
 				{
 					_footerStates.Remove(footer);
-					NotifyItemRemoved(index);
+					NotifyDataSetChanged();
 				}
 
 				return res;
@@ -344,7 +343,7 @@ namespace Xmf2.Components.Droid.List
 		/// </summary>
 		/// <param name="position">position in adapter list</param>
 		/// <returns>position in header list</returns>
-		private int GetHeaderPositionInHeaderList(int position) => position;
+		private static int GetHeaderPositionInHeaderList(int position) => position;
 
 		/// <summary>
 		/// Get position of a footer to the footer list
@@ -358,11 +357,6 @@ namespace Xmf2.Components.Droid.List
 			cellCount -= _footerList.Count;
 
 			return position - (cellCount + HeaderList.Count);
-		}
-
-		private int GetFooterPositionInItemList(int position)
-		{
-			return (ItemCount - _footerList.Count) + position;
 		}
 
 		#endregion
