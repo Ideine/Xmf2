@@ -15,6 +15,8 @@ namespace Xmf2.Notification.Droid
 
 	public abstract class BaseNotificationDisplayService : INotificationDisplayService
 	{
+		private readonly Random _random;
+
 		private readonly string _channelId;
 
 		// The user-visible name of the channel.
@@ -28,6 +30,7 @@ namespace Xmf2.Notification.Droid
 
 		public BaseNotificationDisplayService(string channelId, string channelName, string channelDescription, int backgroundColor)
 		{
+			_random = new Random();
 			_channelId = channelId;
 			_channelName = channelName;
 			_channelDescription = channelDescription;
@@ -36,7 +39,7 @@ namespace Xmf2.Notification.Droid
 
 		public virtual void ShowNotification(FirebaseMessagingService context, RemoteMessage.Notification notification, IDictionary<string, string> notificationData, string content)
 		{
-			int pendingIntentId = (int)(DateTime.Now.Date.Millisecond & 0xFFFFFFF);
+			int pendingIntentId = _random.Next();
 			PendingIntent notificationContentIntent;
 			if (Build.VERSION.SdkInt >= BuildVersionCodes.S)
 			{
