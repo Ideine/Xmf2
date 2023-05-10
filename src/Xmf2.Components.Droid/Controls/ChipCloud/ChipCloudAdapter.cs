@@ -68,9 +68,10 @@ namespace Xmf2.Components.Droid.Controls.ChipCloud
 				_componentDictionary.Remove(remove.OldPos);
 			}
 
-			foreach (var move in moveList)
+			foreach (var move in moveList.OrderBy(x => x.OldPos))
 			{
 				_componentDictionary[move.NewPos] = oldDic[move.OldPos];
+				_componentDictionary.Remove(move.OldPos);
 			}
 		}
 

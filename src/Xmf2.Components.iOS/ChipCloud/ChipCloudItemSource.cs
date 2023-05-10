@@ -49,19 +49,18 @@ namespace Xmf2.Components.iOS.ChipCloud
 
 		public virtual ChipCloudItemCell GetCell(ChipCloudView cloudView, int position)
 		{
-			ChipCloudItemCell cell = null;
+			ChipCloudItemCell cell = new ChipCloudItemCell();
 
 			IEntityViewState childState = ItemSource[position];
 			Guid childId = childState.Id;
 			IComponentView childView = null;
 			if (!_componentViews.TryGetValue(childId, out childView))
 			{
-				cell = new ChipCloudItemCell();
 				childView = _componentViewCreator(childState.Id.ToString());
 				_componentViews.Add(childId, childView);
-				cell.SetContent(childView.View);
 			}
 
+			cell.SetContent(childView.View);
 			childView.SetState(childState);
 
 			cell.ItemSize = ViewSize(childView);
