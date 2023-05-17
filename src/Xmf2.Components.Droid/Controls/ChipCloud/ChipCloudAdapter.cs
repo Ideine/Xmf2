@@ -74,7 +74,8 @@ namespace Xmf2.Components.Droid.Controls.ChipCloud
 
 				if (removeList.Count > 0 && !moveList.Any(x => x.NewPos == move.OldPos))
 				{
-					//CLA 17/05/2023 : remove element from dictionary only if an element needs to be removed and there is no inversion between this element and another
+					//CLA 17/05/2023 : remove element from dictionary only if an element has been removed (tail must be truncated by moving all next elements)
+					// Futhermore, we need to check if there is no inversion between this element and another (in this case dictionary must keep elements)
 					_componentDictionary.Remove(move.OldPos);
 				}
 			}
