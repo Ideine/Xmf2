@@ -71,7 +71,12 @@ namespace Xmf2.Components.Droid.Controls.ChipCloud
 			foreach (var move in moveList.OrderBy(x => x.OldPos))
 			{
 				_componentDictionary[move.NewPos] = oldDic[move.OldPos];
-				_componentDictionary.Remove(move.OldPos);
+
+				if (removeList.Count > 0 && !moveList.Any(x => x.NewPos == move.OldPos))
+				{
+					//CLA 17/05/2023 : remove element from dictionary only if an element needs to be removed and there is no inversion between this element and another
+					_componentDictionary.Remove(move.OldPos);
+				}
 			}
 		}
 
