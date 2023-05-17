@@ -58,16 +58,16 @@ namespace Xmf2.Components.Droid.Controls.ChipCloud
 				RemoveViewAt(remove.OldPos);
 			}
 
+			foreach (var add in addList)
+			{
+				AddView(Adapter.GetView(add.NewPos, null, this).DisposeViewWith(Disposable), add.NewPos);
+			}
+
 			foreach (var move in moveList)
 			{
 				var view = childs[move.OldPos];
 				RemoveView(view);
 				AddView(view, move.NewPos);
-			}
-
-			foreach (var add in addList)
-			{
-				AddView(Adapter.GetView(add.NewPos, null, this).DisposeViewWith(Disposable), add.NewPos);
 			}
 
 			Adapter.RefreshAllStates();

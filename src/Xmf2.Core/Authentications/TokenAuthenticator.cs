@@ -71,7 +71,7 @@ namespace Xmf2.Core.Authentications
 			return Task.CompletedTask; // refresh token will be done on next request call
 		}
 
-		protected bool IsExpired()
+		protected virtual bool IsExpired()
 		{
 			DateTime? expireDate = Token?.ExpireDate;
 			if (expireDate.HasValue)
