@@ -89,7 +89,7 @@ namespace Xmf2.Notification.Droid
 
 		protected abstract void BuildNotification(FirebaseMessagingService context, NotificationCompat.Builder builder, RemoteMessage.Notification notification, IDictionary<string, string> notificationData, string content);
 
-		protected virtual (string, string, string, NotificationImportance) GetChannelInformationFromNotificationData(IDictionary<string, string> data, string content)
+		protected virtual (string id, string title, string description, NotificationImportance importance) GetChannelInformationFromNotificationData(IDictionary<string, string> data, string content)
 		{
 			return (_channelId, _channelName, _channelDescription, NotificationImportance.Default);
 		}
