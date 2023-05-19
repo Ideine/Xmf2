@@ -10,17 +10,27 @@ namespace Xmf2.Core.Droid.Services
 	public class NativeHttpClientFactory : DefaultHttpClientFactory, INativeHttpHandlerFactory
 	{
 		private readonly bool _setCredentials;
+		private readonly int? _timeout;
 
-		public NativeHttpClientFactory() : this(true) { }
+		public NativeHttpClientFactory(int? timeout = null) : this(true, timeout) { }
 
-		public NativeHttpClientFactory(bool setCredentials)
+		public NativeHttpClientFactory(bool setCredentials, int? timeout = null)
 		{
 			_setCredentials = setCredentials;
+			_timeout = timeout;
 		}
 
 		protected override HttpMessageHandler CreateMessageHandler(IRestClient client)
 		{
-			var handler = new NativeMessageHandler();
+			NativeMessageHandler handler;
+			if (_timeout.HasValue)
+			{
+				handler = new(_timeout.Value, _timeout.Value, _timeout.Value);
+			}
+			else
+			{
+				handler = new();
+			}
 
 #if !NO_PROXY
 			if (handler.SupportsProxy && client.Proxy != null)
@@ -54,7 +64,14 @@ namespace Xmf2.Core.Droid.Services
 
 		HttpClientHandler INativeHttpHandlerFactory.NewHandler()
 		{
-			return new NativeMessageHandler();
+			if (_timeout.HasValue)
+			{
+				return new NativeMessageHandler(_timeout.Value, _timeout.Value, _timeout.Value);
+			}
+			else
+			{
+				return new NativeMessageHandler();
+			}
 		}
 	}
 }
