@@ -12,7 +12,7 @@
     <OutputType>Library</OutputType>
     <RootNamespace>Xmf2.Notification.Droid</RootNamespace>
     <AssemblyName>Xmf2.Notification.Droid</AssemblyName>
-    <TargetFrameworkVersion>v12.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v13.0</TargetFrameworkVersion>
     <AndroidResgenFile>Resources\Resource.designer.cs</AndroidResgenFile>
     <AndroidResgenClass>Resource</AndroidResgenClass>
     <MonoAndroidResourcePrefix>Resources</MonoAndroidResourcePrefix>
@@ -58,6 +58,10 @@
     <ProjectReference Include="..\Xmf2.Components\Xmf2.Components.csproj">
       <Project>{029A0034-C63A-4EA4-9342-BB1ED2C794DF}</Project>
       <Name>Xmf2.Components</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Xmf2.Core.Droid\Xmf2.Core.Droid.csproj">
+      <Project>{a2458925-9686-437f-bceb-a68d999d4f7a}</Project>
+      <Name>Xmf2.Core.Droid</Name>
     </ProjectReference>
     <ProjectReference Include="..\Xmf2.Core\Xmf2.Core.csproj">
       <Project>{87A1C2DE-44B0-480F-A4EC-20C211C6C370}</Project>

@@ -1,12 +1,18 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Android;
+using Android.App;
 using Android.Content;
+using Android.Content.PM;
 using Android.Gms.Common;
 using Android.Gms.Extensions;
+using Android.OS;
 using Android.Util;
 using Firebase;
 using Firebase.Installations;
 using Firebase.Messaging;
+using Plugin.CurrentActivity;
+using Xmf2.Core.Droid.Permissions;
 using Xmf2.Core.Services;
 
 namespace Xmf2.Notification.Droid
@@ -15,9 +21,9 @@ namespace Xmf2.Notification.Droid
 	{
 		private readonly string _gcmId;
 
-		private readonly object _initializeLock = new object();
-		private bool _initialized = false;
-		private FirebaseApp _app = null;
+		private readonly object _initializeLock = new();
+		private bool _initialized;
+		private FirebaseApp _app;
 
 		private readonly Context _context;
 		private readonly IDroidNotificationConstants _constants;
@@ -30,6 +36,44 @@ namespace Xmf2.Notification.Droid
 		}
 
 		protected override DeviceType Device => DeviceType.Android;
+
+		public override async Task AskForPermissionIfNeeded(bool showRationale, Func<Task<bool>> onShowRationale)
+		{
+			if (Build.VERSION.SdkInt >= BuildVersionCodes.Tiramisu)
+			{
+				Activity activity = CrossCurrentActivity.Current.Activity;
+				if (activity.CheckSelfPermission(Manifest.Permission.PostNotifications) != Permission.Granted)
+				{
+					bool result = true;
+					if (showRationale && activity.ShouldShowRequestPermissionRationale(Manifest.Permission.PostNotifications))
+					{
+						if (onShowRationale != null)
+						{
+							result = await onShowRationale.Invoke();
+						}
+						else
+						{
+							System.Diagnostics.Debug.WriteLine($"Missing {nameof(onShowRationale)} argument");
+							result = false;
+						}
+					}
+
+					if (result)
+					{
+						const int PERMISSION_CODE = 4041;
+						activity.RequestPermissions(new[]
+						{
+							Manifest.Permission.PostNotifications
+						}, PERMISSION_CODE);
+
+						if (activity is IPermissionHandlingActivity permissionHandlingActivity)
+						{
+							await permissionHandlingActivity.WaitForPermission(PERMISSION_CODE);
+						}
+					}
+				}
+			}
+		}
 
 		protected override void DeleteRegisterId()
 		{
@@ -73,7 +117,7 @@ namespace Xmf2.Notification.Droid
 
 				EnsureInitialized();
 				string token = (string)await FirebaseMessaging.Instance.GetToken();
-				Log.Warn("Xmf2/Token", $"PickToken : {token}");
+				System.Diagnostics.Debug.WriteLine($"PickToken : {token}");
 				SetToken(token);
 			}
 			catch (Exception ex)

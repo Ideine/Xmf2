@@ -8,6 +8,8 @@ namespace Xmf2.Core.Services
 	{
 		void SetToken(string token);
 
+		Task AskForPermissionIfNeeded(bool showRationale, Func<Task<bool>> onShowRationale);
+
 		Task RegisterForNotification();
 
 		Task UnregisterForNotification();
@@ -44,13 +46,15 @@ namespace Xmf2.Core.Services
 		private readonly IKeyValueStorageService _settingsService;
 		private readonly INotificationDataService _notificationDataService;
 		private TaskCompletionSource<string> _tokenTcs;
-		private readonly object _tcsMutex = new object();
+		private readonly object _tcsMutex = new();
 
 		protected BaseNotificationService(IKeyValueStorageService settingsService, INotificationDataService notificationDataService)
 		{
 			_settingsService = settingsService;
 			_notificationDataService = notificationDataService;
 		}
+
+		public virtual Task AskForPermissionIfNeeded(bool showRationale, Func<Task<bool>> onShowRationale) => Task.CompletedTask;
 
 		public async Task RegisterForNotification()
 		{
