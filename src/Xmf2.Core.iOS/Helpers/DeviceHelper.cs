@@ -1,8 +1,10 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using UIKit;
 
 namespace Xmf2.Core.iOS.Helpers
 {
+	[Obsolete]
 	public class DeviceHelper
 	{
 		private const string IPHONE_8_CDMA		= "iPhone10,1";
