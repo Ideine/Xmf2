@@ -12,6 +12,7 @@ namespace Xmf2.Core.Droid.Services
 		private readonly bool _setCredentials;
 		private readonly int? _timeout;
 
+		public NativeHttpClientFactory() : this(true) { }
 		public NativeHttpClientFactory(int? timeout = null) : this(true, timeout) { }
 
 		public NativeHttpClientFactory(bool setCredentials, int? timeout = null)
