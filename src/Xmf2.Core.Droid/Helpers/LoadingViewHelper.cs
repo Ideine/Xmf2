@@ -6,7 +6,6 @@ using Android.OS;
 using Android.Views;
 using Android.Widget;
 using AndroidX.Core.Content;
-using Plugin.CurrentActivity;
 using Xmf2.Core.Helpers;
 using Xmf2.Core.Subscriptions;
 
@@ -65,7 +64,7 @@ namespace Xmf2.Core.Droid.Helpers
 				});
 			}).DisposeWith(_disposable);
 
-			_viewGroup = view ?? CrossCurrentActivity.Current.Activity.FindViewById<ViewGroup>(Android.Resource.Id.Content);
+			_viewGroup = view ?? Microsoft.Maui.ApplicationModel.Platform.CurrentActivity.FindViewById<ViewGroup>(Android.Resource.Id.Content);
 			_context = _viewGroup.Context;
 			CreateLoadingView();
 		}

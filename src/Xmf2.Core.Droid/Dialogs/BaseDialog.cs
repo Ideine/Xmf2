@@ -3,7 +3,6 @@ using Android.App;
 using Android.Content;
 using Android.Graphics;
 using Android.Runtime;
-using Plugin.CurrentActivity;
 using Xmf2.Core.Subscriptions;
 using AlertDialog = AndroidX.AppCompat.App.AlertDialog;
 
@@ -25,7 +24,7 @@ namespace Xmf2.Core.Droid.Dialogs
 
 		private void ApplySize(float widthRatio, float heightRatio)
 		{
-			Activity currentActivity = CrossCurrentActivity.Current.Activity;
+			Activity currentActivity = Microsoft.Maui.ApplicationModel.Platform.CurrentActivity;
 
 			if (currentActivity != null && !currentActivity.IsFinishing)
 			{

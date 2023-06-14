@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -14,8 +13,11 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AndroidResgenFile>Resources\Resource.designer.cs</AndroidResgenFile>
     <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
-    <TargetFrameworkVersion>v12.0</TargetFrameworkVersion>
+    <TargetFramework>net7.0-android</TargetFramework>
+    <UseMauiEssentials>true</UseMauiEssentials>
+    <SupportedOSPlatformVersion>21</SupportedOSPlatformVersion>
     <AndroidUseAapt2>true</AndroidUseAapt2>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -26,7 +28,6 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
 		<LangVersion>latest</LangVersion>
-		<AndroidSupportedAbis>armeabi-v7a;x86;arm64-v8a;x86_64</AndroidSupportedAbis>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>portable</DebugType>
@@ -36,11 +37,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
 		<LangVersion>latest</LangVersion>
-		<AndroidSupportedAbis>armeabi-v7a;x86;arm64-v8a;x86_64</AndroidSupportedAbis>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="Mono.Android" />
     <Reference Include="mscorlib" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -93,21 +92,14 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Xmf2.Components\Xmf2.Components.csproj">
-      <Project>{F7DB4CF5-A47C-4178-B776-D8857468DD47}</Project>
-      <Name>Xmf2.Components</Name>
     </ProjectReference>
     <ProjectReference Include="..\Xmf2.Core.Droid\Xmf2.Core.Droid.csproj">
-      <Project>{A2458925-9686-437F-BCEB-A68D999D4F7A}</Project>
-      <Name>Xmf2.Core.Droid</Name>
     </ProjectReference>
     <ProjectReference Include="..\Xmf2.Core\Xmf2.Core.csproj">
-      <Project>{BE2AF116-1987-4275-A709-4ED4AD331B05}</Project>
-      <Name>Xmf2.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\Xmf2.NavigationGraph\src\Xmf2.NavigationGraph.Droid\Xmf2.NavigationGraph.Droid.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Xamarin.AndroidX.RecyclerView" Version="1.2.1.8" />
-    <PackageReference Include="Xmf2.NavigationGraph" Version="2.0.0" />
+    <PackageReference Include="Xamarin.AndroidX.RecyclerView" Version="1.3.0.2" />
   </ItemGroup>
-  <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
 </Project>

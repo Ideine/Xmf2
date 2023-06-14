@@ -1,7 +1,6 @@
 ﻿using Android.Content;
 using Android.Views.InputMethods;
 using Android.Widget;
-using Plugin.CurrentActivity;
 
 namespace Xmf2.Core.Droid.Helpers
 {
@@ -9,7 +8,7 @@ namespace Xmf2.Core.Droid.Helpers
 	{
 		public static bool IsActive()
 		{
-			var activity = CrossCurrentActivity.Current.Activity;
+			var activity = Microsoft.Maui.ApplicationModel.Platform.CurrentActivity;
 			InputMethodManager inputMethodManager = (InputMethodManager)activity.GetSystemService(Context.InputMethodService);
 			return inputMethodManager?.IsActive ?? false;
 		}

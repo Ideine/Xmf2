@@ -81,7 +81,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Xmf2.Core\Xmf2.Core.csproj">
-      <Project>{BE2AF116-1987-4275-A709-4ED4AD331B05}</Project>
+      <Project>{556F2945-FEF3-433C-915A-4E775DAD3AFD}</Project>
       <Name>Xmf2.Core</Name>
     </ProjectReference>
   </ItemGroup>

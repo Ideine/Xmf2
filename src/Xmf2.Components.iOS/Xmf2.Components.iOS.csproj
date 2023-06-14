@@ -64,7 +64,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Xmf2.Components\Xmf2.Components.csproj">
-      <Project>{f7db4cf5-a47c-4178-b776-d8857468dd47}</Project>
+      <Project>{48468C20-6EA9-4785-AFB8-8211E976E00D}</Project>
       <Name>Xmf2.Components</Name>
     </ProjectReference>
     <ProjectReference Include="..\Xmf2.Core.iOS\Xmf2.Core.iOS.csproj">
@@ -72,7 +72,7 @@
       <Name>Xmf2.Core.iOS</Name>
     </ProjectReference>
     <ProjectReference Include="..\Xmf2.Core\Xmf2.Core.csproj">
-      <Project>{be2af116-1987-4275-a709-4ed4ad331b05}</Project>
+      <Project>{556F2945-FEF3-433C-915A-4E775DAD3AFD}</Project>
       <Name>Xmf2.Core</Name>
     </ProjectReference>
   </ItemGroup>
