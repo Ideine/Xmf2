@@ -57,6 +57,7 @@
     <Compile Include="ChipCloud\IChipCloudItemSource.cs" />
     <Compile Include="Controls\ListViewControl.cs" />
     <Compile Include="Views\Multistates\ByCaseView.cs" />
+    <Compile Include="Views\PullToRefreshView.cs" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Xmf2.iOS.Extensions" Version="1.0.9" />

@@ -55,6 +55,7 @@
     <Compile Include="Fragments\IBackFragment.cs" />
     <Compile Include="Helpers\CollapseLevelEvent.cs" />
     <Compile Include="Helpers\CollapseLevelScrollChangedHelper.cs" />
+    <Compile Include="Helpers\PullToRefreshHelper.cs" />
     <Compile Include="Interfaces\IComponentView.cs" />
     <Compile Include="Interfaces\ILayoutInflaterResolver.cs" />
     <Compile Include="LinearList\AndroidLinearListView.cs" />
@@ -107,6 +108,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Xamarin.AndroidX.RecyclerView" Version="1.2.1.8" />
+    <PackageReference Include="Xamarin.AndroidX.SwipeRefreshLayout" Version="1.1.0.13" />
     <PackageReference Include="Xmf2.NavigationGraph" Version="2.0.0" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
