@@ -11,9 +11,8 @@ namespace Xmf2.Core.iOS.Helpers
 		private UIViewController _controller;
 		private NSObject _keyboardShowObserver;
 		private NSObject _keyboardHideObserver;
-
-		private Dictionary<UIScrollView, UIEdgeInsets> _contentInset = new Dictionary<UIScrollView, UIEdgeInsets>();
-		private Dictionary<UIScrollView, UIEdgeInsets> _scrollIndicatorInsets = new Dictionary<UIScrollView, UIEdgeInsets>();
+		private CGRect _lastKeyboardFrame = CGRect.Empty;
+		private readonly WeakReference<UIView?> _lastActiveView = new WeakReference<UIView?>(null);
 
 		public KeyboardScrollHelper(UIViewController controller)
 		{
@@ -106,25 +105,45 @@ namespace Xmf2.Core.iOS.Helpers
 		private void OnKeyboardChanged(bool visible, CGRect keyboardFrame)
 		{
 			var activeView = KeyboardGetActiveView();
-			if (activeView?.FindTopSuperviewOfType(_controller.View, typeof(UIScrollView)) is UIScrollView scrollView)
+			if (activeView == null)
 			{
-				if (!visible)
-				{
-					scrollView.RestoreScrollPosition();
+				_lastKeyboardFrame = CGRect.Empty;
+				_lastActiveView.SetTarget(null);
+				return;
+			}
 
-					if (_contentInset.ContainsKey(scrollView))
-					{
-						scrollView.ContentInset = _contentInset[scrollView];
-						scrollView.ScrollIndicatorInsets = _scrollIndicatorInsets[scrollView];
-					}
-				}
-				else
-				{
-					_contentInset[scrollView] = scrollView.ContentInset;
-					_scrollIndicatorInsets[scrollView] = scrollView.ScrollIndicatorInsets;
+			var scrollView = activeView.FindTopSuperviewOfType(_controller.View, typeof(UIScrollView)) as UIScrollView;
+			if (scrollView == null)
+			{
+				_lastKeyboardFrame = CGRect.Empty;
+				_lastActiveView.SetTarget(null);
+				return;
+			}
 
-					scrollView.CenterView(activeView, keyboardFrame);
+			if (!visible)
+			{
+				_lastKeyboardFrame = CGRect.Empty;
+				_lastActiveView.SetTarget(null);
+				scrollView.RestoreScrollPosition();
+			}
+			else
+			{
+				//avoid recalculation if the activeView is the same.
+				if (_lastKeyboardFrame == keyboardFrame && _lastActiveView.TryGetTarget(out var lastActiveView) &&
+					lastActiveView?.Equals(activeView) == true)
+				{
+					return;
 				}
+
+				_lastKeyboardFrame = keyboardFrame;
+				_lastActiveView.SetTarget(activeView);
+				if (UIDevice.CurrentDevice.CheckSystemVersion(11, 0))
+				{
+					keyboardFrame.Height -= scrollView.SafeAreaInsets.Bottom;
+				}
+				scrollView.CenterView(activeView, keyboardFrame, adjustContentInsets: false);
+				//CLA: 15/06/2022 adjustContentInsets adds an extra space to the bottom of the scroll content while the keyboard is out.
+				//The scroll view now goes back to its normal size after dismissing the keyboard, but we don't want that extra space when it's out either
 			}
 		}
 
@@ -146,11 +165,6 @@ namespace Xmf2.Core.iOS.Helpers
 			{
 				UnregisterForKeyboardNotifications();
 				_controller = null;
-
-				_contentInset.Clear();
-				_scrollIndicatorInsets.Clear();
-				_contentInset = null;
-				_scrollIndicatorInsets = null;
 			}
 		}
 

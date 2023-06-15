@@ -55,7 +55,7 @@ namespace Xmf2.Core.iOS.Helpers
 			scrollView.ScrollIndicatorInsets = UIEdgeInsets.Zero;
 		}
 
-		public static void CenterView(this UIScrollView scrollView, UIView viewToCenter, CGRect keyboardFrame, bool animated = false)
+		public static void CenterView(this UIScrollView scrollView, UIView viewToCenter, CGRect keyboardFrame, bool adjustContentInsets = true, bool animated = false)
 		{
 			var adjustedFrame = UIApplication.SharedApplication.KeyWindow.ConvertRectFromView(scrollView.Frame, scrollView.Superview);
 			var intersect = CGRect.Intersect(adjustedFrame, keyboardFrame);
@@ -64,7 +64,7 @@ namespace Xmf2.Core.iOS.Helpers
 			{
 				height = intersect.Width;
 			}
-			scrollView.CenterView(viewToCenter, height, animated: animated);
+			scrollView.CenterView(viewToCenter, height, adjustContentInsets : adjustContentInsets, animated: animated);
 		}
 
 		private static void CenterView(this UIScrollView scrollView, UIView viewToCenter, nfloat keyboardHeight = default(nfloat), bool adjustContentInsets = true, bool animated = false)
