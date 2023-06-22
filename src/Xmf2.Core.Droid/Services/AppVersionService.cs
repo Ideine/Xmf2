@@ -1,5 +1,7 @@
 ﻿using Android.Content;
 using Android.Content.PM;
+using AndroidX.Core.Content;
+using AndroidX.Core.Content.PM;
 using Xmf2.Core.Services;
 
 namespace Xmf2.Core.Droid.Services
@@ -15,13 +17,14 @@ namespace Xmf2.Core.Droid.Services
 
 		public string GetVersion()
 		{
-			return _applicationContext.PackageManager.GetPackageInfo(_applicationContext.PackageName, 0).VersionName;
+			return _applicationContext.PackageManager!.GetPackageInfo(_applicationContext.PackageName!, 0)!.VersionName;
 		}
 
 		public string GetFullVersion()
 		{
-			PackageInfo packageInfo = _applicationContext.PackageManager.GetPackageInfo(_applicationContext.PackageName, 0);
-			return $"{packageInfo.VersionName}.{packageInfo.VersionCode}";
+			PackageInfo packageInfo = _applicationContext.PackageManager!.GetPackageInfo(_applicationContext.PackageName!, 0)!;
+			long versionCode = PackageInfoCompat.GetLongVersionCode(packageInfo);
+			return $"{packageInfo.VersionName}.{versionCode.ToString()}";
 		}
 	}
 }
