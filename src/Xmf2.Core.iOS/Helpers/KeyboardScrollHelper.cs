@@ -116,12 +116,16 @@ namespace Xmf2.Core.iOS.Helpers
 					{
 						scrollView.ContentInset = _contentInset[scrollView];
 						scrollView.ScrollIndicatorInsets = _scrollIndicatorInsets[scrollView];
+						_contentInset.Remove(scrollView);
 					}
 				}
 				else
 				{
-					_contentInset[scrollView] = scrollView.ContentInset;
-					_scrollIndicatorInsets[scrollView] = scrollView.ScrollIndicatorInsets;
+					if (!_contentInset.ContainsKey(scrollView))
+					{
+						_contentInset[scrollView] = scrollView.ContentInset;
+						_scrollIndicatorInsets[scrollView] = scrollView.ScrollIndicatorInsets;
+					}
 
 					scrollView.CenterView(activeView, keyboardFrame);
 				}
