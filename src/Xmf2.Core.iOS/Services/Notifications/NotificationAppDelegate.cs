@@ -168,49 +168,49 @@ namespace Xmf2.Core.iOS.Services.Notifications
 
 		protected (string notificationTitle, string notificationMessage) GetNotificationTitleAndMessage(NSDictionary userInfo)
 		{
-			const string apsKey = "aps";
-			const string alertKey = "alert";
-			const string titleKey = "title";
-			const string contentKey = "body";
-			const string localizedTitleKey = "title-loc-key";
-			const string localizedTitleArgsKey = "title-loc-args";
-			const string localizedContentKey = "loc-key";
-			const string localizedContentArgsKey = "loc-args";
+			const string APS_KEY = "aps";
+			const string ALERT_KEY = "alert";
+			const string TITLE_KEY = "title";
+			const string CONTENT_KEY = "body";
+			const string LOCALIZED_TITLE_KEY = "title-loc-key";
+			const string LOCALIZED_TITLE_ARGS_KEY = "title-loc-args";
+			const string LOCALIZED_CONTENT_KEY = "loc-key";
+			const string LOCALIZED_CONTENT_ARGS_KEY = "loc-args";
 
 			string notificationMessage = null;
 			string notificationTitle = null;
 
-			if (userInfo.TryGet(apsKey, out NSDictionary aps))
+			if (userInfo.TryGet(APS_KEY, out NSDictionary aps))
 			{
-				if (aps.TryGet(alertKey, out NSString alertText))
+				if (aps.TryGet(ALERT_KEY, out NSString alertText))
 				{
 					notificationMessage = alertText;
 				}
-				else if (aps.TryGet(alertKey, out NSDictionary alertDictionary))
+				else if (aps.TryGet(ALERT_KEY, out NSDictionary alertDictionary))
 				{
-					if (alertDictionary.TryGet(titleKey, out NSString title))
+					if (alertDictionary.TryGet(TITLE_KEY, out NSString title))
 					{
 						notificationTitle = title.ToString();
 					}
 
-					if (alertDictionary.TryGet(contentKey, out NSString content))
+					if (alertDictionary.TryGet(CONTENT_KEY, out NSString content))
 					{
 						notificationMessage = content.ToString();
 					}
 
-					if (alertDictionary.TryGet(localizedTitleKey, out NSString localizedTitle))
+					if (alertDictionary.TryGet(LOCALIZED_TITLE_KEY, out NSString localizedTitle))
 					{
 						notificationTitle = NSBundle.MainBundle.GetLocalizedString(localizedTitle) ?? notificationTitle ?? localizedTitle;
-						if (alertDictionary.TryGet(localizedTitleArgsKey, out NSArray localizedTitleArgs))
+						if (alertDictionary.TryGet(LOCALIZED_TITLE_ARGS_KEY, out NSArray localizedTitleArgs))
 						{
 							notificationTitle = NSString.LocalizedFormat(notificationTitle, ToNSObjects(localizedTitleArgs));
 						}
 					}
 
-					if (alertDictionary.TryGet(localizedContentKey, out NSString localizedContent))
+					if (alertDictionary.TryGet(LOCALIZED_CONTENT_KEY, out NSString localizedContent))
 					{
 						notificationMessage = NSBundle.MainBundle.GetLocalizedString(localizedContent) ?? notificationMessage ?? localizedContent;
-						if (alertDictionary.TryGet(localizedContentArgsKey, out NSArray localizedContentArgs))
+						if (alertDictionary.TryGet(LOCALIZED_CONTENT_ARGS_KEY, out NSArray localizedContentArgs))
 						{
 							notificationMessage = NSString.LocalizedFormat(notificationMessage, ToNSObjects(localizedContentArgs));
 						}
@@ -240,8 +240,8 @@ namespace Xmf2.Core.iOS.Services.Notifications
 					UserInfo = userInfo
 				};
 
-				const double oneSecond = 1;
-				var trigger = UNTimeIntervalNotificationTrigger.CreateTrigger(oneSecond, false);
+				const double ONE_SECOND = 1;
+				var trigger = UNTimeIntervalNotificationTrigger.CreateTrigger(ONE_SECOND, false);
 				var notificationRequest = UNNotificationRequest.FromIdentifier(new Guid().ToString(), notification, trigger);
 
 				var notificationCenter = UNUserNotificationCenter.Current;
@@ -259,7 +259,7 @@ namespace Xmf2.Core.iOS.Services.Notifications
 			{
 				UIApplication.SharedApplication.InvokeOnMainThread(() =>
 				{
-					UILocalNotification notification = new UILocalNotification
+					UILocalNotification notification = new()
 					{
 						AlertTitle = title,
 						AlertBody = message,

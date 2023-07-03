@@ -10,7 +10,7 @@ namespace Xmf2.Core.iOS.Services.Notifications
 	[DebuggerDisplay("{GetDebuggerDisplay()}")]
 	public class JsonNotificationWriter : IDisposable
 	{
-		private readonly Xmf2Disposable _disposable = new Xmf2Disposable();
+		private readonly Xmf2Disposable _disposable = new();
 		private readonly StringWriter _textWriter;
 		private readonly JsonWriter _jsonWriter;
 
@@ -36,7 +36,7 @@ namespace Xmf2.Core.iOS.Services.Notifications
 		{
 			try
 			{
-				return $"{nameof(JsonNotificationWriter)} {_textWriter.ToString()}";
+				return $"{nameof(JsonNotificationWriter)} {_textWriter}";
 			}
 			catch
 			{
