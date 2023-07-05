@@ -56,7 +56,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Xmf2.Components\Xmf2.Components.csproj">
-      <Project>{029A0034-C63A-4EA4-9342-BB1ED2C794DF}</Project>
+      <Project>{48468C20-6EA9-4785-AFB8-8211E976E00D}</Project>
       <Name>Xmf2.Components</Name>
     </ProjectReference>
     <ProjectReference Include="..\Xmf2.Core.Droid\Xmf2.Core.Droid.csproj">
@@ -64,7 +64,7 @@
       <Name>Xmf2.Core.Droid</Name>
     </ProjectReference>
     <ProjectReference Include="..\Xmf2.Core\Xmf2.Core.csproj">
-      <Project>{87A1C2DE-44B0-480F-A4EC-20C211C6C370}</Project>
+      <Project>{556F2945-FEF3-433C-915A-4E775DAD3AFD}</Project>
       <Name>Xmf2.Core</Name>
     </ProjectReference>
   </ItemGroup>

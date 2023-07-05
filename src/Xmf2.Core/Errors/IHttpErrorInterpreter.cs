@@ -5,6 +5,6 @@ namespace Xmf2.Core.Errors
 {
 	public interface IHttpErrorInterpreter
 	{
-		AccessDataException InterpretException(Exception exception);
+		bool TryInterpretException(Exception ex, out AccessDataException intepretedException);
 	}
 }

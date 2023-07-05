@@ -34,6 +34,8 @@ namespace Xmf2.Authentications.OAuth2
 		protected const int HTTP_STATUS_CODE_RETRY_WITH = 449;
 		protected const int HTTP_STATUS_CODE_UPGRADE_REQUIRED = 426;
 
+		
+
 		public override OAuth2AuthResult HandleAuthResult(IRestResponse response)
 		{
 			if (response.IsSuccess)
@@ -81,5 +83,4 @@ namespace Xmf2.Authentications.OAuth2
 
 		protected abstract OAuth2AuthResult HandleAuthResult(TAuthRequestResponse response);
 	}
-
 }

@@ -26,7 +26,6 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
 		<LangVersion>latest</LangVersion>
-		<AndroidSupportedAbis>armeabi-v7a;x86;arm64-v8a;x86_64</AndroidSupportedAbis>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>portable</DebugType>
@@ -36,7 +35,6 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
 		<LangVersion>latest</LangVersion>
-		<AndroidSupportedAbis>armeabi-v7a;x86;arm64-v8a;x86_64</AndroidSupportedAbis>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
@@ -94,7 +92,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Xmf2.Components\Xmf2.Components.csproj">
-      <Project>{F7DB4CF5-A47C-4178-B776-D8857468DD47}</Project>
+      <Project>{48468C20-6EA9-4785-AFB8-8211E976E00D}</Project>
       <Name>Xmf2.Components</Name>
     </ProjectReference>
     <ProjectReference Include="..\Xmf2.Core.Droid\Xmf2.Core.Droid.csproj">
@@ -102,7 +100,7 @@
       <Name>Xmf2.Core.Droid</Name>
     </ProjectReference>
     <ProjectReference Include="..\Xmf2.Core\Xmf2.Core.csproj">
-      <Project>{BE2AF116-1987-4275-A709-4ED4AD331B05}</Project>
+      <Project>{556F2945-FEF3-433C-915A-4E775DAD3AFD}</Project>
       <Name>Xmf2.Core</Name>
     </ProjectReference>
   </ItemGroup>

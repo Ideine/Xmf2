@@ -6,7 +6,7 @@ namespace Xmf2.Core.Exceptions
 	{
 		public enum ErrorType
 		{
-			Unknown = 0,
+			//Unknown = 0,
 			NoInternetConnexion = 1,
 			UnAuthorized = 2,
 			Timeout = 3,

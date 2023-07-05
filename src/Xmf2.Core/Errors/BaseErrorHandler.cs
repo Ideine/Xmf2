@@ -38,23 +38,23 @@ namespace Xmf2.Core.Errors
 		protected virtual Task<bool> HandleAccessDataException(AccessDataException ex) => Task.FromResult(false);
 		protected virtual Task<bool> HandleGenericException(Exception ex) => Task.FromResult(false);
 
-		public static bool TryDeserializeResponseContent<TResponse>(Exception fromEx, out HttpStatusCode httpStatusCode, out TResponse content)
-		{
-			if (TryGetRestException(fromEx, out var restException)
-			    && restException.Response != null
-			    && !string.IsNullOrEmpty(restException.Response.Content)
-			    && TryDeserialize(restException.Response.Content, out content))
-			{
-				httpStatusCode = restException.Response.StatusCode;
-				return true;
-			}
-			else
-			{
-				httpStatusCode = default;
-				content = default;
-				return false;
-			}
-		}
+		//public static bool TryDeserializeResponseContent<TResponse>(Exception fromEx, out HttpStatusCode httpStatusCode, out TResponse content)
+		//{
+		//	if (TryGetRestException(fromEx, out var restException)
+		//	    && restException.Response != null
+		//	    && !string.IsNullOrEmpty(restException.Response.Content)
+		//	    && TryDeserialize(restException.Response.Content, out content))
+		//	{
+		//		httpStatusCode = restException.Response.StatusCode;
+		//		return true;
+		//	}
+		//	else
+		//	{
+		//		httpStatusCode = default;
+		//		content = default;
+		//		return false;
+		//	}
+		//}
 
 		private static bool TryDeserialize<TResponse>(string json, out TResponse response)
 		{
@@ -70,25 +70,25 @@ namespace Xmf2.Core.Errors
 			}
 		}
 
-		public static bool TryGetHttpStatusCode(Exception fromEx, out HttpStatusCode errorCode)
-		{
-			if (TryGetRestException(fromEx, out RestException restException) && restException.Response != null)
-			{
-				errorCode = restException.Response.StatusCode;
-				return true;
-			}
-			else
-			{
-				errorCode = default;
-				return false;
-			}
-		}
+		//public static bool TryGetHttpStatusCode(Exception fromEx, out HttpStatusCode errorCode)
+		//{
+		//	if (TryGetRestException(fromEx, out RestException restException) && restException.Response != null)
+		//	{
+		//		errorCode = restException.Response.StatusCode;
+		//		return true;
+		//	}
+		//	else
+		//	{
+		//		errorCode = default;
+		//		return false;
+		//	}
+		//}
 
-		public static bool TryGetRestException(Exception fromEx, out RestException restException)
-		{
-			restException = fromEx.Traverse(e => e.InnerException).FirstOrDefault(e => e is RestException) as RestException;
-			return restException != null;
-		}
+		//public static bool TryGetRestException(Exception fromEx, out RestException restException)
+		//{
+		//	restException = fromEx.Traverse(e => e.InnerException).FirstOrDefault(e => e is RestException) as RestException;
+		//	return restException != null;
+		//}
 
 		public static bool IsExceptionInInner<TException>(Exception fromEx) where TException : Exception
 		{

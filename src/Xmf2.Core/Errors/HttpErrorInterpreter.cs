@@ -14,12 +14,13 @@ namespace Xmf2.Core.Errors
 		private const int STATUS_CODE_INVALID_APP_VERSION = 419;
 		private const int STATUS_CODE_UPGRADE_REQUIRED = 426;
 
-		public virtual AccessDataException InterpretException(Exception ex)
+		public virtual bool TryInterpretException(Exception ex, out AccessDataException intepretedException)
 		{
 			if (ex.GetType().FullName == "Java.Net.UnknownHostException"
 			    || ex.GetType().Name == "SSLException")
 			{
-				return new AccessDataException(AccessDataException.ErrorType.NoInternetConnexion, ex);
+				intepretedException = new AccessDataException(AccessDataException.ErrorType.NoInternetConnexion, ex);
+				return true;
 			}
 
 			if (ex.AnyToDescendant(e =>
@@ -36,7 +37,8 @@ namespace Xmf2.Core.Errors
 				       || e is TaskCanceledException;
 			}))
 			{
-				return new AccessDataException(AccessDataException.ErrorType.Timeout, ex);
+				intepretedException = new AccessDataException(AccessDataException.ErrorType.Timeout, ex);
+				return true;
 			}
 
 			if (ex is HttpRequestException { InnerException: WebException webException })
@@ -45,44 +47,49 @@ namespace Xmf2.Core.Errors
 				{
 					case WebExceptionStatus.ConnectFailure:
 					case WebExceptionStatus.NameResolutionFailure:
-						return new AccessDataException(AccessDataException.ErrorType.NoInternetConnexion, ex);
+						intepretedException = new AccessDataException(AccessDataException.ErrorType.NoInternetConnexion, ex);
+						return true;
 					case WebExceptionStatus.Timeout:
-						return new AccessDataException(AccessDataException.ErrorType.Timeout, ex);
+						intepretedException = new AccessDataException(AccessDataException.ErrorType.Timeout, ex);
+						return true;
 				}
 			}
 			else if (ex is HttpRequestException httpException && httpException.Message.Contains("SSL"))
 			{
-				return new AccessDataException(AccessDataException.ErrorType.Timeout, ex);
+				intepretedException = new AccessDataException(AccessDataException.ErrorType.Timeout, ex);
+				return true;
 			}
 
 			switch (ex)
 			{
 				case AccessDataException accessDataException:
-					return accessDataException;
+					intepretedException = accessDataException;
+					return true;
 
-				case RestException restEx when restEx.Response.StatusCode == HttpStatusCode.NotFound:
-					return new AccessDataException(AccessDataException.ErrorType.NotFound, ex);
+				//case RestException restEx when restEx.Response.StatusCode == HttpStatusCode.NotFound:
+				//	return new AccessDataException(AccessDataException.ErrorType.NotFound, ex);
 
-				case RestException restEx when restEx.Response.StatusCode == HttpStatusCode.Forbidden:
-					return new AccessDataException(AccessDataException.ErrorType.Forbidden, ex);
+				//case RestException restEx when restEx.Response.StatusCode == HttpStatusCode.Forbidden:
+				//	return new AccessDataException(AccessDataException.ErrorType.Forbidden, ex);
 
-				case RestException restEx when restEx.Response.StatusCode == HttpStatusCode.Unauthorized:
-					return new AccessDataException(AccessDataException.ErrorType.UnAuthorized, ex);
+				//case RestException restEx when restEx.Response.StatusCode == HttpStatusCode.Unauthorized:
+				//	return new AccessDataException(AccessDataException.ErrorType.UnAuthorized, ex);
 
-				case RestException restEx when (int)restEx.Response.StatusCode == STATUS_CODE_INVALID_APP_VERSION
-				                               || (int)restEx.Response.StatusCode == STATUS_CODE_UPGRADE_REQUIRED:
-					return new AccessDataException(AccessDataException.ErrorType.InvalidAppVersion, restEx);
+				//case RestException restEx when (int)restEx.Response.StatusCode == STATUS_CODE_INVALID_APP_VERSION
+				//                               || (int)restEx.Response.StatusCode == STATUS_CODE_UPGRADE_REQUIRED:
+				//	return new AccessDataException(AccessDataException.ErrorType.InvalidAppVersion, restEx);
 
-				case RestException restEx when restEx.Response.StatusCode == HttpStatusCode.BadGateway:
+				//case RestException restEx when restEx.Response.StatusCode == HttpStatusCode.BadGateway:
 				case OperationCanceledException { CancellationToken: { IsCancellationRequested: true } }:
-					return new AccessDataException(AccessDataException.ErrorType.Timeout);
+					intepretedException = new AccessDataException(AccessDataException.ErrorType.Timeout);
+					return true;
 
 				case WebException { Status: WebExceptionStatus.ConnectFailure }:
-					return new AccessDataException(AccessDataException.ErrorType.NoInternetConnexion, ex);
-
-				default:
-					return new AccessDataException(AccessDataException.ErrorType.Unknown, ex);
+					intepretedException = new AccessDataException(AccessDataException.ErrorType.NoInternetConnexion, ex);
+					return true;
 			}
+			intepretedException = null;
+			return false;
 		}
 	}
 }

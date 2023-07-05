@@ -1,4 +1,5 @@
 ﻿using System.Net.Http;
+using RestSharp.Portable;
 
 namespace Xmf2.Core.Services
 {

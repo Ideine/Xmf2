@@ -15,6 +15,8 @@ namespace Xmf2.Authentications.OAuth2
 
 		public string AccessToken { get; set; }
 
+		public string BiometricRefreshToken { get; set; }
+
 		public DateTime ExpiresAt { get; set; }
 	}
 }
