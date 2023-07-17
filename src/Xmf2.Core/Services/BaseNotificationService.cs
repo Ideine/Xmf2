@@ -13,6 +13,8 @@ namespace Xmf2.Core.Services
 		Task RegisterForNotification();
 
 		Task UnregisterForNotification();
+
+		bool CheckIfPermissionForNotificationIsGranted();
 	}
 
 	public interface IKeyValueStorageService
@@ -55,6 +57,8 @@ namespace Xmf2.Core.Services
 		}
 
 		public virtual Task AskForPermissionIfNeeded(bool showRationale, Func<Task<bool>> onShowRationale) => Task.CompletedTask;
+		
+		public virtual bool CheckIfPermissionForNotificationIsGranted() => false;
 
 		public async Task RegisterForNotification()
 		{

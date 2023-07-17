@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.Remoting.Contexts;
 using System.Threading.Tasks;
 using Android;
 using Android.App;
@@ -14,6 +15,7 @@ using Firebase.Messaging;
 using Plugin.CurrentActivity;
 using Xmf2.Core.Droid.Permissions;
 using Xmf2.Core.Services;
+using Context = Android.Content.Context;
 
 namespace Xmf2.Notification.Droid
 {
@@ -36,6 +38,20 @@ namespace Xmf2.Notification.Droid
 		}
 
 		protected override DeviceType Device => DeviceType.Android;
+
+		public override bool CheckIfPermissionForNotificationIsGranted()
+		{
+			if (Build.VERSION.SdkInt >= BuildVersionCodes.Tiramisu)
+			{
+				Activity activity = CrossCurrentActivity.Current.Activity;
+				return activity.CheckSelfPermission(Manifest.Permission.PostNotifications) == Permission.Granted;
+			}
+			else
+			{
+				NotificationManager notificationManager = (NotificationManager)_context.GetSystemService(Context.NotificationService);
+				return notificationManager.AreNotificationsEnabled();
+			}
+		}
 
 		public override async Task AskForPermissionIfNeeded(bool showRationale, Func<Task<bool>> onShowRationale)
 		{
