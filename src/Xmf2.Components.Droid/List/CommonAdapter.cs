@@ -39,7 +39,7 @@ namespace Xmf2.Components.Droid.List
 			get => _itemSource;
 			set
 			{
-				using var callback = new DiffList(_itemSource?.ToArray() ?? new IEntityViewState[0], value?.ToArray() ?? new IEntityViewState[0]);
+				using var callback = new DiffList(_itemSource?.ToArray() ?? Array.Empty<IEntityViewState>(), value?.ToArray() ?? Array.Empty<IEntityViewState>());
 				using DiffUtil.DiffResult result = DiffUtil.CalculateDiff(callback);
 				_itemSource = value;
 
