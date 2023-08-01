@@ -2,10 +2,11 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Xamarin.FFImageLoading" Version="2.4.4.859" />
+    <PackageReference Include="Xamarin.FFImageLoading" Version="2.4.11.982" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Xmf2.Core\Xmf2.Core.csproj" />

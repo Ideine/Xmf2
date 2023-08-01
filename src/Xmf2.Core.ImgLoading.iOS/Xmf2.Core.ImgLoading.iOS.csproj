@@ -46,18 +46,6 @@
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="Xamarin.iOS" />
-    <Reference Include="WebP.Touch">
-      <HintPath>..\..\..\..\packages\WebP.Touch.1.0.8\lib\Xamarin.iOS10\WebP.Touch.dll</HintPath>
-    </Reference>
-    <Reference Include="FFImageLoading">
-      <HintPath>..\..\..\..\packages\Xamarin.FFImageLoading.2.4.4.859\lib\Xamarin.iOS10\FFImageLoading.dll</HintPath>
-    </Reference>
-    <Reference Include="FFImageLoading.Platform">
-      <HintPath>..\..\..\..\packages\Xamarin.FFImageLoading.2.4.4.859\lib\Xamarin.iOS10\FFImageLoading.Platform.dll</HintPath>
-    </Reference>
-    <Reference Include="FFImageLoading.Transformations">
-      <HintPath>..\..\..\..\packages\Xamarin.FFImageLoading.Transformations.2.4.4.859\lib\Xamarin.iOS10\FFImageLoading.Transformations.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Xmf2.Core.ImgLoading\Xmf2.Core.ImgLoading.csproj">
@@ -71,7 +59,8 @@
     <Compile Include="Transformations\GrayOverlayTransformation.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
+    <PackageReference Include="Xamarin.FFImageLoading" Version="2.4.11.982" />
+    <PackageReference Include="Xamarin.FFImageLoading.Transformations" Version="2.4.11.982" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
 </Project>
