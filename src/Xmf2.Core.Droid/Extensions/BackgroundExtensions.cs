@@ -5,9 +5,9 @@ namespace Xmf2.Core.Droid.Extensions
 {
 	public static class BackgroundExtensions
 	{
-		public static Drawable CreateDrawable(this object _, Color color, int? cornerRadiusInPx = 0, Color? strokeColor = null, int stokeWidthInPx = 0, int dashedWidthInPx = 0, int dashGap = 0, int width = 0, int height = 0)
+		public static GradientDrawable CreateDrawable(this object _, Color color, int? cornerRadiusInPx = 0, Color? strokeColor = null, int stokeWidthInPx = 0, int dashedWidthInPx = 0, int dashGap = 0, int width = 0, int height = 0)
 		{
-			var bg = new GradientDrawable();
+			GradientDrawable bg = new();
 			bg.SetShape(ShapeType.Rectangle);
 			bg.SetOrientation(GradientDrawable.Orientation.LeftRight);
 			bg.SetColors(new int[] { color, color });
