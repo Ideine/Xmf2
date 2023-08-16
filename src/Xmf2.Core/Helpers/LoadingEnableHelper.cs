@@ -16,7 +16,7 @@ namespace Xmf2.Core.Helpers
 			_timer = new Timer()
 			{
 				AutoReset = false,
-				Interval = 200,
+				Interval = 950,
 			};
 			_timer.Elapsed += TimerOnElapsed;
 		}
