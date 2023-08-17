@@ -2,7 +2,6 @@
 using Android.Content;
 using Android.Graphics;
 using Android.Views;
-using Android.Widget;
 using AndroidX.RecyclerView.Widget;
 using Xmf2.Components.Droid.Interfaces;
 using Xmf2.Components.Droid.Views;
