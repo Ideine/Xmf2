@@ -53,6 +53,7 @@
     <Compile Include="Extensions\FragmentExtensions.cs" />
     <Compile Include="Helpers\LoadingViewHelper.cs" />
     <Compile Include="Helpers\ScaleTouchTransformer.cs" />
+    <Compile Include="Helpers\StatusBarHelper.cs" />
     <Compile Include="Helpers\UIHelper.cs" />
     <Compile Include="Parallax\ParallaxScrollView.cs" />
     <Compile Include="Parallax\ParallaxedView.cs" />
