@@ -8,6 +8,7 @@ using DividerItemDecoration = Xmf2.Core.Droid.Controls.DividerItemDecoration;
 
 namespace Xmf2.Components.Droid.List
 {
+	[Obsolete("vju 22/02/2021 : bug with input, wip")]
 	public class RecyclerListView : RecyclerItemsView
 	{
 		public virtual int Orientation => LinearLayoutManager.Vertical;

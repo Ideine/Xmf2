@@ -1,4 +1,5 @@
 ﻿using Android.Content;
+using Android.Views;
 using Android.Views.InputMethods;
 using Android.Widget;
 using Plugin.CurrentActivity;
@@ -14,15 +15,15 @@ namespace Xmf2.Core.Droid.Helpers
 			return inputMethodManager?.IsActive ?? false;
 		}
 
-		public static void HideFrom(this EditText input)
+		public static void HideFrom(this View view)
 		{
-			InputMethodManager inputManager = (InputMethodManager)input.Context.GetSystemService(Context.InputMethodService);
-			inputManager?.HideSoftInputFromWindow(input.WindowToken, 0);
+			InputMethodManager inputManager = (InputMethodManager)view.Context!.GetSystemService(Context.InputMethodService);
+			inputManager?.HideSoftInputFromWindow(view.WindowToken, 0);
 		}
 
 		public static void Show(this EditText input)
 		{
-			InputMethodManager inputManager = (InputMethodManager)input.Context.GetSystemService(Context.InputMethodService);
+			InputMethodManager inputManager = (InputMethodManager)input.Context!.GetSystemService(Context.InputMethodService);
 			input.RequestFocus();
 			inputManager?.ShowSoftInput(input, ShowFlags.Forced);
 		}
