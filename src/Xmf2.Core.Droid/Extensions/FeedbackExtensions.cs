@@ -66,6 +66,8 @@ namespace Xmf2.Core.Droid.Extensions
             return view;
         }
 
+        public static void SetBackgroundWithHighlight(this View view, int backgroundColor, int highlightColor, Xmf2Disposable disposer) => SetBackgroundWithHighlight(view, backgroundColor.ColorFromHex(), highlightColor.ColorFromHex(), disposer);
+        public static void SetBackgroundWithHighlight(this View view, uint backgroundColor, uint highlightColor, Xmf2Disposable disposer) => SetBackgroundWithHighlight(view, backgroundColor.ColorFromHex(), highlightColor.ColorFromHex(), disposer);
         public static void SetBackgroundWithHighlight(this View view, Color backgroundColor, Color highlightColor, Xmf2Disposable disposer)
         {
             var st = new StateListDrawable();

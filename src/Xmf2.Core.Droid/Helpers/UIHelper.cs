@@ -53,6 +53,14 @@ namespace Xmf2.Core.Droid.Helpers
 			return Color.Argb(alpha ?? a, r, g, b);
 		}
 
+		public static Color ColorFromHex(this int color)
+		{
+			byte r = (byte)(color >> 16);
+			byte g = (byte)(color >> 8);
+			byte b = (byte)(color >> 0);
+			return Color.Argb(255, r, g, b);
+		}
+
 		public static int PxToDp(Context context, float pixelValue)
 		{
 			return (int)(pixelValue / context.Resources.DisplayMetrics.Density);
