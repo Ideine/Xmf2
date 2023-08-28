@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using CoreGraphics;
 using Foundation;
+using ObjCRuntime;
 using UIKit;
 using Xmf2.Core.iOS.Extensions;
 using static UIKit.NSLayoutAttribute;
@@ -165,18 +167,18 @@ namespace Xmf2.Core.iOS.Controls
 		{
 			base.LayoutSubviews();
 
-			nfloat yMin = ContentOffset.Y;
-			nfloat visibleHeight = Frame.Height;
+			NFloat yMin = ContentOffset.Y;
+			NFloat visibleHeight = Frame.Height;
 			bool hasChanged = false;
 
 			for (int i = 0 ; i < _subviewsInLayoutOrder.Count ; i++)
 			{
 				if (_subviewsInLayoutOrder[i] is ScrollItemWrapper subview)
 				{
-					nfloat top = subview.Frame.Top;
+					NFloat top = subview.Frame.Top;
 
-					nfloat yTop = yMin - top;
-					nfloat yBot = visibleHeight + yTop;
+					NFloat yTop = yMin - top;
+					NFloat yBot = visibleHeight + yTop;
 
 					hasChanged |= subview.SetVisibleArea(yTop, yBot);
 				}
@@ -184,10 +186,10 @@ namespace Xmf2.Core.iOS.Controls
 
 			if (_stickyViewList.Count > 0)
 			{
-				nfloat scrollViewYOffset = ContentOffset.Y;
+				NFloat scrollViewYOffset = ContentOffset.Y;
 				foreach (StickyViewData wrapper in _stickyViewList)
 				{
-					nfloat stickyViewYOffset = Max(wrapper.LinearLayoutPlaceholder.Frame.Y, scrollViewYOffset);
+					NFloat stickyViewYOffset = Max(wrapper.LinearLayoutPlaceholder.Frame.Y, scrollViewYOffset);
 					if (hasChanged |= wrapper.StickedViewYPosition.Constant != stickyViewYOffset)
 					{
 						wrapper.StickedViewYPosition.Constant = stickyViewYOffset;
@@ -202,7 +204,7 @@ namespace Xmf2.Core.iOS.Controls
 			}
 		}
 
-		private static nfloat Max(nfloat val1, nfloat val2) => val1 > val2 ? val1 : val2;
+		private static NFloat Max(NFloat val1, NFloat val2) => val1 > val2 ? val1 : val2;
 
 		protected override void Dispose(bool disposing)
 		{
@@ -307,14 +309,14 @@ namespace Xmf2.Core.iOS.Controls
 				AddConstraints(innerConstraints);
 			}
 
-			private nfloat GetContentHeight()
+			private NFloat GetContentHeight()
 			{
-				nfloat result = _innerView.ContentSize.Height;
+				NFloat result = _innerView.ContentSize.Height;
 				if (_boundsRegisteredViews != null)
 				{
 					foreach (UIView v in _boundsRegisteredViews)
 					{
-						nfloat height = v.Bounds.Height;
+						NFloat height = v.Bounds.Height;
 						if (result < height)
 						{
 							result = height;
@@ -335,7 +337,7 @@ namespace Xmf2.Core.iOS.Controls
 
 				if (keyPath == SELECTOR_CONTENT_SIZE || keyPath == SELECTOR_BOUNDS_SIZE)
 				{
-					nfloat height = GetContentHeight();
+					NFloat height = GetContentHeight();
 
 					if (_containerHeightConstraint.Constant != height)
 					{
@@ -350,24 +352,24 @@ namespace Xmf2.Core.iOS.Controls
 				}
 			}
 
-			public bool SetVisibleArea(nfloat top, nfloat bottom)
+			public bool SetVisibleArea(NFloat top, NFloat bottom)
 			{
 				if (top < 0)
 				{
 					top = 0;
 				}
 
-				nfloat contentHeight = GetContentHeight();
+				NFloat contentHeight = GetContentHeight();
 				if (bottom > contentHeight)
 				{
 					bottom = contentHeight;
 				}
 
-				nfloat height = NMath.Max(bottom - top, 0f); //avoid negative height.
+				NFloat height = NMath.Max(bottom - top, 0f); //avoid negative height.
 				if (contentHeight > MINIMAL_RENDER_HEIGHT && height < MINIMAL_RENDER_HEIGHT) //arbitrary value to render at least one cell
 				{
 					height = MINIMAL_RENDER_HEIGHT;
-					nfloat maxTop = contentHeight - height;
+					NFloat maxTop = contentHeight - height;
 					if (top + height > maxTop)
 					{
 						top = maxTop;

@@ -1,10 +1,14 @@
-﻿using System.IO;
+﻿#if NET7_0_OR_GREATER
+using Microsoft.Maui.ApplicationModel;
+#else
+using Plugin.CurrentActivity;
+#endif
+using System.IO;
 using System.Threading.Tasks;
 using Android.App;
 using Android.Content;
 using Android.Net;
 using AndroidX.Core.Content;
-using Plugin.CurrentActivity;
 using JavaFile = Java.IO.File;
 
 namespace Xmf2.Core.Droid.Services
@@ -65,7 +69,11 @@ namespace Xmf2.Core.Droid.Services
 
 		private void StartActivity(string filePath)
 		{
+#if NET7_0_OR_GREATER
+			Activity currentActivity = Platform.CurrentActivity!;
+#else
 			Activity currentActivity = CrossCurrentActivity.Current.Activity;
+#endif
 
 			JavaFile javaFile = new(filePath);
 			Uri uri = FileProvider.GetUriForFile(currentActivity, $"{currentActivity.ApplicationContext!.PackageName}.fileprovider", javaFile);
@@ -79,7 +87,11 @@ namespace Xmf2.Core.Droid.Services
 
 		private static async Task<string> SavePdfLocally(Stream data, string filename)
 		{
+#if NET7_0_OR_GREATER
+			Activity currentActivity = Platform.CurrentActivity!;
+#else
 			Activity currentActivity = CrossCurrentActivity.Current.Activity;
+#endif
 			string rootDirPath = currentActivity.CacheDir!.AbsolutePath;
 			string filePath = Path.Combine(rootDirPath, filename);
 			await using FileStream writer = File.Create(filePath);
@@ -89,7 +101,11 @@ namespace Xmf2.Core.Droid.Services
 
 		private static async Task<string> SavePdfLocally(byte[] data, string filename)
 		{
+#if NET7_0_OR_GREATER
+			Activity currentActivity = Platform.CurrentActivity!;
+#else
 			Activity currentActivity = CrossCurrentActivity.Current.Activity;
+#endif
 			string rootDirPath = currentActivity.CacheDir!.AbsolutePath;
 			string filePath = Path.Combine(rootDirPath, filename);
 			await using FileStream writer = File.Create(filePath);

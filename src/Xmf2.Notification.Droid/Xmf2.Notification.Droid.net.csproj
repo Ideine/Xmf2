@@ -1,0 +1,24 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<TargetFramework>net7.0-android</TargetFramework>
+		<LangVersion>9</LangVersion>
+		<Nullable>disable</Nullable>
+		<ImplicitUsings>disable</ImplicitUsings>
+		<RootNamespace>Xmf2.Notification.Droid</RootNamespace>
+		<SupportedOSPlatformVersion>21.0</SupportedOSPlatformVersion>
+		<UseMauiEssentials>true</UseMauiEssentials>
+		<IsPackable>false</IsPackable>
+	</PropertyGroup>
+	<ItemGroup>
+		<Compile Remove="Properties/AssemblyInfo.cs"/>
+	</ItemGroup>
+	<ItemGroup>
+	  <ProjectReference Include="..\Xmf2.Components\Xmf2.Components.csproj" />
+	  <ProjectReference Include="..\Xmf2.Core.Droid\Xmf2.Core.Droid.net.csproj" />
+	  <ProjectReference Include="..\Xmf2.Core\Xmf2.Core.csproj" />
+	</ItemGroup>
+	<ItemGroup>
+	  <PackageReference Include="Xamarin.Firebase.Messaging" Version="123.1.2.2" />
+	  <PackageReference Update="Xamarin.AndroidX.Lifecycle.LiveData" Version="2.6.1.3" />
+	</ItemGroup>
+</Project>

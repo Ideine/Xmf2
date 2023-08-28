@@ -3,6 +3,7 @@ using Android.Runtime;
 using Android.Text;
 using Android.Text.Style;
 using Android.Views;
+using Xmf2.Core.Droid.Helpers;
 
 namespace Xmf2.Core.Droid.Controls
 {
@@ -13,6 +14,9 @@ namespace Xmf2.Core.Droid.Controls
 		private readonly bool _withUnderline;
 
 		protected ClickableSpanWithAction(IntPtr javaReference, JniHandleOwnership transfer) : base(javaReference, transfer) { }
+
+		public ClickableSpanWithAction(Action<View> onClickAction, int textColor, bool withUnderline = true) : this(onClickAction, textColor.ColorFromHex(), withUnderline) { }
+		public ClickableSpanWithAction(Action<View> onClickAction, uint textColor, bool withUnderline = true) : this(onClickAction, textColor.ColorFromHex(), withUnderline) { }
 
 		public ClickableSpanWithAction(Action<View> onClickAction, Android.Graphics.Color textColor, bool withUnderline = true)
 		{

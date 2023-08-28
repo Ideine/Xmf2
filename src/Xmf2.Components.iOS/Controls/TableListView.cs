@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Runtime.InteropServices;
 using UIKit;
 using Xmf2.Components.Interfaces;
 using Xmf2.Components.iOS.Interfaces;
@@ -23,7 +24,7 @@ namespace Xmf2.Components.iOS.Controls
 		private TableViewItemSource<TableViewItemCell> _source;
 		private Func<IServiceLocator, IComponentView> _factory;
 
-		public virtual nfloat EstimatedRowItemHeight
+		public virtual NFloat EstimatedRowItemHeight
 		{
 			get => ListView.EstimatedRowHeight;
 			set => ListView.EstimatedRowHeight = value;
@@ -78,7 +79,7 @@ namespace Xmf2.Components.iOS.Controls
 				base.OnStateUpdate(state);
 				_source.ItemSource = state.Items;
 			}
-			catch (Exception e)
+			catch (Exception)
 			{
 				Debugger.Break();
 			}
