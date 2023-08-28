@@ -1,5 +1,9 @@
-﻿using System;
+﻿#if NET7_0_OR_GREATER
 using System.Runtime.InteropServices;
+using ObjCRuntime;
+#else
+using NFloat = System.nfloat;
+#endif
 using CoreGraphics;
 using UIKit;
 

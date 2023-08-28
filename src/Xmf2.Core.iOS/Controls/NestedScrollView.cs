@@ -1,14 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.InteropServices;
 using CoreGraphics;
 using Foundation;
-using ObjCRuntime;
 using UIKit;
 using Xmf2.Core.iOS.Extensions;
 using static UIKit.NSLayoutAttribute;
 using static UIKit.NSLayoutRelation;
+
+#if NET7_0_OR_GREATER
+using System.Runtime.InteropServices;
+using ObjCRuntime;
+#else
+using NFloat = System.nfloat;
+#endif
 
 namespace Xmf2.Core.iOS.Controls
 {

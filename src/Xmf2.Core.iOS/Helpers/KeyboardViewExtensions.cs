@@ -1,6 +1,11 @@
-﻿using System;
-using System.Linq;
+﻿#if NET7_0_OR_GREATER
 using System.Runtime.InteropServices;
+using ObjCRuntime;
+#else
+using NFloat = System.nfloat;
+#endif
+using System;
+using System.Linq;
 using CoreGraphics;
 using UIKit;
 
@@ -32,6 +37,7 @@ namespace Xmf2.Core.iOS.Helpers
 					return view.Superview.FindSuperviewOfType(stopAt, type);
 				}
 			}
+
 			return null;
 		}
 
@@ -47,6 +53,7 @@ namespace Xmf2.Core.iOS.Helpers
 					topSuperView = superview;
 				}
 			}
+
 			return topSuperView;
 		}
 
@@ -65,6 +72,7 @@ namespace Xmf2.Core.iOS.Helpers
 			{
 				height = intersect.Width;
 			}
+
 			scrollView.CenterView(viewToCenter, height, animated: animated);
 		}
 

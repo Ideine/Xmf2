@@ -1,5 +1,10 @@
-﻿using System;
+﻿#if NET7_0_OR_GREATER
 using System.Runtime.InteropServices;
+using ObjCRuntime;
+#else
+using NFloat = System.nfloat;
+#endif
+using System;
 using CoreGraphics;
 using UIKit;
 
@@ -66,7 +71,7 @@ namespace Xmf2.Core.iOS.Controls
 			NFloat leftInset = TextContainer.LineFragmentPadding + inset.Left;
 			NFloat rightInset = TextContainer.LineFragmentPadding + inset.Right;
 			var placeHolderMaxSize = new CGSize(width: Frame.Width - (leftInset + rightInset)
-											 , height: Frame.Height - (inset.Top + inset.Bottom));
+				, height: Frame.Height - (inset.Top + inset.Bottom));
 			_placeholderLabel.Frame = new CGRect(new CGPoint(leftInset, inset.Top), placeHolderMaxSize);
 			_placeholderLabel.SizeToFit();
 		}

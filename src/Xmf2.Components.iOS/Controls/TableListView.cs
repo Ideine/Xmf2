@@ -1,6 +1,11 @@
-﻿using System;
-using System.Diagnostics;
+﻿#if NET7_0_OR_GREATER
 using System.Runtime.InteropServices;
+using ObjCRuntime;
+#else
+using NFloat = System.nfloat;
+#endif
+using System;
+using System.Diagnostics;
 using UIKit;
 using Xmf2.Components.Interfaces;
 using Xmf2.Components.iOS.Interfaces;
