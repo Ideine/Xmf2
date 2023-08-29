@@ -1,4 +1,10 @@
-﻿using System;
+﻿#if NET7_0_OR_GREATER
+using System.Runtime.InteropServices;
+using ObjCRuntime;
+#else
+using NFloat = System.nfloat;
+#endif
+using System;
 using CoreGraphics;
 using UIKit;
 
@@ -61,11 +67,11 @@ namespace Xmf2.Core.iOS.Controls
 
 		private void DrawPlaceholder()
 		{
-			var inset = TextContainerInset;
-			var leftInset = TextContainer.LineFragmentPadding + inset.Left;
-			var rightInset = TextContainer.LineFragmentPadding + inset.Right;
+			UIEdgeInsets inset = TextContainerInset;
+			NFloat leftInset = TextContainer.LineFragmentPadding + inset.Left;
+			NFloat rightInset = TextContainer.LineFragmentPadding + inset.Right;
 			var placeHolderMaxSize = new CGSize(width: Frame.Width - (leftInset + rightInset)
-											 , height: Frame.Height - (inset.Top + inset.Bottom));
+				, height: Frame.Height - (inset.Top + inset.Bottom));
 			_placeholderLabel.Frame = new CGRect(new CGPoint(leftInset, inset.Top), placeHolderMaxSize);
 			_placeholderLabel.SizeToFit();
 		}
@@ -87,9 +93,9 @@ namespace Xmf2.Core.iOS.Controls
 
 		public void AutoHeight()
 		{
-			nfloat fixedWidth = Frame.Size.Width;
-			var newSize = SizeThatFits(new CGSize(width: fixedWidth, height: nfloat.MaxValue));
-			var newFrame = Frame;
+			NFloat fixedWidth = Frame.Size.Width;
+			CGSize newSize = SizeThatFits(new CGSize(width: fixedWidth, height: NFloat.MaxValue));
+			CGRect newFrame = Frame;
 			newFrame.Size = new CGSize(width: Math.Max(newSize.Width, fixedWidth), height: newSize.Height);
 			Frame = newFrame;
 		}

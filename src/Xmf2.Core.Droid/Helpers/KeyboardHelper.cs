@@ -1,8 +1,14 @@
-﻿using Android.Content;
+﻿using Android.App;
+using Android.Content;
 using Android.Views;
 using Android.Views.InputMethods;
 using Android.Widget;
+#if NET7_0_OR_GREATER
+using Microsoft.Maui.ApplicationModel;
+
+#else
 using Plugin.CurrentActivity;
+#endif
 
 namespace Xmf2.Core.Droid.Helpers
 {
@@ -10,7 +16,11 @@ namespace Xmf2.Core.Droid.Helpers
 	{
 		public static bool IsActive()
 		{
-			var activity = CrossCurrentActivity.Current.Activity;
+#if NET7_0_OR_GREATER
+			Activity activity = Platform.CurrentActivity!;
+#else
+			Activity activity = CrossCurrentActivity.Current.Activity;
+#endif
 			InputMethodManager inputMethodManager = (InputMethodManager)activity.GetSystemService(Context.InputMethodService);
 			return inputMethodManager?.IsActive ?? false;
 		}

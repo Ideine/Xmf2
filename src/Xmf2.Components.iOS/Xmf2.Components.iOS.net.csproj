@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<TargetFramework>net7.0-ios</TargetFramework>
+		<LangVersion>9</LangVersion>
+		<RootNamespace>Xmf2.Components.iOS</RootNamespace>
+		<ImplicitUsings>disable</ImplicitUsings>
+		<Nullable>disable</Nullable>
+		<SupportedOSPlatformVersion>11.0</SupportedOSPlatformVersion>
+	</PropertyGroup>
+	<ItemGroup>
+		<Compile Remove="Properties/AssemblyInfo.cs" />
+	</ItemGroup>
+	<ItemGroup>
+	  <PackageReference Include="Xmf2.NavigationGraph" Version="7.0.0" />
+	</ItemGroup>
+	<ItemGroup>
+	  <ProjectReference Include="..\Xmf2.Components\Xmf2.Components.csproj" />
+	  <ProjectReference Include="..\Xmf2.Core.iOS\Xmf2.Core.iOS.net.csproj" />
+	  <ProjectReference Include="..\Xmf2.Core\Xmf2.Core.csproj" />
+	</ItemGroup>
+</Project>

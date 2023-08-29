@@ -1,4 +1,9 @@
-﻿using System;
+﻿#if NET7_0_OR_GREATER
+using System.Runtime.InteropServices;
+using ObjCRuntime;
+#else
+using NFloat = System.nfloat;
+#endif
 using CoreAnimation;
 using CoreGraphics;
 using Foundation;
@@ -14,7 +19,11 @@ namespace Xmf2.Core.iOS.Controls
 			var layer = Layer;
 			layer.StrokeColor = UIColor.Black.CGColor;
 			layer.FillColor = null;
-			layer.LineDashPattern = new NSNumber[] { 6, 2 };
+			layer.LineDashPattern = new NSNumber[]
+			{
+				6,
+				2
+			};
 			layer.LineWidth = 3f;
 		}
 
@@ -35,7 +44,7 @@ namespace Xmf2.Core.iOS.Controls
 			return this;
 		}
 
-		public UIDashedControl WithLineWidth(nfloat width)
+		public UIDashedControl WithLineWidth(NFloat width)
 		{
 			Layer.LineWidth = width;
 			return this;

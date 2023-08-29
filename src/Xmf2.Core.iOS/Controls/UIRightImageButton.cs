@@ -1,4 +1,9 @@
-﻿using System;
+﻿#if NET7_0_OR_GREATER
+using System.Runtime.InteropServices;
+using ObjCRuntime;
+#else
+using NFloat = System.nfloat;
+#endif
 using CoreGraphics;
 using UIKit;
 
@@ -22,7 +27,7 @@ namespace Xmf2.Core.iOS.Controls
 		{
 			CGRect imageRect = ImageRectForContentRect(rect);
 
-			nfloat x = rect.X + TitleEdgeInsets.Left;
+			NFloat x = rect.X + TitleEdgeInsets.Left;
 
 			return new CGRect(
 				x,
@@ -34,8 +39,8 @@ namespace Xmf2.Core.iOS.Controls
 
 		public override CGRect ImageRectForContentRect(CGRect rect)
 		{
-			nfloat width = 0;
-			nfloat height = 0;
+			NFloat width = 0;
+			NFloat height = 0;
 			if (CurrentImage != null)
 			{
 				width = CurrentImage.Size.Width;

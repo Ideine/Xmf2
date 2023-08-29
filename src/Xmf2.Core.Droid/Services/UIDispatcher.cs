@@ -6,6 +6,7 @@ using Xmf2.Core.Services;
 
 namespace Xmf2.Core.Droid.Services
 {
+	[Obsolete("use essentials MainThread")]
 	public class UIDispatcher : IUIDispatcher
 	{
 		private readonly Handler _handler;
@@ -19,7 +20,7 @@ namespace Xmf2.Core.Droid.Services
 		{
 			_handler.Post(action);
 		}
-		
+
 		public bool IsOnMainThread() => Looper.MyLooper() == Looper.MainLooper;
 
 		public async Task<T> EnqueueOnMainThread<T>(Func<Task<T>> func, CancellationToken cancellationToken = default(CancellationToken))

@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System;
+using System.Net;
 using System.Net.Http;
 using ModernHttpClient;
 using RestSharp.Portable;
@@ -7,6 +8,7 @@ using Xmf2.Rest.HttpClient.Impl;
 
 namespace Xmf2.Core.Droid.Services
 {
+	[Obsolete("modern http client may not be necessary now")]
 	public class NativeHttpClientFactory : DefaultHttpClientFactory, INativeHttpHandlerFactory
 	{
 		private readonly bool _setCredentials;

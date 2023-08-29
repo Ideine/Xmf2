@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using CoreGraphics;
+using ObjCRuntime;
 using UIKit;
 using Xmf2.Core.iOS.Extensions;
 using Xmf2.Core.Subscriptions;
@@ -27,8 +28,8 @@ namespace Xmf2.Core.iOS.Helpers
 		private void OnScroll(object sender, EventArgs eventArgs)
 		{
 			CGRect rect = _getHeaderFrame();
-			nfloat scrollTop = _scrollView.Frame.Top;
-			nfloat bot = NMath.Max(0f, (rect.Bottom - scrollTop));
+			var scrollTop = _scrollView.Frame.Top;
+			var bot = NMath.Max(0f, (rect.Bottom - scrollTop));
 			if(_stickyHeader)
 			{
 				bot = NMath.Max(rect.Height, bot);

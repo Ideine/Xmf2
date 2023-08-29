@@ -6,9 +6,13 @@ using Android.OS;
 using Android.Views;
 using Android.Widget;
 using AndroidX.Core.Content;
-using Plugin.CurrentActivity;
 using Xmf2.Core.Helpers;
 using Xmf2.Core.Subscriptions;
+#if NET7_0_OR_GREATER
+using Microsoft.Maui.ApplicationModel;
+#else
+using Plugin.CurrentActivity;
+#endif
 
 namespace Xmf2.Core.Droid.Helpers
 {
@@ -65,7 +69,11 @@ namespace Xmf2.Core.Droid.Helpers
 				});
 			}).DisposeWith(_disposable);
 
+#if NET7_0_OR_GREATER
+			_viewGroup = view ?? Platform.CurrentActivity!.FindViewById<ViewGroup>(Android.Resource.Id.Content);
+#else
 			_viewGroup = view ?? CrossCurrentActivity.Current.Activity.FindViewById<ViewGroup>(Android.Resource.Id.Content);
+#endif
 			_context = _viewGroup.Context;
 			CreateLoadingView();
 		}
