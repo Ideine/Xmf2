@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<TargetFramework>net7.0-ios</TargetFramework>
+		<LangVersion>9</LangVersion>
+		<RootNamespace>Xmf2.Core.iOS</RootNamespace>
+		<ImplicitUsings>disable</ImplicitUsings>
+		<Nullable>disable</Nullable>
+		<SupportedOSPlatformVersion>11.0</SupportedOSPlatformVersion>
+	</PropertyGroup>
+	<ItemGroup>
+		<Compile Remove="Properties/AssemblyInfo.cs" />
+	</ItemGroup>
+	<ItemGroup>
+	  <ProjectReference Include="..\Xmf2.Core\Xmf2.Core.csproj" />
+	</ItemGroup>
+	<ItemGroup>
+	  <PackageReference Include="Xmf2.iOS.Extensions" Version="7.0.0" />
+	</ItemGroup>
+</Project>

@@ -8,7 +8,7 @@ using FFImageLoading.Work;
 using RestSharp.Portable;
 using Xmf2.Core.Services;
 
-namespace Xmf2.Core.ImgLoading
+namespace Xmf2.Core.ImgLoading.Cache
 {
 	/// <example>
 	/// IRequestService requestService = ...;
@@ -16,9 +16,10 @@ namespace Xmf2.Core.ImgLoading
 	/// </example>
 	public class AuthenticatedDownloadCache : DownloadCache
 	{
-		private IRequestService _requestService;
+		private readonly IRequestService _requestService;
 
 		public AuthenticatedDownloadCache(IRequestService requestService) : this(requestService, ImageService.Instance.Config) { }
+
 		public AuthenticatedDownloadCache(IRequestService requestService, Configuration configuration) : base(configuration)
 		{
 			_requestService = requestService;
@@ -26,9 +27,8 @@ namespace Xmf2.Core.ImgLoading
 
 		protected override async Task<byte[]> DownloadAsync(string url, CancellationToken token, System.Net.Http.HttpClient client, TaskParameter parameters, DownloadInformation downloadInformation)
 		{
-
-			var request = new RestRequest(url, Method.GET);
-			var response = await _requestService.Execute(request, token, withAuthentication: true);
+			RestRequest request = new(url, Method.GET);
+			IRestResponse response = await _requestService.Execute(request, token, withAuthentication: true);
 			if (response.IsSuccess)
 			{
 				return response.RawBytes;
