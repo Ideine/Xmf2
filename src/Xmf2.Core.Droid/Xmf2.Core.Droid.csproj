@@ -80,6 +80,7 @@
     <Compile Include="Controls\GridSpacingDecoration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Helpers\UnderlineTouchListener.cs" />
+    <Compile Include="Helpers\StatusBarHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Ideine.ModernHttpClient" Version="3.2.2" />
