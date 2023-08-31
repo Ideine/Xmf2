@@ -12,17 +12,19 @@ namespace Xmf2.Components.Droid.List
 		private Xmf2Disposable _disposable = new Xmf2Disposable();
 
 		private bool _enabled;
+		private Func<int> _getTopPadding;
 		private View _componentView;
 		private View _recyclerView;
 		private GlobalLayoutHelper _helper;
 		private readonly int _offset;
 
-		public StickyRecyclerHelper(View componentView, View recyclerView, int offset, bool enabled)
+		public StickyRecyclerHelper(View componentView, View recyclerView, int offset, bool enabled, Func<int> getTopPadding)
 		{
 			_componentView = componentView;
 			_recyclerView = recyclerView;
 			_offset = offset;
 			_enabled = enabled;
+			_getTopPadding = getTopPadding;
 
 			_helper = new GlobalLayoutHelper(recyclerView, SynchronizeTop).DisposeWith(_disposable);
 
@@ -63,7 +65,7 @@ namespace Xmf2.Components.Droid.List
 					top = 0;
 				}
 
-				top += _offset;
+				top += _offset + _getTopPadding?.Invoke() ?? 0;
 
 				_componentView.Bottom = top + _componentView.Height;
 				_componentView.Top = top;
@@ -71,7 +73,7 @@ namespace Xmf2.Components.Droid.List
 			else
 			{
 				var top = _recyclerView.Top;
-				top += _offset;
+				top += _offset + _getTopPadding?.Invoke() ?? 0;
 				_componentView.Bottom = top + _componentView.Height;
 				_componentView.Top = top;
 				_componentView.Visibility = _recyclerView.WindowVisibility;
@@ -87,6 +89,7 @@ namespace Xmf2.Components.Droid.List
 				_disposable = null;
 				_componentView = null;
 				_recyclerView = null;
+				_getTopPadding = null;
 			}
 
 			base.Dispose(disposing);

@@ -7,6 +7,7 @@ using AndroidX.RecyclerView.Widget;
 using Xmf2.Components.Droid.Interfaces;
 using Xmf2.Components.Droid.Views;
 using Xmf2.Components.Interfaces;
+using Xmf2.Core.Droid.Helpers;
 using Xmf2.Core.Subscriptions;
 
 namespace Xmf2.Components.Droid.List
@@ -108,7 +109,11 @@ namespace Xmf2.Components.Droid.List
 		public bool TryAddStickyHeader(IComponentView component, View componentView, out StickyRecyclerHelper helper, int offset = 0, bool autoActivate = true)
 		{
 			var stickyView = new StickyView(componentView).DisposeWith(Disposables);
-			var stickyHelper = new StickyRecyclerHelper(componentView, stickyView, offset, autoActivate).DisposeWith(Disposables);
+			var stickyHelper = new StickyRecyclerHelper(componentView, stickyView, offset, autoActivate, () =>
+			{
+				Services.TryResolve(out TopPaddingContainer container);
+				return container?.TopPadding ?? 0;
+			}).DisposeWith(Disposables);
 
 			if (RecyclerView != null)
 			{

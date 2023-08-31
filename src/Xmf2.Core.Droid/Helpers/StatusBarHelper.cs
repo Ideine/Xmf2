@@ -7,12 +7,18 @@ using AndroidX.Core.View;
 
 namespace Xmf2.Core.Droid.Helpers
 {
+	public class TopPaddingContainer
+	{
+		public int TopPadding { get; set; }
+	}
+
 	public class StatusBarHelper : Java.Lang.Object, IOnApplyWindowInsetsListener
 	{
 		private static int _topPadding;
 		private Context _context;
 		private View _container;
 		private readonly int _paddingTopInDp;
+		private Action<int> _registerAction;
 
 		public StatusBarHelper(Context context, View container, int paddingTopInDp = 12)
 		{
@@ -21,6 +27,11 @@ namespace Xmf2.Core.Droid.Helpers
 			_paddingTopInDp = paddingTopInDp;
 			SetPaddingTopOnContainer();
 			ViewCompat.SetOnApplyWindowInsetsListener(container, this);
+		}
+
+		public void SetRegisterAction(Action<int> registerAction)
+		{
+			_registerAction = registerAction;
 		}
 
 		protected StatusBarHelper(IntPtr handle, JniHandleOwnership transfer) : base(handle, transfer) { }
@@ -38,6 +49,7 @@ namespace Xmf2.Core.Droid.Helpers
 				Insets displayCutoutInset = insets.GetInsets(WindowInsetsCompat.Type.DisplayCutout());
 				int paddingTop = UIHelper.DpToPx(_context, _paddingTopInDp) + Math.Max(statusBarInset.Top, displayCutoutInset.Top);
 				_topPadding = paddingTop;
+				_registerAction?.Invoke(_topPadding);
 				SetPaddingTopOnContainer();
 			}
 
@@ -50,6 +62,7 @@ namespace Xmf2.Core.Droid.Helpers
 			{
 				_context = null;
 				_container = null;
+				_registerAction = null;
 			}
 
 			base.Dispose(disposing);
