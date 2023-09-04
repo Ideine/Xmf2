@@ -1,4 +1,8 @@
 ﻿using Android.App;
+using Android.Content.PM;
+using Android.OS;
+using Android.Views;
+using AndroidX.Core.View;
 
 namespace Xmf2.Core.Droid.Extensions
 {
@@ -8,29 +12,40 @@ namespace Xmf2.Core.Droid.Extensions
 		{
 			if (isFullScreen)
 			{
-				activity.Window.AddFlags(Android.Views.WindowManagerFlags.Fullscreen);
+				activity.Window.AddFlags(WindowManagerFlags.Fullscreen);
 			}
 			else
 			{
-				activity.Window.ClearFlags(Android.Views.WindowManagerFlags.Fullscreen);
+				activity.Window.ClearFlags(WindowManagerFlags.Fullscreen);
+			}
+
+
+			if (Build.VERSION.SdkInt > BuildVersionCodes.Kitkat)
+			{
+				WindowCompat.SetDecorFitsSystemWindows(activity.Window!, !isFullScreen);
+
+				var controllerCompat = new WindowInsetsControllerCompat(activity.Window!, activity.Window!.DecorView);
+				if (isFullScreen)
+				{
+					controllerCompat.Hide(WindowInsetsCompat.Type.SystemBars() | WindowInsetsCompat.Type.StatusBars() | WindowInsetsCompat.Type.NavigationBars());
+				}
+				else
+				{
+					controllerCompat.Show(WindowInsetsCompat.Type.SystemBars() | WindowInsetsCompat.Type.StatusBars() | WindowInsetsCompat.Type.NavigationBars());
+				}
+
+				controllerCompat.SystemBarsBehavior = WindowInsetsControllerCompat.BehaviorShowTransientBarsBySwipe;
 			}
 		}
 
 		public static void SetOrientation(this Activity activity, bool portrait)
 		{
-			if (portrait)
-			{
-				activity.RequestedOrientation = Android.Content.PM.ScreenOrientation.Portrait;
-			}
-			else
-			{
-				activity.RequestedOrientation = Android.Content.PM.ScreenOrientation.Landscape;
-			}
+			activity.RequestedOrientation = portrait ? ScreenOrientation.Portrait : ScreenOrientation.Landscape;
 		}
 
 		public static void UnlockScreenOrientation(this Activity activity)
 		{
-			activity.RequestedOrientation = Android.Content.PM.ScreenOrientation.FullSensor;
+			activity.RequestedOrientation = ScreenOrientation.FullSensor;
 		}
 	}
 }
