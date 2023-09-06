@@ -11,7 +11,11 @@ using Android.Util;
 using Firebase;
 using Firebase.Installations;
 using Firebase.Messaging;
+#if NET7_0_OR_GREATER
+using Microsoft.Maui.ApplicationModel;
+#else
 using Plugin.CurrentActivity;
+#endif
 using Xmf2.Core.Droid.Permissions;
 using Xmf2.Core.Services;
 
@@ -41,7 +45,11 @@ namespace Xmf2.Notification.Droid
 		{
 			if (Build.VERSION.SdkInt >= BuildVersionCodes.Tiramisu)
 			{
-				Activity activity = CrossCurrentActivity.Current.Activity;
+#if NET7_0_OR_GREATER
+				Activity activity = Platform.CurrentActivity;
+#else
+				var activity = CrossCurrentActivity.Current.Activity;
+#endif
 				if (activity.CheckSelfPermission(Manifest.Permission.PostNotifications) != Permission.Granted)
 				{
 					bool result = true;
