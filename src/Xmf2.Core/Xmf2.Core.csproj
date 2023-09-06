@@ -5,6 +5,6 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="FubarCoder.RestSharp.Portable.Core" Version="4.0.8" />
-    <PackageReference Include="Xmf2.Common.Extensions" Version="1.1.27" />
+    <PackageReference Include="Xmf2.Common.Extensions" Version="1.1.28" />
   </ItemGroup>
 </Project>
