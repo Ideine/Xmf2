@@ -17,8 +17,8 @@ namespace Xmf2.Core.Droid.Controls
 
 		protected ClickableSpanWithAction(IntPtr javaReference, JniHandleOwnership transfer) : base(javaReference, transfer) { }
 
-		public ClickableSpanWithAction(Action<View> onClickAction, int textColor, bool withUnderline = true, bool isBold = false) : this(onClickAction, textColor.ColorFromHex(), withUnderline) { }
-		public ClickableSpanWithAction(Action<View> onClickAction, uint textColor, bool withUnderline = true, bool isBold = false) : this(onClickAction, textColor.ColorFromHex(), withUnderline) { }
+		public ClickableSpanWithAction(Action<View> onClickAction, int textColor, bool withUnderline = true, bool isBold = false) : this(onClickAction, textColor.ColorFromHex(), withUnderline, isBold) { }
+		public ClickableSpanWithAction(Action<View> onClickAction, uint textColor, bool withUnderline = true, bool isBold = false) : this(onClickAction, textColor.ColorFromHex(), withUnderline, isBold) { }
 
 		public ClickableSpanWithAction(Action<View> onClickAction, Android.Graphics.Color textColor, bool withUnderline = true, bool isBold = false)
 		{
