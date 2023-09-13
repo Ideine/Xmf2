@@ -1,4 +1,5 @@
 using System;
+using Android.Graphics;
 using Android.Runtime;
 using Android.Text;
 using Android.Text.Style;
@@ -12,17 +13,19 @@ namespace Xmf2.Core.Droid.Controls
 		private Action<View> _onClickAction;
 		private readonly Android.Graphics.Color _textColor;
 		private readonly bool _withUnderline;
+		private readonly bool _isBold;
 
 		protected ClickableSpanWithAction(IntPtr javaReference, JniHandleOwnership transfer) : base(javaReference, transfer) { }
 
-		public ClickableSpanWithAction(Action<View> onClickAction, int textColor, bool withUnderline = true) : this(onClickAction, textColor.ColorFromHex(), withUnderline) { }
-		public ClickableSpanWithAction(Action<View> onClickAction, uint textColor, bool withUnderline = true) : this(onClickAction, textColor.ColorFromHex(), withUnderline) { }
+		public ClickableSpanWithAction(Action<View> onClickAction, int textColor, bool withUnderline = true, bool isBold = false) : this(onClickAction, textColor.ColorFromHex(), withUnderline) { }
+		public ClickableSpanWithAction(Action<View> onClickAction, uint textColor, bool withUnderline = true, bool isBold = false) : this(onClickAction, textColor.ColorFromHex(), withUnderline) { }
 
-		public ClickableSpanWithAction(Action<View> onClickAction, Android.Graphics.Color textColor, bool withUnderline = true)
+		public ClickableSpanWithAction(Action<View> onClickAction, Android.Graphics.Color textColor, bool withUnderline = true, bool isBold = false)
 		{
 			_onClickAction = onClickAction;
 			_textColor = textColor;
 			_withUnderline = withUnderline;
+			_isBold = isBold;
 		}
 
 		public override void OnClick(View widget) => _onClickAction?.Invoke(widget);
@@ -32,6 +35,10 @@ namespace Xmf2.Core.Droid.Controls
 			base.UpdateDrawState(ds);
 			ds.Color = _textColor;
 			ds.UnderlineText = _withUnderline;
+			if(_isBold)
+			{
+				ds.SetTypeface(Typeface.DefaultBold);
+			}
 		}
 
 		protected override void Dispose(bool disposing)
