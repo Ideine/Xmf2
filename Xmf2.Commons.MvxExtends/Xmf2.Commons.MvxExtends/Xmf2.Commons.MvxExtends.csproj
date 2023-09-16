@@ -1,11 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
-		<TargetFramework>netstandard2.0</TargetFramework>
+		<TargetFramework>net7.0</TargetFramework>
 		<LangVersion>latest</LangVersion>
+		<EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
 	</PropertyGroup>
 	<ItemGroup>
-	  <PackageReference Include="MvvmCross" Version="6.4.2" />
-	  <PackageReference Include="Nito.AsyncEx" Version="5.0.0" />
-	  <PackageReference Include="Polly" Version="7.2.1" />
+	  <PackageReference Include="MvvmCross" Version="9.2.0-beta.1" />
+	  <PackageReference Include="Nito.AsyncEx" Version="5.1.2" />
+	  <PackageReference Include="Polly" Version="8.0.0-beta.2" />
 	</ItemGroup>
 </Project>

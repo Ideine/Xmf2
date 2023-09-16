@@ -6,8 +6,8 @@ namespace Xmf2.Commons.MvxExtends.ErrorManagers
 	{
 		public bool IsLogged { get; set; }
 		public bool IsUserShown { get; set; }
-		
-		public ManagedException() : base() { }
+
+		public ManagedException() { }
 
 		public ManagedException(string message) : base(message) { }
 

@@ -68,7 +68,7 @@ namespace Xmf2.Commons.MvxExtends.ErrorManagers
 				return ade;
 			}
 
-			if (e is OperationCanceledException oce && oce.CancellationToken != null && !oce.CancellationToken.IsCancellationRequested)
+			if (e is OperationCanceledException { CancellationToken.IsCancellationRequested: false })
 			{
 				return new AccessDataException(AccessDataException.ErrorType.Timeout);
 			}

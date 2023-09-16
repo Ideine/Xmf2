@@ -8,14 +8,7 @@ namespace Xmf2.Commons.MvxExtends.Converters
 	{
 		protected override string Convert(int value, Type targetType, object parameter, CultureInfo culture)
 		{
-			if (value < 0)
-			{
-				return string.Empty;
-			}
-			else
-			{
-				return $"{value}%";
-			}
+			return value < 0 ? string.Empty : $"{value}%";
 		}
 	}
 }
