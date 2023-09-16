@@ -1,12 +1,13 @@
 using System.Diagnostics;
 using Android.Content.Res;
 using Android.Runtime;
-using Android.Support.V4.View;
 using Android.Views;
 using Android.Widget;
+using AndroidX.Core.Content;
+using AndroidX.Core.View;
 using MvvmCross.Platforms.Android.Binding.Target;
 
-namespace Xmf2.Commons.MvxExtends.DroidAppCompat.Target
+namespace Xmf2.Commons.MvxExtends.Droid.Targets
 {
 	public class BackgroundTintDrawableNameTargetBinding : MvxAndroidTargetBinding<View, string>
 	{
@@ -22,7 +23,7 @@ namespace Xmf2.Commons.MvxExtends.DroidAppCompat.Target
 				return;
 			}
 
-			ColorStateList colorList = AndroidGlobals.ApplicationContext.GetColorStateList(id);
+			ColorStateList colorList = ContextCompat.GetColorStateList(AndroidGlobals.ApplicationContext, id);
 
 			ITintableBackgroundView tintableBackgroundView = null;
 			try

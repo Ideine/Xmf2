@@ -1,13 +1,13 @@
 using System;
 using Android.Content;
 using Android.Runtime;
-using Android.Support.V7.Widget;
 using Android.Util;
 using Android.Views;
+using AndroidX.AppCompat.Widget;
 using MvvmCross.ViewModels;
 using Xmf2.Commons.MvxExtends.Interactions;
 
-namespace Xmf2.Commons.MvxExtends.DroidAppCompat.Views
+namespace Xmf2.Commons.MvxExtends.Droid.Views
 {
 	[Register("xmf2.commons.mvxextends.droidappcompat.views.PopupMenuLauncher")]
 	public class PopupMenuLauncher : View

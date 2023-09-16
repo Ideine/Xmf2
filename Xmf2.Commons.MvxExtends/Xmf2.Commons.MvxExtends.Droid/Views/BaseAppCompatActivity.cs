@@ -1,15 +1,21 @@
+using System;
+using Android.Runtime;
 using MvvmCross.Platforms.Android.Views;
 using Xmf2.Commons.MvxExtends.ViewModels;
 
 namespace Xmf2.Commons.MvxExtends.Droid.Views
 {
-	public abstract class BaseView<TViewModel, TParameter> : MvxActivity<TViewModel> where TViewModel : BaseViewModel<TParameter>
+	public abstract class BaseAppCompatActivity<TViewModel, TParameter> : MvxActivity<TViewModel> where TViewModel : BaseViewModel<TParameter>
 	{
 		protected override void OnDestroy()
 		{
 			base.OnDestroy();
 			DisposeManagedObjects();
 		}
+
+		protected BaseAppCompatActivity(IntPtr ptr, JniHandleOwnership ownership) : base(ptr, ownership) { }
+
+		protected BaseAppCompatActivity() { }
 
 		#region Dispose
 
@@ -38,7 +44,7 @@ namespace Xmf2.Commons.MvxExtends.Droid.Views
 			catch { }
 		}
 
-		~BaseView()
+		~BaseAppCompatActivity()
 		{
 			Dispose(false);
 		}

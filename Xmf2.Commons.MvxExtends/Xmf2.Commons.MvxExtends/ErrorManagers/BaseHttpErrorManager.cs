@@ -61,19 +61,19 @@ namespace Xmf2.Commons.MvxExtends.ErrorManagers
 			return _httpHandlePolicy;
 		}
 
-		protected virtual AccessDataException TreatException(Exception e)
+		protected virtual AccessDataException TreatException(Exception ex)
 		{
-			if (e is AccessDataException ade)
+			if (ex is AccessDataException ade)
 			{
 				return ade;
 			}
 
-			if (e is OperationCanceledException { CancellationToken.IsCancellationRequested: false })
+			if (ex is OperationCanceledException { CancellationToken.IsCancellationRequested: false })
 			{
 				return new AccessDataException(AccessDataException.ErrorType.Timeout);
 			}
 
-			return new AccessDataException(AccessDataException.ErrorType.Unknown, e);
+			return new AccessDataException(AccessDataException.ErrorType.Unknown, ex);
 		}
 
 		protected virtual void LogRetryException(Exception e, int retryCount)

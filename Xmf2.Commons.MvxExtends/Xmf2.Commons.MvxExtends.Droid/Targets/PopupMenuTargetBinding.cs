@@ -6,7 +6,7 @@ using MvvmCross.Platforms.Android.Binding.Target;
 using MvvmCross.ViewModels;
 using Xmf2.Commons.MvxExtends.Interactions;
 
-namespace Xmf2.Commons.MvxExtends.DroidAppCompat.Target
+namespace Xmf2.Commons.MvxExtends.Droid.Targets
 {
 	public class PopupMenuTargetBinding : MvxAndroidTargetBinding<View, IMvxInteraction<PopupMenuRequest>>
 	{
