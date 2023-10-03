@@ -47,7 +47,7 @@ namespace Xmf2.Authentications.OAuth2
 
 			if (IsExpired())
 			{
-				OAuth2AuthResult result = await oauth2Client.Refresh(true);
+				OAuth2AuthResult result = await oauth2Client.Refresh();
 				if (result.IsSuccess)
 				{
 					Access = result;

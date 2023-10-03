@@ -45,7 +45,7 @@ namespace Xmf2.Authentications.OAuth2
 			}
 		}
 
-		public async Task<OAuth2AuthResult> Refresh(bool forced = false)
+		public async Task<OAuth2AuthResult> Refresh()
 		{
 			using (await _locker.LockAsync())
 			{
@@ -59,7 +59,7 @@ namespace Xmf2.Authentications.OAuth2
 					throw new InvalidOperationException("Can not refresh without a Refresh token");
 				}
 
-				if (DateTime.Now.Add(TimeSpan.FromSeconds(15)) > _tokens.ExpiresAt || forced)
+				if (DateTime.Now.Add(TimeSpan.FromSeconds(15)) > _tokens.ExpiresAt)
 				{
 					IRestRequest RequestFunc()
 					{
