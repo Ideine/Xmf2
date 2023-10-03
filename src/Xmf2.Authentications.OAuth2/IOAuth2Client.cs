@@ -12,7 +12,7 @@ namespace Xmf2.Authentications.OAuth2
 
 		Task<OAuth2AuthResult> Login(string login, string password);
 
-		Task<OAuth2AuthResult> Refresh();
+		Task<OAuth2AuthResult> Refresh(bool forced = false);
 
 		void SetAuthenticationTokens(OAuth2AuthResult token);
 	}

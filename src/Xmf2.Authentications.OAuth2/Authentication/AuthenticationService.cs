@@ -72,7 +72,7 @@ namespace Xmf2.Authentications.OAuth2.Authentication
 			{
 				if (CanLoginWithRefreshToken())
 				{
-					var result = await _client.Refresh();
+					var result = await _client.Refresh(true);
 
 					string status = result.IsSuccess ? "SUCCESS" : "FAILED";
 					_logFunction?.Invoke($"REFRESH {status}");
