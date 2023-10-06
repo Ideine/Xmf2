@@ -7,6 +7,6 @@
     <ProjectReference Include="..\Xmf2.Core\Xmf2.Core.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Xmf2.NavigationGraph" Version="7.0.0" />
+    <PackageReference Include="Xmf2.NavigationGraph" Version="7.0.1" />
   </ItemGroup>
 </Project>

@@ -109,7 +109,7 @@
   <ItemGroup>
     <PackageReference Include="Xamarin.AndroidX.RecyclerView" Version="1.2.1.8" />
     <PackageReference Include="Xamarin.AndroidX.SwipeRefreshLayout" Version="1.1.0.13" />
-    <PackageReference Include="Xmf2.NavigationGraph" Version="2.0.0" />
+    <PackageReference Include="Xmf2.NavigationGraph" Version="7.0.1" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
 </Project>
