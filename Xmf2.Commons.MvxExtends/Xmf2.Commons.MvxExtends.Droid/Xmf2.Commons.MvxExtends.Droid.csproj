@@ -13,6 +13,6 @@
 	  <ProjectReference Include="..\Xmf2.Commons.MvxExtends\Xmf2.Commons.MvxExtends.csproj" />
 	</ItemGroup>
 	<ItemGroup>
-	  <PackageReference Include="MvvmCross" Version="9.2.0-beta.1" />
+	  <PackageReference Include="MvvmCross" Version="9.2.0-beta.2" />
 	</ItemGroup>
 </Project>
