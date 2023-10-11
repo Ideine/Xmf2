@@ -54,6 +54,7 @@
     <Compile Include="Helpers\OnTouchTransformer.cs" />
     <Compile Include="Helpers\ScrollIndicatorHelper.cs" />
     <Compile Include="Helpers\DeviceHelper.cs" />
+    <Compile Include="Helpers\TapHelper.cs" />
     <Compile Include="Helpers\WKBusyNavigationDelegate.cs" />
     <Compile Include="Layouts\BindingExtensions.cs" />
     <Compile Include="Layouts\ViewExtensions.cs" />
