@@ -6,6 +6,8 @@ namespace Xmf2.Commons.Services
 	{
 		void SetToken(string token);
 
+		Task AskForPermissionIfNeeded();
+
 		Task RegisterForNotification();
 
 		Task UnregisterForNotification();
