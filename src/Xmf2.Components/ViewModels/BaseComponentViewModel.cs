@@ -23,7 +23,7 @@ namespace Xmf2.Components.ViewModels
 		public ILifecycleManager Lifecycle { get; }
 
 		protected Xmf2Disposable Disposables { get; }
-		protected IBusy Busy { get; }
+		protected IBusy Busy { get; set; }
 		protected IEventBus EventBus => _eventBus ??= Services.Resolve<IEventBus>();
 		protected IGlobalEventBus GlobalEventBus => _globalEventBus ??= Services.Resolve<IGlobalEventBus>();
 
