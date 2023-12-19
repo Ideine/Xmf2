@@ -47,6 +47,7 @@
     <Compile Include="Controls\UISwappedImageButton.cs" />
     <Compile Include="Controls\VerticalConstraintCreator.cs" />
     <Compile Include="Extensions\EventsExtensions.cs" />
+    <Compile Include="Extensions\ImageViewExtensions.cs" />
     <Compile Include="Extensions\UIColorExtension.cs" />
     <Compile Include="Helpers\KeyboardScrollHelper.cs" />
     <Compile Include="Helpers\KeyboardViewExtensions.cs" />
