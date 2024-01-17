@@ -242,7 +242,7 @@ namespace Xmf2.Core.iOS.Services.Notifications
 
 				const double ONE_SECOND = 1;
 				var trigger = UNTimeIntervalNotificationTrigger.CreateTrigger(ONE_SECOND, false);
-				var notificationRequest = UNNotificationRequest.FromIdentifier(new Guid().ToString(), notification, trigger);
+				var notificationRequest = UNNotificationRequest.FromIdentifier(Guid.NewGuid().ToString(), notification, trigger);
 
 				var notificationCenter = UNUserNotificationCenter.Current;
 				notificationCenter.AddNotificationRequest(
