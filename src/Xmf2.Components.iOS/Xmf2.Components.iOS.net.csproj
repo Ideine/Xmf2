@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
 		<TargetFramework>net7.0-ios</TargetFramework>
 		<LangVersion>9</LangVersion>
@@ -11,7 +11,7 @@
 		<Compile Remove="Properties/AssemblyInfo.cs" />
 	</ItemGroup>
 	<ItemGroup>
-	  <PackageReference Include="Xmf2.NavigationGraph" Version="7.0.0" />
+	  <PackageReference Include="Xmf2.NavigationGraph" Version="7.0.1" />
 	</ItemGroup>
 	<ItemGroup>
 	  <ProjectReference Include="..\Xmf2.Components\Xmf2.Components.csproj" />

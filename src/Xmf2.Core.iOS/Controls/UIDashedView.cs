@@ -8,13 +8,17 @@ namespace Xmf2.Core.iOS.Controls
 {
 	public class UIDashedView : UIView
 	{
-		public UIDashedView()
+		private readonly float _cornerRadius;
+
+		public UIDashedView(UIColor dashColor, float dashWidth = 6f, float dashGap = 2f, float lineWidth = 3f, float cornerRadius = 6f)
 		{
+			_cornerRadius = cornerRadius;
+
 			var layer = Layer;
-			layer.StrokeColor = UIColor.Black.CGColor;
+			layer.StrokeColor = dashColor.CGColor;
 			layer.FillColor = null;
-			layer.LineDashPattern = new NSNumber[] { 6, 2 };
-			layer.LineWidth = 3f;
+			layer.LineDashPattern = new NSNumber[] { dashWidth, dashGap };
+			layer.LineWidth = lineWidth;
 		}
 
 		[Export("layerClass")]
@@ -25,7 +29,7 @@ namespace Xmf2.Core.iOS.Controls
 		public override void LayoutSubviews()
 		{
 			base.LayoutSubviews();
-			Layer.Path = UIBezierPath.FromRoundedRect(Bounds, 6f).CGPath;
+			Layer.Path = UIBezierPath.FromRoundedRect(Bounds, _cornerRadius).CGPath;
 		}
 
 		public UIDashedView WithDotColor(CGColor color)
