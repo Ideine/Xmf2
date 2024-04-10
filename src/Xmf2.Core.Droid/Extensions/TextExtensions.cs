@@ -19,9 +19,19 @@ namespace Xmf2.Core.Droid.Extensions
 				textView.TextFormatted = Html.FromHtml(htmlText);
 #pragma warning restore 618
 			}
+
 			if (linkifyText)
 			{
 				textView.MovementMethod = LinkMovementMethod.Instance;
+			}
+		}
+
+		public static void BindText(this EditText editText, string text)
+		{
+			if (editText != null && editText.Text != text && text != null)
+			{
+				editText.Text = text;
+				editText.SetSelection(text.Length);
 			}
 		}
 	}
