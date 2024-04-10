@@ -82,19 +82,5 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Xmf2.Commons.iOS\Xmf2.Commons.iOS.csproj">
-      <Project>{ddf35a3e-8d9c-4255-8436-d7926236d5f9}</Project>
-      <Name>Xmf2.Commons.iOS</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Xmf2.Commons\Xmf2.Commons.csproj">
-      <Project>{D2AE31F1-923F-431E-A0DE-CA5B19850A87}</Project>
-      <Name>Xmf2.Commons</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Xmf2.Rx\Xmf2.Rx.csproj">
-      <Project>{B53B90CF-95FD-4CE1-B843-EAD72F60ED7B}</Project>
-      <Name>Xmf2.Rx</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
 </Project>

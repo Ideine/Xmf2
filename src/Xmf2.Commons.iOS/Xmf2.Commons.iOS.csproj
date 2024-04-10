@@ -94,12 +94,6 @@
     <Compile Include="Helpers\WKNavigationDelegateWithBusy.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Xmf2.Commons\Xmf2.Commons.csproj">
-      <Project>{D2AE31F1-923F-431E-A0DE-CA5B19850A87}</Project>
-      <Name>Xmf2.Commons</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
