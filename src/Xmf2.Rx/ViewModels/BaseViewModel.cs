@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Reactive;
@@ -10,14 +9,12 @@ using System.Threading.Tasks;
 using ReactiveUI;
 using Splat;
 using Xmf2.Commons.Errors;
-using Xmf2.Commons.Extensions;
-using Xmf2.Commons.Helpers;
 
 namespace Xmf2.Rx.ViewModels
 {
-	public abstract class BaseViewModel : ReactiveObject, ISupportsActivation
-	{
-		protected Lazy<IErrorHandler> ErrorHandler { get; } = new Lazy<IErrorHandler>(Locator.Current.GetService<IErrorHandler>);
+	public abstract class BaseViewModel : ReactiveObject, IActivatableViewModel
+    {
+		protected Lazy<IErrorHandler> ErrorHandler { get; } = new Lazy<IErrorHandler>(Locator.Current.GetService<IErrorHandler>());
 
 		public int ObservableTimeout { get; set; } = 30;
 
@@ -31,9 +28,9 @@ namespace Xmf2.Rx.ViewModels
 
 		public IViewModelLifecycleManager LifecycleManager { get; }
 
-		public ReactiveCommand CloseCommand { get; protected set; }
+        public ReactiveCommand<Unit, Unit> CloseCommand { get; }
 
-		public IObservable<bool> IsInitializing { get; }
+        public IObservable<bool> IsInitializing { get; }
 
 		public IObservable<bool> IsStarting { get; }
 
@@ -53,11 +50,13 @@ namespace Xmf2.Rx.ViewModels
 
 			Activator = new ViewModelActivator();
 			LifecycleManager = new ViewModelLifecycleManager(this);
-		}
 
-		#region Wrap for error
+            CloseCommand = ReactiveCommand.CreateFromTask(Close);
+        }
 
-		protected Task WrapForError(IObservable<Unit> source, CustomErrorHandler errorHandler = null, int? timeout = null)
+        #region Wrap for error
+
+        protected Task WrapForError(IObservable<Unit> source, CustomErrorHandler errorHandler = null, int? timeout = null)
 		{
 			return ErrorHandler.Value
 							   .Execute(source.Timeout(TimeSpan.FromSeconds(timeout ?? ObservableTimeout)), errorHandler)
@@ -91,7 +90,7 @@ namespace Xmf2.Rx.ViewModels
 		protected virtual Task Initialize()
 		{
 			Debug.WriteLine($"[Lifecycle] Initialize {GetType().Name}");
-			return TaskHelper.CompletedTask;
+			return Task.CompletedTask;
 		}
 
 		/// <summary>
@@ -100,7 +99,7 @@ namespace Xmf2.Rx.ViewModels
 		protected virtual Task OnStart()
 		{
 			Debug.WriteLine($"[Lifecycle] OnStart {GetType().Name}");
-			return TaskHelper.CompletedTask;
+			return Task.CompletedTask;
 		}
 
 		/// <summary>
@@ -109,7 +108,7 @@ namespace Xmf2.Rx.ViewModels
 		protected virtual Task OnResume()
 		{
 			Debug.WriteLine($"[Lifecycle] OnResume {GetType().Name}");
-			return TaskHelper.CompletedTask;
+			return Task.CompletedTask;
 		}
 
 		/// <summary>
@@ -118,7 +117,7 @@ namespace Xmf2.Rx.ViewModels
 		protected virtual Task OnPause()
 		{
 			Debug.WriteLine($"[Lifecycle] OnPause {GetType().Name}");
-			return TaskHelper.CompletedTask;
+			return Task.CompletedTask;
 		}
 
 		/// <summary>
@@ -127,8 +126,10 @@ namespace Xmf2.Rx.ViewModels
 		protected virtual Task OnStop()
 		{
 			Debug.WriteLine($"[Lifecycle] OnStop {GetType().Name}");
-			return TaskHelper.CompletedTask;
+			return Task.CompletedTask;
 		}
+
+		protected abstract Task Close();
 
 		private class ViewModelLifecycleManager : IViewModelLifecycleManager
 		{

@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Diagnostics;
-using Android.App;
 using Android.Content;
-using Android.Support.V7.App;
+using AndroidX.AppCompat.App;
+using AndroidX.Fragment.App;
 using Splat;
 using Xmf2.Commons.Droid.Services;
 
@@ -12,11 +12,11 @@ namespace Xmf2.Rx.Droid.Services
 	{
 		private readonly Lazy<ICurrentActivity> _currentActivity;
 
-		protected Activity CurrentActivity => _currentActivity.Value.Activity;
+		protected Android.App.Activity CurrentActivity => _currentActivity.Value.Activity;
 
 		public BaseViewPresenter()
 		{
-			_currentActivity = new Lazy<ICurrentActivity>(Locator.Current.GetService<ICurrentActivity>);
+			_currentActivity = new Lazy<ICurrentActivity>(Locator.Current.GetService<ICurrentActivity>());
 		}
 
 		protected virtual void ShowView(Type viewType, bool clearHistory = false)
@@ -55,7 +55,7 @@ namespace Xmf2.Rx.Droid.Services
 			activity.StartActivity(intent);
 		}
 
-		protected virtual void ShowView(Android.Support.V4.App.DialogFragment view, string tag)
+		protected virtual void ShowView(DialogFragment view, string tag)
 		{
 			if (CurrentActivity is AppCompatActivity appCompatActivity && !appCompatActivity.IsFinishing)
 			{

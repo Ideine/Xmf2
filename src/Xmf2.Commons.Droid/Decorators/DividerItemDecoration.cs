@@ -1,12 +1,11 @@
 ﻿using System;
 using Android.Content;
-using Android.Content.Res;
 using Android.Graphics;
 using Android.Graphics.Drawables;
-using Android.Support.V4.Content;
-using Android.Support.V4.View;
-using Android.Support.V7.Widget;
 using Android.Views;
+using AndroidX.Core.Content;
+using AndroidX.Core.View;
+using AndroidX.RecyclerView.Widget;
 
 namespace Xmf2.Commons.Droid.Decorators
 {

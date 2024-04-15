@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Specialized;
+using System.ComponentModel;
+using System.Linq;
 using System.Reactive.Disposables;
 using System.Windows.Input;
 using Android.Content;
 using Android.OS;
-using Android.Support.V7.Widget;
 using Android.Views;
+using AndroidX.RecyclerView.Widget;
 using ReactiveUI;
 
 namespace Xmf2.Rx.Droid.ListElement
@@ -14,7 +16,7 @@ namespace Xmf2.Rx.Droid.ListElement
 	{
 		protected CompositeDisposable UiDispo = new CompositeDisposable();
 
-		public int ItemTemplate { get; set; }
+        public int ItemTemplate { get; set; }
 
 		public ICommand ItemClick { get; set; }
 
@@ -22,22 +24,56 @@ namespace Xmf2.Rx.Droid.ListElement
 
 		protected readonly Context Context;
 
-		private IReadOnlyReactiveList<TItemData> _itemsSource;
-		public IReadOnlyReactiveList<TItemData> ItemsSource
-		{
-			get => _itemsSource;
-			set
-			{
-				if (!Equals(_itemsSource, value))
-				{
-					_itemsSource = value;
-					_itemsSource.CollectionChanged += CollectionChanged;
-				}
-				NotifyDataSetChanged();
-			}
-		}
+        private BindingList<TItemData> itemsSource;
+        public BindingList<TItemData> ItemsSource
+        {
+            get => itemsSource;
+            set
+            {
+                if (!Equals(itemsSource, value))
+                {
+                    itemsSource = value;
+                    itemsSource.ListChanged += ListChanged;
+                }
+                NotifyDataSetChanged();
+            }
+        }
 
-		public BaseReactiveRecyclerViewAdapter(Context context)
+        private void ListChanged(object sender, ListChangedEventArgs e)
+        {
+            new Handler(Looper.MainLooper).Post(() =>
+            {
+                try
+                {
+                    switch (e.ListChangedType)
+                    {
+                        case ListChangedType.ItemAdded:
+                            NotifyItemInserted(e.NewIndex);
+                            break;
+                        //case ListChangedType.ItemMoved:
+                        //    NotifyItemMoved(e.OldIndex, e.NewIndex);
+                        //    break;
+                        //case ListChangedType.ItemDeleted:
+                        //    NotifyItemRemoved(e.OldIndex);
+                        //    break;
+                        case ListChangedType.ItemChanged:
+                            NotifyItemChanged(e.NewIndex);
+                            break;
+                        default:
+                            NotifyDataSetChanged();
+                            break;
+                    }
+                }
+                catch (Exception)
+                {
+                    //Mostly occurs in default case when execute NotifyDataSetChanged();
+                    //It was caused by calling manual Dispose on Adapter when setting new adapter to RecyclerView.
+                    //Or Adapter instance was Disposed but not unhooked from Data Source events, and in event method was code working with context.
+                }
+            });
+        }
+
+        public BaseReactiveRecyclerViewAdapter(Context context)
 		{
 			Context = context;
 		}
@@ -48,8 +84,8 @@ namespace Xmf2.Rx.Droid.ListElement
 
 		object ItemAt(int position)
 		{
-			return ItemsSource[position];
-		}
+            return ItemsSource.ElementAt(position);
+        }
 
 		public override void OnBindViewHolder(RecyclerView.ViewHolder holder, int position)
 		{
@@ -72,57 +108,105 @@ namespace Xmf2.Rx.Droid.ListElement
 			return viewHolder.DisposeWith(UiDispo);
 		}
 
-		protected virtual void OnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
-		{
-			new Handler(Looper.MainLooper).Post(() =>
-			{
-				try
-				{
-					switch (e.Action)
-					{
-						case NotifyCollectionChangedAction.Add:
-							NotifyItemInserted(e.NewStartingIndex);
-							break;
-						case NotifyCollectionChangedAction.Move:
-							NotifyItemMoved(e.OldStartingIndex, e.NewStartingIndex);
-							break;
-						case NotifyCollectionChangedAction.Remove:
-							if (e.OldItems.Count > 1)
-							{
-								NotifyItemRangeRemoved(e.OldStartingIndex, e.OldItems.Count);
-							}
-							else
-							{
-								NotifyItemRemoved(e.OldStartingIndex);
-							}
-							break;
-						default:
-							NotifyDataSetChanged();
-							break;
-					}
-				}
-				catch (Exception)
-				{
-					//Mostly occurs in default case when execute NotifyDataSetChanged();
-					//It was caused by calling manual Dispose on Adapter when setting new adapter to RecyclerView.
-					//Or Adapter instance was Disposed but not unhooked from Data Source events, and in event method was code working with context.
-				}
-			});
-		}
+        //public virtual void OnCollectionChanged(IChangeSet<TItemData> changeSet)
+        //{
+        //	new Handler(Looper.MainLooper).Post(() =>
+        //	{
+        //		try
+        //		{
+        //			int i = 0;
+        //			foreach (var change in changeSet)
+        //			{
+        //                      switch (change.Reason)
+        //                      {
+        //                          case ListChangeReason.Add:
+        //                              NotifyItemInserted(i);
+        //                              break;
+        //                          //case ListChangeReason.Moved:
+        //                          //    NotifyItemMoved(change.OldStartingIndex, e.NewStartingIndex);
+        //                          //    break;
+        //                          case ListChangeReason.Remove:
+        //                              //if (e.OldItems.Count > 1)
+        //                              //{
+        //                              //    NotifyItemRangeRemoved(e.OldStartingIndex, e.OldItems.Count);
+        //                              //}
+        //                              //else
+        //                              //{
+        //                              //NotifyItemRemoved(i);
+        //                              //}
+        //                              break;
+        //                          default:
+        //                              NotifyDataSetChanged();
+        //                              break;
+        //                      }
+        //				i++;
+        //                  }
+        //              }
+        //		catch (Exception)
+        //		{
+        //			//Mostly occurs in default case when execute NotifyDataSetChanged();
+        //			//It was caused by calling manual Dispose on Adapter when setting new adapter to RecyclerView.
+        //			//Or Adapter instance was Disposed but not unhooked from Data Source events, and in event method was code working with context.
+        //		}
+        //	});
+        //}
 
 
-		private void CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
-		{
-			OnCollectionChanged(sender, e);
-		}
+        //private void CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        //{
+        //	OnCollectionChanged(sender, e);
+        //}
 
-		protected override void Dispose(bool disposing)
+        protected virtual void OnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            new Handler(Looper.MainLooper).Post(() =>
+            {
+                try
+                {
+                    switch (e.Action)
+                    {
+                        case NotifyCollectionChangedAction.Add:
+                            NotifyItemInserted(e.NewStartingIndex);
+                            break;
+                        case NotifyCollectionChangedAction.Move:
+                            NotifyItemMoved(e.OldStartingIndex, e.NewStartingIndex);
+                            break;
+                        case NotifyCollectionChangedAction.Remove:
+                            if (e.OldItems.Count > 1)
+                            {
+                                NotifyItemRangeRemoved(e.OldStartingIndex, e.OldItems.Count);
+                            }
+                            else
+                            {
+                                NotifyItemRemoved(e.OldStartingIndex);
+                            }
+                            break;
+                        default:
+                            NotifyDataSetChanged();
+                            break;
+                    }
+                }
+                catch (Exception)
+                {
+                    //Mostly occurs in default case when execute NotifyDataSetChanged();
+                    //It was caused by calling manual Dispose on Adapter when setting new adapter to RecyclerView.
+                    //Or Adapter instance was Disposed but not unhooked from Data Source events, and in event method was code working with context.
+                }
+            });
+        }
+
+        private void CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            OnCollectionChanged(sender, e);
+        }
+
+        protected override void Dispose(bool disposing)
 		{
 			if (disposing)
 			{
 				if (ItemsSource != null)
 				{
-					ItemsSource.CollectionChanged -= CollectionChanged;
+                    ItemsSource.ListChanged -= ListChanged;
 				}
 				UiDispo?.Dispose();
 				UiDispo = null;

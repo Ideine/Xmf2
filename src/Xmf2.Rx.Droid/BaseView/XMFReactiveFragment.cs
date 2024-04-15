@@ -1,21 +1,19 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Reactive;
-using System.Reactive.Linq;
-using System.Reactive.Subjects;
 using Android.Runtime;
 using ReactiveUI;
 using Xmf2.Rx.Helpers;
 
 namespace Xmf2.Rx.Droid.BaseView
 {
-	//Class, method and from ReactiveUI : https://github.com/reactiveui/ReactiveUI/blob/7.4.0/src/ReactiveUI/IReactiveObject.cs
+    //Class, method and from ReactiveUI : https://github.com/reactiveui/ReactiveUI/blob/7.4.0/src/ReactiveUI/IReactiveObject.cs
 
-	/// <summary>
-	/// This is a Fragment that is both an Activity and has ReactiveObject powers 
-	/// (i.e. you can call RaiseAndSetIfChanged)
-	/// </summary>
-	public class XMFFragment<TViewModel> : XMFFragment, IViewFor<TViewModel> where TViewModel : class
+    /// <summary>
+    /// This is a Fragment that is both an Activity and has ReactiveObject powers 
+    /// (i.e. you can call RaiseAndSetIfChanged)
+    /// </summary>
+    public class XMFFragment<TViewModel> : XMFFragment, IViewFor<TViewModel> where TViewModel : class
 	{
 		protected XMFFragment() { }
 
@@ -40,39 +38,25 @@ namespace Xmf2.Rx.Droid.BaseView
 	/// This is a Fragment that is both an Activity and has ReactiveObject powers 
 	/// (i.e. you can call RaiseAndSetIfChanged)
 	/// </summary>
-	public class XMFFragment : global::Android.Support.V4.App.Fragment, IReactiveNotifyPropertyChanged<XMFFragment>, IReactiveObject, IHandleObservableErrors, ICanActivate
+	public class XMFFragment : global::AndroidX.Fragment.App.Fragment, IReactiveNotifyPropertyChanged<XMFFragment>, IReactiveObject, IHandleObservableErrors, ICanActivate
 	{
 		protected XMFFragment() { }
 
 		protected XMFFragment(IntPtr handle, JniHandleOwnership ownership) : base(handle, ownership) { }
 
-		public event ReactiveUI.PropertyChangingEventHandler PropertyChanging
-		{
-			add { WeakEventManager<ReactiveUI.INotifyPropertyChanging, ReactiveUI.PropertyChangingEventHandler, ReactiveUI.PropertyChangingEventArgs>.AddHandler(this, value); }
-			remove { WeakEventManager<ReactiveUI.INotifyPropertyChanging, ReactiveUI.PropertyChangingEventHandler, ReactiveUI.PropertyChangingEventArgs>.RemoveHandler(this, value); }
-		}
+        public event PropertyChangingEventHandler PropertyChanging;
 
-		void IReactiveObject.RaisePropertyChanging(ReactiveUI.PropertyChangingEventArgs args)
-		{
-			WeakEventManager<ReactiveUI.INotifyPropertyChanging, ReactiveUI.PropertyChangingEventHandler, ReactiveUI.PropertyChangingEventArgs>.DeliverEvent(this, args);
-		}
+        void IReactiveObject.RaisePropertyChanging(PropertyChangingEventArgs args) => PropertyChanging?.Invoke(this, args);
 
-		public event PropertyChangedEventHandler PropertyChanged
-		{
-			add { WeakEventManager<INotifyPropertyChanged, PropertyChangedEventHandler, PropertyChangedEventArgs>.AddHandler(this, value); }
-			remove { WeakEventManager<INotifyPropertyChanged, PropertyChangedEventHandler, PropertyChangedEventArgs>.RemoveHandler(this, value); }
-		}
+        public event PropertyChangedEventHandler PropertyChanged;
 
-		void IReactiveObject.RaisePropertyChanged(PropertyChangedEventArgs args)
-		{
-			WeakEventManager<INotifyPropertyChanged, PropertyChangedEventHandler, PropertyChangedEventArgs>.DeliverEvent(this, args);
-		}
+        void IReactiveObject.RaisePropertyChanged(PropertyChangedEventArgs args) => PropertyChanged?.Invoke(this, args);
 
-		/// <summary>
-		/// Represents an Observable that fires *before* a property is about to
-		/// be changed.         
-		/// </summary>
-		public IObservable<IReactivePropertyChangedEventArgs<XMFFragment>> Changing
+        /// <summary>
+        /// Represents an Observable that fires *before* a property is about to
+        /// be changed.         
+        /// </summary>
+        public IObservable<IReactivePropertyChangedEventArgs<XMFFragment>> Changing
 		{
 			get { return this.getChangingObservable(); }
 		}

@@ -1,11 +1,10 @@
-﻿using System;
-using Android.Content.PM;
+﻿using Android.Content.PM;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 
 namespace Xmf2.Commons.Droid.Permissions
 {
-	public static class PermissionContainer
+    public static class PermissionContainer
 	{
 		private static readonly Dictionary<int, TaskCompletionSource<Permission[]>> _permissions = new Dictionary<int, TaskCompletionSource<Permission[]>>();
 

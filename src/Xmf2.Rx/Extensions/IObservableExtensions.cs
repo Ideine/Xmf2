@@ -134,7 +134,7 @@ namespace System
 		{
 			IErrorHandler errorHandler = Locator.Current.GetService<IErrorHandler>();
 
-			return errorHandler.Execute(observable, customHandler)
+			return errorHandler. Execute(observable, customHandler)
 				.Catch<T, Exception>(ex => Observable.Return(default(T)));
 		}
 

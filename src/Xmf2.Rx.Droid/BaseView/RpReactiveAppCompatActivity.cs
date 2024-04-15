@@ -3,9 +3,9 @@ using Android.Runtime;
 using ReactiveUI;
 using ReactiveUI.AndroidX;
 
-namespace Xmf2.Rx.DroidUpdated.BaseView
+namespace Xmf2.Rx.Droid.BaseView
 {
-	public class RpReactiveAppCompatActivity<TViewModel> : ReactiveAppCompatActivity, IViewFor<TViewModel>, ICanActivate
+    public class RpReactiveAppCompatActivity<TViewModel> : ReactiveAppCompatActivity, IViewFor<TViewModel>, ICanActivate
         where TViewModel : class
     {
         private TViewModel _viewModel;

@@ -34,7 +34,7 @@ namespace Xmf2.Rx.Services.Authentications
 			this.IsLogged = false;
 			IsLoggedObservable = _isLogged.StartWith(IsLogged).ToObservableForBinding();
 
-			_client.OnAuthSuccess += OnClientAuthenticationSuccess;
+            _client.OnAuthSuccess += OnClientAuthenticationSuccess;
 			_client.OnAuthError += OnClientAuthenticationError;
 		}
 

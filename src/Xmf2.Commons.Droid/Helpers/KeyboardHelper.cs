@@ -1,11 +1,10 @@
-﻿using System;
-using Android.Content;
+﻿using Android.Content;
 using Android.Views.InputMethods;
 using Android.Widget;
 
 namespace Xmf2.Commons.Droid.Helpers
 {
-	public static class KeyboardHelper
+    public static class KeyboardHelper
 	{
 		public static void HideFrom(EditText intput)
 		{

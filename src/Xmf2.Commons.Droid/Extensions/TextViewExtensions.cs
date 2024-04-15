@@ -1,11 +1,10 @@
-﻿using System;
-using Android.Text;
+﻿using Android.Text;
 using Android.Text.Style;
 using Java.Lang;
 
 namespace Android.Widget
 {
-	public static class TextViewExtensions
+    public static class TextViewExtensions
 	{
 		public static void SetTextFromHtml(this TextView textView, string htmlText)
 		{

@@ -1,14 +1,9 @@
 ﻿using System;
-using Android;
-using Android.App;
-using Android.Graphics;
 using Android.Runtime;
-using Android.Views;
-using Android.Widget;
 
 namespace Xmf2.Commons.Droid.Helpers
 {
-	public class ProgressWebChromeClient : Android.Webkit.WebChromeClient
+    public class ProgressWebChromeClient : Android.Webkit.WebChromeClient
 	{
 		private int _currentProgress;
 		private LoadingViewHelper _loadingView;

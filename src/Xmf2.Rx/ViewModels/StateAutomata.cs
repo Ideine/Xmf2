@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Xmf2.Rx.ViewModels
 {
-	internal class StateAutomata
+    public class StateAutomata
 	{
 		public class Node
 		{

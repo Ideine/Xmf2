@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Android.Views;
 
 namespace Xmf2.Commons.Droid.ChipClouds
 {
-	public class LayoutProcessor
+    public class LayoutProcessor
 	{
 		private readonly FlowLayout _flowLayout;
 

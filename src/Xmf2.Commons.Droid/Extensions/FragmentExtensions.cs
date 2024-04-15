@@ -1,6 +1,6 @@
 ﻿using System;
-using Android.Support.V4.App;
-using Android.Support.V7.App;
+using AndroidX.AppCompat.App;
+using AndroidX.Fragment.App;
 
 public static class FragmentExtensions
 {

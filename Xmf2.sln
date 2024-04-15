@@ -11,9 +11,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xmf2.Rx.iOS", "src\Xmf2.Rx.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xmf2.Rx.Droid", "src\Xmf2.Rx.Droid\Xmf2.Rx.Droid.csproj", "{30DFDFEA-2765-48E6-ABA5-E7B842C9F813}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xmf2.Rx.DroidUpdated", "src\Xmf2.Rx.DroidUpdated\Xmf2.Rx.DroidUpdated.csproj", "{25D05C72-E903-4E23-9A48-98276641ED5D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xmf2.Rx.Droid", "src\Xmf2.Rx.Droid\Xmf2.Rx.Droid.csproj", "{25D05C72-E903-4E23-9A48-98276641ED5D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xmf2.RxUpdated", "src\Xmf2.RxUpdated\Xmf2.RxUpdated.csproj", "{3F510F7F-B52D-45FE-A50A-AE7519BEE6F8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xmf2.Rx", "src\Xmf2.Rx\Xmf2.Rx.csproj", "{3F510F7F-B52D-45FE-A50A-AE7519BEE6F8}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xmf2.Commons", "src\Xmf2.Commons\Xmf2.Commons.csproj", "{FC537055-C255-4D80-AE43-60AEB6BC593F}"
 EndProject
@@ -21,7 +21,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xmf2.Commons.Droid", "src\X
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xmf2.Commons.iOS", "src\Xmf2.Commons.iOS\Xmf2.Commons.iOS.csproj", "{DDF35A3E-8D9C-4255-8436-D7926236D5F9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xmf2.Commons.DroidUpdated", "src\Xmf2.Commons.DroidUpdated\Xmf2.Commons.DroidUpdated.csproj", "{37DDD405-72D1-4C27-A3EA-8E03A74EF65D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xmf2.Commons.Droid", "src\Xmf2.Commons.Droid\Xmf2.Commons.Droid.csproj", "{37DDD405-72D1-4C27-A3EA-8E03A74EF65D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

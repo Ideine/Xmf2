@@ -1,7 +1,6 @@
-﻿using System;
-namespace Xmf2.Commons.Droid.ChipClouds
+﻿namespace Xmf2.Commons.Droid.ChipClouds
 {
-	public interface IChipCloudObserver
+    public interface IChipCloudObserver
 	{
 		void Update(IChipCloudObserver observer, object data);
 	}

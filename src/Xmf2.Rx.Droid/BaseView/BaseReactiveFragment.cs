@@ -1,12 +1,11 @@
 ﻿using System;
 using ReactiveUI;
-using Android.Views;
 using Android.Runtime;
 using Xmf2.Rx.ViewModels;
 
 namespace Xmf2.Rx.Droid.BaseView
 {
-	public abstract class BaseReactiveFragment<TViewModel> : XMFFragment<TViewModel> where TViewModel : BaseViewModel
+    public abstract class BaseReactiveFragment<TViewModel> : XMFFragment<TViewModel> where TViewModel : BaseViewModel
 	{
 		protected abstract TViewModel GetViewModel();
 

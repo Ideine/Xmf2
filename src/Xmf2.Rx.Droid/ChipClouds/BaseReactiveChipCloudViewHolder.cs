@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Reactive;
-using System.Reactive.Concurrency;
-using System.Reactive.Linq;
-using System.Reactive.Subjects;
 using System.Windows.Input;
 using Android.Content;
 using Android.Views;
@@ -12,12 +9,10 @@ using Xmf2.Rx.Helpers;
 
 namespace Xmf2.Rx.Droid.ChipClouds
 {
-	public class BaseReactiveChipCloudViewHolder<TViewModel> : ChipCloudViewHolder, IViewFor<TViewModel>, IViewFor, ICanActivate
+    public class BaseReactiveChipCloudViewHolder<TViewModel> : ChipCloudViewHolder, IViewFor<TViewModel>, IViewFor, ICanActivate
 		where TViewModel : class, IReactiveObject
 	{
 		public readonly Context Context;
-
-		protected XmfDisposable Disposable = new XmfDisposable();
 
 		private TViewModel _viewModel;
 		public TViewModel ViewModel
@@ -89,7 +84,6 @@ namespace Xmf2.Rx.Droid.ChipClouds
 				{
 					ItemView.Click -= OnClickItem;
 				}
-				Disposable.Dispose();
 			}
 		}
 

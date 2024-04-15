@@ -1,11 +1,10 @@
-﻿using System;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using Android.App;
 using Android.Content;
 
 namespace Xmf2.Commons.Droid.Services
 {
-	public interface ICurrentActivity
+    public interface ICurrentActivity
 	{
 		Activity Activity { get; }
 	}
@@ -30,6 +29,11 @@ namespace Xmf2.Commons.Droid.Services
 	public class LifecycleMonitor : ILifecycleMonitor, ICurrentActivity
 	{
 		public Activity Activity { get; private set; }
+
+        public LifecycleMonitor(Context context)
+        {
+            Activity = context as Activity;
+        }
 
 		public void OnCreate(Activity activity)
 		{

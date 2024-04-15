@@ -1,11 +1,10 @@
 ﻿using System;
-using Splat;
 
 namespace Splat
 {
 	public static class LocatorExtensions
 	{
-		public static TService GetService<TService>(this IDependencyResolver resolver)
+		public static TService GetServiced<TService>(this IDependencyResolver resolver)
 		{
 			return resolver.GetService<TService>(null);
 		}
@@ -37,9 +36,9 @@ namespace Splat
 			return Locator.Current.GetService<TService>();
 		}
 
-		public static TService ResolveOrDefault<TService>(this object _)
-		{
-			return Locator.Current.GetServiceOrDefault<TService>();
-		}
+		//public static TService ResolveOrDefault<TService>(this object _)
+		//{
+		//	return Locator.Current.GetServiceOrDefault<TService>();
+		//}
 	}
 }

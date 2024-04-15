@@ -90,10 +90,5 @@ namespace System.Collections.Generic
 			}
 			return acc;
 		}
-
-		public static HashSet<T> ToHashSet<T>(this IEnumerable<T> source)
-		{
-			return new HashSet<T>(source);
-		}
 	}
 }
