@@ -108,55 +108,6 @@ namespace Xmf2.Rx.Droid.ListElement
 			return viewHolder.DisposeWith(UiDispo);
 		}
 
-        //public virtual void OnCollectionChanged(IChangeSet<TItemData> changeSet)
-        //{
-        //	new Handler(Looper.MainLooper).Post(() =>
-        //	{
-        //		try
-        //		{
-        //			int i = 0;
-        //			foreach (var change in changeSet)
-        //			{
-        //                      switch (change.Reason)
-        //                      {
-        //                          case ListChangeReason.Add:
-        //                              NotifyItemInserted(i);
-        //                              break;
-        //                          //case ListChangeReason.Moved:
-        //                          //    NotifyItemMoved(change.OldStartingIndex, e.NewStartingIndex);
-        //                          //    break;
-        //                          case ListChangeReason.Remove:
-        //                              //if (e.OldItems.Count > 1)
-        //                              //{
-        //                              //    NotifyItemRangeRemoved(e.OldStartingIndex, e.OldItems.Count);
-        //                              //}
-        //                              //else
-        //                              //{
-        //                              //NotifyItemRemoved(i);
-        //                              //}
-        //                              break;
-        //                          default:
-        //                              NotifyDataSetChanged();
-        //                              break;
-        //                      }
-        //				i++;
-        //                  }
-        //              }
-        //		catch (Exception)
-        //		{
-        //			//Mostly occurs in default case when execute NotifyDataSetChanged();
-        //			//It was caused by calling manual Dispose on Adapter when setting new adapter to RecyclerView.
-        //			//Or Adapter instance was Disposed but not unhooked from Data Source events, and in event method was code working with context.
-        //		}
-        //	});
-        //}
-
-
-        //private void CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
-        //{
-        //	OnCollectionChanged(sender, e);
-        //}
-
         protected virtual void OnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             new Handler(Looper.MainLooper).Post(() =>
