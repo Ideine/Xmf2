@@ -47,18 +47,18 @@ namespace Xmf2.Rx.Droid.ListElement
                 {
                     switch (e.ListChangedType)
                     {
-                        case ListChangedType.ItemAdded:
-                            NotifyItemInserted(e.NewIndex);
-                            break;
+                        //case ListChangedType.ItemAdded:
+                        //    NotifyItemInserted(e.NewIndex);
+                        //    break;
                         //case ListChangedType.ItemMoved:
                         //    NotifyItemMoved(e.OldIndex, e.NewIndex);
                         //    break;
                         //case ListChangedType.ItemDeleted:
                         //    NotifyItemRemoved(e.OldIndex);
                         //    break;
-                        case ListChangedType.ItemChanged:
-                            NotifyItemChanged(e.NewIndex);
-                            break;
+                        //case ListChangedType.ItemChanged:
+                        //    NotifyItemChanged(e.NewIndex);
+                        //    break;
                         default:
                             NotifyDataSetChanged();
                             break;
