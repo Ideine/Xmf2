@@ -5,6 +5,7 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="FubarCoder.RestSharp.Portable.Core" Version="4.0.8" />
+    <PackageReference Include="Microsoft.Maui.Essentials" Version="8.0.20" />
     <PackageReference Include="Xmf2.Common.Extensions" Version="1.1.29" />
   </ItemGroup>
 </Project>
