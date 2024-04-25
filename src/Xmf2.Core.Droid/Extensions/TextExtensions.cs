@@ -28,10 +28,10 @@ namespace Xmf2.Core.Droid.Extensions
 
 		public static void BindText(this EditText editText, string text)
 		{
-			if (editText != null && editText.Text != text && text != null)
+			if (editText != null && editText.Text != text)
 			{
 				editText.Text = text;
-				editText.SetSelection(text.Length);
+				editText.SetSelection(text?.Length ?? 0);
 			}
 		}
 	}
