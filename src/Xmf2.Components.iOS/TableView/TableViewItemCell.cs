@@ -1,5 +1,4 @@
-﻿using System;
-using Foundation;
+﻿using Foundation;
 using UIKit;
 using Xmf2.Core.iOS.Extensions;
 using Xmf2.iOS.Extensions.Constraints;
@@ -12,16 +11,20 @@ namespace Xmf2.Components.iOS.TableView
 	public class TableViewItemCell : UITableViewCell
 	{
 		public const string CELL_IDENTIFIER = nameof(TableViewItemCell);
-		public static readonly NSString NsCellIdentifier = new NSString(CELL_IDENTIFIER);
+		public static readonly NSString NsCellIdentifier = new(CELL_IDENTIFIER);
 
 		private NSLayoutConstraint[] _childConstraints;
 		private UIView _child;
 
-		protected TableViewItemCell(IntPtr handle) : base(handle) { }
+#if NET7_0_OR_GREATER
+		protected TableViewItemCell(ObjCRuntime.NativeHandle handle) : base(handle) { }
+#else
+		protected TableViewItemCell(System.IntPtr handle) : base(handle) { }
+#endif
 
 		public void SetContent(UIView child)
 		{
-			if(_child == child)
+			if (_child == child)
 			{
 				return;
 			}
@@ -35,21 +38,22 @@ namespace Xmf2.Components.iOS.TableView
 				_childConstraints = InstantiateConstraints();
 
 				ContentView.EnsureAdd(child)
-						   .EnsureAdd(_childConstraints);
+					.EnsureAdd(_childConstraints);
 
 				child.TranslatesAutoresizingMaskIntoConstraints = false;
 			}
+
 			ContentView.WithBackgroundColor(UIColor.Clear);
 			this.WithBackgroundColor(UIColor.Clear);
 		}
 
 		public virtual NSLayoutConstraint[] InstantiateConstraints()
 		{
-			var vConstraint1 = NSLayoutConstraint.Create(ContentView, CenterY, Equal, _child, CenterY, 1f, 0f).WithAutomaticIdentifier();
-			var vConstraint2 = NSLayoutConstraint.Create(ContentView, Height, Equal, _child, Height, 1f, 0f).WithAutomaticIdentifier();
-			//La priorité de la contraint doit être inférieur a 1000 (Required)...
-			//...autrement de nombreuses erreur de contrainte peuvent s'afficher...
-			//... au layout see https://stackoverflow.com/questions/24984650/autolayout-breaks-constraints-when-layoutifneeded-is-called
+			NSLayoutConstraint vConstraint1 = NSLayoutConstraint.Create(ContentView, CenterY, Equal, _child, CenterY, 1f, 0f).WithAutomaticIdentifier();
+			NSLayoutConstraint vConstraint2 = NSLayoutConstraint.Create(ContentView, Height, Equal, _child, Height, 1f, 0f).WithAutomaticIdentifier();
+			//La priorité de la contraint doit être inférieur à 1000 (Required)...
+			//...autrement de nombreuses erreurs de contrainte peuvent s'afficher...
+			//... au layout, see https://stackoverflow.com/questions/24984650/autolayout-breaks-constraints-when-layoutifneeded-is-called
 			vConstraint1.Priority = (float)UILayoutPriority.DefaultHigh;
 			vConstraint2.Priority = (float)UILayoutPriority.DefaultHigh;
 			return new[]
