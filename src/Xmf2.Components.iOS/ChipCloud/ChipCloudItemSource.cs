@@ -14,7 +14,7 @@ namespace Xmf2.Components.iOS.ChipCloud
 	{
 		private ChipCloudView _collectionView;
 
-		private Dictionary<Guid, IComponentView> _componentViews = new Dictionary<Guid, IComponentView>();
+		private Dictionary<Guid, IComponentView> _componentViews = new();
 		private Func<string, IComponentView> _componentViewCreator;
 
 		private IReadOnlyList<IEntityViewState> _itemSource;

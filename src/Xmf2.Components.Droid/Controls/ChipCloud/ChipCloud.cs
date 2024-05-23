@@ -12,7 +12,7 @@ namespace Xmf2.Components.Droid.Controls.ChipCloud
 {
 	public class ChipCloud : FlowLayout
 	{
-		protected Xmf2Disposable Disposable = new Xmf2Disposable();
+		protected Xmf2Disposable Disposable = new();
 
 		private ChipCloudAdapter _adapter;
 		private EventSubscriber<ChipCloudAdapter> _subscriber;
