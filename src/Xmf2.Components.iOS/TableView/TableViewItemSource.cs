@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using Foundation;
 using UIKit;
+using Xmf2.Components.Helpers;
 using Xmf2.Components.Interfaces;
 using Xmf2.Components.iOS.Interfaces;
 using Xmf2.Core.Subscriptions;
-using Xmf2.Components.Helpers;
 
 namespace Xmf2.Components.iOS.TableView
 {
@@ -15,12 +15,12 @@ namespace Xmf2.Components.iOS.TableView
 		protected readonly NSString _cellIdentifier;
 
 		private UITableView _listView;
-		protected Xmf2Disposable Disposables { get; } = new Xmf2Disposable();
+		protected Xmf2Disposable Disposables { get; } = new();
 
 		protected readonly Dictionary<Type, Func<IComponentView>> _componentViewCreators;
-		protected readonly Dictionary<Type, Dictionary<TCell, IComponentView>> _componentViews = new Dictionary<Type, Dictionary<TCell, IComponentView>>();
-		private Dictionary<Guid, IComponentView> _componentViewsByState = new Dictionary<Guid, IComponentView>();
-		private Dictionary<IComponentView, Guid> _stateByComponentViews = new Dictionary<IComponentView, Guid>();
+		protected readonly Dictionary<Type, Dictionary<TCell, IComponentView>> _componentViews = new();
+		private readonly Dictionary<Guid, IComponentView> _componentViewsByState = new();
+		private readonly Dictionary<IComponentView, Guid> _stateByComponentViews = new();
 
 		private IReadOnlyList<IEntityViewState> _itemSource;
 
@@ -99,13 +99,11 @@ namespace Xmf2.Components.iOS.TableView
 			return cell;
 		}
 
-		protected virtual void ComponentAdditionnalTreatment(UITableView tableView, NSIndexPath indexPath, IComponentView childComponent)
-		{
-		}
+		protected virtual void ComponentAdditionalTreatment(UITableView tableView, NSIndexPath indexPath, IComponentView childComponent) { }
 
 		private void ReloadState()
 		{
-			for (int i = 0; i < ItemSource.Count; i++)
+			for (int i = 0 ; i < ItemSource.Count ; i++)
 			{
 				var childState = ItemSource[i];
 
