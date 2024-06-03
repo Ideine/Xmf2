@@ -88,7 +88,8 @@ namespace Xmf2.Components.iOS.TableView
 				childComponent = _componentViewCreators[implementationType]().DisposeWith(Disposables);
 				childViews.Add(cell, childComponent);
 			}
-			ComponentAdditionnalTreatment(tableView, indexPath, childComponent);
+
+			ComponentAdditionalTreatment(tableView, indexPath, childComponent);
 
 			_stateByComponentViews[childComponent] = childState.Id;
 			_componentViewsByState[childState.Id] = childComponent;
