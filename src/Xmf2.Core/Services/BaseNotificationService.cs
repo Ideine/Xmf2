@@ -11,6 +11,8 @@ namespace Xmf2.Core.Services
 		Task RegisterForNotification();
 
 		Task UnregisterForNotification();
+
+		bool CheckIfPermissionForNotificationIsGranted();
 	}
 
 	public interface IKeyValueStorageService
@@ -51,6 +53,8 @@ namespace Xmf2.Core.Services
 			_settingsService = settingsService;
 			_notificationDataService = notificationDataService;
 		}
+
+		public virtual bool CheckIfPermissionForNotificationIsGranted() => false;
 
 		public async Task RegisterForNotification()
 		{
