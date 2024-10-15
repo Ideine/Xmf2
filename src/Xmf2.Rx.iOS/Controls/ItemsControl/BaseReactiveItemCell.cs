@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Reactive;
 using System.Reactive.Concurrency;
 using System.Reactive.Linq;
@@ -43,14 +44,14 @@ namespace Xmf2.Rx.iOS.Controls.ItemControls
 		Subject<Unit> deactivated = new Subject<Unit>();
 		public IObservable<Unit> Deactivated => deactivated.AsObservable();
 
-		public BaseReactiveItemCell() { }
+        public BaseReactiveItemCell() { }
 
 		public int GetAffinityForView(Type view)
 		{
 			return (typeof(ICanActivate).GetTypeInfo().IsAssignableFrom(view.GetTypeInfo())) ? 10 : 0;
 		}
 
-		public IObservable<bool> GetActivationForView(IActivatable view)
+		public IObservable<bool> GetActivationForView(IActivatableView view)
 		{
 			var ca = view as ICanActivate;
 			return ca.Activated.Select(_ => true).Merge(ca.Deactivated.Select(_ => false));
@@ -66,5 +67,5 @@ namespace Xmf2.Rx.iOS.Controls.ItemControls
 			base.WillMoveToSuperview(newsuper);
 			RxApp.MainThreadScheduler.Schedule(() => (newsuper != null ? activated : deactivated).OnNext(Unit.Default));
 		}
-	}
+    }
 }

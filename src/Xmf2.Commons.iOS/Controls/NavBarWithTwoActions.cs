@@ -71,18 +71,18 @@ namespace Xmf2.Commons.iOS.Controls
 
 		public NavBarWithTwoActions(string leftImage, string rightImage)
 		{
-			this.LeftButton  = this.CreateButton().WithTitle(LeftActionTitle) .OnClick(OnClickLeftButton) .WithTextColorHighlight(_DEFAULT_TEXT_HIGHLIGHT_COLOR);
+			this.LeftButton = this.CreateButton().WithTitle(LeftActionTitle).OnClick(OnClickLeftButton).WithTextColorHighlight(_DEFAULT_TEXT_HIGHLIGHT_COLOR);
 			this.RightButton = this.CreateButton().WithTitle(RightActionTitle).OnClick(OnClickRightButton).WithTextColorHighlight(_DEFAULT_TEXT_HIGHLIGHT_COLOR);
-			this.Title		 = this.CreateLabel()
+			this.Title = this.CreateLabel()
 								   .WithText(TextTitle)
 								   .WithAlignment(UITextAlignment.Center);
 			this.Title.AdjustsFontSizeToFitWidth = true;
 			this.Title.MinimumScaleFactor = 0.7f;
 
-			bool hasLeftImage  = !string.IsNullOrEmpty(leftImage);
+			bool hasLeftImage = !string.IsNullOrEmpty(leftImage);
 			bool hasRightImage = !string.IsNullOrEmpty(rightImage);
-			LeftButton .ContentEdgeInsets = new UIEdgeInsets(top: 0, left: 15, bottom: 0, right:  0);
-			RightButton.ContentEdgeInsets = new UIEdgeInsets(top: 0, left:  0, bottom: 0, right: 15);
+			LeftButton.ContentEdgeInsets = new UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 0);
+			RightButton.ContentEdgeInsets = new UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 15);
 			if (hasLeftImage)
 			{
 				LeftButton.WithImage(leftImage);
@@ -104,24 +104,22 @@ namespace Xmf2.Commons.iOS.Controls
 			}
 		}
 
-		private const float NOTCH_EXTRA_SPACE = 12f;
+		private const float NOTCH_EXTRA_SPACE = 24f;
 		public NavBarWithTwoActions ConstrainHeightToDefault()
 		{
-			this.ConstrainHeight(  LayoutConsts.UINavBar_DefaultHeight
-			                     + (this.HaveNotch() ? NOTCH_EXTRA_SPACE : 0f)
-			                     + LayoutConsts.UIStatusBar_DefaultHeight
-			                     );
+			this.ConstrainHeight(LayoutConsts.UINavBar_DefaultHeight
+								 + NOTCH_EXTRA_SPACE
+								 + LayoutConsts.UIStatusBar_DefaultHeight
+								 );
 			return this;
 		}
 
 		protected virtual void ApplyAutoLayout()
 		{
-			var topMargin = LayoutConsts.UIStatusBar_DefaultHeight
-						  + (this.HaveNotch() ? NOTCH_EXTRA_SPACE : 0f);
-			
+			this.SafeAreaLayoutGuide.TopAnchor.ConstraintEqualTo(_container.TopAnchor).Active = true;
+
 			//Vertical Layout
-			this.AnchorTop(_container, topMargin)
-				.AnchorBottom(_container);
+			this.AnchorBottom(_container, 4);
 
 			_container.CenterVertically(LeftButton)
 					  .CenterVertically(Title)
@@ -140,7 +138,7 @@ namespace Xmf2.Commons.iOS.Controls
 					  .MinHorizontalSpace(Title, RightButton);
 			Title.SetContentCompressionResistancePriority((float)UILayoutPriority.DefaultLow, UILayoutConstraintAxis.Horizontal);
 		}
-	
+
 		public virtual void OnClickLeftButton()
 		{
 			LeftAction?.Invoke();

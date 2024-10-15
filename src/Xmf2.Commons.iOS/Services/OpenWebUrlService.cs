@@ -1,5 +1,4 @@
-﻿using System;
-using Foundation;
+﻿using Foundation;
 using SafariServices;
 using UIKit;
 using Xmf2.Commons.Services;
@@ -8,9 +7,9 @@ namespace Xmf2.Commons.iOS.Services
 {
 	public class OpenWebUrlService: IOpenWebUrlService
 	{
-		public void OpenWebsite(string url)
-		{
-			if (NSThread.IsMain)
+        public void Open(string url)
+        {
+            if (NSThread.IsMain)
 			{
 				InternalOpenWebSite(url);
 			}

@@ -1,5 +1,6 @@
 ﻿using Foundation;
 using System;
+using System.Collections.ObjectModel;
 using UIKit;
 
 namespace ReactiveUI
@@ -9,28 +10,15 @@ namespace ReactiveUI
 		public static void WithDataList<TSource, TCell>(
 			this ReactiveTableViewSource<TSource> tableViewSource,
 			UITableView tableView,
-			ReactiveList<TSource> dataSource,
+            ObservableCollection<TSource> dataSource,
 			NSString cellKey,
 			Action<TCell> initializeCellAction)
 			where TCell : UITableViewCell
 			where TSource : class
 		{
 			tableViewSource.Data = new[]{
-				new TableSectionInformation<TSource, TCell>(dataSource ?? new ReactiveList<TSource>(), cellKey, (float)tableView.RowHeight, initializeCellAction)
+				new TableSectionInformation<TSource, TCell>(dataSource ?? new ObservableCollection<TSource>(), cellKey, (float)tableView.RowHeight, initializeCellAction)
 			};
 		}
-
-		public static void WithDataList<TSource, TCell>(
-			this ReactiveCollectionViewSource<TSource> collectionViewSource,
-			IReactiveNotifyCollectionChanged<TSource> dataSource,
-			NSString cellKey,
-			Action<TCell> initalizeCellAction)
-			where TCell : UICollectionViewCell
-		{
-			collectionViewSource.Data = new[]
-			{
-				new CollectionViewSectionInformation<TSource, TCell>(dataSource, cellKey, initalizeCellAction)
-			};
-		}
-	}
+    }
 }

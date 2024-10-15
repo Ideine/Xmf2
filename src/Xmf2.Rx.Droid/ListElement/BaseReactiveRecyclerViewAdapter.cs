@@ -1,190 +1,104 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 using System.Collections.Specialized;
-using System.ComponentModel;
-using System.Linq;
-using System.Reactive.Disposables;
 using System.Windows.Input;
 using Android.Content;
-using Android.OS;
 using Android.Views;
 using AndroidX.RecyclerView.Widget;
 using ReactiveUI;
+using Object = Java.Lang.Object;
 
 namespace Xmf2.Rx.Droid.ListElement
 {
-	public class BaseReactiveRecyclerViewAdapter<TItemData, TViewHolder> : RecyclerView.Adapter where TViewHolder : RecyclerView.ViewHolder, IRecyclerViewViewHolder
-	{
-		protected CompositeDisposable UiDispo = new CompositeDisposable();
-
+    public class BaseReactiveRecyclerViewAdapter<TItemData, TViewHolder> : RecyclerView.Adapter where TViewHolder : RecyclerView.ViewHolder, IRecyclerViewViewHolder
+    {
         public int ItemTemplate { get; set; }
 
-		public ICommand ItemClick { get; set; }
+        public ICommand ItemClick { get; set; }
 
-		public ICommand ItemLongClick { get; set; }
+        public ICommand ItemLongClick { get; set; }
 
-		protected readonly Context Context;
+        protected readonly Context Context;
 
-        private BindingList<TItemData> itemsSource;
-        public BindingList<TItemData> ItemsSource
+        private ObservableCollection<TItemData> _itemsSource;
+        public ObservableCollection<TItemData> ItemsSource
         {
-            get => itemsSource;
+            get => _itemsSource;
             set
             {
-                if (!Equals(itemsSource, value))
+                if (!Equals(_itemsSource, value))
                 {
-                    itemsSource = value;
-                    itemsSource.ListChanged += ListChanged;
+                    _itemsSource = value;
+                    _itemsSource.CollectionChanged += OnCollectionChanged;
                 }
+
                 NotifyDataSetChanged();
             }
         }
 
-        private void ListChanged(object sender, ListChangedEventArgs e)
-        {
-            new Handler(Looper.MainLooper).Post(() =>
-            {
-                try
-                {
-                    switch (e.ListChangedType)
-                    {
-                        //case ListChangedType.ItemAdded:
-                        //    NotifyItemInserted(e.NewIndex);
-                        //    break;
-                        //case ListChangedType.ItemMoved:
-                        //    NotifyItemMoved(e.OldIndex, e.NewIndex);
-                        //    break;
-                        //case ListChangedType.ItemDeleted:
-                        //    NotifyItemRemoved(e.OldIndex);
-                        //    break;
-                        //case ListChangedType.ItemChanged:
-                        //    NotifyItemChanged(e.NewIndex);
-                        //    break;
-                        default:
-                            NotifyDataSetChanged();
-                            break;
-                    }
-                }
-                catch (Exception)
-                {
-                    //Mostly occurs in default case when execute NotifyDataSetChanged();
-                    //It was caused by calling manual Dispose on Adapter when setting new adapter to RecyclerView.
-                    //Or Adapter instance was Disposed but not unhooked from Data Source events, and in event method was code working with context.
-                }
-            });
-        }
-
         public BaseReactiveRecyclerViewAdapter(Context context)
-		{
-			Context = context;
-		}
-
-		protected BaseReactiveRecyclerViewAdapter(IntPtr javaRef, Android.Runtime.JniHandleOwnership transfer) : base(javaRef, transfer) { }
-
-		public override int ItemCount => ItemsSource?.Count ?? 0;
-
-		object ItemAt(int position)
-		{
-            return ItemsSource.ElementAt(position);
+        {
+            Context = context;
         }
 
-		public override void OnBindViewHolder(RecyclerView.ViewHolder holder, int position)
-		{
-			if (holder is IViewFor viewFor)
-			{
-				viewFor.ViewModel = ItemAt(position);
-			}
-		}
+        public override int ItemCount => ItemsSource?.Count ?? 0;
 
-		public override RecyclerView.ViewHolder OnCreateViewHolder(ViewGroup parent, int viewType)
-		{
-			View view;
-			using (var inflater = LayoutInflater.From(Context))
-			{
-				view = inflater.Inflate(ItemTemplate, parent, false);
-			}
-			var viewHolder = Activator.CreateInstance(typeof(TViewHolder), view) as TViewHolder;
-			viewHolder.ItemClick = ItemClick;
-			viewHolder.ItemLongClick = ItemLongClick;
-			return viewHolder.DisposeWith(UiDispo);
-		}
-
-        protected virtual void OnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        private object ItemAt(int position)
         {
-            new Handler(Looper.MainLooper).Post(() =>
+            return ItemsSource[position];
+        }
+
+        public override void OnBindViewHolder(RecyclerView.ViewHolder holder, int position)
+        {
+            if (holder is IViewFor viewFor)
             {
-                try
-                {
-                    switch (e.Action)
-                    {
-                        case NotifyCollectionChangedAction.Add:
-                            NotifyItemInserted(e.NewStartingIndex);
-                            break;
-                        case NotifyCollectionChangedAction.Move:
-                            NotifyItemMoved(e.OldStartingIndex, e.NewStartingIndex);
-                            break;
-                        case NotifyCollectionChangedAction.Remove:
-                            if (e.OldItems.Count > 1)
-                            {
-                                NotifyItemRangeRemoved(e.OldStartingIndex, e.OldItems.Count);
-                            }
-                            else
-                            {
-                                NotifyItemRemoved(e.OldStartingIndex);
-                            }
-                            break;
-                        default:
-                            NotifyDataSetChanged();
-                            break;
-                    }
-                }
-                catch (Exception)
-                {
-                    //Mostly occurs in default case when execute NotifyDataSetChanged();
-                    //It was caused by calling manual Dispose on Adapter when setting new adapter to RecyclerView.
-                    //Or Adapter instance was Disposed but not unhooked from Data Source events, and in event method was code working with context.
-                }
-            });
+                viewFor.ViewModel = ItemAt(position);
+            }
         }
 
-        private void CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        public override RecyclerView.ViewHolder OnCreateViewHolder(ViewGroup parent, int viewType)
         {
-            OnCollectionChanged(sender, e);
+            var view = LayoutInflater.From(Context).Inflate(ItemTemplate, parent, false);
+            var viewHolder = Activator.CreateInstance(typeof(TViewHolder), view) as TViewHolder;
+            viewHolder.ItemClick = ItemClick;
+            viewHolder.ItemLongClick = ItemLongClick;
+            return viewHolder;
+        }
+
+        private void OnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            NotifyDataSetChanged();
         }
 
         protected override void Dispose(bool disposing)
-		{
-			if (disposing)
-			{
-				if (ItemsSource != null)
-				{
-                    ItemsSource.ListChanged -= ListChanged;
-				}
-				UiDispo?.Dispose();
-				UiDispo = null;
-			}
-			base.Dispose(disposing);
-		}
+        {
+            if (disposing)
+            {
+                if (ItemsSource != null)
+                {
+                    ItemsSource.CollectionChanged -= OnCollectionChanged;
+                }
+            }
 
-		#region View holders Lifecycle
+            base.Dispose(disposing);
+        }
 
-		public override void OnViewAttachedToWindow(Java.Lang.Object holder)
-		{
-			base.OnViewAttachedToWindow(holder);
-			(holder as IRecyclerViewViewHolder)?.OnViewAttachedToWindow();
-		}
+        public override void OnViewAttachedToWindow(Object holder)
+        {
+            base.OnViewAttachedToWindow(holder);
+            (holder as IRecyclerViewViewHolder)?.OnViewAttachedToWindow();
+        }
 
-		public override void OnViewDetachedFromWindow(Java.Lang.Object holder)
-		{
-			(holder as IRecyclerViewViewHolder)?.OnViewDetachedFromWindow();
-			base.OnViewDetachedFromWindow(holder);
-		}
+        public override void OnViewDetachedFromWindow(Object holder)
+        {
+            (holder as IRecyclerViewViewHolder)?.OnViewDetachedFromWindow();
+            base.OnViewDetachedFromWindow(holder);
+        }
 
-		public override void OnViewRecycled(Java.Lang.Object holder)
-		{
-			(holder as IRecyclerViewViewHolder)?.OnViewRecycled();
-			base.OnViewRecycled(holder);
-		}
-
-		#endregion
-	}
+        public override void OnViewRecycled(Object holder)
+        {
+            (holder as IRecyclerViewViewHolder)?.OnViewRecycled();
+            base.OnViewRecycled(holder);
+        }
+    }
 }
