@@ -9,7 +9,7 @@ using Xmf2.Rx.Helpers;
 namespace Xmf2.Rx.Droid.BaseView
 {
 	/// <summary>
-	/// This is a DialogFragment that is both a DialogFragment and has ReactiveObject powers 
+	/// This is a DialogFragment that is both a DialogFragment and has ReactiveObject powers
 	/// (i.e. you can call RaiseAndSetIfChanged)
 	/// </summary>
 	public class XMFReactiveDialogFragment<TViewModel> : XMFReactiveDialogFragment, IViewFor<TViewModel>
@@ -23,7 +23,7 @@ namespace Xmf2.Rx.Droid.BaseView
 		{
 		}
 
-		TViewModel _ViewModel;
+		private TViewModel _ViewModel;
 
 		public TViewModel ViewModel
 		{
@@ -39,7 +39,7 @@ namespace Xmf2.Rx.Droid.BaseView
 	}
 
 	/// <summary>
-	/// This is a Fragment that is both an Activity and has ReactiveObject powers 
+	/// This is a Fragment that is both an Activity and has ReactiveObject powers
 	/// (i.e. you can call RaiseAndSetIfChanged)
 	/// </summary>
 	public class XMFReactiveDialogFragment : DialogFragment,
@@ -63,7 +63,7 @@ namespace Xmf2.Rx.Droid.BaseView
 
         /// <summary>
         /// Represents an Observable that fires *before* a property is about to
-        /// be changed.         
+        /// be changed.
         /// </summary>
         public IObservable<IReactivePropertyChangedEventArgs<XMFReactiveDialogFragment>> Changing =>
 			this.getChangingObservable();

@@ -41,8 +41,8 @@ namespace Xmf2.Rest.HttpClient.Impl.Http
         /// </summary>
         public Method Method
         {
-            get { return RequestMessage.Method.ToMethod(); }
-            set { RequestMessage.Method = value.ToHttpMethod(); }
+            get => RequestMessage.Method.ToMethod();
+            set => RequestMessage.Method = value.ToHttpMethod();
         }
 
         /// <summary>
@@ -50,8 +50,8 @@ namespace Xmf2.Rest.HttpClient.Impl.Http
         /// </summary>
         public Uri RequestUri
         {
-            get { return RequestMessage.RequestUri; }
-            set { RequestMessage.RequestUri = value; }
+            get => RequestMessage.RequestUri;
+            set => RequestMessage.RequestUri = value;
         }
 
         /// <summary>
@@ -59,8 +59,8 @@ namespace Xmf2.Rest.HttpClient.Impl.Http
         /// </summary>
         public Version Version
         {
-            get { return RequestMessage.Version; }
-            set { RequestMessage.Version = value; }
+            get => RequestMessage.Version;
+            set => RequestMessage.Version = value;
         }
 
         /// <summary>
@@ -68,10 +68,7 @@ namespace Xmf2.Rest.HttpClient.Impl.Http
         /// </summary>
         public IHttpContent Content
         {
-            get
-            {
-                return _content;
-            }
+            get => _content;
             set
             {
                 _content = value;

@@ -46,7 +46,7 @@ namespace Xmf2.Commons.Droid.ChipClouds
 			Initialize();
 		}
 
-		void Initialize()
+		private void Initialize()
 		{
 			MinimumHorizontalSpacing = UIHelper.DpToPx(Context, 8);
 			VerticalSpacing = UIHelper.DpToPx(Context, 8);
@@ -54,7 +54,7 @@ namespace Xmf2.Commons.Droid.ChipClouds
 
 		#endregion
 
-		void Refresh()
+		private void Refresh()
 		{
 			if (Adapter != null)
 			{

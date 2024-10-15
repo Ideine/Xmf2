@@ -157,7 +157,7 @@ public static class CreatorExtensions
 	}
 	public static TUIButton WithImage<TUIButton>(this TUIButton button, string image, UIControlState state) where TUIButton : UIButton
 	{
-		if (String.IsNullOrEmpty(image))
+		if (string.IsNullOrEmpty(image))
 		{
 			button.SetImage(null, state);
 		}
@@ -377,7 +377,7 @@ public static class CreatorExtensions
 			ShowsHorizontalScrollIndicator = false
 		}.WithContentInsetAdjustementBehavior(UIScrollViewContentInsetAdjustmentBehavior.Never);
 	}
-	
+
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static UIScrollView CreateVerticalScroll(this UIResponder _)
 	{
@@ -487,7 +487,7 @@ public static class CreatorExtensions
 		label.Font = UIFont.SystemFontOfSize(size, weight);
 		return label;
 	}
-	
+
 	public static TView WithSketchShadow<TView>(this TView view, uint shadowColor, float x = 0, float y = 0, float blur = 4, float spread = 0) where TView : UIView
 	{
 		//Reference : https://stackoverflow.com/a/48489506/1479638
@@ -508,7 +508,7 @@ public static class CreatorExtensions
 		*/
 		return view;
 	}
-	
+
 	public static TView WithSketchShadow<TView>(this TView view, UIColor shadowColor, float x = 0, float y = 0, float blur = 4, float spread = 0) where TView : UIView
 	{
 		//Reference : https://stackoverflow.com/a/48489506/1479638
@@ -556,7 +556,7 @@ public static class CreatorExtensions
 		input.SecureTextEntry = true;
 		return input;
 	}
-	
+
 	public static UITextField AsSearchField(this UITextField input, UIReturnKeyType returnKeyType = UIReturnKeyType.Search)
 	{
 		input.KeyboardType = UIKeyboardType.Default;
@@ -597,7 +597,7 @@ public static class CreatorExtensions
 		input.TintColor = color.ColorFromHex();
 		return input;
 	}
-	
+
 	public static UITextField WithTextColor(this UITextField input, int color)
 	{
 		return input.WithTextColor(color.ColorFromHex());
@@ -824,7 +824,7 @@ public static class CreatorExtensions
 		});
 		return view;
 	}
-	
+
 	public static UIImageView UniformToFit(this UIImageView view)
 	{
 		view.ContentMode = UIViewContentMode.ScaleAspectFit;

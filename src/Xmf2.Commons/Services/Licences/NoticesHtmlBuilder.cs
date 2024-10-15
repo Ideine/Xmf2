@@ -7,10 +7,10 @@ namespace Xmf2.Commons.Services.Licences
 {
     public class NoticesHtmlBuilder
     {
-        private Dictionary<Licence, String> mLicenseTextCache = new Dictionary<Licence, String>();
+        private Dictionary<Licence, string> mLicenseTextCache = new Dictionary<Licence, string>();
         private Notices _notices;
         private Notice _notice;
-        private String _style;
+        private string _style;
         private bool _showFullLicenseText;
 
         private bool _isUrlClickable;
@@ -51,7 +51,7 @@ namespace Xmf2.Commons.Services.Licences
             return this;
         }
 
-        public NoticesHtmlBuilder SetStyle(String style)
+        public NoticesHtmlBuilder SetStyle(string style)
         {
             _style = style;
             return this;
@@ -69,7 +69,7 @@ namespace Xmf2.Commons.Services.Licences
             return this;
         }
 
-        public String Build()
+        public string Build()
         {
             StringBuilder noticesHtmlBuilder = new StringBuilder(500);
             AppendNoticesContainerStart(noticesHtmlBuilder);
@@ -106,7 +106,7 @@ namespace Xmf2.Commons.Services.Licences
         private void AppendNoticeBlock(StringBuilder noticesHtmlBuilder, Notice notice)
         {
             noticesHtmlBuilder.Append("<ul><li>").Append(notice.Name);
-            String currentNoticeUrl = notice.Url;
+            string currentNoticeUrl = notice.Url;
             if (currentNoticeUrl != null && currentNoticeUrl.Length > 0)
             {
                 if (_isUrlClickable)
@@ -124,7 +124,7 @@ namespace Xmf2.Commons.Services.Licences
             }
             noticesHtmlBuilder.Append("</li></ul>");
             noticesHtmlBuilder.Append("<pre>");
-            String copyright = notice.Copyright;
+            string copyright = notice.Copyright;
             if (!string.IsNullOrEmpty(copyright))
             {
                 noticesHtmlBuilder.Append(copyright).Append("<br/><br/>");
@@ -137,7 +137,7 @@ namespace Xmf2.Commons.Services.Licences
             noticesHtmlBuilder.Append("</body></html>");
         }
 
-        private String GetLicenseText(Licence license)
+        private string GetLicenseText(Licence license)
         {
             if (license != null)
             {

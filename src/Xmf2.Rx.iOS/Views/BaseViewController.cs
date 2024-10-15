@@ -79,7 +79,7 @@ namespace Xmf2.Rx.iOS
 
 		public override UIStatusBarStyle PreferredStatusBarStyle() => UIStatusBarStyle.LightContent;
 
-		#region Keyboard Features 
+		#region Keyboard Features
 		//Code from MvvmCross https://github.com/MvvmCross/MvvmCross
 		/// <summary>
 		/// The view to center on keyboard shown
@@ -154,7 +154,10 @@ namespace Xmf2.Rx.iOS
 		/// <param name="notification">The notification.</param>
 		private void OnKeyboardNotification(NSNotification notification)
 		{
-			if (!IsViewLoaded) return;
+			if (!IsViewLoaded)
+			{
+				return;
+			}
 
 			//Check if the keyboard is becoming visible
 			var visible = notification.Name == UIKeyboard.WillShowNotification;

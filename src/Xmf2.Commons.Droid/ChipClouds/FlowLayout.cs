@@ -44,7 +44,7 @@ namespace Xmf2.Commons.Droid.ChipClouds
 
 		#endregion
 
-		void Initialize()
+		private void Initialize()
 		{
 			_layoutProcessor = new LayoutProcessor(this);
 		}

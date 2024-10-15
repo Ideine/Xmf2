@@ -56,7 +56,7 @@ namespace Xmf2.Rx.Droid.ChipClouds
 
 		protected virtual void SetViewModelBindings() { }
 
-		void OnClickItem(object sender, EventArgs e)
+		private void OnClickItem(object sender, EventArgs e)
 		{
 			ItemClick?.TryExecute(ViewModel);
 		}

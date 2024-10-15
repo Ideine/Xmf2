@@ -14,7 +14,7 @@ namespace Xmf2.Rx.Helpers
 {
 	public static class IReactiveObjectExtensions
 	{
-		static ConditionalWeakTable<IReactiveObject, IExtensionState<IReactiveObject>> state = new ConditionalWeakTable<IReactiveObject, IExtensionState<IReactiveObject>>();
+		private static ConditionalWeakTable<IReactiveObject, IExtensionState<IReactiveObject>> state = new ConditionalWeakTable<IReactiveObject, IExtensionState<IReactiveObject>>();
 
 		public static IObservable<IReactivePropertyChangedEventArgs<TSender>> getChangedObservable<TSender>(this TSender This) where TSender : IReactiveObject
 		{
@@ -70,18 +70,19 @@ namespace Xmf2.Rx.Helpers
 	}
 
 	#region
-	class ExtensionState<TSender> : IExtensionState<TSender> where TSender : IReactiveObject
-	{
-		long changeNotificationsSuppressed;
-		long changeNotificationsDelayed;
-		ISubject<IReactivePropertyChangedEventArgs<TSender>> changingSubject;
-		IObservable<IReactivePropertyChangedEventArgs<TSender>> changingObservable;
-		ISubject<IReactivePropertyChangedEventArgs<TSender>> changedSubject;
-		IObservable<IReactivePropertyChangedEventArgs<TSender>> changedObservable;
-		ISubject<Exception> thrownExceptions;
-		ISubject<Unit> startDelayNotifications;
 
-		TSender sender;
+	internal class ExtensionState<TSender> : IExtensionState<TSender> where TSender : IReactiveObject
+	{
+		private long changeNotificationsSuppressed;
+		private long changeNotificationsDelayed;
+		private ISubject<IReactivePropertyChangedEventArgs<TSender>> changingSubject;
+		private IObservable<IReactivePropertyChangedEventArgs<TSender>> changingObservable;
+		private ISubject<IReactivePropertyChangedEventArgs<TSender>> changedSubject;
+		private IObservable<IReactivePropertyChangedEventArgs<TSender>> changedObservable;
+		private ISubject<Exception> thrownExceptions;
+		private ISubject<Unit> startDelayNotifications;
+
+		private TSender sender;
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="ExtensionState{TSender}"/> class.
@@ -115,20 +116,11 @@ namespace Xmf2.Rx.Helpers
 				.RefCount();
 		}
 
-		public IObservable<IReactivePropertyChangedEventArgs<TSender>> Changing
-		{
-			get { return this.changingObservable; }
-		}
+		public IObservable<IReactivePropertyChangedEventArgs<TSender>> Changing => this.changingObservable;
 
-		public IObservable<IReactivePropertyChangedEventArgs<TSender>> Changed
-		{
-			get { return this.changedObservable; }
-		}
+		public IObservable<IReactivePropertyChangedEventArgs<TSender>> Changed => this.changedObservable;
 
-		public IObservable<Exception> ThrownExceptions
-		{
-			get { return thrownExceptions; }
-		}
+		public IObservable<Exception> ThrownExceptions => thrownExceptions;
 
 		public bool areChangeNotificationsEnabled()
 		{
@@ -172,7 +164,9 @@ namespace Xmf2.Rx.Helpers
 		public void raisePropertyChanging(string propertyName)
 		{
 			if (!this.areChangeNotificationsEnabled())
+			{
 				return;
+			}
 
 			var changing = new ReactivePropertyChangingEventArgs<TSender>(sender, propertyName);
 			sender.RaisePropertyChanging(changing);
@@ -183,7 +177,9 @@ namespace Xmf2.Rx.Helpers
 		public void raisePropertyChanged(string propertyName)
 		{
 			if (!this.areChangeNotificationsEnabled())
+			{
 				return;
+			}
 
 			var changed = new ReactivePropertyChangedEventArgs<TSender>(sender, propertyName);
 			sender.RaisePropertyChanged(changed);
@@ -205,7 +201,7 @@ namespace Xmf2.Rx.Helpers
 		}
 	}
 
-	interface IExtensionState<out TSender> where TSender : IReactiveObject
+	internal interface IExtensionState<out TSender> where TSender : IReactiveObject
 	{
 		IObservable<IReactivePropertyChangedEventArgs<TSender>> Changing { get; }
 

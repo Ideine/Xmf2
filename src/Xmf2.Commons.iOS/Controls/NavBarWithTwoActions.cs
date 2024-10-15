@@ -18,49 +18,49 @@ namespace Xmf2.Commons.iOS.Controls
 		public Action RightAction { get; set; }
 		public ICommand LeftCommand
 		{
-			get { return null; }
-			set { LeftAction = () => value?.TryExecute(); }
+			get => null;
+			set => LeftAction = () => value?.TryExecute();
 		}
 		public ICommand RightCommand
 		{
-			get { return null; }
-			set { RightAction = () => value?.TryExecute(); }
+			get => null;
+			set => RightAction = () => value?.TryExecute();
 		}
 		public string LeftActionTitle
 		{
-			get { return LeftButton?.Title(UIControlState.Normal); }
-			set { LeftButton.WithTitle(value); }
+			get => LeftButton?.Title(UIControlState.Normal);
+			set => LeftButton.WithTitle(value);
 		}
 		public string RightActionTitle
 		{
-			get { return RightButton?.Title(UIControlState.Normal); }
-			set { RightButton.WithTitle(value); }
+			get => RightButton?.Title(UIControlState.Normal);
+			set => RightButton.WithTitle(value);
 		}
 		public string TextTitle
 		{
-			get { return Title?.Text; }
-			set { Title.WithText(value); }
+			get => Title?.Text;
+			set => Title.WithText(value);
 		}
 		public UIFont TextTitleFont
 		{
-			get { return Title?.Font; }
-			set { Title.WithFont(value); }
+			get => Title?.Font;
+			set => Title.WithFont(value);
 		}
 		public UIColor TitleColor
 		{
-			get { return Title?.TextColor; }
-			set { Title.TextColor = value; }
+			get => Title?.TextColor;
+			set => Title.TextColor = value;
 		}
 
 		public bool HasLeftAction
 		{
-			get { return LeftButton?.Hidden ?? false; }
-			set { LeftButton.Hidden = !value; }
+			get => LeftButton?.Hidden ?? false;
+			set => LeftButton.Hidden = !value;
 		}
 		public bool HasRightAction
 		{
-			get { return RightButton?.Hidden ?? false; }
-			set { RightButton.Hidden = !value; }
+			get => RightButton?.Hidden ?? false;
+			set => RightButton.Hidden = !value;
 		}
 		public UIButton LeftButton { get; }
 		public UIButton RightButton { get; }

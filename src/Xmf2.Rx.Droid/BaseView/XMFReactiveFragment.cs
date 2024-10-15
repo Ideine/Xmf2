@@ -10,7 +10,7 @@ namespace Xmf2.Rx.Droid.BaseView
     //Class, method and from ReactiveUI : https://github.com/reactiveui/ReactiveUI/blob/7.4.0/src/ReactiveUI/IReactiveObject.cs
 
     /// <summary>
-    /// This is a Fragment that is both an Activity and has ReactiveObject powers 
+    /// This is a Fragment that is both an Activity and has ReactiveObject powers
     /// (i.e. you can call RaiseAndSetIfChanged)
     /// </summary>
     public class XMFFragment<TViewModel> : XMFFragment, IViewFor<TViewModel> where TViewModel : class
@@ -19,23 +19,23 @@ namespace Xmf2.Rx.Droid.BaseView
 
 		protected XMFFragment(IntPtr handle, JniHandleOwnership ownership) : base(handle, ownership) { }
 
-		TViewModel _viewModel;
+		private TViewModel _viewModel;
 
 		public TViewModel ViewModel
 		{
-			get { return _viewModel; }
-			set { this.RaiseAndSetIfChanged(ref _viewModel, value); }
+			get => _viewModel;
+			set => this.RaiseAndSetIfChanged(ref _viewModel, value);
 		}
 
 		object IViewFor.ViewModel
 		{
-			get { return _viewModel; }
-			set { _viewModel = (TViewModel)value; }
+			get => _viewModel;
+			set => _viewModel = (TViewModel)value;
 		}
 	}
 
 	/// <summary>
-	/// This is a Fragment that is both an Activity and has ReactiveObject powers 
+	/// This is a Fragment that is both an Activity and has ReactiveObject powers
 	/// (i.e. you can call RaiseAndSetIfChanged)
 	/// </summary>
 	public class XMFFragment : global::AndroidX.Fragment.App.Fragment, IReactiveNotifyPropertyChanged<XMFFragment>, IReactiveObject, IHandleObservableErrors, ICanActivate
@@ -54,20 +54,14 @@ namespace Xmf2.Rx.Droid.BaseView
 
         /// <summary>
         /// Represents an Observable that fires *before* a property is about to
-        /// be changed.         
+        /// be changed.
         /// </summary>
-        public IObservable<IReactivePropertyChangedEventArgs<XMFFragment>> Changing
-		{
-			get { return this.getChangingObservable(); }
-		}
+        public IObservable<IReactivePropertyChangedEventArgs<XMFFragment>> Changing => this.getChangingObservable();
 
-		/// <summary>
+        /// <summary>
 		/// Represents an Observable that fires *after* a property has changed.
 		/// </summary>
-		public IObservable<IReactivePropertyChangedEventArgs<XMFFragment>> Changed
-		{
-			get { return this.getChangedObservable(); }
-		}
+		public IObservable<IReactivePropertyChangedEventArgs<XMFFragment>> Changed => this.getChangedObservable();
 
 		/// <summary>
 		/// When this method is called, an object will not fire change
@@ -81,7 +75,7 @@ namespace Xmf2.Rx.Droid.BaseView
 			return this.suppressChangeNotifications();
 		}
 
-		public IObservable<Exception> ThrownExceptions { get { return this.getThrownExceptionsObservable(); } }
+		public IObservable<Exception> ThrownExceptions => this.getThrownExceptionsObservable();
 
 		private readonly CanActivateImplementation _activationImplementation = new CanActivateImplementation();
 

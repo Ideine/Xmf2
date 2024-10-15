@@ -28,29 +28,26 @@ namespace Xmf2.Rx.Droid.ListElement
 		}
 
 		/// <summary>
-		/// Signals that this ViewHolder has been selected. 
-		/// 
-		/// The <see cref="int"/> is the position of this ViewHolder in the <see cref="RecyclerView"/> 
+		/// Signals that this ViewHolder has been selected.
+		///
+		/// The <see cref="int"/> is the position of this ViewHolder in the <see cref="RecyclerView"/>
 		/// and corresponds to the <see cref="RecyclerView.ViewHolder.AdapterPosition"/> property.
 		/// </summary>
 		public IObservable<int> Selected { get; private set; }
 
-		public View View
-		{
-			get { return this.ItemView; }
-		}
+		public View View => this.ItemView;
 
-		TViewModel _ViewModel;
+		private TViewModel _ViewModel;
 		public TViewModel ViewModel
 		{
-			get { return _ViewModel; }
-			set { this.RaiseAndSetIfChanged(ref _ViewModel, value); }
+			get => _ViewModel;
+			set => this.RaiseAndSetIfChanged(ref _ViewModel, value);
 		}
 
 		object IViewFor.ViewModel
 		{
-			get { return ViewModel; }
-			set { ViewModel = (TViewModel)value; }
+			get => ViewModel;
+			set => ViewModel = (TViewModel)value;
 		}
 
         public event PropertyChangingEventHandler PropertyChanging;
@@ -63,33 +60,27 @@ namespace Xmf2.Rx.Droid.ListElement
 
         /// <summary>
         /// Represents an Observable that fires *before* a property is about to
-        /// be changed.         
+        /// be changed.
         /// </summary>
         //[IgnoreDateMember]
-        public IObservable<IReactivePropertyChangedEventArgs<XMF2ReactiveRecyclerViewViewHolder<TViewModel>>> Changing
-		{
-			get => this.getChangingObservable();
-		}
+        public IObservable<IReactivePropertyChangedEventArgs<XMF2ReactiveRecyclerViewViewHolder<TViewModel>>> Changing => this.getChangingObservable();
 
-		/// <summary>
+        /// <summary>
 		/// Represents an Observable that fires *after* a property has changed.
 		/// </summary>
 		//[IgnoreDataMember]
-		public IObservable<IReactivePropertyChangedEventArgs<XMF2ReactiveRecyclerViewViewHolder<TViewModel>>> Changed
-		{
-			get => this.getChangedObservable();
-		}
+		public IObservable<IReactivePropertyChangedEventArgs<XMF2ReactiveRecyclerViewViewHolder<TViewModel>>> Changed => this.getChangedObservable();
 
 		//[IgnoreDataMember]
 		protected Lazy<PropertyInfo[]> allPublicProperties;
 
 		//[IgnoreDataMember]
-		public IObservable<Exception> ThrownExceptions { get { return this.getThrownExceptionsObservable(); } }
+		public IObservable<Exception> ThrownExceptions => this.getThrownExceptionsObservable();
 
 		[OnDeserialized]
-		void setupRxObj(StreamingContext sc) { setupRxObj(); }
+		private void setupRxObj(StreamingContext sc) { setupRxObj(); }
 
-		void setupRxObj()
+		private void setupRxObj()
 		{
 			allPublicProperties = new Lazy<PropertyInfo[]>(() =>
 				GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance).ToArray());

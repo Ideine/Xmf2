@@ -30,7 +30,7 @@ namespace Xmf2.Commons.Logs
 
 		private void InternalLog(LogLevel level, Exception e, string message)
 		{
-			System.Diagnostics.Debug.WriteLine($"LOG/{level}: {message ?? String.Empty} {e?.ToString() ?? String.Empty}");
+			System.Diagnostics.Debug.WriteLine($"LOG/{level}: {message ?? string.Empty} {e?.ToString() ?? string.Empty}");
 		}
 	}
 }
