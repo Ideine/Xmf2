@@ -7,7 +7,6 @@ using NFloat = System.nfloat;
 using CoreAnimation;
 using CoreGraphics;
 using Foundation;
-using ObjCRuntime;
 using UIKit;
 
 namespace Xmf2.Core.iOS.Controls
