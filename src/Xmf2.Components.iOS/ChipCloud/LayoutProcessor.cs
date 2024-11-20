@@ -85,12 +85,12 @@ namespace Xmf2.Components.iOS.ChipCloud
 
 		private static Dictionary<int, List<ChipCloudItemCell>> GetItemInRows(float containerWidth, List<ChipCloudItemCell> views, int hMargin = 0)
 		{
-			Dictionary<int, List<ChipCloudItemCell>> itemGrouped = new Dictionary<int, List<ChipCloudItemCell>>();
+			Dictionary<int, List<ChipCloudItemCell>> itemGrouped = new();
 			int currentRow = 0;
 			float currentWidth = 0;
-			List<ChipCloudItemCell> currentListInRow = new List<ChipCloudItemCell>();
+			List<ChipCloudItemCell> currentListInRow = new();
 
-			foreach (var currentView in views)
+			foreach (ChipCloudItemCell currentView in views)
 			{
 				if (currentWidth + currentView.Width > containerWidth)
 				{
@@ -99,7 +99,7 @@ namespace Xmf2.Components.iOS.ChipCloud
 
 					//on passe à la ligne suivante
 					currentRow++;
-					currentListInRow = new List<ChipCloudItemCell>();
+					currentListInRow = new();
 					currentWidth = 0;
 				}
 				currentListInRow.Add(currentView);
@@ -111,9 +111,9 @@ namespace Xmf2.Components.iOS.ChipCloud
 
 		private void Clear()
 		{
-			if (_container.Subviews != null && _container.Subviews.Length > 0)
+			if (_container.Subviews is { Length: > 0 })
 			{
-				foreach (var v in _container.Subviews)
+				foreach (UIView v in _container.Subviews)
 				{
 					v.RemoveFromSuperview();
 				}
