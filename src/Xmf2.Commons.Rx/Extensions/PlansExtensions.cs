@@ -1,6 +1,8 @@
-﻿using System.Reactive.Joins;
+﻿using System;
+using System.Reactive.Joins;
+using System.Reactive.Linq;
 
-namespace System.Reactive.Linq
+namespace Xmf2.Commons.Rx.Extensions
 {
 	public static class PlansExtensions
 	{

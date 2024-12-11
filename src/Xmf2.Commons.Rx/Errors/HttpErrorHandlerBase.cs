@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Xmf2.Commons.Errors;
 using Xmf2.Commons.Exceptions;
 using Xmf2.Commons.Logs;
+using Xmf2.Commons.Rx.Extensions;
 using Xmf2.Rest.OAuth2;
 
 namespace Xmf2.Commons.Rx.Errors
@@ -74,7 +75,7 @@ namespace Xmf2.Commons.Rx.Errors
 
 		protected virtual bool IsInternetException(Exception ex)
 		{
-			if (ex is AggregateException aggEx && aggEx.InnerExceptions != null)
+			if (ex is AggregateException aggEx)
 			{
 				if (aggEx.InnerExceptions.Any(IsInternetException))
 				{

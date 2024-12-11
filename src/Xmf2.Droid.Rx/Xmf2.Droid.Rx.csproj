@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk">
+<PropertyGroup>
+	<TargetFramework>net8.0-android</TargetFramework>
+	<LangVersion>9</LangVersion>
+	<Nullable>disable</Nullable>
+	<ImplicitUsings>disable</ImplicitUsings>
+	<RootNamespace>Xmf2.Droid.Rx</RootNamespace>
+	<SupportedOSPlatformVersion>21.0</SupportedOSPlatformVersion>
+	<IsPackable>false</IsPackable>
+	<UseMauiEssentials>true</UseMauiEssentials>
+</PropertyGroup>
+<ItemGroup>
+	<Compile Remove="Properties/AssemblyInfo.cs"/>
+</ItemGroup>
+<ItemGroup>
+	<PackageReference Update="Xamarin.AndroidX.Lifecycle.LiveData" Version="2.6.1.3" />
+	<PackageReference Include="ReactiveUI.AndroidX" Version="20.1.63" />
+</ItemGroup>
+<ItemGroup>
+  <Folder Include="ViewHandlers\" />
+  <Folder Include="Views\" />
+</ItemGroup>
+<ItemGroup>
+  <ProjectReference Include="..\Xmf2.Commons.Rx\Xmf2.Commons.Rx.csproj" />
+</ItemGroup>
+</Project>

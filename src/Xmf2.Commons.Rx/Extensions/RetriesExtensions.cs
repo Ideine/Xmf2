@@ -1,8 +1,11 @@
-﻿namespace System.Reactive.Linq
+﻿using System;
+using System.Reactive.Linq;
+
+namespace Xmf2.Commons.Rx.Extensions
 {
 	public static class RetriesExtensions
 	{
-		public interface IRetryObservableBuilder<TResult>
+		public interface IRetryObservableBuilder<out TResult>
 		{
 			IRetryObservableBuilder<TResult> Handle<TException>(Func<TException, bool> handler) where TException : Exception;
 

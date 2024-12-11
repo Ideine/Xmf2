@@ -11,7 +11,7 @@ namespace Xmf2.Commons.Rx.Errors
 	{
 		private readonly ILogger _logger;
 
-		public ErrorHandlerBase(ILogger logger)
+		protected ErrorHandlerBase(ILogger logger)
 		{
 			_logger = logger;
 		}

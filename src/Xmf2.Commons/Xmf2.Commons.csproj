@@ -8,6 +8,6 @@
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="FubarCoder.RestSharp.Portable.Core" Version="4.0.8" />
-    <PackageReference Include="Xmf2.Common.Extensions" Version="1.1.26" />
+    <PackageReference Include="Xmf2.Common.Extensions" Version="1.1.30" />
   </ItemGroup>
 </Project>

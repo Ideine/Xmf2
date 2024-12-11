@@ -6,8 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="reactiveui" Version="7.4.0" />
-    <PackageReference Include="System.Net.Requests" Version="4.3.0" />
+    <PackageReference Include="reactiveui" Version="20.1.63" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Xmf2.Commons\Xmf2.Commons.csproj" />

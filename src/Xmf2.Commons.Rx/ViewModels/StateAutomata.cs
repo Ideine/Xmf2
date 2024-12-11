@@ -103,7 +103,7 @@ namespace Xmf2.Commons.Rx.ViewModels
 			{
 				Node node = exploreNodes.Dequeue();
 
-				foreach (var transition in node.Edges.Where(transition => !marked[transition.Destination]))
+				foreach (Transition transition in node.Edges.Where(transition => !marked[transition.Destination]))
 				{
 					marked[transition.Destination] = true;
 					parent[transition.Destination] = transition;

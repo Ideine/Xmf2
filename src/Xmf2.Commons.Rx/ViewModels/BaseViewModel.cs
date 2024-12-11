@@ -9,10 +9,11 @@ using System.Threading.Tasks;
 using ReactiveUI;
 using Splat;
 using Xmf2.Commons.Errors;
+using Xmf2.Commons.Rx.Extensions;
 
 namespace Xmf2.Commons.Rx.ViewModels
 {
-	public abstract class BaseViewModel : ReactiveObject, ISupportsActivation
+	public abstract class BaseViewModel : ReactiveObject, IActivatableViewModel
 	{
 		private const int DEFAULT_TIMEOUT = 60;
 
@@ -46,7 +47,7 @@ namespace Xmf2.Commons.Rx.ViewModels
 			IsPausing = _isPausing.StartWith(false);
 			IsStopping = _isStopping.StartWith(false);
 
-			Activator = new ViewModelActivator();
+			Activator = new();
 			LifecycleManager = new ViewModelLifecycleManager(this);
 		}
 
@@ -151,7 +152,7 @@ namespace Xmf2.Commons.Rx.ViewModels
 			public ViewModelLifecycleManager(BaseViewModel viewModel)
 			{
 				_viewModel = viewModel;
-				_initializationTask = new TaskCompletionSource<object>();
+				_initializationTask = new();
 
 				_stateAutomata = CreateStateGraph();
 			}
@@ -258,12 +259,12 @@ namespace Xmf2.Commons.Rx.ViewModels
 
 			private StateAutomata CreateStateGraph()
 			{
-				var created = new StateAutomata.Node(nameof(ViewModelState.Created));
-				var initialized = new StateAutomata.Node(nameof(ViewModelState.Initialized));
-				var started = new StateAutomata.Node(nameof(ViewModelState.Started));
-				var resumed = new StateAutomata.Node(nameof(ViewModelState.Resumed));
-				var paused = new StateAutomata.Node(nameof(ViewModelState.Paused));
-				var stopped = new StateAutomata.Node(nameof(ViewModelState.Stopped));
+				StateAutomata.Node created = new(nameof(ViewModelState.Created));
+				StateAutomata.Node initialized = new(nameof(ViewModelState.Initialized));
+				StateAutomata.Node started = new(nameof(ViewModelState.Started));
+				StateAutomata.Node resumed = new(nameof(ViewModelState.Resumed));
+				StateAutomata.Node paused = new(nameof(ViewModelState.Paused));
+				StateAutomata.Node stopped = new(nameof(ViewModelState.Stopped));
 
 				created.AddTransition(async () =>
 				{
@@ -283,9 +284,14 @@ namespace Xmf2.Commons.Rx.ViewModels
 				paused.AddTransition(() => Run(_viewModel._isStopping, _viewModel.OnStop), stopped);
 				stopped.AddTransition(() => Run(_viewModel._isStarting, _viewModel.OnStart), started);
 
-				return new StateAutomata(created, new List<StateAutomata.Node>
+				return new(created, new()
 				{
-					created, initialized, started, resumed, paused, stopped
+					created,
+					initialized,
+					started,
+					resumed,
+					paused,
+					stopped
 				});
 
 				static async Task Run(Subject<bool> navigationObserver, Func<Task> navigationMethod)
