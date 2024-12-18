@@ -3,10 +3,12 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
     <LangVersion>9</LangVersion>
+		<RootNamespace>Xmf2.Commons.Rx</RootNamespace>
+		<DefineConstants>INTERVENTION</DefineConstants>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="reactiveui" Version="20.1.63" />
+    <PackageReference Include="reactiveui" Version="7.4.0" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Xmf2.Commons\Xmf2.Commons.csproj" />

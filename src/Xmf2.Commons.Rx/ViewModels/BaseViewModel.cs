@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Reactive;
 using System.Reactive.Linq;
@@ -13,7 +12,11 @@ using Xmf2.Commons.Rx.Extensions;
 
 namespace Xmf2.Commons.Rx.ViewModels
 {
+#if INTERVENTION
+	public abstract class BaseViewModel : ReactiveObject, ISupportsActivation
+#else
 	public abstract class BaseViewModel : ReactiveObject, IActivatableViewModel
+#endif
 	{
 		private const int DEFAULT_TIMEOUT = 60;
 

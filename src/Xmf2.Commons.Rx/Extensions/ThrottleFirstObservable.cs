@@ -13,7 +13,7 @@ namespace Xmf2.Commons.Rx.Extensions
 
 		private readonly TimeSpan _timespan;
 
-		internal ThrottleFirstObservable(IObservable<T> source, IScheduler timeSource, TimeSpan timespan)
+		public ThrottleFirstObservable(IObservable<T> source, IScheduler timeSource, TimeSpan timespan)
 		{
 			_source = source;
 			_timeSource = timeSource;

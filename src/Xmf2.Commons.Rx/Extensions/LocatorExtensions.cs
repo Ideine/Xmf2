@@ -5,12 +5,20 @@ namespace Xmf2.Commons.Rx.Extensions
 {
 	public static class LocatorExtensions
 	{
+#if INTERVENTION
+		public static TService GetService<TService>(this IDependencyResolver resolver)
+#else
 		public static TService GetService<TService>(this IReadonlyDependencyResolver resolver)
+#endif
 		{
 			return resolver.GetService<TService>(null);
 		}
 
+#if INTERVENTION
+		public static TService GetServiceOrDefault<TService>(this IDependencyResolver resolver)
+#else
 		public static TService GetServiceOrDefault<TService>(this IReadonlyDependencyResolver resolver)
+#endif
 		{
 			try
 			{
