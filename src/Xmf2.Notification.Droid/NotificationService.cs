@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Runtime.Remoting.Contexts;
 using System.Threading.Tasks;
 using Android;
 using Android.App;
@@ -47,7 +46,11 @@ namespace Xmf2.Notification.Droid
 		{
 			if (Build.VERSION.SdkInt >= BuildVersionCodes.Tiramisu)
 			{
-				Activity activity = CrossCurrentActivity.Current.Activity;
+				#if NET7_0_OR_GREATER
+				Activity activity = Platform.CurrentActivity;
+#else
+				var activity = CrossCurrentActivity.Current.Activity;
+#endif
 				return activity.CheckSelfPermission(Manifest.Permission.PostNotifications) == Permission.Granted;
 			}
 			else
