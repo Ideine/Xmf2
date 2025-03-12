@@ -20,7 +20,7 @@ namespace Xmf2.Components.iOS.Controls
 		public UILinearLayout LinearLayout { get; private set; }
 		public List<IComponentView> ChildComponents { get; private set; }
 
-		public ListViewControl(Func<IComponentView> componentViewCreator, bool enableScrollView, UILinearLayout.LayoutOrientation orientation = UILinearLayout.LayoutOrientation.Vertical, Func<UIView> separatorCreator = null)
+		public ListViewControl(Func<IComponentView> componentViewCreator, bool enableScrollView, UILinearLayout.LayoutOrientation orientation = UILinearLayout.LayoutOrientation.Vertical, Func<UIView> separatorCreator = null, int scrollPadding = 0)
 		{
 			_componentViewCreator = componentViewCreator;
 
@@ -37,7 +37,7 @@ namespace Xmf2.Components.iOS.Controls
 					ScrollView.Add(LinearLayout);
 
 					this.CenterAndFillWidth(ScrollView)
-						.CenterAndFillHeight(ScrollView);
+						.CenterAndFillHeight(ScrollView, scrollPadding);
 
 					ScrollView.VerticalScrollContentConstraint(LinearLayout);
 				}
@@ -48,7 +48,7 @@ namespace Xmf2.Components.iOS.Controls
 					Add(ScrollView);
 					ScrollView.Add(LinearLayout);
 
-					this.CenterAndFillWidth(ScrollView)
+					this.CenterAndFillWidth(ScrollView, scrollPadding)
 						.CenterAndFillHeight(ScrollView);
 
 					ScrollView.HorizontalScrollContentConstraint(LinearLayout);
@@ -69,7 +69,7 @@ namespace Xmf2.Components.iOS.Controls
 				throw new InvalidOperationException();
 			}
 
-			for (int i = 0; i < ChildComponents.Count; i++)
+			for (int i = 0 ; i < ChildComponents.Count ; i++)
 			{
 				ChildComponents[i].SetState(items[i]);
 			}

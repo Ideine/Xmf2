@@ -12,7 +12,7 @@ namespace Xmf2.Components.Droid.Controls.ChipCloud
 {
 	public class ChipCloud : FlowLayout
 	{
-		protected Xmf2Disposable Disposable = new Xmf2Disposable();
+		protected Xmf2Disposable Disposable = new();
 
 		private ChipCloudAdapter _adapter;
 		private EventSubscriber<ChipCloudAdapter> _subscriber;
@@ -53,19 +53,19 @@ namespace Xmf2.Components.Droid.Controls.ChipCloud
 		{
 			View[] childs = Enumerable.Range(0, ChildCount).Select(GetChildAt).ToArray();
 
-			foreach (var remove in removeList.OrderByDescending(x => x.OldPos))
+			foreach (Remove remove in removeList.OrderByDescending(x => x.OldPos))
 			{
 				RemoveViewAt(remove.OldPos);
 			}
 
-			foreach (var add in addList)
+			foreach (Add add in addList)
 			{
 				AddView(Adapter.GetView(add.NewPos, null, this).DisposeViewWith(Disposable), add.NewPos);
 			}
 
-			foreach (var move in moveList)
+			foreach (Move move in moveList)
 			{
-				var view = childs[move.OldPos];
+				View view = childs[move.OldPos];
 				RemoveView(view);
 				AddView(view, move.NewPos);
 			}

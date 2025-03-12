@@ -39,7 +39,7 @@ namespace Xmf2.Components.iOS.Controls
 
 		protected virtual ChipCloudItemSource CreateSource(ChipCloudView groupView, Func<IServiceLocator, IComponentView> factory)
 		{
-			return new ChipCloudItemSource(groupView, s => factory(Services)).DisposeWith(Disposables);
+			return new ChipCloudItemSource(groupView, _ => factory(Services)).DisposeWith(Disposables);
 		}
 
 		protected override UIView RenderView()

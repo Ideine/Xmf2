@@ -24,7 +24,7 @@ namespace Xmf2.Components.iOS.Controls
 		where TComponentView : IComponentView
 		where TViewState : class, IListViewState
 	{
-		protected UITableView ListView;
+		public UITableView ListView { get; protected set; }
 
 		private TableViewItemSource<TableViewItemCell> _source;
 		private Func<IServiceLocator, IComponentView> _factory;
