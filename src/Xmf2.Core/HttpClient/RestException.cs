@@ -1,15 +1,10 @@
 using System;
-using RestSharp.Portable;
+using RestSharp;
 
 namespace Xmf2.Core.HttpClient
 {
-	public class RestException : Exception
+	public class RestException(RestResponse response) : Exception($"Status code: {response.StatusCode} : {response.ResponseUri?.AbsoluteUri}")
 	{
-		public IRestResponse Response { get; }
-
-		public RestException(IRestResponse response) : base($"Status code: {response.StatusCode} : {response.ResponseUri.AbsoluteUri}")
-		{
-			Response = response;
-		}
+		public RestResponse Response { get; } = response;
 	}
 }

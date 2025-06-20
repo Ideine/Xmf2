@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
-using RestSharp.Portable;
+using RestSharp;
 using Xmf2.Core.Errors;
 
 namespace Xmf2.Core.Services
@@ -13,23 +13,23 @@ namespace Xmf2.Core.Services
 
 	public interface IRequestService
 	{
-		Task<IRestResponse> Execute(IRestRequest request, CancellationToken ct, bool withAuthentication = true);
+		Task<RestResponse> Execute(RestRequest request, CancellationToken ct, bool withAuthentication = true);
 
-		Task<IRestResponse<T>> Execute<T>(IRestRequest request, CancellationToken ct, bool withAuthentication = true);
+		Task<RestResponse<T>> Execute<T>(RestRequest request, CancellationToken ct, bool withAuthentication = true);
 	}
 
 	public class RequestService : IRequestService
 	{
-		private readonly IRestClient _client;
+		private readonly RestClient _client;
 		protected IHttpErrorInterpreter ErrorManager { get; }
 
-		public RequestService(IRestClient client, IHttpErrorInterpreter errorManager)
+		public RequestService(RestClient client, IHttpErrorInterpreter errorManager)
 		{
 			_client = client;
 			ErrorManager = errorManager;
 		}
 
-		public virtual async Task<IRestResponse> Execute(IRestRequest request, CancellationToken ct, bool withAuthentication = true)
+		public virtual async Task<RestResponse> Execute(RestRequest request, CancellationToken ct, bool withAuthentication = true)
 		{
 			if (!withAuthentication)
 			{
@@ -38,7 +38,7 @@ namespace Xmf2.Core.Services
 
 			try
 			{
-				return await _client.Execute(request, ct);
+				return await _client.ExecuteAsync(request, ct);
 			}
 			catch (Exception e)
 			{
@@ -46,7 +46,7 @@ namespace Xmf2.Core.Services
 			}
 		}
 
-		public virtual async Task<IRestResponse<T>> Execute<T>(IRestRequest request, CancellationToken ct, bool withAuthentication = true)
+		public virtual async Task<RestResponse<T>> Execute<T>(RestRequest request, CancellationToken ct, bool withAuthentication = true)
 		{
 			if (!withAuthentication)
 			{
@@ -55,7 +55,7 @@ namespace Xmf2.Core.Services
 
 			try
 			{
-				return await _client.Execute<T>(request, ct);
+				return await _client.ExecuteAsync<T>(request, ct);
 			}
 			catch (Exception e)
 			{
