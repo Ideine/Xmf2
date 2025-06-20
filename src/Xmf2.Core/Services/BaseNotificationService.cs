@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading.Tasks;
 
@@ -10,7 +11,7 @@ namespace Xmf2.Core.Services
 
 		Task AskForPermissionIfNeeded(bool showRationale, Func<Task<bool>> onShowRationale);
 
-		Task RegisterForNotification();
+		Task RegisterForNotification(HashSet<string> tags);
 
 		Task UnregisterForNotification();
 	}
@@ -30,7 +31,7 @@ namespace Xmf2.Core.Services
 
 	public interface INotificationDataService
 	{
-		Task<string> Register(string token, DeviceType deviceType);
+		Task<string> Register(string token, DeviceType deviceType, HashSet<string> tags);
 
 		Task Unregister(string registrationId);
 	}
@@ -56,7 +57,7 @@ namespace Xmf2.Core.Services
 
 		public virtual Task AskForPermissionIfNeeded(bool showRationale, Func<Task<bool>> onShowRationale) => Task.CompletedTask;
 
-		public async Task RegisterForNotification()
+		public async Task RegisterForNotification(HashSet<string> tags)
 		{
 			try
 			{
@@ -64,7 +65,7 @@ namespace Xmf2.Core.Services
 
 				if (!string.IsNullOrEmpty(token))
 				{
-					string registerId = await _notificationDataService.Register(token, Device);
+					string registerId = await _notificationDataService.Register(token, Device, tags);
 					_settingsService.Set(nameof(INotificationService), registerId);
 				}
 			}
