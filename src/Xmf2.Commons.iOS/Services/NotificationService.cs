@@ -142,7 +142,7 @@ namespace Xmf2.Commons.MvxExtends.Touch.Services
 						}
 						if (localizedKey != null && alertDictionary.ContainsKey(locArgsKey) && alertDictionary[locArgsKey] is NSArray args)
 						{
-							string format = NSBundle.MainBundle.LocalizedString(localizedKey, null) ?? localizedKey;
+							string format = NSBundle.MainBundle.GetLocalizedString(localizedKey, null) ?? localizedKey;
 							alert = NSString.LocalizedFormat(format, args).ToString();
 						}
 					}

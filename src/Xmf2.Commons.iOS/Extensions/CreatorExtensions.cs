@@ -3,7 +3,9 @@ using CoreGraphics;
 using UIKit;
 using Xmf2.Commons.iOS.Controls;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 using Foundation;
+using Xmf2.iOS.Extensions.Extensions;
 
 public static class CreatorExtensions
 {
@@ -41,13 +43,13 @@ public static class CreatorExtensions
 	}
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public static TUIButton WithContentEdgeInset<TUIButton>(this TUIButton button, nfloat top, nfloat left, nfloat bottom, nfloat right) where TUIButton : UIButton
+	public static TUIButton WithContentEdgeInset<TUIButton>(this TUIButton button, NFloat top, NFloat left, NFloat bottom, NFloat right) where TUIButton : UIButton
 	{
 		return button.WithContentEdgeInset(new UIEdgeInsets(top, left, bottom, right));
 	}
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public static TUIButton WithImageEdgeInset<TUIButton>(this TUIButton button, nfloat top, nfloat left, nfloat bottom, nfloat right) where TUIButton : UIButton
+	public static TUIButton WithImageEdgeInset<TUIButton>(this TUIButton button, NFloat top, NFloat left, NFloat bottom, NFloat right) where TUIButton : UIButton
 	{
 		return button.WithImageEdgeInset(new UIEdgeInsets(top, left, bottom, right));
 	}
@@ -68,12 +70,12 @@ public static class CreatorExtensions
 
 	public static TUIButton WithHighlightBackgroundColor<TUIButton>(this TUIButton button, int color) where TUIButton : UIHighlightButton
 	{
-		button.HighlightColor = color.ColorFromHex();
+		button.HighlightColor = UIColorExtension.ColorFromHex(color);
 		return button;
     }
     public static TUIButton WithHighlightBackgroundColor<TUIButton>(this TUIButton button, uint color) where TUIButton : UIHighlightButton
     {
-        button.HighlightColor = color.ColorFromHex();
+        button.HighlightColor = UIColorExtension.ColorFromHex(color);
         return button;
     }
 	public static TUIButton WithHighlightBackgroundColor<TUIButton>(this TUIButton button, UIColor color) where TUIButton : UIHighlightButton
@@ -95,24 +97,24 @@ public static class CreatorExtensions
 
 	public static TUIButton WithTextColor<TUIButton>(this TUIButton button, uint color, UIControlState forState) where TUIButton : UIButton
 	{
-		button.SetTitleColor(color.ColorFromHex(), forState);
+		button.SetTitleColor(UIColorExtension.ColorFromHex(color), forState);
 		return button;
 	}
 
 	public static TUIButton WithTextColor<TUIButton>(this TUIButton button, int color, UIControlState forState) where TUIButton : UIButton
 	{
-		button.SetTitleColor(color.ColorFromHex(), forState);
+		button.SetTitleColor(UIColorExtension.ColorFromHex(color), forState);
 		return button;
 	}
 
 	public static TUIButton WithTextColor<TUIButton>(this TUIButton button, int color) where TUIButton : UIButton
 	{
-		button.SetTitleColor(color.ColorFromHex(), UIControlState.Normal);
+		button.SetTitleColor(UIColorExtension.ColorFromHex(color), UIControlState.Normal);
 		return button;
 	}
 	public static TUIButton WithTextColor<TUIButton>(this TUIButton button, uint color) where TUIButton : UIButton
 	{
-		button.SetTitleColor(color.ColorFromHex(), UIControlState.Normal);
+		button.SetTitleColor(UIColorExtension.ColorFromHex(color), UIControlState.Normal);
 		return button;
 	}
 
@@ -130,13 +132,13 @@ public static class CreatorExtensions
 
 	public static TUIButton WithTextColorSelected<TUIButton>(this TUIButton button, uint color) where TUIButton : UIButton
 	{
-		button.SetTitleColor(color.ColorFromHex(), UIControlState.Selected);
+		button.SetTitleColor(UIColorExtension.ColorFromHex(color), UIControlState.Selected);
 		return button;
 	}
 
 	public static TUIButton WithTextColorHighlight<TUIButton>(this TUIButton button, int color) where TUIButton : UIButton
 	{
-		return button.WithTextColorHighlight(color.ColorFromHex());
+		return button.WithTextColorHighlight(UIColorExtension.ColorFromHex(color));
 	}
 
 	public static TUIButton WithTextColorSelected<TUIButton>(this TUIButton button, UIColor color) where TUIButton : UIButton
@@ -147,7 +149,7 @@ public static class CreatorExtensions
 
 	public static TUIButton WithTextColorSelected<TUIButton>(this TUIButton button, int color) where TUIButton : UIButton
 	{
-		return button.WithTextColorSelected(color.ColorFromHex());
+		return button.WithTextColorSelected(UIColorExtension.ColorFromHex(color));
 	}
 
 	public static TUIButton WithImage<TUIButton>(this TUIButton button, string image) where TUIButton : UIButton
@@ -157,7 +159,7 @@ public static class CreatorExtensions
 	}
 	public static TUIButton WithImage<TUIButton>(this TUIButton button, string image, UIControlState state) where TUIButton : UIButton
 	{
-		if (String.IsNullOrEmpty(image))
+		if (string.IsNullOrEmpty(image))
 		{
 			button.SetImage(null, state);
 		}
@@ -210,15 +212,9 @@ public static class CreatorExtensions
 		return button;
 	}
 
-	public static TUIButton WithFont<TUIButton>(this TUIButton button, UIFont font) where TUIButton : UIButton
-	{
-		button.Font = font;
-		return button;
-	}
-
 	public static TUIButton WithSystemFont<TUIButton>(this TUIButton button, float size, UIFontWeight weight = UIFontWeight.Regular) where TUIButton : UIButton
 	{
-		button.Font = UIFont.SystemFontOfSize(size, weight);
+		button.WithFont(UIFont.SystemFontOfSize(size, weight));
 		return button;
 	}
 
@@ -247,7 +243,7 @@ public static class CreatorExtensions
 
 	public static TUIButton WithBackgroundColor<TUIButton>(this TUIButton button, int backgroundColor, UIControlState forState) where TUIButton : UIButton
 	{
-		return button.WithBackgroundColor(backgroundColor.ColorFromHex(), forState);
+		return button.WithBackgroundColor(UIColorExtension.ColorFromHex(backgroundColor), forState);
 	}
 	public static TUIButton WithBackgroundColor<TUIButton>(this TUIButton button, UIColor backgroundColor, UIControlState forState) where TUIButton : UIButton
 	{
@@ -275,7 +271,7 @@ public static class CreatorExtensions
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static TCell WithSelectedBackground<TCell>(this TCell cell, int color) where TCell : UITableViewCell
 	{
-		return cell.WithBackgroundColor(color.ColorFromHex());
+		return cell.WithBackgroundColor(UIColorExtension.ColorFromHex(color));
 	}
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -298,7 +294,7 @@ public static class CreatorExtensions
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static UIView CreateSeparator(this UIResponder _, int backgroundColor)
 	{
-		return new UIView().WithBackgroundColor(backgroundColor.ColorFromHex());
+		return new UIView().WithBackgroundColor(UIColorExtension.ColorFromHex(backgroundColor));
 	}
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -377,7 +373,7 @@ public static class CreatorExtensions
 			ShowsHorizontalScrollIndicator = false
 		}.WithContentInsetAdjustementBehavior(UIScrollViewContentInsetAdjustmentBehavior.Never);
 	}
-	
+
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static UIScrollView CreateVerticalScroll(this UIResponder _)
 	{
@@ -445,11 +441,11 @@ public static class CreatorExtensions
 
 	public static UILabel WithTextColor(this UILabel label, int color)
 	{
-		return WithTextColor(label, color.ColorFromHex());
+		return WithTextColor(label, UIColorExtension.ColorFromHex(color));
     }
     public static UILabel WithTextColor(this UILabel label, uint color)
     {
-        return WithTextColor(label, color.ColorFromHex());
+        return WithTextColor(label, UIColorExtension.ColorFromHex(color));
     }
 	public static UILabel WithTextColor(this UILabel label, UIColor color)
 	{
@@ -487,11 +483,11 @@ public static class CreatorExtensions
 		label.Font = UIFont.SystemFontOfSize(size, weight);
 		return label;
 	}
-	
+
 	public static TView WithSketchShadow<TView>(this TView view, uint shadowColor, float x = 0, float y = 0, float blur = 4, float spread = 0) where TView : UIView
 	{
 		//Reference : https://stackoverflow.com/a/48489506/1479638
-		UIColor color = shadowColor.ColorFromHex();
+		UIColor color = UIColorExtension.ColorFromHex(shadowColor);
 		view.Layer.ShadowColor = color.ColorWithAlpha(1).CGColor;
 		view.Layer.ShadowOpacity = (float) color.CGColor.Alpha;
 		view.Layer.ShadowOffset = new CGSize(x, y);
@@ -508,7 +504,7 @@ public static class CreatorExtensions
 		*/
 		return view;
 	}
-	
+
 	public static TView WithSketchShadow<TView>(this TView view, UIColor shadowColor, float x = 0, float y = 0, float blur = 4, float spread = 0) where TView : UIView
 	{
 		//Reference : https://stackoverflow.com/a/48489506/1479638
@@ -556,7 +552,7 @@ public static class CreatorExtensions
 		input.SecureTextEntry = true;
 		return input;
 	}
-	
+
 	public static UITextField AsSearchField(this UITextField input, UIReturnKeyType returnKeyType = UIReturnKeyType.Search)
 	{
 		input.KeyboardType = UIKeyboardType.Default;
@@ -594,13 +590,13 @@ public static class CreatorExtensions
 
 	public static UITextField WithCarretColor(this UITextField input, int color)
 	{
-		input.TintColor = color.ColorFromHex();
+		input.TintColor = UIColorExtension.ColorFromHex(color);
 		return input;
 	}
-	
+
 	public static UITextField WithTextColor(this UITextField input, int color)
 	{
-		return input.WithTextColor(color.ColorFromHex());
+		return input.WithTextColor(UIColorExtension.ColorFromHex(color));
 	}
 
 	public static UITextField WithTextColor(this UITextField input, UIColor color)
@@ -611,7 +607,7 @@ public static class CreatorExtensions
 
 	public static UITextView WithTextColor(this UITextView input, int color)
 	{
-		return input.WithTextColor(color.ColorFromHex());
+		return input.WithTextColor(UIColorExtension.ColorFromHex(color));
 	}
 
 	public static UITextView WithTextColor(this UITextView input, UIColor color)
@@ -622,7 +618,7 @@ public static class CreatorExtensions
 
 	public static UITextField WithPlaceholderTextColor(this UITextField input, int color)
 	{
-		return input.WithPlaceholderTextColor(color.ColorFromHex());
+		return input.WithPlaceholderTextColor(UIColorExtension.ColorFromHex(color));
 	}
 
 	public static UITextField WithPlaceholderTextColor(this UITextField input, UIColor color)
@@ -824,7 +820,7 @@ public static class CreatorExtensions
 		});
 		return view;
 	}
-	
+
 	public static UIImageView UniformToFit(this UIImageView view)
 	{
 		view.ContentMode = UIViewContentMode.ScaleAspectFit;
@@ -876,12 +872,12 @@ public static class CreatorExtensions
 
 	public static TView WithBackgroundColor<TView>(this TView view, int color) where TView : UIView
 	{
-		view.BackgroundColor = color.ColorFromHex();
+		view.BackgroundColor = UIColorExtension.ColorFromHex(color);
 		return view;
 	}
 	public static TView WithBackgroundColor<TView>(this TView view, uint color) where TView : UIView
 	{
-		view.BackgroundColor = color.ColorFromHex();
+		view.BackgroundColor = UIColorExtension.ColorFromHex(color);
 		return view;
 	}
 
@@ -891,7 +887,7 @@ public static class CreatorExtensions
 
 
 #if DEBUG
-        view.BackgroundColor = color.ColorFromHex();
+        view.BackgroundColor = UIColorExtension.ColorFromHex(color);
 
 
 #endif
@@ -904,7 +900,7 @@ public static class CreatorExtensions
 
 
 #if DEBUG
-        view.BackgroundColor = color.ColorFromHex();
+        view.BackgroundColor = UIColorExtension.ColorFromHex(color);
 
 
 #endif
@@ -935,7 +931,7 @@ public static class CreatorExtensions
 
 	public static TView WithBorder<TView>(this TView view, int borderColor, float size) where TView : UIView
 	{
-		return view.WithBorder(borderColor.ColorFromHex(), size);
+		return view.WithBorder(UIColorExtension.ColorFromHex(borderColor), size);
 	}
 	public static TView WithBorder<TView>(this TView view, UIColor borderColor, float size) where TView : UIView
 	{
@@ -946,7 +942,7 @@ public static class CreatorExtensions
 
 	public static TView WithShadow<TView>(this TView view, uint shadowColor, float xOffset, float yOffset, float radius = 8f) where TView : UIView
 	{
-		var color = shadowColor.ColorFromHex();
+		var color = UIColorExtension.ColorFromHex(shadowColor);
 		view.Layer.ShadowColor = color.CGColor; ;
 		view.Layer.ShadowOpacity = (float)color.CGColor.Alpha;
 		view.Layer.ShadowRadius = radius;

@@ -3,9 +3,10 @@ using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using System.Threading;
 using System.Threading.Tasks;
+using Ideine.LogsSender.Extensions;
+using Ideine.LogsSender.Interfaces;
 using Xmf2.Commons.Errors;
 using Xmf2.Commons.Exceptions;
-using Xmf2.Commons.Logs;
 using Xmf2.Commons.Services.Authentications;
 using Xmf2.Commons.Services.Authentications.Models;
 using Xmf2.Rest.Caches;
@@ -17,20 +18,20 @@ namespace Xmf2.Rx.Services.Authentications
 	{
 		private readonly IOAuth2Client _client;
 		private readonly IUserStorageService _storageService;
-		private readonly ILogger _logger;
+		private readonly IContextLogService _logger;
 		private readonly IHttpErrorHandler _errorManager;
 		private readonly Subject<bool> _isLogged = new Subject<bool>();
 
 		public IObservable<bool> IsLoggedObservable { get; }
 		public bool IsLogged { get; private set; }
 
-		public AuthenticationService(IOAuth2Client client, IUserStorageService storageService, ILogger logger, IHttpErrorHandler errorManager)
+		public AuthenticationService(IOAuth2Client client, IUserStorageService storageService, IContextLogService logger, IHttpErrorHandler errorManager)
 		{
 			_client = client;
 			_storageService = storageService;
 			_logger = logger;
 			_errorManager = errorManager;
-			
+
 			this.IsLogged = false;
 			IsLoggedObservable = _isLogged.StartWith(IsLogged).ToObservableForBinding();
 
@@ -51,7 +52,7 @@ namespace Xmf2.Rx.Services.Authentications
 
 		protected virtual void OnClientAuthenticationError(object sender, OAuth2AuthResult e)
 		{
-			_logger.LogWarning(message: $"{nameof(AuthenticationService)}/Unable to authenticate {e.ErrorReason} : {e.ErrorMessage}");
+			_logger.Warning(message: $"{nameof(AuthenticationService)}/Unable to authenticate {e.ErrorReason} : {e.ErrorMessage}");
 
 			if (e.ErrorReason == AuthErrorReason.InvalidAppVersion)
 			{

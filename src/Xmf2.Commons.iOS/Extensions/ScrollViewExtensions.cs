@@ -1,5 +1,6 @@
 ﻿using CoreGraphics;
 using System;
+using System.Runtime.InteropServices;
 
 namespace UIKit
 {
@@ -25,7 +26,7 @@ namespace UIKit
 			}
 			scrollView.CenterView(viewToCenter, height, animated: animated);
 		}
-		public static void CenterView(this UIScrollView scrollView, UIView viewToCenter, nfloat keyboardHeight = default(nfloat), bool adjustContentInsets = true, bool animated = false)
+		public static void CenterView(this UIScrollView scrollView, UIView viewToCenter, NFloat keyboardHeight = default(NFloat), bool adjustContentInsets = true, bool animated = false)
 		{
 			if (adjustContentInsets)
 			{
@@ -57,7 +58,7 @@ namespace UIKit
 			}
 			scrollView.MakeViewVisible(viewToCenter, height, animated: animated);
 		}
-		public static void MakeViewVisible(this UIScrollView scrollView, UIView viewToCenter, nfloat keyboardHeight = default(nfloat), bool adjustContentInsets = true, bool animated = false)
+		public static void MakeViewVisible(this UIScrollView scrollView, UIView viewToCenter, NFloat keyboardHeight = default(NFloat), bool adjustContentInsets = true, bool animated = false)
 		{
 			if (adjustContentInsets)
 			{

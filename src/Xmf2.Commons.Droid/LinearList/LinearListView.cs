@@ -74,7 +74,7 @@ namespace Xmf2.Commons.Droid.LinearList
 
 		#endregion
 
-		void Init()
+		private void Init()
 		{
 			_classicLayoutAdapter = new LinearItemLayoutAdapter(this);
 		}

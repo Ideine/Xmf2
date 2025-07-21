@@ -1,7 +1,8 @@
 ﻿using System;
+using Ideine.LogsSender.Extensions;
+using Ideine.LogsSender.Interfaces;
 using Xmf2.Rest.OAuth2;
 using RestSharp.Portable;
-using Xmf2.Commons.Logs;
 using Xmf2.Rest.HttpClient.Impl;
 
 namespace Xmf2.Commons.Services.OAuth2
@@ -28,9 +29,9 @@ namespace Xmf2.Commons.Services.OAuth2
 			};
 		}
 
-		public static Action<Method, string, string> CreateDefaultLog(ILogger logger)
+		public static Action<Method, string, string> CreateDefaultLog(IContextLogService logger)
 		{
-			return (method, uri, body) => logger.LogInfo(message: $"HTTP {method} {uri} with content {body}");
+			return (method, uri, body) => logger.Information(message: $"HTTP {method} {uri} with content {body}");
 		}
 	}
 }

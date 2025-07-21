@@ -38,10 +38,10 @@ namespace Xmf2.Rx.iOS.Controls.ItemControls
 			set => ViewModel = (TViewModel)value;
 		}
 
-		Subject<Unit> activated = new Subject<Unit>();
+		private Subject<Unit> activated = new Subject<Unit>();
 		public IObservable<Unit> Activated => activated.AsObservable();
 
-		Subject<Unit> deactivated = new Subject<Unit>();
+		private Subject<Unit> deactivated = new Subject<Unit>();
 		public IObservable<Unit> Deactivated => deactivated.AsObservable();
 
         public BaseReactiveItemCell() { }

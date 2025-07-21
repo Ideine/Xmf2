@@ -12,7 +12,7 @@ namespace Xmf2.Rest.HttpClient.Impl.Http
     public class DefaultHttpClient : IHttpClient
     {
         private readonly DefaultHttpHeaders _defaultHeaders;
-		
+
         private readonly CookieContainer _cookies;
 
         /// <summary>
@@ -37,8 +37,8 @@ namespace Xmf2.Rest.HttpClient.Impl.Http
         /// </summary>
         public Uri BaseAddress
         {
-            get { return Client.BaseAddress; }
-            set { Client.BaseAddress = value; }
+            get => Client.BaseAddress;
+            set => Client.BaseAddress = value;
         }
 
         /// <summary>
@@ -51,8 +51,8 @@ namespace Xmf2.Rest.HttpClient.Impl.Http
         /// </summary>
         public TimeSpan Timeout
         {
-            get { return Client.Timeout; }
-            set { Client.Timeout = value; }
+            get => Client.Timeout;
+            set => Client.Timeout = value;
         }
 
         /// <summary>

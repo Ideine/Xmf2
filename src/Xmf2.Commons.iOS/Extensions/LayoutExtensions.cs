@@ -3,13 +3,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 using UIKit;
 using static UIKit.NSLayoutAttribute;
 using static UIKit.NSLayoutRelation;
 
 public static class CustomAutoLayoutExtensions
 {
-	
+
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static UIView CenterAndFillWidth(this UIView containerView, params UIView[] views)
@@ -393,7 +394,7 @@ public static class CustomAutoLayoutExtensions
 		view.WithConstraint(v1, Baseline, Equal, v2, Baseline, 1f, offset);
 		return view;
 	}
-	
+
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static UIView AlignOnBottom(this UIView view, UIView v1, UIView v2, float offset = 0)
 	{
@@ -444,7 +445,7 @@ public static class CustomAutoLayoutExtensions
 	{
 		return view.WithConstraint(v1, Width, Equal, v2, Width, 1f, margin);
 	}
-	
+
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static UIView SameWidth(this UIView view, UIView v1, params UIView[] v2)
 	{
@@ -644,7 +645,7 @@ public static class CustomAutoLayoutExtensions
     }
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public static UIView WithConstraint(this UIView constrainedView, UIView view, NSLayoutAttribute attribute, NSLayoutRelation relation, nfloat multiplier, nfloat constant)
+	public static UIView WithConstraint(this UIView constrainedView, UIView view, NSLayoutAttribute attribute, NSLayoutRelation relation, NFloat multiplier, NFloat constant)
 	{
 		if (view != null && view != constrainedView)
 		{
@@ -655,7 +656,7 @@ public static class CustomAutoLayoutExtensions
 	}
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public static UIView WithConstraint(this UIView constrainedView, UIView view1, NSLayoutAttribute attribute1, NSLayoutRelation relation, UIView view2, NSLayoutAttribute attribute2, nfloat multiplier, nfloat constant)
+	public static UIView WithConstraint(this UIView constrainedView, UIView view1, NSLayoutAttribute attribute1, NSLayoutRelation relation, UIView view2, NSLayoutAttribute attribute2, NFloat multiplier, NFloat constant)
 	{
 		if (view1 != null && view1 != constrainedView)
 		{

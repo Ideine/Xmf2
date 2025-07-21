@@ -37,14 +37,14 @@ namespace Xmf2.Rx.Droid.ListElement
 
 		protected virtual void SetViewModelBindings() { }
 
-		void OnClickItem(object sender, EventArgs e)
+		private void OnClickItem(object sender, EventArgs e)
 		{
 			ItemClick?.TryExecute(GetItemClickParameter());
 		}
 
 		protected virtual object GetItemClickParameter() => ViewModel;
 
-		void OnLongClickItem(object sender, EventArgs e)
+		private void OnLongClickItem(object sender, EventArgs e)
 		{
 			if (ItemLongClick != null)
 			{

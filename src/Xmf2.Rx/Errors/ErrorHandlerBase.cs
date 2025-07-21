@@ -1,17 +1,18 @@
 ﻿using System;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
+using Ideine.LogsSender.Extensions;
+using Ideine.LogsSender.Interfaces;
 using Xmf2.Commons.Errors;
 using Xmf2.Commons.Exceptions;
-using Xmf2.Commons.Logs;
 
 namespace Xmf2.Rx.Errors
 {
 	public abstract class ErrorHandlerBase : IErrorHandler
 	{
-		private readonly ILogger _logger;
+		private readonly IContextLogService _logger;
 
-		protected ErrorHandlerBase(ILogger logger)
+		protected ErrorHandlerBase(IContextLogService logger)
 		{
 			_logger = logger;
 		}
@@ -80,19 +81,19 @@ namespace Xmf2.Rx.Errors
 
 		protected virtual bool ShowErrorForAccessDataException(AccessDataException accessDataException, Action asyncCallback)
 		{
-			_logger.LogError(accessDataException, "ErrorHandler: CATCH AccessDataException");
+			_logger.Error($"ErrorHandler: CATCH AccessDataException {accessDataException}");
 			return false;
 		}
 
 		protected virtual bool ShowErrorForManagedException(ManagedException managedException, Action asyncCallback)
 		{
-			_logger.LogError(managedException, "ErrorHandler: CATCH ManagedException");
+			_logger.Error($"ErrorHandler: CATCH ManagedException {managedException}");
 			return false;
 		}
 
 		protected virtual bool ShowErrorForException(Exception exception, Action asyncCallback)
 		{
-			_logger.LogCritical(exception, "ErrorHandler: CATCH Exception");
+			_logger.Critical($"ErrorHandler: CATCH Exception {exception}");
 			return false;
 		}
 	}

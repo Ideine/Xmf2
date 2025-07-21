@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using CoreGraphics;
 using Foundation;
 using UIKit;
@@ -35,7 +36,7 @@ namespace Xmf2.Commons.iOS.Controls
 		NSLayoutConstraint[] UIBaseLinearLayout.IConstraintCreator.FillSize(UIView container, UIView cell) => FillSize(container, cell);
 		NSLayoutConstraint UIBaseLinearLayout.IConstraintCreator.Space(UIView previousCell, UIView nextCell) => Space(previousCell, nextCell);
 	}
-	
+
 	public class HorizontalConstraintCreator : UIBaseLinearLayout.IConstraintCreator
 	{
 		public static NSLayoutConstraint AnchorStart(UIView container, UIView cell)
@@ -71,7 +72,7 @@ namespace Xmf2.Commons.iOS.Controls
 		NSLayoutConstraint UIBaseLinearLayout.IConstraintCreator.Space(UIView previousCell, UIView nextCell)
 			=> Space(previousCell, nextCell);
 	}
-	
+
 	public class UIBaseLinearLayout : UIView
 	{
 		public interface IConstraintCreator
@@ -137,7 +138,7 @@ namespace Xmf2.Commons.iOS.Controls
 
 		/// <remarks>
 		/// On ne peut pas overrider <see cref="UIView.AddSubviews(UIView[])"/>,
-		/// mais il reste préférable de le redéfinir car cette méthode provoque plusieurs appels de 
+		/// mais il reste préférable de le redéfinir car cette méthode provoque plusieurs appels de
 		/// <see cref="AddSubview(UIView)"/> ce qui est contreperformant.
 		/// </remarks>
 		public new void AddSubviews(params UIView[] viewsToAdd)
@@ -373,7 +374,7 @@ namespace Xmf2.Commons.iOS.Controls
 		}
 		#endregion Nested Types
 	}
-	
+
 	public class UILinearLayout : UIBaseLinearLayout
 	{
 		public enum LayoutOrientation
@@ -419,7 +420,7 @@ namespace Xmf2.Commons.iOS.Controls
 			this.ConstraintCreator = GetConstraintCreator(orientation);
 		}
 	}
-	
+
 	public class NestedScrollView : UIScrollView
 	{
 		private const string SELECTOR_BOUNDS_SIZE = "bounds";
@@ -493,7 +494,7 @@ namespace Xmf2.Commons.iOS.Controls
 
 			_subviewsInLayoutOrder.Add(view);
 			_contentView.AddSubview(view);
-			
+
 			view.AddObserver(this, SELECTOR_BOUNDS_SIZE, NSKeyValueObservingOptions.Old, Handle);
 		}
 
@@ -510,7 +511,7 @@ namespace Xmf2.Commons.iOS.Controls
 		public void AddStickableView(UIView stickableView)
 		{
 			UIView placeholderView = new UIView() { BackgroundColor = UIColor.Clear };
-			
+
 			base.AddSubview(stickableView);
 			AddSubview(placeholderView);
 
@@ -578,18 +579,18 @@ namespace Xmf2.Commons.iOS.Controls
 		{
 			base.LayoutSubviews();
 
-			nfloat yMin = ContentOffset.Y;
-			nfloat visibleHeight = Frame.Height;
+			NFloat yMin = ContentOffset.Y;
+			NFloat visibleHeight = Frame.Height;
 			bool hasChanged = false;
 
 			for (int i = 0; i < _subviewsInLayoutOrder.Count; i++)
 			{
 				if (_subviewsInLayoutOrder[i] is ScrollItemWrapper subview)
 				{
-					nfloat top = subview.Frame.Top;
+					NFloat top = subview.Frame.Top;
 
-					nfloat yTop = yMin - top;
-					nfloat yBot = visibleHeight + yTop;
+					NFloat yTop = yMin - top;
+					NFloat yBot = visibleHeight + yTop;
 
 					hasChanged |= subview.SetVisibleArea(yTop, yBot);
 				}
@@ -615,7 +616,7 @@ namespace Xmf2.Commons.iOS.Controls
 			}
 		}
 
-		private static nfloat Max(nfloat val1, nfloat val2) => val1 > val2 ? val1 : val2;
+		private static NFloat Max(NFloat val1, NFloat val2) => val1 > val2 ? val1 : val2;
 
 		protected override void Dispose(bool disposing)
 		{
@@ -715,14 +716,14 @@ namespace Xmf2.Commons.iOS.Controls
 				AddConstraints(innerConstraints);
 			}
 
-			private nfloat GetContentHeight()
+			private NFloat GetContentHeight()
 			{
-				nfloat result = _innerView.ContentSize.Height;
+				NFloat result = _innerView.ContentSize.Height;
 				if(_boundsRegisteredViews != null)
 				{
 					foreach(UIView v in _boundsRegisteredViews)
 					{
-						nfloat height = v.Bounds.Height;
+						NFloat height = v.Bounds.Height;
 						if(result < height)
 						{
 							result = height;
@@ -742,7 +743,7 @@ namespace Xmf2.Commons.iOS.Controls
 
 				if (keyPath == SELECTOR_CONTENT_SIZE || keyPath == SELECTOR_BOUNDS_SIZE)
 				{
-					nfloat height = GetContentHeight();
+					NFloat height = GetContentHeight();
 
 					if (_containerHeightConstraint.Constant != height)
 					{
@@ -757,24 +758,24 @@ namespace Xmf2.Commons.iOS.Controls
 				}
 			}
 
-			public bool SetVisibleArea(nfloat top, nfloat bottom)
+			public bool SetVisibleArea(NFloat top, NFloat bottom)
 			{
 				if (top < 0)
 				{
 					top = 0;
 				}
 
-				nfloat contentHeight = GetContentHeight();
+				NFloat contentHeight = GetContentHeight();
 				if (bottom > contentHeight)
 				{
 					bottom = contentHeight;
 				}
 
-				nfloat height = bottom - top;
+				NFloat height = bottom - top;
 				if (contentHeight > MINIMAL_RENDER_HEIGHT && height < MINIMAL_RENDER_HEIGHT) //arbitrary value to render at least one cell
 				{
 					height = MINIMAL_RENDER_HEIGHT;
-					nfloat maxTop = contentHeight - height;
+					NFloat maxTop = contentHeight - height;
 					if (top + height > maxTop)
 					{
 						top = maxTop;
@@ -817,7 +818,7 @@ namespace Xmf2.Commons.iOS.Controls
 				{
 					_innerView.RemoveObserver(_observer, SELECTOR_CONTENT_SIZE, _observer.Handle);
 					_observer = null;
-					
+
 					_innerView.RemoveObserver(this, SELECTOR_CONTENT_SIZE, Handle);
 					_innerView.Dispose();
 					_innerView = null;
@@ -886,7 +887,7 @@ namespace Xmf2.Commons.iOS.Controls
 				.AnchorLeft(content, left)
 				.AnchorRight(content, right);
 		}
-		
+
 		public PaddingContainer(UIView content, int vertical, int horizontal) : this(content, vertical, horizontal, vertical, horizontal) { }
 
 		public PaddingContainer(UIView content, int allDirections) : this(content, allDirections, allDirections) { }

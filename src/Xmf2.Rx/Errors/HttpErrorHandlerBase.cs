@@ -3,21 +3,22 @@ using System.Linq;
 using System.Net;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
+using Ideine.LogsSender.Extensions;
+using Ideine.LogsSender.Interfaces;
 using Xmf2.Commons.Errors;
 using Xmf2.Commons.Exceptions;
-using Xmf2.Commons.Logs;
 
 namespace Xmf2.Rx.Errors
 {
 	public abstract class HttpErrorHandlerBase : IHttpErrorHandler
 	{
-		private readonly ILogger _logger;
+		private readonly IContextLogService _logger;
 
 		private readonly Lazy<WebExceptionStatus[]> _retryStatus;
 		private readonly Lazy<WebExceptionStatus[]> _timeoutStatus;
 		private readonly Lazy<WebExceptionStatus[]> _noInternetStatus;
 
-		protected HttpErrorHandlerBase(ILogger logger)
+		protected HttpErrorHandlerBase(IContextLogService logger)
 		{
 			_logger = logger;
 
@@ -63,7 +64,7 @@ namespace Xmf2.Rx.Errors
 
 				case Rest.OAuth2.RestException restException when HttpStatusCode.NotFound == restException.Response.StatusCode:
 					return new AccessDataException(AccessDataException.ErrorType.NotFound, ex);
-				
+
 				case Rest.OAuth2.RestException restException when HttpStatusCode.Forbidden == restException.Response.StatusCode:
 					return new AccessDataException(AccessDataException.ErrorType.Forbidden, ex);
 
@@ -106,12 +107,12 @@ namespace Xmf2.Rx.Errors
 
 		protected virtual void LogOnRetry(Exception ex, int attemptCount)
 		{
-			_logger.LogWarning(ex, $"HTTP retry attempt {attemptCount}.");
+			_logger.Warning($"HTTP retry attempt {attemptCount}. Exception: {ex.Message}");
 		}
 
 		protected virtual void LogOnException(AccessDataException ex)
 		{
-			_logger.LogError(ex);
+			_logger.Error(ex.ToString());
 		}
 	}
 }

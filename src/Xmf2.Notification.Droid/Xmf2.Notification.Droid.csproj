@@ -121,9 +121,6 @@
     <Compile Include="INotificationSetup.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\..\..\Xmf2.Components\src\Xmf2.Core\Xmf2.Core.csproj">
       <Project>{210CC838-2D22-4719-917F-64A08B02CC5D}</Project>
       <Name>Xmf2.Core</Name>

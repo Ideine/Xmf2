@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics;
-using Android.App;
 using Android.Content;
+using Activity = Android.App.Activity;
 
 namespace Xmf2.Commons.Droid.Services
 {

@@ -10,7 +10,7 @@ namespace Xmf2.Commons.iOS.Helpers
 
 		public virtual bool IsBusy
 		{
-			get { return _isBusy; }
+			get => _isBusy;
 			set
 			{
 				CreateLoadingViewIfNeeded();

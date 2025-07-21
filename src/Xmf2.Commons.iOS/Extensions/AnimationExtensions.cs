@@ -1,10 +1,10 @@
-using System;
+using System.Runtime.InteropServices;
 using UIKit;
 using CoreGraphics;
 
 public static class AnimationExtensions
 {
-	public static TView TranslateY<TView>(this TView view, nfloat offset) where TView : UIView
+	public static TView TranslateY<TView>(this TView view, NFloat offset) where TView : UIView
 	{
 		CGRect frame = view.Frame;
 		frame.Y += offset;
@@ -13,7 +13,7 @@ public static class AnimationExtensions
 		return view;
 	}
 
-	public static TView TranslateX<TView>(this TView view, nfloat offset) where TView : UIView
+	public static TView TranslateX<TView>(this TView view, NFloat offset) where TView : UIView
 	{
 		CGRect frame = view.Frame;
 		frame.X += offset;

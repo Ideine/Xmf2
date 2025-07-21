@@ -121,7 +121,7 @@ public static class Layout
 			throw new NotSupportedException("When assigning a name to a control, only constants are supported.");
 		}
 
-		var iOSName = view.Class.Name + ":0x" + view.Handle.ToString("x");
+		var iOSName = view.Class.Name + ":0x" + ((int)view.Handle).ToString("x");
 		constraintSubstitutions[iOSName] = name;
 
 		return true;
@@ -460,19 +460,19 @@ public static class Layout
 		}
 
 		[System.Runtime.InteropServices.DllImport("libobjc.dylib")]
-		static extern IntPtr objc_msgSend(IntPtr handle, IntPtr sel);
+		private static extern IntPtr objc_msgSend(IntPtr handle, IntPtr sel);
 
 		[System.Runtime.InteropServices.DllImport("libobjc.dylib")]
-		static extern IntPtr class_getInstanceMethod(IntPtr c, IntPtr sel);
+		private static extern IntPtr class_getInstanceMethod(IntPtr c, IntPtr sel);
 
 		[System.Runtime.InteropServices.DllImport("libobjc.dylib")]
-		static extern bool class_addMethod(IntPtr cls, IntPtr name, IntPtr imp, string types);
+		private static extern bool class_addMethod(IntPtr cls, IntPtr name, IntPtr imp, string types);
 
 		[System.Runtime.InteropServices.DllImport("libobjc.dylib")]
-		extern static IntPtr class_getMethodImplementation(IntPtr cls, IntPtr sel);
+		private extern static IntPtr class_getMethodImplementation(IntPtr cls, IntPtr sel);
 
 		[System.Runtime.InteropServices.DllImport("libobjc.dylib")]
-		extern static IntPtr method_setImplementation(IntPtr method, IntPtr imp);
+		private extern static IntPtr method_setImplementation(IntPtr method, IntPtr imp);
 	}
 
 #endif

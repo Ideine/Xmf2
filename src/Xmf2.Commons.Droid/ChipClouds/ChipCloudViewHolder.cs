@@ -19,12 +19,12 @@ namespace Xmf2.Commons.Droid.ChipClouds
 			Dispose(false);
 		}
 
-		void NotifyViewAttachedToWindow(object sender, View.ViewAttachedToWindowEventArgs e)
+		private void NotifyViewAttachedToWindow(object sender, View.ViewAttachedToWindowEventArgs e)
 		{
 			OnViewAttachedToWindow();
 		}
 
-		void NotifyViewDetachedFromWindow(object sender, View.ViewDetachedFromWindowEventArgs e)
+		private void NotifyViewDetachedFromWindow(object sender, View.ViewDetachedFromWindowEventArgs e)
 		{
 			OnViewDetachedFromWindow();
 			OnViewRecycled();

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.InteropServices;
 using CoreGraphics;
 using UIKit;
 
@@ -23,10 +24,11 @@ namespace Xmf2.Commons.iOS.Controls
 			this.Add(this._placeholderLabel);
 		}
 
-		public UILabel Placeholder { get { return _placeholderLabel; } }
+		public UILabel Placeholder => _placeholderLabel;
+
 		public string PlaceholderText
 		{
-			get { return _placeholderLabel.Text; }
+			get => _placeholderLabel.Text;
 			set
 			{
 				_placeholderLabel.Text = value;
@@ -41,8 +43,16 @@ namespace Xmf2.Commons.iOS.Controls
 				this.UpdatePlaceHolderVisibility();
 			}
 		}
-		public UIColor PlaceholderColor { get { return _placeholderLabel.TextColor; } set { _placeholderLabel.TextColor = value; } }
-		public UIFont PlaceholderFont { get { return _placeholderLabel.Font; } set { _placeholderLabel.Font = value; } }
+		public UIColor PlaceholderColor
+		{
+			get => _placeholderLabel.TextColor;
+			set => _placeholderLabel.TextColor = value;
+		}
+		public UIFont PlaceholderFont
+		{
+			get => _placeholderLabel.Font;
+			set => _placeholderLabel.Font = value;
+		}
 
 		public override void Draw(CGRect rect)
 		{
@@ -77,8 +87,8 @@ namespace Xmf2.Commons.iOS.Controls
 		}
 
         public void AutoHeight(){
-            nfloat fixedWidth = Frame.Size.Width;
-            var newSize=SizeThatFits(new CGSize(width: fixedWidth, height: nfloat.MaxValue));
+	        NFloat fixedWidth = Frame.Size.Width;
+            var newSize=SizeThatFits(new CGSize(width: fixedWidth, height: NFloat.MaxValue));
             var newFrame = Frame;
             newFrame.Size = new CGSize(width: Math.Max(newSize.Width, fixedWidth), height: newSize.Height);
             Frame = newFrame;

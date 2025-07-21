@@ -17,10 +17,7 @@ namespace Xmf2.Commons.iOS.Controls
 
 		public override bool Highlighted
 		{
-			get
-			{
-				return base.Highlighted;
-			}
+			get => base.Highlighted;
 			set
 			{
 				if (base.Highlighted != value)

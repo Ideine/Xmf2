@@ -8,21 +8,13 @@ namespace UIKit
 {
 	public static class IosBindingExtensions
 	{
-		public static IDisposable OnClickCommand(this UIControl button, Func<ICommand> getCommand)
-		{
-			return button.SubscribeOnClickCommand(() => getCommand()?.TryExecute());
-		}
-		
 		public static IDisposable SubscribeOnClickCommand(this UIControl button, Action action)
 		{
-			return button.Events().TouchUpInside
-				.OnTaskThread()
-				.Subscribe(_ => action());
-		}
-
-		public static IObservable<EventArgs> ClickObservable(this UIControl button)
-		{
-			return button.Events().TouchUpInside;
+			return Observable.FromEventPattern<EventHandler, EventArgs>(
+					h => button.TouchUpInside += h,
+					h => button.TouchUpInside -= h)
+					.OnTaskThread()
+					.Subscribe(_ => action());
 		}
 
 		public static IObservable<object> ShouldReturnObservable(this UITextField input)

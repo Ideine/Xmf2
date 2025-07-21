@@ -70,7 +70,7 @@ namespace Xmf2.Rx.Droid.ListElement
 
         public override int ItemCount => ItemsSource?.Count ?? 0;
 
-        object ItemAt(int position)
+        private object ItemAt(int position)
         {
             return ItemsSource.ElementAt(position);
         }
