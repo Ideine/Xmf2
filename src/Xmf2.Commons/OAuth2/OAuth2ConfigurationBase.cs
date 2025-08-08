@@ -54,6 +54,7 @@ namespace Xmf2.Rest.OAuth2
 						ErrorReason = AuthErrorReason.BadRequest,
 						ErrorMessage = response.Content,
 					};
+				case (HttpStatusCode)419:
 				case (HttpStatusCode)449:
 					return new OAuth2AuthResult
 					{
