@@ -15,6 +15,8 @@ namespace Xmf2.Notification.Droid
 
 	public abstract class BaseNotificationDisplayService : INotificationDisplayService
 	{
+		private readonly Random _random;
+
 		private readonly string _channelId;
 
 		// The user-visible name of the channel.
@@ -28,6 +30,7 @@ namespace Xmf2.Notification.Droid
 
 		protected BaseNotificationDisplayService(string channelId, string channelName, string channelDescription, int backgroundColor)
 		{
+			_random = new Random();
 			_channelId = channelId;
 			_channelName = channelName;
 			_channelDescription = channelDescription;
@@ -36,10 +39,19 @@ namespace Xmf2.Notification.Droid
 
 		public virtual void ShowNotification(FirebaseMessagingService context, RemoteMessage.Notification notification, IDictionary<string, string> notificationData, string content)
 		{
-			int pendingIntentId = DateTime.Now.Date.Millisecond & 0xFFFFFFF;
-			PendingIntent notificationContentIntent = PendingIntent.GetActivity(context, pendingIntentId, IntentForNotification(context, notification, notificationData, content), PendingIntentFlags.OneShot | PendingIntentFlags.Immutable);
+			int pendingIntentId = _random.Next();
+			PendingIntent notificationContentIntent;
 
-			NotificationManager notificationManager = (NotificationManager)context.GetSystemService(Context.NotificationService);
+			if (Build.VERSION.SdkInt >= BuildVersionCodes.S)
+			{
+				notificationContentIntent = PendingIntent.GetActivity(context, pendingIntentId, IntentForNotification(context, notification, notificationData, content), PendingIntentFlags.Mutable);
+			}
+			else
+			{
+				notificationContentIntent = PendingIntent.GetActivity(context, pendingIntentId, IntentForNotification(context, notification, notificationData, content), PendingIntentFlags.OneShot);
+			}
+
+			var notificationManager = (NotificationManager)context.GetSystemService(Context.NotificationService);
 			System.Diagnostics.Debug.Assert(notificationManager != null, nameof(notificationManager) + " != null");
 
 			string channelId = string.Empty;

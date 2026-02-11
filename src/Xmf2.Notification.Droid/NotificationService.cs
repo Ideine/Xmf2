@@ -41,6 +41,20 @@ namespace Xmf2.Notification.Droid
 
 		protected override DeviceType Device => DeviceType.Android;
 
+		public override bool CheckIfPermissionForNotificationIsGranted()
+		{
+			if (Build.VERSION.SdkInt >= BuildVersionCodes.Tiramisu)
+			{
+				Activity activity = Platform.CurrentActivity;
+				return activity?.CheckSelfPermission(Manifest.Permission.PostNotifications) == Permission.Granted;
+			}
+			else
+			{
+				var notificationManager = (NotificationManager)_context.GetSystemService(Context.NotificationService);
+				return notificationManager?.AreNotificationsEnabled() ?? false;
+			}
+		}
+
 		public override async Task AskForPermissionIfNeeded(bool showRationale, Func<Task<bool>> onShowRationale)
 		{
 			if (Build.VERSION.SdkInt >= BuildVersionCodes.Tiramisu)
@@ -85,6 +99,7 @@ namespace Xmf2.Notification.Droid
 
 		protected override void DeleteRegisterId()
 		{
+			base.DeleteRegisterId();
 			Task.Run(async () =>
 			{
 				try

@@ -5,7 +5,7 @@ namespace Xmf2.Core.Helpers
 {
 	public class LoadingEnableHelper : IDisposable
 	{
-		private readonly object _mutex = new object();
+		private readonly object _mutex = new();
 		private Action<bool> _action;
 		private Timer _timer;
 		private bool _value;
@@ -13,10 +13,10 @@ namespace Xmf2.Core.Helpers
 		public LoadingEnableHelper(Action<bool> action)
 		{
 			_action = action;
-			_timer = new Timer()
+			_timer = new Timer
 			{
 				AutoReset = false,
-				Interval = 200,
+				Interval = 950
 			};
 			_timer.Elapsed += TimerOnElapsed;
 		}
