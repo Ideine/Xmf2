@@ -5,10 +5,11 @@ using Android.Content;
 using Android.Util;
 using Firebase.Messaging;
 using Splat;
+using Xmf2.Commons.Services;
 
 namespace Xmf2.Notification.Droid
 {
-	[Service, IntentFilter(new[] { "com.google.firebase.MESSAGING_EVENT" })]
+	[Service(Exported = false), IntentFilter(new[] { "com.google.firebase.MESSAGING_EVENT" })]
 	public class MyFirebaseListenerService : FirebaseMessagingService
 	{
 		public override void OnMessageReceived(RemoteMessage message)
@@ -75,6 +76,12 @@ namespace Xmf2.Notification.Droid
 			{
 				Log.Wtf("Xmf2/Notification", $"Exception(general) while trying to display notification: {e.Message} {e.StackTrace}");
 			}
+		}
+
+		public override void OnNewToken(string token)
+		{
+			base.OnNewToken(token);
+			Locator.Current.GetService<INotificationService>()?.SetToken(token);
 		}
 
 		private void InitializeSetup(Context applicationContext)

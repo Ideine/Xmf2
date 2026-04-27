@@ -5,6 +5,7 @@
     <BuildWithMSBuildOnMono>true</BuildWithMSBuildOnMono>
     <Configurations>Debug;Release;</Configurations>
     <Platforms>AnyCPU</Platforms>
+    <LangVersion>latestmajor</LangVersion>
   </PropertyGroup>
 
   <ItemGroup>

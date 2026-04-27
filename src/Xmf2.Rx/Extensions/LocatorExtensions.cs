@@ -21,11 +21,6 @@ namespace Splat
 			}
 		}
 
-		public static void RegisterLazySingleton<TInterface>(this IMutableDependencyResolver resolver, Func<TInterface> creator)
-		{
-			resolver.RegisterLazySingleton(() => creator(), typeof(TInterface));
-		}
-
 		public static void RegisterLazySingleton<TInterface, TImplementation>(this IMutableDependencyResolver resolver) where TImplementation : class, TInterface, new()
 		{
 			resolver.RegisterLazySingleton(() => new TImplementation(), typeof(TInterface));

@@ -67,14 +67,6 @@ namespace System.Collections.Generic
 			return source.Except(new T[] { exclude });
 		}
 
-		public static T Aggregate<T>(this IEnumerable<T> source, Func<T, T, T> func)
-		{
-			var enumerator = source.GetEnumerator();
-			return enumerator.MoveNext()
-				 ? Aggregate(enumerator, enumerator.Current, func)
-				 : default(T);
-		}
-
 		public static HashSet<T> SymmetricExceptWith<T>(this IEnumerable<T> setA, IEnumerable<T> setB)
 		{
 			var result = new HashSet<T>(setA);

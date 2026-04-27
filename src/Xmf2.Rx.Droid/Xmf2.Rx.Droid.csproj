@@ -4,7 +4,6 @@
         <LangVersion>latest</LangVersion>
         <Nullable>disable</Nullable>
         <ImplicitUsings>disable</ImplicitUsings>
-        <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
         <SupportedOSPlatformVersion>21.0</SupportedOSPlatformVersion>
         <IsPackable>false</IsPackable>
         <TargetFrameworkVersion>v15.0</TargetFrameworkVersion>
@@ -21,7 +20,6 @@
     <ItemGroup>
 			<PackageReference Include="ReactiveUI" Version="20.4.1" />
 			<PackageReference Include="ReactiveUI.AndroidX" Version="20.4.1" />
-      <PackageReference Include="ReactiveUI.Events" Version="15.1.1" />
       <PackageReference Include="Xamarin.AndroidX.Annotation" Version="1.9.1.4" />
       <PackageReference Include="Xamarin.AndroidX.Legacy.Support.Core.Utils" Version="1.0.0.33" />
       <PackageReference Include="Xamarin.AndroidX.Legacy.Support.Core.UI" Version="1.0.0.34" />

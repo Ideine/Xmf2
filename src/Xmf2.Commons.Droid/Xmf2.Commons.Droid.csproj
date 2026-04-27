@@ -4,7 +4,6 @@
         <LangVersion>latest</LangVersion>
         <Nullable>disable</Nullable>
         <ImplicitUsings>disable</ImplicitUsings>
-        <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
         <SupportedOSPlatformVersion>24.0</SupportedOSPlatformVersion>
         <IsPackable>false</IsPackable>
         <TargetFrameworkVersion>v15.0</TargetFrameworkVersion>

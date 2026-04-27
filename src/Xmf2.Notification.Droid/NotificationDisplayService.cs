@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Android.App;
 using Android.Content;
 using Android.Support.V4.App;
+using AndroidX.Core.App;
 using Firebase.Messaging;
 
 namespace Xmf2.Notification.Droid
@@ -31,10 +32,16 @@ namespace Xmf2.Notification.Droid
 
 		public virtual void ShowNotification(FirebaseMessagingService context, RemoteMessage.Notification notification, IDictionary<string, string> notificationData, string content)
 		{
-			PendingIntent notificationContentIntent = PendingIntent.GetActivity(context, 0, IntentForNotification(context, notification, notificationData, content), 0);
+			var pendingIntentFlags = Android.OS.Build.VERSION.SdkInt >= Android.OS.BuildVersionCodes.S
+				? PendingIntentFlags.Immutable
+				: 0;
+			PendingIntent notificationContentIntent = PendingIntent.GetActivity(
+				context, 0,
+				IntentForNotification(context, notification, notificationData, content),
+				(PendingIntentFlags)pendingIntentFlags);
 
 			NotificationManager notificationManager = (NotificationManager)context.GetSystemService(Context.NotificationService);
-			NotificationCompat.Builder builder = new NotificationCompat.Builder(context)
+			NotificationCompat.Builder builder = new NotificationCompat.Builder(context, _channelId)
 					.SetStyle(new NotificationCompat.BigTextStyle().BigText(content))
 					.SetContentText(content)
 					.SetAutoCancel(true)

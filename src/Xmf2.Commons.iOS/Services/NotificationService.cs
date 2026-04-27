@@ -14,6 +14,19 @@ namespace Xmf2.Commons.MvxExtends.Touch.Services
 
 		protected override DeviceType Device => DeviceType.iOS;
 
+		public override async Task AskForPermissionIfNeeded(bool showRationale, Func<Task<bool>> onShowRationale)
+		{
+			var settings = await UNUserNotificationCenter.Current.GetNotificationSettingsAsync();
+			if (settings.AuthorizationStatus == UNAuthorizationStatus.Authorized
+				|| settings.AuthorizationStatus == UNAuthorizationStatus.Provisional)
+			{
+				return;
+			}
+
+			await UNUserNotificationCenter.Current.RequestAuthorizationAsync(
+				UNAuthorizationOptions.Alert | UNAuthorizationOptions.Badge | UNAuthorizationOptions.Sound);
+		}
+
 		protected override void RequestToken()
 		{
 			UIApplication.SharedApplication.InvokeOnMainThread(() =>
