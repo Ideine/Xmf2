@@ -81,14 +81,8 @@ namespace Xmf2.Rx.Droid.ListElement
 		{
 			if (disposing)
 			{
-				if (ItemView != null)
-				{
-					ItemView.Click -= OnClickItem;
-				}
-				if (ItemView != null)
-				{
-					ItemView.LongClick -= OnLongClickItem;
-				}
+				ItemView.Click -= OnClickItem;
+				ItemView.LongClick -= OnLongClickItem;
 			}
 			base.Dispose(disposing);
 		}

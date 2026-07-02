@@ -24,19 +24,19 @@ namespace Xmf2.Rx.Droid.ListElement
 
         protected readonly Context Context;
 
-        private BindingList<TItemData> itemsSource;
         public BindingList<TItemData> ItemsSource
         {
-            get => itemsSource;
-            set
-            {
-                if (!Equals(itemsSource, value))
-                {
-                    itemsSource = value;
-                    itemsSource.ListChanged += ListChanged;
-                }
-                NotifyDataSetChanged();
-            }
+	        get;
+	        set
+	        {
+		        if (!Equals(field, value))
+		        {
+			        field = value;
+			        field.ListChanged += ListChanged;
+		        }
+
+		        NotifyDataSetChanged();
+	        }
         }
 
         private void ListChanged(object sender, ListChangedEventArgs e)
@@ -143,10 +143,7 @@ namespace Xmf2.Rx.Droid.ListElement
         {
             if (disposing)
             {
-                if (ItemsSource != null)
-                {
-                    ItemsSource.ListChanged -= ListChanged;
-                }
+                ItemsSource?.ListChanged -= ListChanged;
                 UiDispo?.Dispose();
                 UiDispo = null;
             }

@@ -17,16 +17,14 @@ namespace Xmf2.Commons.Droid.LinearList
 
 		private bool _isAttachedToWindow;
 		private bool _clickOverloaded;
-		private ICommand _itemClick;
-		private object _dataContext;
 
 		public ICommand ItemClick
 		{
-			get => this._itemClick;
+			get;
 			set
 			{
-				this._itemClick = value;
-				if (this._itemClick != null)
+				field = value;
+				if (field != null)
 				{
 					this.EnsureClickOverloaded();
 				}
@@ -35,12 +33,12 @@ namespace Xmf2.Commons.Droid.LinearList
 
 		public object DataContext
 		{
-			get => _dataContext;
+			get;
 			set
 			{
 				if (value != null)
 				{
-					this._dataContext = value;
+					field = value;
 				}
 			}
 		}

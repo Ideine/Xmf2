@@ -46,15 +46,9 @@ namespace Xmf2.Commons.Droid.LinearList
 
 				_adapter = value;
 
-				if (_adapter != null)
-				{
-					_adapter.DataSetChanged += AdapterOnDataSetChanged;
-				}
+				_adapter?.DataSetChanged += AdapterOnDataSetChanged;
 
-				if (existing != null)
-				{
-					existing.ItemsSource = null;
-				}
+				existing?.ItemsSource = null;
 			}
 		}
 

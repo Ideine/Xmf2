@@ -15,15 +15,14 @@ namespace Xmf2.Commons.Droid.ChipClouds
 
 		public int ItemTemplate { get; set; }
 
-		private List<object> _itemSource;
 		public List<object> ItemSource
 		{
-			get => _itemSource;
+			get;
 			set
 			{
-				if (!Equals(_itemSource, value))
+				if (!Equals(field, value))
 				{
-					_itemSource = value;
+					field = value;
 				}
 
 				if (value != null)

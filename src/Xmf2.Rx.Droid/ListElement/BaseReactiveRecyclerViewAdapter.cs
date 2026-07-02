@@ -20,20 +20,19 @@ namespace Xmf2.Rx.Droid.ListElement
 
         protected readonly Context Context;
 
-        private ObservableCollection<TItemData> _itemsSource;
         public ObservableCollection<TItemData> ItemsSource
         {
-            get => _itemsSource;
-            set
-            {
-                if (!Equals(_itemsSource, value))
-                {
-                    _itemsSource = value;
-                    _itemsSource.CollectionChanged += OnCollectionChanged;
-                }
+	        get;
+	        set
+	        {
+		        if (!Equals(field, value))
+		        {
+			        field = value;
+			        field.CollectionChanged += OnCollectionChanged;
+		        }
 
-                NotifyDataSetChanged();
-            }
+		        NotifyDataSetChanged();
+	        }
         }
 
         public BaseReactiveRecyclerViewAdapter(Context context)
@@ -74,10 +73,7 @@ namespace Xmf2.Rx.Droid.ListElement
         {
             if (disposing)
             {
-                if (ItemsSource != null)
-                {
-                    ItemsSource.CollectionChanged -= OnCollectionChanged;
-                }
+                ItemsSource?.CollectionChanged -= OnCollectionChanged;
             }
 
             base.Dispose(disposing);

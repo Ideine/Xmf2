@@ -22,7 +22,7 @@ namespace Xmf2.Commons.Droid.Services
 
         public bool IsOnMainThread() => Looper.MyLooper() == Looper.MainLooper;
 
-        public async Task<T> EnqueueOnMainThread<T>(Func<Task<T>> func, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<T> EnqueueOnMainThread<T>(Func<Task<T>> func, CancellationToken cancellationToken = default)
         {
             if (IsOnMainThread())
             {

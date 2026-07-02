@@ -37,11 +37,10 @@ namespace Xmf2.Rx.Droid.ListElement
 
 		public View View => this.ItemView;
 
-		private TViewModel _viewModel;
 		public TViewModel ViewModel
 		{
-			get => _viewModel;
-			set => this.RaiseAndSetIfChanged(ref _viewModel, value);
+			get;
+			set => this.RaiseAndSetIfChanged(ref field, value);
 		}
 
 		object IViewFor.ViewModel

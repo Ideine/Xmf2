@@ -10,7 +10,7 @@ namespace Xmf2.Commons.Droid.Services.Licences
 	{
 		private readonly Context _context;
 
-		private AssetManager _assetManager;
+		private readonly AssetManager _assetManager;
 
 		public LicenceReaderService(Context context)
 		{

@@ -14,13 +14,12 @@ namespace Xmf2.Rx.Droid.ChipClouds
 	{
 		public readonly Context Context;
 
-		private TViewModel _viewModel;
 		public TViewModel ViewModel
 		{
-			get => _viewModel;
+			get;
 			set
 			{
-				_viewModel = value;
+				field = value;
 				if (value != null)
 				{
 					OnViewModelSet();
@@ -80,10 +79,7 @@ namespace Xmf2.Rx.Droid.ChipClouds
 			base.Dispose(disposing);
 			if (disposing)
 			{
-				if (ItemView != null)
-				{
-					ItemView.Click -= OnClickItem;
-				}
+				ItemView?.Click -= OnClickItem;
 			}
 		}
 

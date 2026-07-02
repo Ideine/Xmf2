@@ -12,13 +12,12 @@ namespace Xmf2.Commons.Droid.ChipClouds
 
 		public int Count => Adapter?.Count ?? 0;
 
-		private ChipCloudAdapter _adapter;
 		public ChipCloudAdapter Adapter
 		{
-			get => _adapter;
+			get;
 			set
 			{
-				_adapter = value;
+				field = value;
 				Adapter.DeleteObservers();
 				Adapter.Subscribe(this);
 				Refresh();
