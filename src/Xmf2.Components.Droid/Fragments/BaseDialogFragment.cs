@@ -5,6 +5,7 @@ using Android.Graphics;
 using Android.OS;
 using Android.Runtime;
 using Android.Views;
+using AndroidX.Activity;
 using Xmf2.Components.Bootstrappers;
 using Xmf2.Components.Droid.Interfaces;
 using Xmf2.Components.Events;
@@ -81,7 +82,17 @@ namespace Xmf2.Components.Droid.Fragments
 		public override Dialog OnCreateDialog(Bundle savedInstanceState)
 		{
 			var dialog = base.OnCreateDialog(savedInstanceState);
-			dialog.SetOnKeyListener(this);
+
+			//BLE : a partir de targetSdk 36 le predictive back ne delivre plus KEYCODE_BACK, on passe par le dispatcher quand le dialog l'expose
+			if (dialog is ComponentDialog componentDialog)
+			{
+				componentDialog.OnBackPressedDispatcher.AddCallback(componentDialog, new BackPressedCallback(this).DisposeWith(Disposable));
+			}
+			else
+			{
+				dialog.SetOnKeyListener(this);
+			}
+
 			return dialog;
 		}
 
@@ -89,12 +100,39 @@ namespace Xmf2.Components.Droid.Fragments
 		{
 			if (keyCode == Keycode.Back && e.Action == KeyEventActions.Up)
 			{
-				Services.Resolve<IEventBus>().Publish(new BackEvent());
+				HandleBackPressed();
 				return true;
 			}
 			else
 			{
 				return false;
+			}
+		}
+
+		protected virtual void HandleBackPressed()
+		{
+			Services.Resolve<IEventBus>().Publish(new BackEvent());
+		}
+
+		private class BackPressedCallback : OnBackPressedCallback
+		{
+			private BaseDialogFragment<TComponentViewModel, TComponentView> _fragment;
+
+			public BackPressedCallback(BaseDialogFragment<TComponentViewModel, TComponentView> fragment) : base(enabled: true)
+			{
+				_fragment = fragment;
+			}
+
+			public override void HandleOnBackPressed() => _fragment?.HandleBackPressed();
+
+			protected override void Dispose(bool disposing)
+			{
+				if (disposing)
+				{
+					_fragment = null;
+				}
+
+				base.Dispose(disposing);
 			}
 		}
 
