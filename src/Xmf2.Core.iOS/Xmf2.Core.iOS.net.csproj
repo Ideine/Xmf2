@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
-		<TargetFramework>net8.0-ios</TargetFramework>
+		<TargetFramework>net10.0-ios</TargetFramework>
 		<LangVersion>9</LangVersion>
 		<RootNamespace>Xmf2.Core.iOS</RootNamespace>
 		<ImplicitUsings>disable</ImplicitUsings>

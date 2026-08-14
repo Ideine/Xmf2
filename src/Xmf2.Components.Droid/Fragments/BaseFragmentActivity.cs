@@ -2,6 +2,7 @@
 using Android.OS;
 using Android.Runtime;
 using Android.Content.PM;
+using AndroidX.Activity;
 using System.Threading.Tasks;
 using Xmf2.Components.Events;
 using Xmf2.Core.Subscriptions;
@@ -29,6 +30,9 @@ namespace Xmf2.Components.Droid.Fragments
 			base.OnCreate(savedInstanceState);
 
 			SetContentView(LayoutId);
+
+			//BLE : a partir de targetSdk 36 le predictive back est actif par defaut et OnBackPressed n'est plus appele, il faut passer par le dispatcher
+			OnBackPressedDispatcher.AddCallback(this, new BackPressedCallback(this).DisposeWith(Disposables));
 		}
 
 		public override void OnConfigurationChanged(Android.Content.Res.Configuration newConfig)
@@ -37,12 +41,34 @@ namespace Xmf2.Components.Droid.Fragments
 			BaseApplicationBootstrapper.StaticServices.Resolve<IGlobalEventBus>().Publish(new ConfigurationChangedEvent(newConfig: newConfig));
 		}
 
-		public override void OnBackPressed()
+		protected virtual void HandleBackPressed()
 		{
 			var currentFrag = SupportFragmentManager.GetTopFragment();
 			if (currentFrag is IBackFragment frag)
 			{
 				frag.BackPressed();
+			}
+		}
+
+		private class BackPressedCallback : OnBackPressedCallback
+		{
+			private BaseFragmentActivity<TViewModel> _activity;
+
+			public BackPressedCallback(BaseFragmentActivity<TViewModel> activity) : base(enabled: true)
+			{
+				_activity = activity;
+			}
+
+			public override void HandleOnBackPressed() => _activity?.HandleBackPressed();
+
+			protected override void Dispose(bool disposing)
+			{
+				if (disposing)
+				{
+					_activity = null;
+				}
+
+				base.Dispose(disposing);
 			}
 		}
 
