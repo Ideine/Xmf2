@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using RestSharp.Portable;
 using Xmf2.Common.Extensions;
 using Xmf2.Core.Authentications;
-using Xmf2.Core.Extensions;
 using Xmf2.Core.Services;
 
 namespace Xmf2.Authentications.OAuth2
@@ -58,22 +57,14 @@ namespace Xmf2.Authentications.OAuth2
 				{
 					throw new InvalidOperationException("Can not refresh without a Refresh token");
 				}
-
-				if (DateTime.Now.Add(TimeSpan.FromSeconds(15)) > _tokens.ExpiresAt)
+				IRestRequest RequestFunc()
 				{
-					IRestRequest RequestFunc()
-					{
-						var request = new RestRequest(Configuration.RefreshUrl, Configuration.RefreshMethod);
-						Configuration.PopulateRefreshRequest(request, _tokens.RefreshToken);
-						return request;
-					}
+					var request = new RestRequest(Configuration.RefreshUrl, Configuration.RefreshMethod);
+					Configuration.PopulateRefreshRequest(request, _tokens.RefreshToken);
+					return request;
+				}
 
-					return await ExecuteAuthRequest(RequestFunc);
-				}
-				else
-				{
-					return _tokens;
-				}
+				return await ExecuteAuthRequest(RequestFunc);
 			}
 		}
 
