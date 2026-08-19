@@ -10,22 +10,24 @@ namespace Xmf2.Commons.Services.OAuth2
 	{
 		private const int DEFAULT_TIMEOUT = 60;
 
-		public static IOAuth2Client CreateClient(string baseUrl, OAuth2ConfigurationBase configuration, IHttpClientFactory factory = null, Action<Method, string, string> logMethod = null)
+		public static IOAuth2Client CreateClient(string baseUrl, OAuth2ConfigurationBase configuration, IHttpClientFactory factory = null, Action<Method, string, string> logMethod = null, Action<Method, string, int, long> logResponseMethod = null)
 		{
 			return new OAuth2RestClient(factory ?? new DefaultHttpClientFactory(), baseUrl)
 			{
 				Configuration = configuration,
 				LogRequest = logMethod,
+				LogResponse = logResponseMethod,
 				Timeout = TimeSpan.FromSeconds(DEFAULT_TIMEOUT)
 			};
 		}
 
-		public static IOAuth2Client CreateClient(OAuth2ConfigurationBase configuration, IHttpClientFactory factory = null, Action<Method, string, string> logMethod = null)
+		public static IOAuth2Client CreateClient(OAuth2ConfigurationBase configuration, IHttpClientFactory factory = null, Action<Method, string, string> logMethod = null, Action<Method, string, int, long> logResponseMethod = null)
 		{
 			return new OAuth2RestClient(factory ?? new DefaultHttpClientFactory())
 			{
 				Configuration = configuration,
 				LogRequest = logMethod,
+				LogResponse = logResponseMethod,
 				Timeout = TimeSpan.FromSeconds(DEFAULT_TIMEOUT)
 			};
 		}

@@ -29,6 +29,11 @@ namespace Xmf2.Rest.OAuth2
 		/// </summary>
 		public Action<Method, string, string> LogRequest { get; set; }
 
+		/// <summary>
+		/// Extension point to log responses (HttpMethod, url, status code, elapsed milliseconds)
+		/// </summary>
+		public Action<Method, string, int, long> LogResponse { get; set; }
+
 		public event EventHandler<OAuth2AuthResult> OnAuthSuccess;
 
 		public event EventHandler<OAuth2AuthResult> OnAuthError;
@@ -195,28 +200,54 @@ namespace Xmf2.Rest.OAuth2
 			OAuth2Authenticator = null;
 		}
 
+		public override async Task<IRestResponse> Execute(IRestRequest request, CancellationToken ct)
+		{
+			Stopwatch watch = Stopwatch.StartNew();
+			IRestResponse response = await base.Execute(request, ct).ConfigureAwait(false);
+			watch.Stop();
+
+			NotifyResponse(request, (int)response.StatusCode, watch.ElapsedMilliseconds);
+
+			return response;
+		}
+
 		public override async Task<IRestResponse<T>> Execute<T>(IRestRequest request, CancellationToken ct)
 		{
+			Stopwatch watch = Stopwatch.StartNew();
 			using (IHttpResponseMessage response = await ExecuteRequest(request, ct).ConfigureAwait(false))
 			{
+				watch.Stop();
+				NotifyResponse(request, (int)response.StatusCode, watch.ElapsedMilliseconds);
+
 				if (response.IsSuccessStatusCode)
 				{
 					return await RestResponse.CreateResponse<T>(this, request, response, ct).ConfigureAwait(false);
 				}
 
-				try
-				{
-					throw new Exception("Invalid response status code");
-				}
-				catch (Exception ex)
-				{
-					Debug.WriteLine($"LSTLOG Invalid status code: {response.StatusCode} / {this.BuildUri(request)}");
-					Debug.WriteLine($"LSTLOG stack: {ex.StackTrace}");
-				}
-
 				IRestResponse restResponse = await RestResponse.CreateResponse(this, request, response, ct).ConfigureAwait(false);
 				throw new RestException(restResponse);
 			}
+		}
+
+		private void NotifyResponse(IRestRequest request, int statusCode, long elapsedMilliseconds)
+		{
+			Action<Method, string, int, long> logger = LogResponse;
+			if (logger == null)
+			{
+				return;
+			}
+
+			string url;
+			try
+			{
+				url = this.BuildUri(request).ToString();
+			}
+			catch (Exception)
+			{
+				url = request.Resource;
+			}
+
+			logger(request.Method, url, statusCode, elapsedMilliseconds);
 		}
 
 		protected virtual OAuth2Authenticator CreateAuthenticator() => new OAuth2Authenticator
